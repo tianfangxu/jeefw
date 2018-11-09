@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/bootstrap-timepicker.css"/>
 <link rel="stylesheet" href="${contextPath}/static/assets/css/daterangepicker.css"/>
 <link rel="stylesheet" href="${contextPath}/static/assets/css/bootstrap-datetimepicker.css"/>
+<link rel="stylesheet" href="${contextPath}/static/assets/css/select2.css" />
+
 
 <div class="row">
     <div class="col-xs-12">
@@ -97,14 +99,13 @@
                                     <label class="col-sm-2 control-label blue" style="text-align: left"
                                            for="htlx">合同类型：</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control" id="htlx">
+                                        <select class="select2 width-100" id="htlx">
                                             <option value="">--请选择--</option>
                                             <option value="wy">物业管理服务合同</option>
                                             <option value="cw">协议停车合同</option>
                                         </select>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left"
-                                           for="htsj">合同时间：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="htsj">合同时间：</label>
                                     <div class="col-sm-4">
                                         <div class="input-group">
 											<span class="input-group-addon">
@@ -115,10 +116,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left"
-                                           for="zldz">租赁地址：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="zldz">租赁地址：</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control" id="zldz">
+                                        <select class="select2 width-100" id="zldz">
                                             <option value="WY">闵行区</option>
                                             <option value="XYTC">浦东新区</option>
                                         </select>
@@ -137,8 +137,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left"
-                                           for="qttk">其他条款：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="qttk">其他条款：</label>
                                     <div class="col-sm-10">
                                         <textarea class="width-100" id="qttk" placeholder="补充合同条款使用"></textarea>
                                     </div>
@@ -169,10 +168,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left"
-                                           for="fkfs">付款方式：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="fkfs">付款方式：</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control" id="fkfs">
+                                        <select class="select2 width-100" id="fkfs">
                                             <option value="WY">押一付一</option>
                                             <option value="XYTC">押一付三</option>
                                             <option value="XYTC">押二付二</option>
@@ -266,16 +264,14 @@
                         <div class="widget-body">
                             <div class="widget-main">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left"
-                                           for="glf">管理方：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="glf">管理方：</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control" id="glf">
+                                        <select class="select2 width-100" id="glf">
                                             <option value="WY">上海交投物业管理有限公司</option>
                                             <option value="XYTC">上海交投物业管理有限公司</option>
                                         </select>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left"
-                                           for="glfdz">地址：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="glfdz">地址：</label>
                                     <div class="col-sm-4">
                                         <input type="text" id="glfdz" class="width-100" readonly
                                                value="上海市徐汇区吴中东路555号8楼"/>
@@ -288,31 +284,25 @@
                                     </div>
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="glflxdh">联系电话：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="glflxdh" class="width-100" readonly
-                                               value="021-34770192"/>
+                                        <input type="text" id="glflxdh" class="width-100" readonly value="021-34770192"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="glfzhmc">帐户名称：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="glfzhmc" class="width-100" readonly
-                                               value="上海交投物业管理有限公司"/>
+                                        <input type="text" id="glfzhmc" class="width-100" readonly value="上海交投物业管理有限公司"/>
                                     </div>
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="glfkhyh">开户银行：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="glfkhyh" class="width-100" readonly
-                                               value="上海浦东发展银行卢湾支行"/>
+                                        <input type="text" id="glfkhyh" class="width-100" readonly value="上海浦东发展银行卢湾支行"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="glfzh">帐
-                                        号：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="glfzh">帐 号：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="glfzh" class="width-100" readonly
-                                               value="98990158000000493"/>
+                                        <input type="text" id="glfzh" class="width-100" readonly value="98990158000000493"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="glfsh">税
-                                        号：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="glfsh">税 号：</label>
                                     <div class="col-sm-4">
                                         <input type="text" id="glfsh" class="width-100" readonly
                                                value="913123299958782109N"/>
@@ -334,17 +324,15 @@
                         <div class="widget-body">
                             <div class="widget-main">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left"
-                                           for="czf">承租方：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="czf">承租方：</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control" id="czf">
+                                        <select class="select2 width-100" id="czf">
                                             <option value="WY">无匹配用户</option>
                                             <option value="WY">张三</option>
                                             <option value="XYTC">李四</option>
                                         </select>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left"
-                                           for="czfdz">地址：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="czfdz">地址：</label>
                                     <div class="col-sm-4">
                                         <input type="text" id="czfdz" class="width-100"/>
                                     </div>
@@ -361,8 +349,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="czfsh">税
-                                        号：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="czfsh">税 号：</label>
                                     <div class="col-sm-4">
                                         <input type="text" id="czfsh" class="width-100" />
                                     </div>
@@ -395,10 +382,13 @@
         "${contextPath}/static/assets/js/jquery.ui.touch-punch.js", "${contextPath}/static/assets/js/markdown/markdown.js", "${contextPath}/static/assets/js/markdown/bootstrap-markdown.js",
         "${contextPath}/static/assets/js/jquery.hotkeys.js", "${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js",
         "${contextPath}/static/assets/js/jquery.gritter.js", "${contextPath}/static/assets/js/date-time/bootstrap-datepicker.js", "${contextPath}/static/assets/js/date-time/bootstrap-timepicker.js",
-        "${contextPath}/static/assets/js/date-time/moment.js", "${contextPath}/static/assets/js/date-time/daterangepicker.js", "${contextPath}/static/assets/js/date-time/bootstrap-datetimepicker.js", null]
+        "${contextPath}/static/assets/js/date-time/moment.js", "${contextPath}/static/assets/js/date-time/daterangepicker.js", "${contextPath}/static/assets/js/date-time/bootstrap-datetimepicker.js",
+        "${contextPath}/static/assets/js/select2.js",null]
     $(".page-content-area").ace_ajax("loadScripts", scripts, function () {
         // inline scripts related to this page
         jQuery(function ($) {
+            $('.select2').select2({allowClear:true})
+
             var grid_selector = "#grid-table";
             var pager_selector = "#grid-pager";
 

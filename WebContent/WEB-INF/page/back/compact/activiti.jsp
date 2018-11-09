@@ -9,6 +9,22 @@
 
 <div class="row">
 	<div class="col-xs-12">
+
+		<div class="well well-sm">
+			<a id="shInformationButton" role="button" class="btn btn-info btn-sm" data-toggle="modal">
+				查看审核
+			</a>
+			<a id="downloadInformationButton" role="button" class="btn btn-inverse btn-sm" data-toggle="modal">
+				下载合同
+			</a>
+			<form id="bulidingHibernateSearchForm" class="nav-search form-search">
+                <span class="input-icon" style="position: relative;top: -30px;">
+                    <input type="text" placeholder="全文检索 ..." class="nav-search-input" id="search-input" autocomplete="off"/>
+                    <i class="ace-icon fa fa-search nav-search-icon"></i>
+                </span>
+			</form>
+		</div>
+
 		<div class="tabbable">
 			<ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="myTab4">
 				<li class="active">
@@ -50,45 +66,400 @@
 	</div><!-- /.col -->
 </div><!-- /.row -->
 
-<div id="modal-table" class="modal fade" tabindex="-1" data-backdrop="static">
+<div id="modal-table" class="modal fade" data-backdrop="static">
 	<div class="modal-dialog" style="min-width: 820px;">
-		<form id="informationForm">
+		<form id="bulidingForm" class="form-horizontal">
 			<div class="modal-content">
 				<div class="modal-header no-padding">
 					<div class="table-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							<span class="white">&times;</span>
 						</button>
-						信息发布
+						合同信息
 					</div>
 				</div>
 				<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
 					<div id="modal-tip" class="red clearfix"></div>
 					<div>
-						<input type="hidden" id="id" />
+						<input type="hidden" id="id"/>
 					</div>
-					<div class="blue clearfix">
-						<label for="title">标题：</label>
-						<input type="text" id="title" class="width-100" />
+
+					<div class="widget-box">
+						<div class="widget-header">
+							<h4 class="widget-title">基本信息</h4>
+							<div class="widget-toolbar">
+								<a href="#" data-action="collapse">
+									<i class="ace-icon fa fa-chevron-up"></i>
+								</a>
+							</div>
+						</div>
+						<div class="widget-body">
+							<div class="widget-main">
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left"
+										   for="htlx">合同类型：</label>
+									<div class="col-sm-4">
+										<select class="form-control" id="htlx" disabled>
+											<option value="">--请选择--</option>
+											<option value="wy" selected >物业管理服务合同</option>
+											<option value="cw">协议停车合同</option>
+										</select>
+									</div>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="htsj">合同时间：</label>
+									<div class="col-sm-4">
+										<div class="input-group">
+											<span class="input-group-addon">
+												<i class="fa fa-calendar bigger-110"></i>
+											</span>
+											<input class="form-control" type="text" name="date-range-picker" id="htsj" value="11/09/2018 - 11/09/2018" readonly/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="zldz">租赁地址：</label>
+									<div class="col-sm-2">
+										<select class="form-control" id="zldz" disabled>
+											<option value="WY">闵行区</option>
+											<option value="XYTC" selected>浦东新区</option>
+										</select>
+									</div>
+									<div class="col-sm-2">
+										<input type="text" id="road" placeholder="路" class="width-100"  value="光中路" readonly/>
+									</div>
+									<div class="col-sm-2">
+										<input type="text" id="hao" placeholder="号" class="width-100" value="330号"  readonly/>
+									</div>
+									<div class="col-sm-2">
+										<input type="text" id="lou" placeholder="大厦" class="width-100"  value="世纪大厦" readonly/>
+									</div>
+									<div class="col-sm-2">
+										<input type="text" id="shi" placeholder="室" class="width-100" value="“204室" readonly/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="qttk">其他条款：</label>
+									<div class="col-sm-10">
+										<textarea class="width-100" id="qttk"  readonly></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="space-4"></div>
-					<div class="blue clearfix">
-						<label for="author">作者：</label>
-						<input type="text" id="author" class="width-100" />
+
+					<div class="widget-box wyxx" >
+						<div class="widget-header">
+							<h4 class="widget-title">物业信息</h4>
+							<div class="widget-toolbar">
+								<a href="#" data-action="collapse">
+									<i class="ace-icon fa fa-chevron-up"></i>
+								</a>
+							</div>
+						</div>
+						<div class="widget-body">
+							<div class="widget-main">
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="fwjzmj"  >房屋建筑面积(平方米)：</label>
+									<div class="col-sm-4">
+										<input type="text" id="fwjzmj" class="width-100" readonly value="300"/>
+									</div>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="czjzmj" >承租建筑面积(平方米)：</label>
+									<div class="col-sm-4">
+										<input type="text" id="czjzmj" class="width-100" readonly value="300"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="fkfs">付款方式：</label>
+									<div class="col-sm-4">
+										<select class="form-control" id="fkfs" disabled>
+											<option value="WY">押一付一</option>
+											<option value="XYTC" selected>押一付三</option>
+											<option value="XYTC">押二付二</option>
+										</select>
+									</div>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="wyyj">物业费押金(元)：</label>
+									<div class="col-sm-4">
+										<input type="text" id="wyyj" class="width-100" readonly value="30000"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="dfdj">电费单价(元/千瓦小时)：</label>
+									<div class="col-sm-4">
+										<input type="text" id="dfdj" class="width-100" readonly value="1.0"/>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<h4 class="header blue clearfix">内容：</h4>
-					<div class="wysiwyg-editor" id="editor" style="min-height: 400px;"></div>
+
+					<div class="widget-box cwxx" style="display: none">
+						<div class="widget-header">
+							<h4 class="widget-title">车位信息</h4>
+							<div class="widget-toolbar">
+								<a href="#" data-action="collapse">
+									<i class="ace-icon fa fa-chevron-up"></i>
+								</a>
+							</div>
+						</div>
+						<div class="widget-body">
+							<div class="widget-main">
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="cqdw">停车场地资产产权单位：</label>
+									<div class="col-sm-10">
+										<input type="text" id="cqdw" class="width-100"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="dxcwjg">地下车位价格(元/月/车)：</label>
+									<div class="col-sm-4">
+										<input type="text" id="dxcwjg" class="width-100"/>
+									</div>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="dscwjg">地面车位价格(元/月/车)：</label>
+									<div class="col-sm-4">
+										<input type="text" id="dscwjg" class="width-100"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="dxcwsl">地下车位数量(个)：</label>
+									<div class="col-sm-4">
+										<input type="text" id="dxcwsl" class="width-100"/>
+									</div>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="dscwsl">地面车位数量(个)：</label>
+									<div class="col-sm-4">
+										<input type="text" id="dscwsl" class="width-100"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="cwzlf">车位租赁费(元/月)：</label>
+									<div class="col-sm-4">
+										<input type="text" id="cwzlf" class="width-100"/>
+									</div>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="zffs">支付方式(月预付)：</label>
+									<div class="col-sm-4">
+										<input type="text" id="zffs" class="width-100"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="zzf">停车证制作费：</label>
+									<div class="col-sm-4">
+										<input type="text" id="zzf" class="width-100"/>
+									</div>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="bbf">停车证补办费：</label>
+									<div class="col-sm-4">
+										<input type="text" id="bbf" class="width-100"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="widget-box">
+						<div class="widget-header">
+							<h4 class="widget-title">甲方信息</h4>
+							<div class="widget-toolbar">
+								<a href="#" data-action="collapse">
+									<i class="ace-icon fa fa-chevron-up"></i>
+								</a>
+							</div>
+						</div>
+						<div class="widget-body">
+							<div class="widget-main">
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="glf">管理方：</label>
+									<div class="col-sm-4">
+										<select class="form-control" id="glf" disabled>
+											<option value="WY" selected>上海交投物业管理有限公司</option>
+											<option value="XYTC">上海交投物业管理有限公司</option>
+										</select>
+									</div>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="glfdz">地址：</label>
+									<div class="col-sm-4">
+										<input type="text" id="glfdz" class="width-100" readonly value="上海市徐汇区吴中东路555号8楼"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="glfname">法定代表人：</label>
+									<div class="col-sm-4">
+										<input type="text" id="glfname" class="width-100" readonly value="邵重业"/>
+									</div>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="glflxdh">联系电话：</label>
+									<div class="col-sm-4">
+										<input type="text" id="glflxdh" class="width-100" readonly value="021-34770192"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="glfzhmc">帐户名称：</label>
+									<div class="col-sm-4">
+										<input type="text" id="glfzhmc" class="width-100" readonly value="上海交投物业管理有限公司"/>
+									</div>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="glfkhyh">开户银行：</label>
+									<div class="col-sm-4">
+										<input type="text" id="glfkhyh" class="width-100" readonly value="上海浦东发展银行卢湾支行"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="glfzh">帐 号：</label>
+									<div class="col-sm-4">
+										<input type="text" id="glfzh" class="width-100" readonly value="98990158000000493"/>
+									</div>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="glfsh">税 号：</label>
+									<div class="col-sm-4">
+										<input type="text" id="glfsh" class="width-100" readonly value="913123299958782109N"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="widget-box">
+						<div class="widget-header">
+							<h4 class="widget-title">乙方信息</h4>
+							<div class="widget-toolbar">
+								<a href="#" data-action="collapse">
+									<i class="ace-icon fa fa-chevron-up"></i>
+								</a>
+							</div>
+						</div>
+						<div class="widget-body">
+							<div class="widget-main">
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="czf">承租方：</label>
+									<div class="col-sm-4">
+										<select class="form-control" id="czf" disabled>
+											<option value="WY">无匹配用户</option>
+											<option value="WY" selected>张三</option>
+											<option value="XYTC">李四</option>
+										</select>
+									</div>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="czfdz">地址：</label>
+									<div class="col-sm-4">
+										<input type="text" id="czfdz" class="width-100" readonly value="如意江南余福里二栋一单元"/>
+									</div>
+								</div>
+								<div class="space-4"></div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="czfname">法定代表人：</label>
+									<div class="col-sm-4">
+										<input type="text" id="czfname" class="width-100" readonly value="张三"/>
+									</div>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="czflxdh">联系电话：</label>
+									<div class="col-sm-4">
+										<input type="text" id="czflxdh" class="width-100" readonly value="15021340098"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="czfsh">税号：</label>
+									<div class="col-sm-4">
+										<input type="text" id="czfsh" class="width-100" value="913123299958782109N" readonly/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="widget-box">
+						<div class="widget-header">
+							<h4 class="widget-title">处理信息</h4>
+							<div class="widget-toolbar">
+								<a href="#" data-action="collapse">
+									<i class="ace-icon fa fa-chevron-up"></i>
+								</a>
+							</div>
+						</div>
+						<div class="widget-body">
+							<div class="widget-main">
+								<div class="timeline-container timeline-style2">
+									<span class="timeline-label">
+										<b>处理人</b>
+									</span>
+									<div class="timeline-items">
+
+										<div class="timeline-item clearfix">
+											<div class="timeline-info">
+												<span class="timeline-date">张三</span>
+												<i class="timeline-indicator btn btn-success no-hover"></i>
+											</div>
+											<div class="widget-box transparent">
+												<div class="widget-body">
+													<div class="widget-main no-padding">
+														<div class="clearfix">
+															<div class="pull-left">
+																<span class="orange2 bolder">同意</span>&nbsp;&nbsp;&nbsp;备注：请审核
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="timeline-item clearfix">
+											<div class="timeline-info">
+												<span class="timeline-date">李四</span>
+
+												<i class="timeline-indicator btn btn-success no-hover"></i>
+											</div>
+
+											<div class="widget-box transparent">
+												<div class="widget-body">
+													<div class="widget-main no-padding">
+														<div class="pull-left">
+															<span class="orange2 bolder">同意</span>&nbsp;&nbsp;&nbsp;备注：
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="timeline-item clearfix">
+											<div class="timeline-info">
+												<span class="timeline-date">王五</span>
+												<i class="timeline-indicator btn btn-success no-hover"></i>
+											</div>
+
+											<div class="widget-box transparent">
+												<div class="widget-body">
+													<div class="widget-main no-padding">
+														<span class="pink2 bolder">回退</span>&nbsp;&nbsp;&nbsp;备注：证件信息不完整
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="timeline-item clearfix">
+											<div class="timeline-info">
+												<span class="timeline-date">李四</span>
+
+												<i class="timeline-indicator btn btn-success no-hover"></i>
+											</div>
+											<div class="widget-box transparent">
+												<div class="widget-body">
+													<div class="widget-main no-padding">
+														<span class="orange2 bolder">同意</span>&nbsp;&nbsp;&nbsp;备注：证件信息已经补全完整
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="col-sm-12">
+												<textarea class="width-100"  placeholder="请输入意见备注"></textarea>
+											</div>
+										</div>
+
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
+
+			</div>
+
+			<div class="modal-footer no-margin-top">
 				<div class="modal-footer no-margin-top">
 					<div class="text-center">
-						<button id="submitButton" type="submit" class="btn btn-app btn-success btn-xs">
-							<i class="ace-icon fa fa-floppy-o bigger-160"></i>
-							保存
-						</button>
-						<button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
-							<i class="ace-icon fa fa-share bigger-160"></i>
-							取消
-						</button>
+						<button class="btn btn-success">同意</button>
+						<button class="btn btn-danger">退回</button>
 					</div>
 				</div>
 			</div><!-- /.modal-content -->
@@ -102,7 +473,7 @@
 		        		"${contextPath}/static/assets/js/jquery.ui.touch-punch.js", "${contextPath}/static/assets/js/markdown/markdown.js", "${contextPath}/static/assets/js/markdown/bootstrap-markdown.js",
 		        		"${contextPath}/static/assets/js/jquery.hotkeys.js", "${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js",
             			"${contextPath}/static/assets/js/jquery.ui.touch-punch.js","${contextPath}/static/assets/js/bootbox.js", "${contextPath}/static/assets/js/jquery.easypiechart.js",
-						"${contextPath}/static/assets/js/jquery.gritter.js","${contextPath}/static/assets/js/jquery.gritter.js","${contextPath}/static/assets/js/spin.js" ,null ]
+						"${contextPath}/static/assets/js/jquery.gritter.js","${contextPath}/static/assets/js/jquery.gritter.js","${contextPath}/static/assets/js/spin.js" , ,null ]
 
 
 
@@ -120,13 +491,17 @@
                         grid_selector = "#grid-table";
                         pager_selector = "#grid-pager";
                     }else if(url=='#shz'){
-                        grid_selector = "#grid-table-shz";
-                        pager_selector = "#grid-pager-shz";
+                        grid_selector = "#grid-table—shz";
+                        pager_selector = "#grid-pager—shz";
                         getjqGrid("${contextPath}/static/json/compactShz.json");
+                        $(grid_selector).jqGrid("setGridWidth", $(".page-content").width()-20);
+                        getNavGrid();
 					}else if(url=='#ysh'){
-                        grid_selector = "#grid-table-ysh";
-                        pager_selector = "#grid-pager-ysh";
+                        grid_selector = "#grid-table—ysh";
+                        pager_selector = "#grid-pager—ysh";
                         getjqGrid("${contextPath}/static/json/compactYsh.json");
+                        $(grid_selector).jqGrid("setGridWidth", $(".page-content").width()-20);
+                        getNavGrid();
                     }
                 })
 
@@ -178,14 +553,9 @@
         		function getjqGrid(url){
                     jQuery(grid_selector).jqGrid({
                         subGrid : false,
-                        url : "${contextPath}/static/json/compactDsh.json",
+                        url : url,
                         datatype : "json",
                         height : 450,
-                        colNames: ["ID", "合同编号", "管理方", "承租方", "合同类型", "承租方联系电话", "租赁时间", "合同状态",
-                            "租赁地址", "其他条款", "范围建筑面积", "承租建筑面积", "付款方式", "物业费押金(元)", "电费单价(元/千瓦小时)", "停车场地资产产权单位",
-                            "地下车位价格(元/月/车)", "地面车位价格(元/月/车)", "地下车位数量(个)", "地面车位数量(个)", "车位租赁费(元/月)", "支付方式(月预付)",
-                            "停车证制作费", "停车证补办费", "管理方地址", "管理方法定代表人", "管理方联系电话", "管理方帐户名称", "管理方开户银行", "管理方账号",
-                            "管理方税号", "承租方地址", "承租方法定代表人", "承租方税号"],
                         colNames: ["ID", "合同编号", "管理方", "承租方", "合同类型", "承租方联系电话", "租赁时间", "合同状态",
                             "租赁地址", "其他条款", "范围建筑面积", "承租建筑面积", "付款方式", "物业费押金(元)", "电费单价(元/千瓦小时)", "停车场地资产产权单位",
                             "地下车位价格(元/月/车)", "地面车位价格(元/月/车)", "地下车位数量(个)", "地面车位数量(个)", "车位租赁费(元/月)", "支付方式(月预付)",
@@ -414,86 +784,92 @@
     			    }
         		});
 
+                getNavGrid();
+
         		// navButtons
-        		jQuery(grid_selector).jqGrid("navGrid", pager_selector, { // navbar options
-        			edit : false,
-        			editicon : "ace-icon fa fa-pencil blue",
-        			add : false,
-        			addicon : "ace-icon fa fa-plus-circle purple",
-        			del : <shiro:hasPermission name="${ROLE_KEY}:information:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:delete">false</shiro:lacksPermission>,
-        			delicon : "ace-icon fa fa-trash-o red",
-        			search : <shiro:hasPermission name="${ROLE_KEY}:information:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:search">false</shiro:lacksPermission>,
-        			searchicon : "ace-icon fa fa-search orange",
-        			refresh : true,
-        			refreshicon : "ace-icon fa fa-refresh blue",
-        			view : <shiro:hasPermission name="${ROLE_KEY}:information:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:view">false</shiro:lacksPermission>,
-        			viewicon : "ace-icon fa fa-search-plus grey"
-        		}, {
-        			// edit record form
-        			// closeAfterEdit: true,
-        			// width: 700,
-        			recreateForm : true,
-        			beforeShowForm : function(e) {
-        				var form = $(e[0]);
-        				form.closest(".ui-jqdialog").find(".ui-jqdialog-titlebar").wrapInner("<div class='widget-header' />")
-        				style_edit_form(form);
-        			},
-    				errorTextFormat: function (response) {
-    					var result = eval("("+response.responseText+")");
-    				    return result.message;
-    				}
-        		}, {
-        			// new record form
-        			// width: 700,
-        			closeAfterAdd : true,
-        			recreateForm : true,
-        			viewPagerButtons : false,
-        			beforeShowForm : function(e) {
-        				var form = $(e[0]);
-        				form.closest(".ui-jqdialog").find(".ui-jqdialog-titlebar").wrapInner("<div class='widget-header' />")
-        				style_edit_form(form);
-        			},
-    				errorTextFormat: function (response) {
-    					var result = eval("("+response.responseText+")");
-    				    return result.message;
-    				}
-        		}, {
-        			// delete record form
-        			recreateForm : true,
-        			beforeShowForm : function(e) {
-        				var form = $(e[0]);
-        				if (form.data("styled"))
-        					return false;
-        				form.closest(".ui-jqdialog").find(".ui-jqdialog-titlebar").wrapInner("<div class='widget-header' />")
-        				style_delete_form(form);
-        				form.data("styled", true);
-        			},
-        			onClick : function(e) {
-        				// alert(1);
-        			}
-        		}, {
-        			// search form
-        			recreateForm : true,
-        			afterShowSearch : function(e) {
-        				var form = $(e[0]);
-        				form.closest(".ui-jqdialog").find(".ui-jqdialog-title").wrap("<div class='widget-header' />")
-        				style_search_form(form);
-        			},
-        			afterRedraw : function() {
-        				style_search_filters($(this));
-        			},
-        			multipleSearch : true
-	        		/**
-	        		 * multipleGroup:true, showQuery: true
-	        		 */
-        		}, {
-        			// view record form
-        			recreateForm : true,
-        			beforeShowForm : function(e) {
-        				var form = $(e[0]);
-        				form.closest(".ui-jqdialog").find(".ui-jqdialog-title").wrap("<div class='widget-header' />")
-        			}
-        		})
+				function getNavGrid(){
+                    jQuery(grid_selector).jqGrid("navGrid", pager_selector, { // navbar options
+                        edit : false,
+                        editicon : "ace-icon fa fa-pencil blue",
+                        add : false,
+                        addicon : "ace-icon fa fa-plus-circle purple",
+                        del : <shiro:hasPermission name="${ROLE_KEY}:information:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:delete">false</shiro:lacksPermission>,
+                        delicon : "ace-icon fa fa-trash-o red",
+                        search : <shiro:hasPermission name="${ROLE_KEY}:information:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:search">false</shiro:lacksPermission>,
+                        searchicon : "ace-icon fa fa-search orange",
+                        refresh : true,
+                        refreshicon : "ace-icon fa fa-refresh blue",
+                        view : <shiro:hasPermission name="${ROLE_KEY}:information:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:view">false</shiro:lacksPermission>,
+                        viewicon : "ace-icon fa fa-search-plus grey"
+                    }, {
+                        // edit record form
+                        // closeAfterEdit: true,
+                        // width: 700,
+                        recreateForm : true,
+                        beforeShowForm : function(e) {
+                            var form = $(e[0]);
+                            form.closest(".ui-jqdialog").find(".ui-jqdialog-titlebar").wrapInner("<div class='widget-header' />")
+                            style_edit_form(form);
+                        },
+                        errorTextFormat: function (response) {
+                            var result = eval("("+response.responseText+")");
+                            return result.message;
+                        }
+                    }, {
+                        // new record form
+                        // width: 700,
+                        closeAfterAdd : true,
+                        recreateForm : true,
+                        viewPagerButtons : false,
+                        beforeShowForm : function(e) {
+                            var form = $(e[0]);
+                            form.closest(".ui-jqdialog").find(".ui-jqdialog-titlebar").wrapInner("<div class='widget-header' />")
+                            style_edit_form(form);
+                        },
+                        errorTextFormat: function (response) {
+                            var result = eval("("+response.responseText+")");
+                            return result.message;
+                        }
+                    }, {
+                        // delete record form
+                        recreateForm : true,
+                        beforeShowForm : function(e) {
+                            var form = $(e[0]);
+                            if (form.data("styled"))
+                                return false;
+                            form.closest(".ui-jqdialog").find(".ui-jqdialog-titlebar").wrapInner("<div class='widget-header' />")
+                            style_delete_form(form);
+                            form.data("styled", true);
+                        },
+                        onClick : function(e) {
+                            // alert(1);
+                        }
+                    }, {
+                        // search form
+                        recreateForm : true,
+                        afterShowSearch : function(e) {
+                            var form = $(e[0]);
+                            form.closest(".ui-jqdialog").find(".ui-jqdialog-title").wrap("<div class='widget-header' />")
+                            style_search_form(form);
+                        },
+                        afterRedraw : function() {
+                            style_search_filters($(this));
+                        },
+                        multipleSearch : true
+                        /**
+                         * multipleGroup:true, showQuery: true
+                         */
+                    }, {
+                        // view record form
+                        recreateForm : true,
+                        beforeShowForm : function(e) {
+                            var form = $(e[0]);
+                            form.closest(".ui-jqdialog").find(".ui-jqdialog-title").wrap("<div class='widget-header' />")
+                        }
+                    })
+                }
+
+
 
         		// add custom button to export the data to excel
         		if(<shiro:hasPermission name="${ROLE_KEY}:information:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:export">false</shiro:lacksPermission>){
@@ -627,6 +1003,36 @@
         				container : "body"
         			});
         		}
+
+                $("#downloadInformationButton").bind("click", function () {
+                    var selectedId = $(grid_selector).jqGrid("getGridParam", "selrow");
+                    if (null == selectedId) {
+                        $.gritter.add({
+                            title: "系统信息",
+                            text: "请选择记录",
+                            class_name: "gritter-info gritter-center"
+                        });
+                    } else {
+
+                    }
+                });
+
+
+                $("#shInformationButton").bind("click", function () {
+                    var selectedId = $(grid_selector).jqGrid("getGridParam", "selrow");
+                    if (null == selectedId) {
+                        $.gritter.add({
+                            title: "系统信息",
+                            text: "请选择记录",
+                            class_name: "gritter-info gritter-center"
+                        });
+                    } else {
+                        $("#modal-table").modal("toggle");
+                        $("#informationForm")[0].reset();
+                        $("#editor").html("");
+                        $("#modal-tip").html("");
+                    }
+                });
 
         		// var selr = jQuery(grid_selector).jqGrid("getGridParam","selrow");
 
