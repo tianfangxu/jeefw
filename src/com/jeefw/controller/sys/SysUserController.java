@@ -619,4 +619,30 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 		return "back/druid";
 	}
 
+	/*******************new 20181107 start********************/
+	@RequestMapping("/t_jfht")
+	public String t_jfht(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/infomanage/t_jfht";
+	}
+	@RequestMapping("/t_lyxx")
+	public String t_lyxx(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/infomanage/t_lyxx";
+	}
+	@RequestMapping("/t_lywyxx")
+	public String t_lywyxx(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/infomanage/t_lywyxx";
+	}
+	@RequestMapping("/t_lytcwxx")
+	public String t_lytcwxx(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/infomanage/t_lytcwxx";
+	}
+	@RequestMapping("/t_khgl")
+	public String t_khgl(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/infomanage/t_khgl";
+	}
+	@RequestMapping("/t_htbd")
+	public String t_htbd(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/infomanage/t_htbd";
+	}
+	/*******************new 20181107 end********************/
 }
