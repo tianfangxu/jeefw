@@ -59,25 +59,44 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							<span class="white">&times;</span>
 						</button>
-						信息发布
+						信息新增
 					</div>
 				</div>
 				<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
-					<div id="modal-tip" class="red clearfix"></div>
-					<div>
-						<input type="hidden" id="id" />
+					<div class="row">
+						<div class="col-xs-12 col-sm-12">
+							<div class="widget-box">
+								<div class="widget-header">
+									<h4 class="widget-title">甲方基本信息</h4>
+								</div>
+								<div class="widget-body">
+									<div class="widget-main">
+										<div>
+											<label for="form-field-8">名称</label>
+											<input class="form-control" type="text"> 
+											<label for="form-field-8">地址</label>
+											<input class="form-control" type="text"> 
+										</div>
+										<hr />
+										<div>
+											<label for="form-field-8">电话号码</label>
+											<input class="form-control" type="text"> 
+											<label for="form-field-8">税号</label>
+											<input class="form-control" type="text"> 
+										</div>
+										<hr />
+										<div>
+											<label for="form-field-8">银行卡类型</label>
+											<input class="form-control" type="text"> 
+											<label for="form-field-8">银行卡号</label>
+											<input class="form-control" type="text"> 
+										</div>
+										<hr />
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="blue clearfix">
-						<label for="title">标题：</label>
-						<input type="text" id="title" class="width-100" />
-					</div>
-					<div class="space-4"></div>
-					<div class="blue clearfix">
-						<label for="author">作者：</label>
-						<input type="text" id="author" class="width-100" />
-					</div>
-					<h4 class="header blue clearfix">内容：</h4>
-					<div class="wysiwyg-editor" id="editor" style="min-height: 400px;"></div>
 				</div>
 				<div class="modal-footer no-margin-top">
 					<div class="text-center">

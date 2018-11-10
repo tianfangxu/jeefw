@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
 <!DOCTYPE html>
@@ -6,7 +6,7 @@
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta charset="utf-8" />
-        <title>Java企业通用开发平台框架</title>
+        <title>九事集团资产管理智能平台</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
         <meta http-equiv="refresh" content="1800" />
         <!-- bootstrap & fontawesome -->
@@ -58,7 +58,7 @@
                     <!-- #section:basics/navbar.layout.brand -->
                     <a href="#" class="navbar-brand">
                         <small>
-                            <i class="fa fa-leaf"></i>Java企业通用开发平台框架
+                            <i class="fa fa-leaf"></i>九事集团资产管理智能平台
                         </small>
                     </a>
                     <!-- /section:basics/navbar.layout.brand -->

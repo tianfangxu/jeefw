@@ -59,55 +59,25 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							<span class="white">&times;</span>
 						</button>
-						信息新增
+						信息发布
 					</div>
 				</div>
 				<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
-					<div class="row">
-						<div class="col-xs-12 col-sm-12">
-							<div class="widget-box">
-								<div class="widget-header">
-									<h4 class="widget-title">合同信息新增</h4>
-								</div>
-								<div class="widget-body">
-									<div class="widget-main">
-										<div>
-											<label for="form-field-8">客户</label>
-											<select class="form-control" id="form-field-select-1">
-												<option value=""></option>
-												<option value="AL">Alabama</option>
-												<option value="AK">Alaska</option>
-												<option value="AZ">Arizona</option>
-												<option value="AR">Arkansas</option>
-												<option value="CA">California</option>
-												<option value="CO">Colorado</option>
-												<option value="CT">Connecticut</option>
-												<option value="DE">Delaware</option>
-												<option value="FL">Florida</option>
-											</select>
-										</div>
-										<hr />
-										<div>
-											<label for="form-field-8">地址</label>
-											<input class="form-control" type="text"> 
-										</div>
-										<hr />
-										<div>
-											<label for="form-field-8">租金</label>
-											<input class="form-control" type="text"> 
-											<label for="form-field-8">押金</label>
-											<input class="form-control" type="text"> 
-											<label for="form-field-8">水电煤</label>
-											<input class="form-control" type="text"> 
-											<label for="form-field-8">停车费</label>
-											<input class="form-control" type="text"> 
-										</div>
-										<hr />
-									</div>
-								</div>
-							</div>
-						</div>
+					<div id="modal-tip" class="red clearfix"></div>
+					<div>
+						<input type="hidden" id="id" />
 					</div>
+					<div class="blue clearfix">
+						<label for="title">标题：</label>
+						<input type="text" id="title" class="width-100" />
+					</div>
+					<div class="space-4"></div>
+					<div class="blue clearfix">
+						<label for="author">作者：</label>
+						<input type="text" id="author" class="width-100" />
+					</div>
+					<h4 class="header blue clearfix">内容：</h4>
+					<div class="wysiwyg-editor" id="editor" style="min-height: 400px;"></div>
 				</div>
 				<div class="modal-footer no-margin-top">
 					<div class="text-center">
@@ -135,33 +105,82 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							<span class="white">&times;</span>
 						</button>
-						合同绑定
+						合同信息
 					</div>
 				</div>
 				<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
-					<div>
-						<label for="form-field-8">请选择</label>
-						<select class="form-control" id="form-field-select-1">
-							<option value=""></option>
-							<option value="AL">Alabama</option>
-							<option value="AK">Alaska</option>
-							<option value="AZ">Arizona</option>
-							<option value="AR">Arkansas</option>
-							<option value="CA">California</option>
-							<option value="CO">Colorado</option>
-							<option value="CT">Connecticut</option>
-							<option value="DE">Delaware</option>
-							<option value="FL">Florida</option>
-						</select>
-					</div>
-					
+						<div class="ui-jqdialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix" id="edithdgrid-table" style="cursor: move;">
+							<div class="widget-header"><span class="ui-jqdialog-title" style="float: left;">基本信息</span>
+								<a class="ui-jqdialog-titlebar-close ui-corner-all" style="right: 0.3em;"><span class="ui-icon ui-icon-closethick"></span></a>
+							</div>
+						</div>
+						<div class="ui-jqdialog-content ui-widget-content" id="editcntgrid-table">
+							<div>
+								<form name="FormPost" id="FrmGrid_grid-table" class="FormGrid" onsubmit="return false;" style="width:auto;overflow:auto;position:relative;height:auto;">
+									<table id="TblGrid_grid-table" class="EditTable" cellspacing="0" cellpadding="0" border="0">
+										<tbody>
+											<tr rowpos="2" class="FormData" id="tr_dictValue">
+												<td class="CaptionTD">合同类型</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="40" id="dictValue" name="dictValue" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+												<td class="CaptionTD">合同编号</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="40" id="dictValue" name="dictValue" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+											</tr>
+											<tr rowpos="2" class="FormData" id="tr_dictValue">
+												<td class="CaptionTD">合同类型</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="40" id="dictValue" name="dictValue" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+												<td class="CaptionTD">合同编号</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="40" id="dictValue" name="dictValue" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+											</tr>
+											<tr rowpos="3" class="FormData" id="tr_sequence">
+												<td class="CaptionTD">甲方姓名</td>
+												<td class="DataTD">&nbsp;<input type="text" id="sequence" name="sequence" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+												<td class="CaptionTD">乙方姓名</td>
+												<td class="DataTD">&nbsp;<input type="text" id="sequence" name="sequence" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+											</tr>
+											<tr rowpos="4" class="FormData" id="tr_parentDictkey">
+												<td class="CaptionTD">合同签订时间</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="20" title="如果没有上级，不填即可" id="parentDictkey" name="parentDictkey" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+												<td class="CaptionTD">合同终止时间</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="20" title="如果没有上级，不填即可" id="parentDictkey" name="parentDictkey" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+											</tr>
+											<tr rowpos="5" class="FormData" id="tr_parentDictkey">
+												<td class="CaptionTD">签约类型</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="20" title="如果没有上级，不填即可" id="parentDictkey" name="parentDictkey" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+												<td class="CaptionTD">签约地</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="20" title="如果没有上级，不填即可" id="parentDictkey" name="parentDictkey" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+								<table border="0" cellspacing="0" cellpadding="0" class="EditTable" id="TblGrid_grid-table_2">
+									<tbody>
+										<tr>
+											<td colspan="2">
+												<hr class="ui-widget-content" style="margin:1px">
+											</td>
+										</tr>
+										<tr id="Act_Buttons">
+											<td class="navButton">
+												<a id="pData" class="fm-button ui-state-default ui-corner-left" style="display: none;"><span class="ui-icon ui-icon-triangle-1-w" style="display: none;"></span><i class="ace-icon fa fa-chevron-left"></i></a>
+												<a id="nData" class="fm-button ui-state-default ui-corner-right" style="display: none;"><span class="ui-icon ui-icon-triangle-1-e" style="display: none;"></span><i class="ace-icon fa fa-chevron-right"></i></a>
+											</td>
+											
+										</tr>
+										<tr style="display:none" class="binfo">
+											<td class="bottominfo" colspan="2"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="jqResize ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
 				</div>
 				<div class="modal-footer no-margin-top">
 					<div class="text-center">
-						<button id="submitButton" type="submit" class="btn btn-app btn-success btn-xs">
+						<!-- <button id="submitButton" type="submit" class="btn btn-app btn-success btn-xs">
 							<i class="ace-icon fa fa-floppy-o bigger-160"></i>
 							保存
-						</button>
+						</button> -->
 						<button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
 							<i class="ace-icon fa fa-share bigger-160"></i>
 							取消
@@ -230,15 +249,16 @@
         		
         		jQuery(grid_selector).jqGrid({
         			subGrid : false,
-        			url : "${contextPath}/sys/test/getTesthtbd",
+        			url : "${contextPath}/sys/test/getTestkhgl",
         			datatype : "json",
         			height : 450,
         			width : 770,
-        			colNames : ["客户","客户电话", "地址", "物业费", "租金", "押金", "水电煤", "停车费","合计",""],
+        			align:'center',
+        			colNames : ["编号","名称", "电话", "税号", "银行卡号",""],
         			colModel : [ {
         				name : "a1",
         				index : "a1",
-        				label : "客户",
+        				label : "编号",
         				width : 150,
         				editable : true,
         				editoptions : {size : "20", maxlength : "100"},
@@ -247,7 +267,7 @@
         			}, {
         				name : "a2",
         				index : "a2",
-        				label : "客户电话",
+        				label : "名称",
         				width : 150,
         				editable : true,
         			}, {
@@ -261,49 +281,13 @@
         			}, {
         				name : "a4",
         				index : "a4",
-        				label : "物业费",
+        				label : "电话号码",
         				width : 150,
         				sorttype : "date",
         			}, {
         				name : "a5",
         				index : "a5",
-        				label : "租金",
-        				width : 200,
-        				editable : true,
-        				search : false,
-        				edittype : "textarea", 
-        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
-        			}, {
-        				name : "a6",
-        				index : "a6",
-        				label : "押金",
-        				width : 200,
-        				editable : true,
-        				search : false,
-        				edittype : "textarea", 
-        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
-        			}, {
-        				name : "a7",
-        				index : "a7",
-        				label : "水电煤",
-        				width : 200,
-        				editable : true,
-        				search : false,
-        				edittype : "textarea", 
-        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
-        			}, {
-        				name : "a8",
-        				index : "a8",
-        				label : "停车费",
-        				width : 200,
-        				editable : true,
-        				search : false,
-        				edittype : "textarea", 
-        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
-        			}, {
-        				name : "a9",
-        				index : "a9",
-        				label : "合计",
+        				label : "物业概况",
         				width : 200,
         				editable : true,
         				search : false,
@@ -316,7 +300,7 @@
         				search : false,
         				align:'center',
         				formatter:function(){
-        					return '<a class="btn btn-info btn-sm" onclick="getmsg()">绑定合同</a>';
+        					return '<a class="btn btn-info btn-sm" onclick="getmsg()">合同信息</a>';
         				}
         				
         			}],
@@ -682,31 +666,11 @@
         			$(".ui-jqdialog").remove();
         		});
         		
+        		
+        		
         	});
         });
-		
-		function  getmsg(){
-			bootbox.dialog({
-				message: "<span class='bigger-110'>请选择绑定类型</span>",
-				buttons: 			
-				{
-					"success" :
-					{
-						"label" : "物业",
-						"className" : "btn-sm",
-						"callback": function() {
-							$("#modal-htxx").modal('toggle');
-						}
-					},
-					"click" :
-					{
-						"label" : "停车",
-						"className" : "btn-sm",
-						"callback": function() {
-							$("#modal-htxx").modal('toggle');
-						}
-					}
-				}
-			});
+		function getmsg(){
+			$("#modal-htxx").modal('toggle');
 		}
 </script>

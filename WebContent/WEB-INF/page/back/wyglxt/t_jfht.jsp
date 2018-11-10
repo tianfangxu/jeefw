@@ -38,7 +38,7 @@
             </form>
 		</div>
 		
-		<table id="lyxx-table"></table>
+		<table id="jfht-table"></table>
 			
 		<div id="grid-pager"></div>
 
@@ -59,102 +59,25 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							<span class="white">&times;</span>
 						</button>
-						信息新增
+						信息发布
 					</div>
 				</div>
 				<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
-					<div class="row">
-						<div class="col-xs-12 col-sm-12">
-							<div class="widget-box">
-								<div class="widget-header">
-									<h4 class="widget-title">合同信息新增</h4>
-								</div>
-								<div class="widget-body">
-									<div class="widget-main">
-										<div>
-											<label for="form-field-8">客户</label>
-											<select class="form-control" id="form-field-select-1">
-												<option value=""></option>
-												<option value="AL">Alabama</option>
-												<option value="AK">Alaska</option>
-												<option value="AZ">Arizona</option>
-												<option value="AR">Arkansas</option>
-												<option value="CA">California</option>
-												<option value="CO">Colorado</option>
-												<option value="CT">Connecticut</option>
-												<option value="DE">Delaware</option>
-												<option value="FL">Florida</option>
-											</select>
-										</div>
-										<hr />
-										<div>
-											<label for="form-field-8">地址</label>
-											<input class="form-control" type="text"> 
-										</div>
-										<hr />
-										<div>
-											<label for="form-field-8">租金</label>
-											<input class="form-control" type="text"> 
-											<label for="form-field-8">押金</label>
-											<input class="form-control" type="text"> 
-											<label for="form-field-8">水电煤</label>
-											<input class="form-control" type="text"> 
-											<label for="form-field-8">停车费</label>
-											<input class="form-control" type="text"> 
-										</div>
-										<hr />
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer no-margin-top">
-					<div class="text-center">
-						<button id="submitButton" type="submit" class="btn btn-app btn-success btn-xs">
-							<i class="ace-icon fa fa-floppy-o bigger-160"></i>
-							保存
-						</button>
-						<button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
-							<i class="ace-icon fa fa-share bigger-160"></i>
-							取消
-						</button>
-					</div>
-				</div>
-			</div><!-- /.modal-content -->
-		</form>
-	</div><!-- /.modal-dialog -->
-</div>
-
-<div id="modal-htxx" class="modal fade" tabindex="-1" data-backdrop="static">
-	<div class="modal-dialog" style="min-width: 820px;">
-		<form id="informationForm">
-			<div class="modal-content">
-				<div class="modal-header no-padding">
-					<div class="table-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-							<span class="white">&times;</span>
-						</button>
-						合同绑定
-					</div>
-				</div>
-				<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
+					<div id="modal-tip" class="red clearfix"></div>
 					<div>
-						<label for="form-field-8">请选择</label>
-						<select class="form-control" id="form-field-select-1">
-							<option value=""></option>
-							<option value="AL">Alabama</option>
-							<option value="AK">Alaska</option>
-							<option value="AZ">Arizona</option>
-							<option value="AR">Arkansas</option>
-							<option value="CA">California</option>
-							<option value="CO">Colorado</option>
-							<option value="CT">Connecticut</option>
-							<option value="DE">Delaware</option>
-							<option value="FL">Florida</option>
-						</select>
+						<input type="hidden" id="id" />
 					</div>
-					
+					<div class="blue clearfix">
+						<label for="title">标题：</label>
+						<input type="text" id="title" class="width-100" />
+					</div>
+					<div class="space-4"></div>
+					<div class="blue clearfix">
+						<label for="author">作者：</label>
+						<input type="text" id="author" class="width-100" />
+					</div>
+					<h4 class="header blue clearfix">内容：</h4>
+					<div class="wysiwyg-editor" id="editor" style="min-height: 400px;"></div>
 				</div>
 				<div class="modal-footer no-margin-top">
 					<div class="text-center">
@@ -183,7 +106,7 @@
         	// inline scripts related to this page
         	jQuery(function($) {
         		
-        		var grid_selector = "#lyxx-table";
+        		var grid_selector = "#jfht-table";
         		var pager_selector = "#grid-pager";
 
         		// resize to fit page size
@@ -230,15 +153,15 @@
         		
         		jQuery(grid_selector).jqGrid({
         			subGrid : false,
-        			url : "${contextPath}/sys/test/getTesthtbd",
+        			url : "${contextPath}/sys/test/getTestjfht",
         			datatype : "json",
         			height : 450,
-        			width : 770,
-        			colNames : ["客户","客户电话", "地址", "物业费", "租金", "押金", "水电煤", "停车费","合计",""],
-        			colModel : [ {
+        			colNames : ["名称", "地址", "电话号码", "税号", "银行卡信息"],
+        			colModel : [ 
+        			{
         				name : "a1",
         				index : "a1",
-        				label : "客户",
+        				label : "名称",
         				width : 150,
         				editable : true,
         				editoptions : {size : "20", maxlength : "100"},
@@ -247,79 +170,38 @@
         			}, {
         				name : "a2",
         				index : "a2",
-        				label : "客户电话",
-        				width : 150,
-        				editable : true,
-        			}, {
-        				name : "a3",
-        				index : "a3",
         				label : "地址",
         				width : 110,
         				editable : true,
         				editoptions : {size : "20", maxlength : "40"},
         				search : false,
         			}, {
-        				name : "a4",
-        				index : "a4",
-        				label : "物业费",
+        				name : "a3",
+        				index : "a3",
+        				label : "电话号码",
         				width : 150,
         				sorttype : "date",
+        				search : false
+        			}, {
+        				name : "a4",
+        				index : "a4",
+        				label : "税号",
+        				width : 200,
+        				editable : true,
+        				search : false,
+        				edittype : "textarea", 
+        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
         			}, {
         				name : "a5",
         				index : "a5",
-        				label : "租金",
+        				label : "银行卡信息",
         				width : 200,
         				editable : true,
         				search : false,
         				edittype : "textarea", 
         				editoptions : {rows : "2", cols : "18", maxlength : "200"}
-        			}, {
-        				name : "a6",
-        				index : "a6",
-        				label : "押金",
-        				width : 200,
-        				editable : true,
-        				search : false,
-        				edittype : "textarea", 
-        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
-        			}, {
-        				name : "a7",
-        				index : "a7",
-        				label : "水电煤",
-        				width : 200,
-        				editable : true,
-        				search : false,
-        				edittype : "textarea", 
-        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
-        			}, {
-        				name : "a8",
-        				index : "a8",
-        				label : "停车费",
-        				width : 200,
-        				editable : true,
-        				search : false,
-        				edittype : "textarea", 
-        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
-        			}, {
-        				name : "a9",
-        				index : "a9",
-        				label : "合计",
-        				width : 200,
-        				editable : true,
-        				search : false,
-        				edittype : "textarea", 
-        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
-        			}, {
-        				label : "",
-        				width : 200,
-        				editable : true,
-        				search : false,
-        				align:'center',
-        				formatter:function(){
-        					return '<a class="btn btn-info btn-sm" onclick="getmsg()">绑定合同</a>';
-        				}
-        				
-        			}],
+        			}
+        			],
         			//scroll : 1, // set the scroll property to 1 to enable paging with scrollbar - virtual loading of records
         			sortname : "id",
         			sortorder : "asc",
@@ -684,29 +566,4 @@
         		
         	});
         });
-		
-		function  getmsg(){
-			bootbox.dialog({
-				message: "<span class='bigger-110'>请选择绑定类型</span>",
-				buttons: 			
-				{
-					"success" :
-					{
-						"label" : "物业",
-						"className" : "btn-sm",
-						"callback": function() {
-							$("#modal-htxx").modal('toggle');
-						}
-					},
-					"click" :
-					{
-						"label" : "停车",
-						"className" : "btn-sm",
-						"callback": function() {
-							$("#modal-htxx").modal('toggle');
-						}
-					}
-				}
-			});
-		}
 </script>

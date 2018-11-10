@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
 <!DOCTYPE html>
@@ -57,8 +57,9 @@
 									<div class="widget-body">
 										<div class="widget-main">
 											<h4 class="header blue lighter bigger">
-												<i class="ace-icon fa fa-coffee green"></i>
-												登录管理后台
+												<!-- <i class="ace-icon fa fa-coffee green"></i> -->
+												<img style="width: 26px;" src="static/assets/img/photo.png">
+												欢迎登录资产管理智能平台
 											</h4>
 
 											<div class="space-6"></div>

@@ -59,25 +59,54 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							<span class="white">&times;</span>
 						</button>
-						信息发布
+						信息新增
 					</div>
 				</div>
 				<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
-					<div id="modal-tip" class="red clearfix"></div>
-					<div>
-						<input type="hidden" id="id" />
+					<div class="row">
+						<div class="col-xs-12 col-sm-12">
+							<div class="widget-box">
+								<div class="widget-header">
+									<h4 class="widget-title">物业新增</h4>
+								</div>
+								<div class="widget-body">
+									<div class="widget-main">
+										<div>
+											<label for="form-field-8">楼宇名称</label>
+											<select class="form-control" id="form-field-select-1">
+												<option value=""></option>
+												<option value="AL">Alabama</option>
+												<option value="AK">Alaska</option>
+												<option value="AZ">Arizona</option>
+												<option value="AR">Arkansas</option>
+												<option value="CA">California</option>
+												<option value="CO">Colorado</option>
+												<option value="CT">Connecticut</option>
+												<option value="DE">Delaware</option>
+												<option value="FL">Florida</option>
+											</select>
+											<label for="form-field-8">地址</label>
+											<input class="form-control" type="text">
+										</div>
+										<hr />
+										<div>
+											<label for="form-field-8">编号</label>
+											<input class="form-control" type="text"> 
+											<label for="form-field-8">房间号</label>
+											<input class="form-control" type="text">
+										</div>
+										<hr />
+										<div>
+											<label for="form-field-8">面积</label>
+											<input class="form-control" type="text"> 
+											<label for="form-field-8">物业概况</label>
+											<textarea id="form-field-11" class="autosize-transition form-control"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="blue clearfix">
-						<label for="title">标题：</label>
-						<input type="text" id="title" class="width-100" />
-					</div>
-					<div class="space-4"></div>
-					<div class="blue clearfix">
-						<label for="author">作者：</label>
-						<input type="text" id="author" class="width-100" />
-					</div>
-					<h4 class="header blue clearfix">内容：</h4>
-					<div class="wysiwyg-editor" id="editor" style="min-height: 400px;"></div>
 				</div>
 				<div class="modal-footer no-margin-top">
 					<div class="text-center">
@@ -154,7 +183,7 @@
         		jQuery(grid_selector).jqGrid({
         			subGrid : false,
         			url : "${contextPath}/sys/test/getTestlywyxx",
-        			datatype : "json",
+        			datatype : "json", //从服务器端返回的数据类型 默认xml
         			height : 450,
         			width : 770,
         			colNames : ["编号","房间号", "地址", "面积", "物业概况"],
@@ -163,7 +192,6 @@
         				index : "a1",
         				label : "编号",
         				width : 150,
-        				editable : true,
         				editoptions : {size : "20", maxlength : "100"},
         				searchoptions : {sopt : ["cn"]},
         				editrules : {required : true}
@@ -172,13 +200,11 @@
         				index : "a2",
         				label : "房间号",
         				width : 150,
-        				editable : true,
         			}, {
         				name : "a3",
         				index : "a3",
         				label : "地址",
         				width : 110,
-        				editable : true,
         				editoptions : {size : "20", maxlength : "40"},
         				search : false,
         			}, {
@@ -192,7 +218,6 @@
         				index : "a5",
         				label : "物业概况",
         				width : 200,
-        				editable : true,
         				search : false,
         				edittype : "textarea", 
         				editoptions : {rows : "2", cols : "18", maxlength : "200"}
@@ -218,7 +243,7 @@
         					enableTooltips(table);
         				}, 0);
         			},
-        			editurl : "${contextPath}/sys/information/operateInformation"
+        			editurl : "${contextPath}/sys/test/getTestlywyxx",
         			//caption : "用户管理列表",
         			//autowidth : true,
         			/**
@@ -470,6 +495,7 @@
         		}
 
         		function style_delete_form(form) {
+        			alert(2);
         			var buttons = form.next().find(".EditButton .fm-button");
         			buttons.addClass("btn btn-sm btn-white btn-round").find("[class*='-icon']").hide();// ui-icon, s-icon
         			buttons.eq(0).addClass("btn-danger").prepend("<i class='ace-icon fa fa-trash-o'></i>");
