@@ -154,6 +154,7 @@ public class RoleController extends JavaEEFrameworkBaseController<Role> implemen
 					// permissions.add(roleKey + ":*");
 					// entity.setPermissions(permissions);
 					doSave(entity, request, response);
+					System.out.println("123");
 				}
 			}
 		}
