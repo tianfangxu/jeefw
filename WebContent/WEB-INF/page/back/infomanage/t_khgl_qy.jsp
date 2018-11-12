@@ -32,7 +32,7 @@
 			</shiro:lacksPermission>
 		</div>
 		
-		<table id="jfht-table"></table>
+		<table id="lyxx-table"></table>
 			
 		<div id="grid-pager"></div>
 
@@ -61,35 +61,48 @@
 						<div class="col-xs-12 col-sm-12">
 							<div class="widget-box">
 								<div class="widget-header">
-									<h4 class="widget-title">甲方基本信息</h4>
+									<h4 class="widget-title">客户信息新增</h4>
 								</div>
 								<div class="widget-body">
 									<div class="widget-main">
 										<div>
-											<label for="form-field-8">名称</label>
+											<label for="form-field-8">客户名称</label>
 											<input class="form-control" type="text"> 
-											<label for="form-field-8">地址</label>
-											<input class="form-control" type="text"> 
+											<label for="form-field-8">性别</label>
+											<input class="form-control" type="text">
 										</div>
 										<hr />
 										<div>
-											<label for="form-field-8">联系人电话号码</label>
+											<label for="form-field-8">联系人</label>
 											<input class="form-control" type="text"> 
-											<label for="form-field-8">联系人姓名</label>
+											<label for="form-field-8">联系人电话</label>
+											<input class="form-control" type="text">
+										</div>
+										<hr />
+										<div>
+											<label for="form-field-8">通讯地址</label>
 											<input class="form-control" type="text"> 
-											<label for="form-field-8">税号</label>
-											<input class="form-control" type="text"> 
+											<label for="form-field-8">邮政编码</label>
+											<input class="form-control" type="text">
+											<label for="form-field-8">电子邮箱</label>
+											<input class="form-control" type="text">
 										</div>
 										<hr />
 										<div>
 											<label for="form-field-8">开户银行</label>
 											<input class="form-control" type="text"> 
-											<label for="form-field-8">户名</label>
-											<input class="form-control" type="text"> 
+											<label for="form-field-8">开户银行户名</label>
+											<input class="form-control" type="text">
 											<label for="form-field-8">开户银行账号</label>
-											<input class="form-control" type="text"> 
+											<input class="form-control" type="text">
 										</div>
 										<hr />
+										<div>
+											<label for="form-field-8">企业税号</label>
+											<input class="form-control" type="text"> 
+											<label for="form-field-8">法人</label>
+											<input class="form-control" type="text">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -113,6 +126,218 @@
 	</div><!-- /.modal-dialog -->
 </div>
 
+<div id="modal-htxx" class="modal fade" tabindex="-1" data-backdrop="static">
+	<div class="modal-dialog" style="min-width: 820px;">
+		<form id="informationForm">
+			<div class="modal-content">
+				<div class="modal-header no-padding">
+					<div class="table-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							<span class="white">&times;</span>
+						</button>
+						合同信息
+					</div>
+				</div>
+				<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="table-header">
+									历史合同信息
+								</div>
+				
+								<!-- <div class="table-responsive"> -->
+				
+								<!-- <div class="dataTables_borderWrap"> -->
+								<div>
+									<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr>
+												<th class="center">
+													<label class="position-relative">
+														<input type="checkbox" class="ace" />
+														<span class="lbl"></span>
+													</label>
+												</th>
+												<th>合同编号</th>
+												<th>甲方姓名</th>
+												<th>乙方姓名</th>
+				
+												<th  class="hidden-480">
+													合同开始时间
+												</th>
+												<th class="hidden-480">合同结束时间</th>
+				
+												<th></th>
+											</tr>
+										</thead>
+				
+										<tbody>
+											<tr>
+												<td class="center">
+													<label class="position-relative">
+														<input type="checkbox" class="ace" />
+														<span class="lbl"></span>
+													</label>
+												</td>
+				
+												<td>
+													<a href="#">1000255555</a>
+												</td>
+												<td>甲方测试企业公司1</td>
+												<td class="hidden-480">乙方企业1</td>
+												<td>2018-01-01</td>
+				
+												<td class="hidden-480">
+													<span>2019-12-12</span>
+												</td>
+				
+												<td>
+													<a class="btn btn-info btn-sm" onclick="changval()">详情</a>
+												</td>
+											</tr>
+											<tr>
+												<td class="center">
+													<label class="position-relative">
+														<input type="checkbox" class="ace" />
+														<span class="lbl"></span>
+													</label>
+												</td>
+				
+												<td>
+													<a href="#">1000255555</a>
+												</td>
+												<td>甲方测试企业公司2</td>
+												<td class="hidden-480">乙方企业2</td>
+												<td>2018-01-01</td>
+				
+												<td class="hidden-480">
+													<span >2019-12-12</span>
+												</td>
+				
+												<td>
+													<a class="btn btn-info btn-sm" onclick="changval()">详情</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+				</div>
+				<div class="modal-footer no-margin-top">
+					<div class="text-center">
+						<!-- <button id="submitButton" type="submit" class="btn btn-app btn-success btn-xs">
+							<i class="ace-icon fa fa-floppy-o bigger-160"></i>
+							保存
+						</button> -->
+						<button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
+							<i class="ace-icon fa fa-share bigger-160"></i>
+							取消
+						</button>
+					</div>
+				</div>
+			</div><!-- /.modal-content -->
+		</form>
+	</div><!-- /.modal-dialog -->
+</div>
+
+
+<div id="modal-htxx_else" class="modal fade" tabindex="-1" data-backdrop="static">
+	<div class="modal-dialog" style="min-width: 820px;">
+		<form id="informationForm">
+			<div class="modal-content">
+				<div class="modal-header no-padding">
+					<div class="table-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							<span class="white">&times;</span>
+						</button>
+						合同信息
+					</div>
+				</div>
+				<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
+						<div class="ui-jqdialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix" id="edithdgrid-table" style="cursor: move;">
+							<div class="widget-header"><span class="ui-jqdialog-title" style="float: left;">基本信息</span>
+								<a class="ui-jqdialog-titlebar-close ui-corner-all" style="right: 0.3em;"><span class="ui-icon ui-icon-closethick"></span></a>
+							</div>
+						</div>
+						<div class="ui-jqdialog-content ui-widget-content" id="editcntgrid-table">
+							<div>
+								<form name="FormPost" id="FrmGrid_grid-table" class="FormGrid" onsubmit="return false;" style="width:auto;overflow:auto;position:relative;height:auto;">
+									<table id="TblGrid_grid-table" class="EditTable" cellspacing="0" cellpadding="0" border="0">
+										<tbody>
+											<tr rowpos="2" class="FormData" id="tr_dictValue">
+												<td class="CaptionTD">合同类型</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="40" id="dictValue" name="dictValue" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+												<td class="CaptionTD">合同编号</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="40" id="dictValue" name="dictValue" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+											</tr>
+											<tr rowpos="2" class="FormData" id="tr_dictValue">
+												<td class="CaptionTD">合同类型</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="40" id="dictValue" name="dictValue" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+												<td class="CaptionTD">合同编号</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="40" id="dictValue" name="dictValue" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+											</tr>
+											<tr rowpos="3" class="FormData" id="tr_sequence">
+												<td class="CaptionTD">甲方姓名</td>
+												<td class="DataTD">&nbsp;<input type="text" id="sequence" name="sequence" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+												<td class="CaptionTD">乙方姓名</td>
+												<td class="DataTD">&nbsp;<input type="text" id="sequence" name="sequence" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+											</tr>
+											<tr rowpos="4" class="FormData" id="tr_parentDictkey">
+												<td class="CaptionTD">合同签订时间</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="20"  id="parentDictkey" name="parentDictkey" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+												<td class="CaptionTD">合同终止时间</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="20"  id="parentDictkey" name="parentDictkey" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+											</tr>
+											<tr rowpos="5" class="FormData" id="tr_parentDictkey">
+												<td class="CaptionTD">签约类型</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="20" id="parentDictkey" name="parentDictkey" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+												<td class="CaptionTD">签约地</td>
+												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="20" id="parentDictkey" name="parentDictkey" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+								<table border="0" cellspacing="0" cellpadding="0" class="EditTable" id="TblGrid_grid-table_2">
+									<tbody>
+										<tr>
+											<td colspan="2">
+												<hr class="ui-widget-content" style="margin:1px">
+											</td>
+										</tr>
+										<tr id="Act_Buttons">
+											<td class="navButton">
+												<a id="pData" class="fm-button ui-state-default ui-corner-left" style="display: none;"><span class="ui-icon ui-icon-triangle-1-w" style="display: none;"></span><i class="ace-icon fa fa-chevron-left"></i></a>
+												<a id="nData" class="fm-button ui-state-default ui-corner-right" style="display: none;"><span class="ui-icon ui-icon-triangle-1-e" style="display: none;"></span><i class="ace-icon fa fa-chevron-right"></i></a>
+											</td>
+											
+										</tr>
+										<tr style="display:none" class="binfo">
+											<td class="bottominfo" colspan="2"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="jqResize ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
+				</div>
+				<div class="modal-footer no-margin-top">
+					<div class="text-center">
+						<!-- <button id="submitButton" type="submit" class="btn btn-app btn-success btn-xs">
+							<i class="ace-icon fa fa-floppy-o bigger-160"></i>
+							保存
+						</button> -->
+						<button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
+							<i class="ace-icon fa fa-share bigger-160"></i>
+							取消
+						</button>
+					</div>
+				</div>
+			</div><!-- /.modal-content -->
+		</form>
+	</div><!-- /.modal-dialog -->
+</div>
+
 <!-- page specific plugin scripts -->
 <script type="text/javascript">
 		var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
@@ -123,7 +348,7 @@
         	// inline scripts related to this page
         	jQuery(function($) {
         		
-        		var grid_selector = "#jfht-table";
+        		var grid_selector = "#lyxx-table";
         		var pager_selector = "#grid-pager";
 
         		// resize to fit page size
@@ -170,16 +395,16 @@
         		
         		jQuery(grid_selector).jqGrid({
         			subGrid : false,
-        			url : "${contextPath}/sys/test/getTestjfht",
+        			url : "${contextPath}/sys/test/getTestkhglqy",
         			datatype : "json",
         			height : 450,
-        			colNames : ["名称", "地址", "联系人电话号码","联系人姓名", "税号", "开户银行","户名","开户银行帐号"],
-        			colModel : [ 
-        			{
+        			width : 770,
+        			align:'center',
+        			colNames : ["客户编号","客户名称", "联系人", "联系电话", "通讯地址","邮政编码","电子邮箱","开户银行","开户银行户名","开户银行账号","企业税号","法人",""],
+        			colModel : [ {
         				name : "a1",
         				index : "a1",
-        				label : "名称",
-        				width : 150,
+        				width : 90,
         				editable : true,
         				editoptions : {size : "20", maxlength : "100"},
         				searchoptions : {sopt : ["cn"]},
@@ -187,31 +412,23 @@
         			}, {
         				name : "a2",
         				index : "a2",
-        				label : "地址",
+        				width : 150,
+        				editable : true,
+        			}, {
+        				name : "a3",
+        				index : "a3",
         				width : 110,
         				editable : true,
         				editoptions : {size : "20", maxlength : "40"},
         				search : false,
         			}, {
-        				name : "a3",
-        				index : "a3",
-        				label : "电话号码",
-        				width : 150,
-        				sorttype : "date",
-        				search : false
-        			}, {
         				name : "a4",
         				index : "a4",
-        				label : "联系人姓名",
-        				width : 200,
-        				editable : true,
-        				search : false,
-        				edittype : "textarea", 
-        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
+        				width : 150,
+        				sorttype : "date",
         			}, {
         				name : "a5",
         				index : "a5",
-        				label : "税号",
         				width : 200,
         				editable : true,
         				search : false,
@@ -220,16 +437,14 @@
         			}, {
         				name : "a6",
         				index : "a6",
-        				label : "开户银行",
         				width : 200,
         				editable : true,
         				search : false,
         				edittype : "textarea", 
         				editoptions : {rows : "2", cols : "18", maxlength : "200"}
-        			}, {
+        			},{
         				name : "a7",
         				index : "a7",
-        				label : "户名",
         				width : 200,
         				editable : true,
         				search : false,
@@ -238,14 +453,54 @@
         			}, {
         				name : "a8",
         				index : "a8",
-        				label : "开户银行账号",
         				width : 200,
         				editable : true,
         				search : false,
         				edittype : "textarea", 
         				editoptions : {rows : "2", cols : "18", maxlength : "200"}
-        			}
-        			],
+        			}, {
+        				name : "a9",
+        				index : "a9",
+        				width : 200,
+        				editable : true,
+        				search : false,
+        				edittype : "textarea", 
+        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
+        			}, {
+        				name : "a10",
+        				index : "a10",
+        				width : 200,
+        				editable : true,
+        				search : false,
+        				edittype : "textarea", 
+        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
+        			}, {
+        				name : "a11",
+        				index : "a11",
+        				width : 200,
+        				editable : true,
+        				search : false,
+        				edittype : "textarea", 
+        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
+        			}, {
+        				name : "a12",
+        				index : "a12",
+        				width : 200,
+        				editable : true,
+        				search : false,
+        				edittype : "textarea", 
+        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
+        			}, {
+        				label : "",
+        				width : 200,
+        				editable : true,
+        				search : false,
+        				align:'center',
+        				formatter:function(){
+        					return '<a class="btn btn-info btn-sm" onclick="getmsg()">合同信息</a>';
+        				}
+        				
+        			}],
         			//scroll : 1, // set the scroll property to 1 to enable paging with scrollbar - virtual loading of records
         			sortname : "id",
         			sortorder : "asc",
@@ -608,6 +863,15 @@
         			$(".ui-jqdialog").remove();
         		});
         		
+        		
+        		
         	});
         });
+		function getmsg(){
+			$("#modal-htxx").modal('toggle');
+		}
+		
+		function changval(){
+			$("#modal-htxx_else").modal('toggle');
+		}
 </script>

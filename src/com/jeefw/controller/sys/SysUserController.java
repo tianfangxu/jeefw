@@ -654,5 +654,9 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	public String t_htbd(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/infomanage/t_htbd";
 	}
+	@RequestMapping("/t_khgl_qy")
+	public String t_khgl_qy(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/infomanage/t_khgl_qy";
+	}
 	/*******************new 20181107 end********************/
 }

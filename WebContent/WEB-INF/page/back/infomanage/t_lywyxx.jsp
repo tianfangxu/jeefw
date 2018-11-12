@@ -30,12 +30,26 @@
 					编辑记录
 				</a>			
 			</shiro:lacksPermission>
-            <form id="informationHibernateSearchForm" class="nav-search form-search">
-                <span class="input-icon" style="position: relative;top: -30px;">
-                    <input type="text" placeholder="全文检索 ..." class="nav-search-input" id="search-input" autocomplete="off" />
-                    <i class="ace-icon fa fa-search nav-search-icon"></i>
-                </span>
-            </form>
+			<select class="col-xs-2" id="form-field-select-1" style="float: none;height: 35px;margin-left: 5%">
+				<option value="">请选择楼宇名称</option>
+				<option value="AL">Alabama</option>
+				<option value="AK">Alaska</option>
+				<option value="AZ">Arizona</option>
+				<option value="AR">Arkansas</option>
+				<option value="CA">California</option>
+				<option value="CO">Colorado</option>
+				<option value="CT">Connecticut</option>
+				<option value="DE">Delaware</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+			</select>
 		</div>
 		
 		<table id="lyxx-table"></table>
@@ -92,7 +106,7 @@
 										<div>
 											<label for="form-field-8">编号</label>
 											<input class="form-control" type="text"> 
-											<label for="form-field-8">房间号</label>
+											<label for="form-field-8">管理单元</label>
 											<input class="form-control" type="text">
 										</div>
 										<hr />
@@ -185,13 +199,12 @@
         			url : "${contextPath}/sys/test/getTestlywyxx",
         			datatype : "json", //从服务器端返回的数据类型 默认xml
         			height : 450,
-        			width : 770,
-        			colNames : ["编号","房间号", "地址", "面积", "物业概况"],
+        			colNames : ["编号","管理单元", "地址", "面积", "物业概况"],
         			colModel : [ {
         				name : "a1",
         				index : "a1",
         				label : "编号",
-        				width : 150,
+        				width : 50,
         				editoptions : {size : "20", maxlength : "100"},
         				searchoptions : {sopt : ["cn"]},
         				editrules : {required : true}

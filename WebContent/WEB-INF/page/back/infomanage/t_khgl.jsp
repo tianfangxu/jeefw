@@ -30,12 +30,6 @@
 					编辑记录
 				</a>			
 			</shiro:lacksPermission>
-            <form id="informationHibernateSearchForm" class="nav-search form-search">
-                <span class="input-icon" style="position: relative;top: -30px;">
-                    <input type="text" placeholder="全文检索 ..." class="nav-search-input" id="search-input" autocomplete="off" />
-                    <i class="ace-icon fa fa-search nav-search-icon"></i>
-                </span>
-            </form>
 		</div>
 		
 		<table id="lyxx-table"></table>
@@ -79,16 +73,15 @@
 										</div>
 										<hr />
 										<div>
-											<label for="form-field-8">电话号码</label>
+											<label for="form-field-8">联系电话</label>
 											<input class="form-control" type="text"> 
-											<label for="form-field-8">居住地址</label>
+											<label for="form-field-8">通讯地址</label>
 											<input class="form-control" type="text">
-										</div>
-										<hr />
-										<div>
-											<label for="form-field-8">税号</label>
-											<input class="form-control" type="text"> 
-											<label for="form-field-8">银行卡号</label>
+											<label for="form-field-8">邮政编码</label>
+											<input class="form-control" type="text">
+											<label for="form-field-8">身份证号</label>
+											<input class="form-control" type="text">
+											<label for="form-field-8">电子邮箱</label>
 											<input class="form-control" type="text">
 										</div>
 									</div>
@@ -115,6 +108,122 @@
 </div>
 
 <div id="modal-htxx" class="modal fade" tabindex="-1" data-backdrop="static">
+	<div class="modal-dialog" style="min-width: 820px;">
+		<form id="informationForm">
+			<div class="modal-content">
+				<div class="modal-header no-padding">
+					<div class="table-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							<span class="white">&times;</span>
+						</button>
+						合同信息
+					</div>
+				</div>
+				<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="table-header">
+									历史合同信息
+								</div>
+				
+								<!-- <div class="table-responsive"> -->
+				
+								<!-- <div class="dataTables_borderWrap"> -->
+								<div>
+									<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr>
+												<th class="center">
+													<label class="position-relative">
+														<input type="checkbox" class="ace" />
+														<span class="lbl"></span>
+													</label>
+												</th>
+												<th>合同编号</th>
+												<th>甲方姓名</th>
+												<th>乙方姓名</th>
+				
+												<th  class="hidden-480">
+													合同开始时间
+												</th>
+												<th class="hidden-480">合同结束时间</th>
+				
+												<th></th>
+											</tr>
+										</thead>
+				
+										<tbody>
+											<tr>
+												<td class="center">
+													<label class="position-relative">
+														<input type="checkbox" class="ace" />
+														<span class="lbl"></span>
+													</label>
+												</td>
+				
+												<td>
+													<a href="#">1000255555</a>
+												</td>
+												<td>甲方测试企业公司1</td>
+												<td class="hidden-480">张丹</td>
+												<td>2015-04-01</td>
+				
+												<td class="hidden-480">
+													<span>2019-12-12</span>
+												</td>
+				
+												<td>
+													<a class="btn btn-info btn-sm" onclick="changval()">详情</a>
+												</td>
+											</tr>
+											<tr>
+												<td class="center">
+													<label class="position-relative">
+														<input type="checkbox" class="ace" />
+														<span class="lbl"></span>
+													</label>
+												</td>
+				
+												<td>
+													<a href="#">1000255555</a>
+												</td>
+												<td>甲方测试企业公司2</td>
+												<td class="hidden-480">王芳</td>
+												<td>2009-12-01</td>
+				
+												<td class="hidden-480">
+													<span >2010-12-12</span>
+												</td>
+				
+												<td>
+													<a class="btn btn-info btn-sm" onclick="changval()">详情</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+				</div>
+				<div class="modal-footer no-margin-top">
+					<div class="text-center">
+						<!-- <button id="submitButton" type="submit" class="btn btn-app btn-success btn-xs">
+							<i class="ace-icon fa fa-floppy-o bigger-160"></i>
+							保存
+						</button> -->
+						<button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
+							<i class="ace-icon fa fa-share bigger-160"></i>
+							取消
+						</button>
+					</div>
+				</div>
+			</div><!-- /.modal-content -->
+		</form>
+	</div><!-- /.modal-dialog -->
+</div>
+
+
+<div id="modal-htxx_else" class="modal fade" tabindex="-1" data-backdrop="static">
 	<div class="modal-dialog" style="min-width: 820px;">
 		<form id="informationForm">
 			<div class="modal-content">
@@ -210,6 +319,7 @@
 	</div><!-- /.modal-dialog -->
 </div>
 
+
 <!-- page specific plugin scripts -->
 <script type="text/javascript">
 		var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
@@ -270,14 +380,12 @@
         			url : "${contextPath}/sys/test/getTestkhgl",
         			datatype : "json",
         			height : 450,
-        			width : 770,
         			align:'center',
-        			colNames : ["编号","名称", "电话", "税号", "银行卡号",""],
+        			colNames : ["客户编号","客户名称", "性别", "联系电话", "通讯地址","邮政编码","身份证号","电子邮箱",""],
         			colModel : [ {
         				name : "a1",
         				index : "a1",
-        				label : "编号",
-        				width : 150,
+        				width : 100,
         				editable : true,
         				editoptions : {size : "20", maxlength : "100"},
         				searchoptions : {sopt : ["cn"]},
@@ -285,33 +393,62 @@
         			}, {
         				name : "a2",
         				index : "a2",
-        				label : "名称",
         				width : 150,
         				editable : true,
         			}, {
         				name : "a3",
         				index : "a3",
-        				label : "地址",
+        				label : "性别",
         				width : 110,
         				editable : true,
         				editoptions : {size : "20", maxlength : "40"},
         				search : false,
-        			}, {
-        				name : "a4",
-        				index : "a4",
-        				label : "电话号码",
-        				width : 150,
-        				sorttype : "date",
-        			}, {
+        			},{
         				name : "a5",
         				index : "a5",
-        				label : "物业概况",
+        				label : "联系电话",
         				width : 200,
         				editable : true,
         				search : false,
         				edittype : "textarea", 
         				editoptions : {rows : "2", cols : "18", maxlength : "200"}
         			}, {
+        				name : "a4",
+        				index : "a4",
+        				label : "通讯地址",
+        				width : 200,
+        				editable : true,
+        				search : false,
+        				edittype : "textarea", 
+        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
+        			}, {
+        				name : "a6",
+        				index : "a6",
+        				label : "邮政编码",
+        				width : 200,
+        				editable : true,
+        				search : false,
+        				edittype : "textarea", 
+        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
+        			}, {
+        				name : "a7",
+        				index : "a7",
+        				label : "身份证号",
+        				width : 200,
+        				editable : true,
+        				search : false,
+        				edittype : "textarea", 
+        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
+        			}, {
+        				name : "a8",
+        				index : "a8",
+        				label : "电子邮箱",
+        				width : 200,
+        				editable : true,
+        				search : false,
+        				edittype : "textarea", 
+        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
+        			},{
         				label : "",
         				width : 200,
         				editable : true,
@@ -690,5 +827,8 @@
         });
 		function getmsg(){
 			$("#modal-htxx").modal('toggle');
+		}
+		function changval(){
+			$("#modal-htxx_else").modal('toggle');
 		}
 </script>

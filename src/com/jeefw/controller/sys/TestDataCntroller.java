@@ -31,32 +31,44 @@ public class TestDataCntroller<V> extends JavaEEFrameworkBaseController<SysUser>
 		JqGridPageView<Object> informationListView = new JqGridPageView<Object>();
 		List<Object> rows = new ArrayList<Object>();
 		HashMap<String,String> map = new HashMap<String, String>();
-		map.put("a1", "张三");
+		map.put("a1", "名将测试企业");
 		map.put("a2", "顾戴路1920号");
 		map.put("a3", "05556-544212");
-		map.put("a4", "Sk734757435h34");
-		map.put("a5", "5570000334xxxxxx324");
+		map.put("a4", "张建");
+		map.put("a5", "8859999");
+		map.put("a6", "江川路浦发银行支行");
+		map.put("a7", "阿健");
+		map.put("a8", "591526xxxxxx261548");
 		rows.add(map);
 		HashMap<String,String> map2 = new HashMap<String, String>();
-		map2.put("a1", "李四");
+		map2.put("a1", "回恢测试企业");
 		map2.put("a2", "手牛路1460号");
 		map2.put("a3", "03445-234234");
-		map2.put("a4", "432443243243");
-		map2.put("a5", "432434345xxxx324543");
+		map2.put("a4", "李建");
+		map2.put("a5", "88845999");
+		map2.put("a6", "梅川路建设银行支行");
+		map2.put("a7", "李建");
+		map2.put("a8", "487156xxxxxx458912");
 		rows.add(map2);
 		HashMap<String,String> map3 = new HashMap<String, String>();
-		map3.put("a1", "王五");
+		map3.put("a1", "镜都测试企业");
 		map3.put("a2", "枢纽路7888号");
 		map3.put("a3", "0434-55567");
-		map3.put("a4", "15755502377");
-		map3.put("a5", "2343424432XXXXXXXXXX324");
+		map3.put("a4", "张耀");
+		map3.put("a5", "88845999");
+		map3.put("a6", "梅川路建设银行支行");
+		map3.put("a7", "张套");
+		map3.put("a8", "784556xxxxxx635978");
 		rows.add(map3);
 		HashMap<String,String> map4 = new HashMap<String, String>();
-		map4.put("a1", "樱木花道");
-		map4.put("a2", "三川路23423号");
-		map4.put("a3", "0669-3345");
-		map4.put("a4", "18832434224");
-		map4.put("a5", "467328647xxxxxxxxx234432");
+		map4.put("a1", "禁如测试企业");
+		map4.put("a2", "枢纽路5622号");
+		map4.put("a3", "0434-548777");
+		map4.put("a4", "王辉");
+		map4.put("a5", "889545999");
+		map4.put("a6", "金铎路建设银行支行");
+		map4.put("a7", "王辉");
+		map4.put("a8", "567814xxxxxx562548");
 		rows.add(map4);
 		informationListView.setRows(rows );
 		informationListView.setMaxResults(10);
@@ -75,32 +87,32 @@ public class TestDataCntroller<V> extends JavaEEFrameworkBaseController<SysUser>
 		JqGridPageView<Object> informationListView = new JqGridPageView<Object>();
 		List<Object> rows = new ArrayList<Object>();
 		HashMap<String,String> map = new HashMap<String, String>();
-		map.put("a1", "43243432");
-		map.put("a2", "张三");
-		map.put("a3", "顾戴路1920号");
+		map.put("a1", "100100");
+		map.put("a2", "巴士大厦");
+		map.put("a3", "建国东路525号8楼803-804室");
 		map.put("a4", "05556-544212");
 		map.put("a5", "暂无介绍");
 		rows.add(map);
 		HashMap<String,String> map2 = new HashMap<String, String>();
-		map2.put("a1", "43243243");
-		map2.put("a2", "李四");
-		map2.put("a3", "手牛路1460号");
-		map2.put("a4", "03445-234234");
-		map2.put("a5", "暂无介绍--暂无介绍");
+		map2.put("a1", "100132");
+		map2.put("a2", "建国大厦");
+		map2.put("a3", "梅川路564号11楼203室");
+		map2.put("a4", "05556-564878");
+		map2.put("a5", "暂无介绍");
 		rows.add(map2);
 		HashMap<String,String> map3 = new HashMap<String, String>();
-		map3.put("a1", "43243243");
-		map3.put("a2", "王五");
-		map3.put("a3", "枢纽路7888号");
-		map3.put("a4", "0434-55567");
-		map3.put("a5", "暂无介绍--暂无介绍-暂无介绍--暂无介绍");
+		map3.put("a1", "100111");
+		map3.put("a2", "帝国大厦");
+		map3.put("a3", "梅川路788号23楼101室");
+		map3.put("a4", "05556-659847");
+		map3.put("a5", "暂无介绍");
 		rows.add(map3);
 		HashMap<String,String> map4 = new HashMap<String, String>();
-		map4.put("a1", "43243244");
-		map4.put("a2", "樱木花道");
-		map4.put("a3", "三川路23423号");
-		map4.put("a4", "0669-3345");
-		map4.put("a5", "暂无介绍--暂无介绍-暂无介绍--暂无介绍");
+		map4.put("a1", "100110");
+		map4.put("a2", "测试大厦");
+		map4.put("a3", "梅川路111号4楼122室");
+		map4.put("a4", "05556-655825");
+		map4.put("a5", "暂无介绍");
 		rows.add(map4);
 		informationListView.setRows(rows );
 		informationListView.setMaxResults(10);
@@ -195,40 +207,68 @@ public class TestDataCntroller<V> extends JavaEEFrameworkBaseController<SysUser>
 	}
 	
 	/**
-	 * 客户管理测试数据
+	 * 企业客户管理测试数据
 	 * @throws IOException 
 	 */
-	@RequestMapping(value = "/getTestkhgl", method = { RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping(value = "/getTestkhglqy", method = { RequestMethod.POST, RequestMethod.GET })
 	public void getTestkhgl(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		JqGridPageView<Object> informationListView = new JqGridPageView<Object>();
 		List<Object> rows = new ArrayList<Object>();
 		HashMap<String,String> map = new HashMap<String, String>();
-		map.put("a1", "101");
-		map.put("a2", "张三");
-		map.put("a3", "00523-34324");
-		map.put("a4", "34500543598");
-		map.put("a5", "2343244432xxxxx234324");
+		map.put("a1", "100120");
+		map.put("a2", "将夜测试企业");
+		map.put("a3", "蓝露");
+		map.put("a4", "55561-131415");
+		map.put("a5", "返回路200号");
+		map.put("a6", "458926");
+		map.put("a7", "15487519931128xxxx");
+		map.put("a8", "中国邮政储蓄");
+		map.put("a9", "李吉娜");
+		map.put("a10", "154856xxxxxx485926");
+		map.put("a11", "484855");
+		map.put("a12", "李吉娜");
 		rows.add(map);
 		HashMap<String,String> map2 = new HashMap<String, String>();
-		map2.put("a1", "101");
-		map2.put("a2", "李四");
-		map2.put("a3", "00523-34324");
-		map2.put("a4", "3443243598");
-		map2.put("a5", "432444332xxxxx234324");
+		map2.put("a1", "100126");
+		map2.put("a2", "蓝鲫测试企业");
+		map2.put("a3", "蓝露");
+		map2.put("a4", "55561-485989");
+		map2.put("a5", "返回路200号");
+		map2.put("a6", "458926");
+		map2.put("a7", "15487519931128xxxx");
+		map2.put("a8", "中国邮政储蓄");
+		map2.put("a9", "张丽");
+		map2.put("a10", "154856xxxxxx485926");
+		map2.put("a11", "484855");
+		map2.put("a12", "张丽");
 		rows.add(map2);
 		HashMap<String,String> map3 = new HashMap<String, String>();
-		map3.put("a1", "101");
-		map3.put("a2", "五五");
-		map3.put("a3", "00523-34324");
-		map3.put("a4", "3432498");
-		map3.put("a5", "4324324232xxxxx234324");
+		map3.put("a1", "100128");
+		map3.put("a2", "看空测试企业");
+		map3.put("a3", "蓝露");
+		map3.put("a4", "55561-263666");
+		map3.put("a5", "返回路200号");
+		map3.put("a6", "458926");
+		map3.put("a7", "15487519931128xxxx");
+		map3.put("a8", "中国邮政储蓄");
+		map3.put("a9", "加蓝");
+		map3.put("a10", "154856xxxxxx485926");
+		map3.put("a11", "484855");
+		map3.put("a12", "加蓝");
 		rows.add(map3);
 		HashMap<String,String> map4 = new HashMap<String, String>();
-		map4.put("a1", "101");
-		map4.put("a2", "琪琪");
-		map4.put("a3", "00523-34324");
-		map4.put("a4", "4324434233498");
-		map4.put("a5", "4324324242xxxxx234324");
+		map4.put("a1", "100156");
+		map4.put("a2", "胡室测试企业");
+		map4.put("a3", "蓝露");
+		map4.put("a4", "55561-6665555");
+		map4.put("a5", "返回路200号");
+		map4.put("a6", "458926");
+		map4.put("a7", "15487519931128xxxx");
+		map4.put("a8", "中国邮政储蓄");
+		map4.put("a9", "孔之");
+		map4.put("a10", "154856xxxxxx485926");
+		map4.put("a11", "585899");
+		map4.put("a12", "孔之");
 		rows.add(map4);
 		informationListView.setRows(rows );
 		informationListView.setMaxResults(10);
@@ -236,6 +276,59 @@ public class TestDataCntroller<V> extends JavaEEFrameworkBaseController<SysUser>
 		writeJSON(response, informationListView);
 	}
 	
+	/**
+	 * 个人客户管理测试数据
+	 * @throws IOException 
+	 */
+	@RequestMapping(value = "/getTestkhgl", method = { RequestMethod.POST, RequestMethod.GET })
+	public void getTestkhglqy(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		JqGridPageView<Object> informationListView = new JqGridPageView<Object>();
+		List<Object> rows = new ArrayList<Object>();
+		HashMap<String,String> map = new HashMap<String, String>();
+		map.put("a1", "101");
+		map.put("a2", "张三");
+		map.put("a3", "男");
+		map.put("a4", "蓝屏路43号344室");
+		map.put("a5", "00523-34324");
+		map.put("a6", "458926");
+		map.put("a7", "15487519931128xxxx");
+		map.put("a8", "15755502377@163.com");
+		rows.add(map);
+		HashMap<String,String> map2 = new HashMap<String, String>();
+		map2.put("a1", "112");
+		map2.put("a2", "张静");
+		map2.put("a3", "女");
+		map2.put("a4", "顾江路44号102室");
+		map2.put("a5", "00523-485615");
+		map2.put("a6", "263636");
+		map2.put("a7", "45152619931025xxxx");
+		map2.put("a8", "15755502377@163.com");
+		rows.add(map2);
+		HashMap<String,String> map3 = new HashMap<String, String>();
+		map3.put("a1", "122");
+		map3.put("a2", "王凯");
+		map3.put("a3", "男");
+		map3.put("a4", "富康路110号104室");
+		map3.put("a5", "00523-4714215");
+		map3.put("a6", "151526");
+		map3.put("a7", "26154819951026xxxx");
+		map3.put("a8", "15755502377@163.com");
+		rows.add(map3);
+		HashMap<String,String> map4 = new HashMap<String, String>();
+		map4.put("a1", "322");
+		map4.put("a2", "李静");
+		map4.put("a3", "女");
+		map4.put("a4", "粉饼路899号404室");
+		map4.put("a5", "00523-485628");
+		map4.put("a6", "262659");
+		map4.put("a7", "26154819951026xxxx");
+		map4.put("a8", "15755502377@163.com");
+		rows.add(map4);
+		informationListView.setRows(rows );
+		informationListView.setMaxResults(10);
+		informationListView.setRecords(0);
+		writeJSON(response, informationListView);
+	}
 	
 	/**
 	 * 合同绑定测试数据
