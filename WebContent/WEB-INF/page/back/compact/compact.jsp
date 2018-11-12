@@ -86,7 +86,7 @@
 
                     <div class="widget-box">
                         <div class="widget-header">
-                            <h4 class="widget-title">基本信息</h4>
+                            <h4 class="widget-title">基本条款</h4>
                             <div class="widget-toolbar">
                                 <a href="#" data-action="collapse">
                                     <i class="ace-icon fa fa-chevron-up"></i>
@@ -96,8 +96,7 @@
                         <div class="widget-body">
                             <div class="widget-main">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left"
-                                           for="htlx">合同类型：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="glf">合同类型：</label>
                                     <div class="col-sm-4">
                                         <select class="select2 width-100" id="htlx">
                                             <option value="">--请选择--</option>
@@ -119,133 +118,21 @@
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="zldz">租赁地址：</label>
                                     <div class="col-sm-2">
                                         <select class="select2 width-100" id="zldz">
-                                            <option value="WY">闵行区</option>
-                                            <option value="XYTC">浦东新区</option>
+                                            <option value="">--请选择--</option>
+                                            <option value="lya">楼宇A</option>
+                                            <option value="lyb">楼宇B</option>
+                                            <option value="lyc">楼宇C</option>
+                                            <option value="lyd">楼宇D</option>
                                         </select>
                                     </div>
-                                    <div class="col-sm-2">
-                                        <input type="text" id="road" placeholder="路" class="width-100"/>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <input type="text" id="hao" placeholder="号" class="width-100"/>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <input type="text" id="lou" placeholder="大厦" class="width-100"/>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="road" placeholder="区路号" class="width-100"/>
                                     </div>
                                     <div class="col-sm-2">
                                         <input type="text" id="shi" placeholder="室" class="width-100"/>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="qttk">其他条款：</label>
-                                    <div class="col-sm-10">
-                                        <textarea class="width-100" id="qttk" placeholder="补充合同条款使用"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="widget-box wyxx" style="display: none">
-                        <div class="widget-header">
-                            <h4 class="widget-title">物业信息</h4>
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="fwjzmj">房屋建筑面积(平方米)：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="fwjzmj" class="width-100"/>
-                                    </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="czjzmj">承租建筑面积(平方米)：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="czjzmj" class="width-100"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="fkfs">付款方式：</label>
-                                    <div class="col-sm-4">
-                                        <select class="select2 width-100" id="fkfs">
-                                            <option value="WY">押一付一</option>
-                                            <option value="XYTC">押一付三</option>
-                                            <option value="XYTC">押二付二</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="wyyj">物业费押金(元)：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="wyyj" class="width-100"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="dfdj">电费单价(元/千瓦小时)：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="dfdj" class="width-100"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="widget-box cwxx" style="display: none">
-                        <div class="widget-header">
-                            <h4 class="widget-title">车位信息</h4>
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="cqdw">停车场地资产产权单位：</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" id="cqdw" class="width-100"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="dxcwjg">地下车位价格(元/月/车)：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="dxcwjg" class="width-100"/>
-                                    </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="dscwjg">地面车位价格(元/月/车)：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="dscwjg" class="width-100"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="dxcwsl">地下车位数量(个)：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="dxcwsl" class="width-100"/>
-                                    </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="dscwsl">地面车位数量(个)：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="dscwsl" class="width-100"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="cwzlf">车位租赁费(元/月)：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="cwzlf" class="width-100"/>
-                                    </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="zffs">支付方式(月预付)：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="zffs" class="width-100"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="zzf">停车证制作费：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="zzf" class="width-100"/>
-                                    </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="bbf">停车证补办费：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="bbf" class="width-100"/>
+                                    <div class="col-sm-2">
+                                        <input type="text" id="dy" placeholder="管理单元" class="width-100"/>
                                     </div>
                                 </div>
                             </div>
@@ -352,6 +239,133 @@
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="czfsh">税 号：</label>
                                     <div class="col-sm-4">
                                         <input type="text" id="czfsh" class="width-100" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-box wyxx" style="display: none">
+                        <div class="widget-header">
+                            <h4 class="widget-title">基本条款</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="fwjzmj">房屋建筑面积(平方米)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="fwjzmj" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="czjzmj">承租建筑面积(平方米)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="czjzmj" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="fkfs">付款方式：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2 width-100" id="fkfs">
+                                            <option value="WY">押一付一</option>
+                                            <option value="XYTC">押一付三</option>
+                                            <option value="XYTC">押二付二</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="wyyj">物业费押金(元)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="wyyj" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="dfdj">电费单价(元/千瓦小时)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="dfdj" class="width-100"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-box cwxx" style="display: none">
+                        <div class="widget-header">
+                            <h4 class="widget-title">基本条款</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="cqdw">停车场地资产产权单位：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="cqdw" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="dxcwjg">地下车位价格(元/月/车)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="dxcwjg" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="dscwjg">地面车位价格(元/月/车)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="dscwjg" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="dxcwsl">地下车位数量(个)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="dxcwsl" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="dscwsl">地面车位数量(个)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="dscwsl" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="cwzlf">车位租赁费(元/月)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="cwzlf" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="zffs">支付方式(月预付)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="zffs" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="zzf">停车证制作费：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="zzf" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="bbf">停车证补办费：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="bbf" class="width-100"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">补充条款</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="qttk">其他条款：</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="width-100" id="qttk" placeholder="补充合同条款使用" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>
