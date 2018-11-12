@@ -30,12 +30,7 @@
 					编辑记录
 				</a>			
 			</shiro:lacksPermission>
-            <form id="informationHibernateSearchForm" class="nav-search form-search">
-                <span class="input-icon" style="position: relative;top: -30px;">
-                    <input type="text" placeholder="全文检索 ..." class="nav-search-input" id="search-input" autocomplete="off" />
-                    <i class="ace-icon fa fa-search nav-search-icon"></i>
-                </span>
-            </form>
+            
 		</div>
 		
 		<table id="lyxx-table"></table>
@@ -169,7 +164,7 @@
         			datatype : "json",
         			height : 450,
         			width : 770,
-        			colNames : ["编号","名称", "地址", "电话号码", "物业概况"],
+        			colNames : ["编号","名称", "地址", "电话号码","楼宇经理姓名", "物业概况"],
         			colModel : [ {
         				name : "a1",
         				index : "a1",
@@ -200,6 +195,15 @@
         				label : "电话号码",
         				width : 150,
         				sorttype : "date",
+        			}, {
+        				name : "a5",
+        				index : "a5",
+        				label : "楼宇经理姓名",
+        				width : 200,
+        				editable : true,
+        				search : false,
+        				edittype : "textarea", 
+        				editoptions : {rows : "2", cols : "18", maxlength : "200"}
         			}, {
         				name : "a5",
         				index : "a5",

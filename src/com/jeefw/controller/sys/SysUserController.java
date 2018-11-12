@@ -618,7 +618,7 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	public String druid(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/druid";
 	}
-
+	
 	/*******************new 20181107 start********************/
 	@RequestMapping("/t_jfht")
 	public String t_jfht(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -643,6 +643,10 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	@RequestMapping("/t_htbd")
 	public String t_htbd(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/infomanage/t_htbd";
+	}
+	@RequestMapping("/t_khgl_qy")
+	public String t_khgl_qy(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/infomanage/t_khgl_qy";
 	}
 	/*******************new 20181107 end********************/
 }

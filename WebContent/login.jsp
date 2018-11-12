@@ -57,7 +57,8 @@
 									<div class="widget-body">
 										<div class="widget-main">
 											<h4 class="header blue lighter bigger">
-												<i class="ace-icon fa fa-coffee green"></i>
+												<!-- <i class="ace-icon fa fa-coffee green"></i> -->
+												<img style="width: 26px;" src="static/assets/img/photo.jpg">
 												登录管理后台
 											</h4>
 
@@ -88,13 +89,13 @@
 
 													<div class="space"></div>
 
-													<div class="clearfix">
-														<label class="inline">
+													<div class="clearfix" style="text-align: center;">
+														<!-- <label class="inline">
 															<input id="rememberMe" name="rememberMe" type="checkbox" class="ace" />
 															<span class="lbl">下次自动登录</span>
-														</label>
+														</label> -->
 
-														<button id="loginButton" type="button" class="width-35 pull-right btn btn-sm btn-primary">
+														<button id="loginButton" type="button" class="width-35 btn btn-sm btn-primary">
 															<i class="ace-icon fa fa-key"></i>
 															<span class="bigger-110">登录</span>
 														</button>
@@ -106,7 +107,7 @@
 
 										</div><!-- /.widget-main -->
 
-										<div class="toolbar clearfix">
+										<div class="toolbar clearfix" style="display: none">
 											<div>
 												<a href="#" data-target="#forgot-box" class="forgot-password-link">
 													<i class="ace-icon fa fa-arrow-left"></i>
@@ -303,10 +304,10 @@
                     <div class="footer-content-nobordertop">
                         <span class="bigger-120">
                             <span class="blue bolder">
-                                                                                                研发中心
+                                                                                                憬承信息
                             </span>
                             &copy; 
-                            2015-2017
+                            2015-2018
                         </span>
                     </div>
                     <!-- /section:basics/footer -->

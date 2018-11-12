@@ -30,12 +30,26 @@
 					编辑记录
 				</a>			
 			</shiro:lacksPermission>
-            <form id="informationHibernateSearchForm" class="nav-search form-search">
-                <span class="input-icon" style="position: relative;top: -30px;">
-                    <input type="text" placeholder="全文检索 ..." class="nav-search-input" id="search-input" autocomplete="off" />
-                    <i class="ace-icon fa fa-search nav-search-icon"></i>
-                </span>
-            </form>
+            <select class="col-xs-2" id="form-field-select-1" style="float: none;height: 35px;margin-left: 5%">
+				<option value="">请选择楼宇名称</option>
+				<option value="AL">Alabama</option>
+				<option value="AK">Alaska</option>
+				<option value="AZ">Arizona</option>
+				<option value="AR">Arkansas</option>
+				<option value="CA">California</option>
+				<option value="CO">Colorado</option>
+				<option value="CT">Connecticut</option>
+				<option value="DE">Delaware</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+				<option value="FL">Florida</option>
+			</select>
 		</div>
 		
 		<table id="lyxx-table"></table>
