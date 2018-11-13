@@ -619,6 +619,16 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 		return "back/druid";
 	}
 	
+	@RequestMapping("/compact")
+	public String compact(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/compact";
+	}
+
+	@RequestMapping("/activiti")
+	public String acticiti(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/activiti";
+	}
+	
 	/*******************new 20181107 start********************/
 	@RequestMapping("/t_jfht")
 	public String t_jfht(HttpServletRequest request, HttpServletResponse response) throws IOException {
