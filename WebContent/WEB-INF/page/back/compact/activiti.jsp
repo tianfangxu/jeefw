@@ -15,7 +15,7 @@
 				查看审核
 			</a>
 			<a id="downloadInformationButton" role="button" class="btn btn-inverse btn-sm" data-toggle="modal">
-				下载合同
+				合同预览
 			</a>
 			<form id="bulidingHibernateSearchForm" class="nav-search form-search">
                 <span class="input-icon" style="position: relative;top: -30px;">
@@ -65,6 +65,20 @@
 		<!-- PAGE CONTENT ENDS -->
 	</div><!-- /.col -->
 </div><!-- /.row -->
+
+<div id="modal-table1" class="modal fade" data-backdrop="static">
+	<div class="modal-dialog" style="width: 90%;height: 90%">
+		<div class="modal-content">
+			<div class="table-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					<span class="white">&times;</span>
+				</button>
+				合同预览
+			</div>
+			<div id="handout_wrap_inner"></div>
+		</div>
+	</div>
+</div>
 
 <div id="modal-table" class="modal fade" data-backdrop="static">
 	<div class="modal-dialog" style="min-width: 820px;">
@@ -488,7 +502,7 @@
 		        		"${contextPath}/static/assets/js/jquery.ui.touch-punch.js", "${contextPath}/static/assets/js/markdown/markdown.js", "${contextPath}/static/assets/js/markdown/bootstrap-markdown.js",
 		        		"${contextPath}/static/assets/js/jquery.hotkeys.js", "${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js",
             			"${contextPath}/static/assets/js/jquery.ui.touch-punch.js","${contextPath}/static/assets/js/bootbox.js", "${contextPath}/static/assets/js/jquery.easypiechart.js",
-						"${contextPath}/static/assets/js/jquery.gritter.js","${contextPath}/static/assets/js/jquery.gritter.js","${contextPath}/static/assets/js/spin.js" , ,null ]
+						"${contextPath}/static/assets/js/jquery.gritter.js","${contextPath}/static/assets/js/jquery.gritter.js","${contextPath}/static/assets/js/spin.js" , "${contextPath}/static/assets/js/jquery.media.js",null ]
 
 
 
@@ -1055,6 +1069,25 @@
         			$(grid_selector).jqGrid("GridUnload");
         			$(".ui-jqdialog").remove();
         		});
+
+                $("#downloadInformationButton").bind("click", function () {
+                    var selectedId = $(grid_selector).jqGrid("getGridParam", "selrow");
+                    if (null == selectedId) {
+                        $.gritter.add({
+                            title: "系统信息",
+                            text: "请选择记录",
+                            class_name: "gritter-info gritter-center"
+                        });
+                    } else {
+                        $("#modal-table1").modal("toggle");
+                        $('#handout_wrap_inner').media({
+                            width: '100%',
+                            height: '900px',
+                            autoplay: true,
+                            src:'${contextPath}/static/word/wyglht.pdf',
+                        });
+                    }
+                });
 
         	});
         });

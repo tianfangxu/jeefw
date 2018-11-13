@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/select2.css" />
 
 
+
 <div class="row">
     <div class="col-xs-12">
         <div class="well well-sm">
@@ -33,7 +34,7 @@
                 </a>
             </shiro:hasPermission>
             <a id="downloadInformationButton" role="button" class="btn btn-inverse btn-sm" data-toggle="modal">
-                下载合同
+                合同预览
             </a>
             <a id="examineInformationButton" role="button" class="btn btn-pink btn-sm" data-toggle="modal">
                 提交审核
@@ -65,6 +66,22 @@
     </div><!-- /.col -->
 </div>
 <!-- /.row -->
+
+
+<div id="modal-table1" class="modal fade" data-backdrop="static">
+    <div class="modal-dialog" style="width: 90%;height: 90%">
+            <div class="modal-content">
+                <div class="table-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span class="white">&times;</span>
+                    </button>
+                    合同预览
+                </div>
+                <div id="handout_wrap_inner"></div>
+            </div>
+    </div>
+</div>
+
 
 <div id="modal-table" class="modal fade" data-backdrop="static">
     <div class="modal-dialog" style="min-width: 820px;">
@@ -397,7 +414,7 @@
         "${contextPath}/static/assets/js/jquery.hotkeys.js", "${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js",
         "${contextPath}/static/assets/js/jquery.gritter.js", "${contextPath}/static/assets/js/date-time/bootstrap-datepicker.js", "${contextPath}/static/assets/js/date-time/bootstrap-timepicker.js",
         "${contextPath}/static/assets/js/date-time/moment.js", "${contextPath}/static/assets/js/date-time/daterangepicker.js", "${contextPath}/static/assets/js/date-time/bootstrap-datetimepicker.js",
-        "${contextPath}/static/assets/js/select2.js",null]
+        "${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.media.js",null]
     $(".page-content-area").ace_ajax("loadScripts", scripts, function () {
         // inline scripts related to this page
         jQuery(function ($) {
@@ -569,7 +586,16 @@
                         enableTooltips(table);
                     }, 0);
                 },
-                editurl: "${contextPath}/sys/buliding/operateInformation"
+                editurl: "${contextPath}/sys/buliding/operateInformation",
+                gridComplete:function(){
+                    var ids = $(grid_selector).getDataIDs();
+                    for(var i=0;i<ids.length;i++){
+                        var rowData = $(grid_selector).getRowData(ids[i]);
+                        if(rowData.htsj=='2016-11-06 2018-11-06'){//如果天数等于0，则背景色置灰显示
+                            $('#'+ids[i]).find("td").css("background-color","#FFB6C1");
+                        }
+                    }
+                }
                 //caption : "用户管理列表",
                 //autowidth : true,
                 /**
@@ -770,19 +796,6 @@
                         });
 
                     }
-                }
-            });
-
-            $("#downloadInformationButton").bind("click", function () {
-                var selectedId = $(grid_selector).jqGrid("getGridParam", "selrow");
-                if (null == selectedId) {
-                    $.gritter.add({
-                        title: "系统信息",
-                        text: "请选择记录",
-                        class_name: "gritter-info gritter-center"
-                    });
-                } else {
-
                 }
             });
 
@@ -1062,6 +1075,25 @@
                 return;
             }
 
+
+            $("#downloadInformationButton").bind("click", function () {
+                var selectedId = $(grid_selector).jqGrid("getGridParam", "selrow");
+                if (null == selectedId) {
+                    $.gritter.add({
+                        title: "系统信息",
+                        text: "请选择记录",
+                        class_name: "gritter-info gritter-center"
+                    });
+                } else {
+                    $("#modal-table1").modal("toggle");
+                    $('#handout_wrap_inner').media({
+                        width: '100%',
+                        height: '900px',
+                        autoplay: true,
+                        src:'${contextPath}/static/word/wyglht.pdf',
+                    });
+                }
+            });
 
         });
     });
