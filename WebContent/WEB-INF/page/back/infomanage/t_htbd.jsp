@@ -30,12 +30,6 @@
 					编辑记录
 				</a>			
 			</shiro:lacksPermission>
-            <form id="informationHibernateSearchForm" class="nav-search form-search">
-                <span class="input-icon" style="position: relative;top: -30px;">
-                    <input type="text" placeholder="全文检索 ..." class="nav-search-input" id="search-input" autocomplete="off" />
-                    <i class="ace-icon fa fa-search nav-search-icon"></i>
-                </span>
-            </form>
 		</div>
 		
 		<table id="lyxx-table"></table>
