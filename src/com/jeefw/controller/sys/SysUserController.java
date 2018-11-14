@@ -618,7 +618,7 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	public String druid(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/druid";
 	}
-	
+
 	@RequestMapping("/compact")
 	public String compact(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/compact/compact";
@@ -628,7 +628,7 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	public String acticiti(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/compact/activiti";
 	}
-	
+
 	/*******************new 20181107 start********************/
 	@RequestMapping("/t_jfht")
 	public String t_jfht(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -659,4 +659,9 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 		return "back/infomanage/t_khgl_qy";
 	}
 	/*******************new 20181107 end********************/
+
+	@RequestMapping("/report")
+	public String report(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/report";
+	}
 }
