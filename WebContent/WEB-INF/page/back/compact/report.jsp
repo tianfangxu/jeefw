@@ -16,7 +16,6 @@
 
 <div class="row">
     <div class="col-xs-12">
-
         <div class="well well-sm">
             <select class="select2 col-xs-2 " id="lyxx" >
                 <option value="">--请选择楼宇--</option>
@@ -35,11 +34,14 @@
                     <input type="text" name="date-range-picker" id="htsj" placeholder="选择统计时间范围"/>
                 </div>
             </div>
-            <a id="searchReportButton" role="button" disabled="disabled" class="btn btn-purple btn-sm" data-toggle="modal">
+            <a id="searchReportButton" role="button"  class="btn btn-purple btn-sm" data-toggle="modal">
                 查询
             </a>
-            <a id="downloadReportButton" role="button" disabled="disabled" class="btn btn-purple btn-sm" data-toggle="modal" >
+            <a id="downloadReportButton" role="button"  class="btn btn-purple btn-sm" data-toggle="modal" >
                 导出报表
+            </a>
+            <a id="chartViewButton" role="button"  class="btn btn-purple btn-sm" data-toggle="modal" >
+                查看图表
             </a>
         </div>
 
@@ -55,6 +57,27 @@
 </div>
 
 
+<div id="modal-table" class="modal fade" data-backdrop="static">
+    <div class="modal-dialog" style="min-width: 1000px;">
+        <form id="bulidingForm" class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        月租金曲线图
+                    </div>
+                </div>
+                <div class="modal-body" style="height: 600px;">
+                    <div id="main" style="width: 1000px;height: 600px"></div>
+                </div>
+            </div><!-- /.modal-content -->
+        </form>
+    </div><!-- /.modal-dialog -->
+</div>
+
+
 <!-- page specific plugin scripts -->
 <script type="text/javascript">
     var scripts = [null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
@@ -62,7 +85,8 @@
         "${contextPath}/static/assets/js/jquery.hotkeys.js", "${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js",
         "${contextPath}/static/assets/js/jquery.gritter.js", "${contextPath}/static/assets/js/date-time/bootstrap-datepicker.js", "${contextPath}/static/assets/js/date-time/bootstrap-timepicker.js",
         "${contextPath}/static/assets/js/date-time/moment.js", "${contextPath}/static/assets/js/date-time/daterangepicker.js", "${contextPath}/static/assets/js/date-time/bootstrap-datetimepicker.js",
-        "${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.media.js",null]
+        "${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/echarts.js",null]
+
     $(".page-content-area").ace_ajax("loadScripts", scripts, function () {
         // inline scripts related to this page
         jQuery(function ($) {
@@ -531,6 +555,36 @@
                 } else {
                     window.location.href="${contextPath}/static/word/客户物业费情况表.xls";
                 }
+            });
+
+
+            $("#chartViewButton").bind("click", function () {
+                $("#modal-table").modal("toggle");
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('main'));
+
+                // 指定图表的配置项和数据
+                var option = {
+                    title: {
+                        text: '2018年月租金'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月','八月','八月','九月','十月','十一月','十二月']
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: [820, 932, 901, 934, 1290, 1330, 1320,3000,4000,5400,12000,3000],
+                        type: 'line',
+                        smooth:true,
+                        itemStyle : { normal: {label : {show: true}}}
+                    }]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+
             });
 
         });
