@@ -1219,7 +1219,6 @@
         });
     });
     function getmsg() {
-        alert(11);
         $("#modal-htxx_test").modal("toggle");
     }
 
