@@ -618,7 +618,7 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	public String druid(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/druid";
 	}
-	
+
 	@RequestMapping("/compact")
 	public String compact(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/compact/compact";
@@ -628,7 +628,12 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	public String acticiti(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/compact/activiti";
 	}
-	
+
+	@RequestMapping("/report")
+	public String report(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/report";
+	}
+
 	/*******************new 20181107 start********************/
 	@RequestMapping("/t_jfht")
 	public String t_jfht(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -657,6 +662,13 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	@RequestMapping("/t_khgl_qy")
 	public String t_khgl_qy(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/infomanage/t_khgl_qy";
+	}
+	/**
+	 * 跳转到甲方合同页面
+	 */
+	@RequestMapping("/firstpartyContract")
+	public String firstpartyContract(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/recode/firstpartyContract";
 	}
 	/*******************new 20181107 end********************/
 }
