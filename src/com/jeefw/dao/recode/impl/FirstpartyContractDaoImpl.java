@@ -34,8 +34,26 @@ public class FirstpartyContractDaoImpl extends
 		} else {
 			sb.append(" and flag = '0' ");
 		}
-		if (session == null) {
-			System.out.println(11);
+		if(!StringUtils.isEmpty(model.getAddress())){
+			sb.append(" and address like '%"+model.getAddress()+"%' ");
+		}
+		if(!StringUtils.isEmpty(model.getBank())){
+			sb.append(" and bank like '%"+model.getBank()+"%' ");
+		}
+		if(!StringUtils.isEmpty(model.getBankname())){
+			sb.append(" and bankname like '%"+model.getBankname()+"%' ");
+		}
+		if(!StringUtils.isEmpty(model.getBanknumber())){
+			sb.append(" and banknumber = '"+model.getBanknumber()+"' ");
+		}
+		if(!StringUtils.isEmpty(model.getLinkname())){
+			sb.append(" and linkname like '%"+model.getLinkname()+"%' ");
+		}
+		if(!StringUtils.isEmpty(model.getLinkphone())){
+			sb.append(" and linkphone = '"+model.getLinkphone()+"' ");
+		}
+		if(!StringUtils.isEmpty(model.getNamea())){
+			sb.append(" and namea like '%"+model.getNamea()+"%' ");
 		}
 		Query query = session.createQuery("from firstpartyContractEntity "
 				+ sb.toString());

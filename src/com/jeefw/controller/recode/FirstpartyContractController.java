@@ -14,6 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+
+
+
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -106,11 +115,36 @@ public class FirstpartyContractController extends JavaEEFrameworkBaseController<
 		}
 	}
 	
+	/**
+	 * 参数封装
+	 * @param request
+	 * @return
+	 */
 	public firstpartyContractModel getparam(HttpServletRequest request){
 		firstpartyContractModel model = new firstpartyContractModel();
 		model.setPage(request.getParameter("page"));
 		model.setRows(request.getParameter("rows"));
 		model.setId(request.getParameter("id"));
+		model.setAddress(request.getParameter("address"));
+		model.setBank(request.getParameter("bank"));
+		model.setBankname(request.getParameter("bankname"));
+		model.setBanknumber(request.getParameter("banknumber"));
+		model.setLinkname(request.getParameter("linkname"));
+		model.setLinkphone(request.getParameter("linkphone"));
+		model.setNamea(request.getParameter("namea"));
+		
+		/*String str = request.getParameter("filters");
+		if(str != null){
+			JSONObject obj = JSONObject.fromObject(str);
+			JSONArray array = JSONArray.fromObject(obj.get("rules").toString());
+			if(array!= null && array.size() != 0){
+				for (int i = 0; i < array.size(); i++) {
+					JSONObject temp = JSONObject.fromObject(array.get(i));
+					String field = temp.get("field").toString();
+					String param = temp.get("data").toString();
+				}
+			}
+		}*/
 		return model;
 	}
 }

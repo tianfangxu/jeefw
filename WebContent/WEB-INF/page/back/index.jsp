@@ -6,7 +6,7 @@
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta charset="utf-8" />
-        <title>Java企业通用开发平台框架</title>
+        <title>资产管理智能平台</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
         <meta http-equiv="refresh" content="1800" />
         <!-- bootstrap & fontawesome -->

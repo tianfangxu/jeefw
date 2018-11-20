@@ -663,12 +663,19 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	public String t_khgl_qy(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/infomanage/t_khgl_qy";
 	}
-	/**
-	 * 跳转到甲方合同页面
-	 */
 	@RequestMapping("/firstpartyContract")
 	public String firstpartyContract(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/recode/firstpartyContract";
 	}
 	/*******************new 20181107 end********************/
+
+	@RequestMapping("/report")
+	public String report(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/report";
+	}
+
+	@RequestMapping("/budgetReport")
+	public String budgetReport(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/budgetReport";
+	}
 }

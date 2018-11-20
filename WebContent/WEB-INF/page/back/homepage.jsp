@@ -7,7 +7,7 @@
 <div >
 	<div style="text-align: center;margin-top: 200px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;">
     	<div style="font-size: 50px;color:#BFD6DC;">欢迎使用</div>
-     <span style="font-size: 50px;color:#BFD6DC">久事集团资产管理智能平台</span>
+     <span style="font-size: 50px;color:#BFD6DC">资产管理智能平台</span>
     </div>
     
 </div><!-- /.row -->
