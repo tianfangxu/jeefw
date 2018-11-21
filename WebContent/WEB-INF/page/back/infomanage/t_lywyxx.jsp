@@ -7,6 +7,13 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/ui.jqgrid.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery.gritter.css" />
 
+<div style="margin-bottom: 10px">
+	<select class="col-xs-2" id="form-field-select-1" style="float: none;height: 35px;">
+		<option value="">请选择楼宇名称</option>
+		<option value="AL">巴士大厦</option>
+	</select>
+</div>
+
 <div class="row">
 	<div class="col-xs-12">
 		<div class="well well-sm">
@@ -30,26 +37,6 @@
 					编辑记录
 				</a>			
 			</shiro:lacksPermission>
-			<select class="col-xs-2" id="form-field-select-1" style="float: none;height: 35px;margin-left: 5%">
-				<option value="">请选择楼宇名称</option>
-				<option value="AL">Alabama</option>
-				<option value="AK">Alaska</option>
-				<option value="AZ">Arizona</option>
-				<option value="AR">Arkansas</option>
-				<option value="CA">California</option>
-				<option value="CO">Colorado</option>
-				<option value="CT">Connecticut</option>
-				<option value="DE">Delaware</option>
-				<option value="FL">Florida</option>
-				<option value="FL">Florida</option>
-				<option value="FL">Florida</option>
-				<option value="FL">Florida</option>
-				<option value="FL">Florida</option>
-				<option value="FL">Florida</option>
-				<option value="FL">Florida</option>
-				<option value="FL">Florida</option>
-				<option value="FL">Florida</option>
-			</select>
 		</div>
 		
 		<table id="lyxx-table"></table>
