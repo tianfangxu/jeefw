@@ -669,4 +669,14 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	public String budgetReport(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/compact/budgetReport";
 	}
+
+	@RequestMapping("/enterBudget")
+	public String enterBudget(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/enterBudget";
+	}
+
+	@RequestMapping("/income")
+	public String income(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/income";
+	}
 }
