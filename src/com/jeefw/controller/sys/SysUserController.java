@@ -678,5 +678,9 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	public String t_khgl_qy(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/infomanage/t_khgl_qy";
 	}
+	@RequestMapping("/firstpartyContract")
+	public String firstpartyContract(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/recode/firstpartyContract";
+	}
 	/*******************new 20181107 end********************/
 }
