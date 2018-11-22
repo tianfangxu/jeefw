@@ -638,6 +638,16 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	public String budgetReport(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/compact/budgetReport";
 	}
+	
+	@RequestMapping("/enterBudget")
+	public String enterBudget(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/enterBudget";
+	}
+	
+	@RequestMapping("/income")
+	public String income(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/income";
+	}
 
 	/*******************new 20181107 start********************/
 	@RequestMapping("/t_jfht")
@@ -667,6 +677,10 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	@RequestMapping("/t_khgl_qy")
 	public String t_khgl_qy(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/infomanage/t_khgl_qy";
+	}
+	@RequestMapping("/firstpartyContract")
+	public String firstpartyContract(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/recode/firstpartyContract";
 	}
 	/*******************new 20181107 end********************/
 }
