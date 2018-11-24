@@ -32,4 +32,15 @@ public class CurrentUserInterceptor extends HandlerInterceptorAdapter {
 		}
 	}
 
+	 @Override
+	 public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+		final Long currentUserId = (Long) SecurityUtils.getSubject().getPrincipal();
+		SysUser currentUser = sysUserService.get(currentUserId);
+		if (currentUser != null) {
+			request.setAttribute("currentUser", currentUser);
+			return true;
+		}
+		return false;
+		 
+	 }
 }
