@@ -691,24 +691,4 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 		return "back/recode/property";
 	}
 	/*******************new 20181107 end********************/
-
-	@RequestMapping("/report")
-	public String report(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		return "back/compact/report";
-	}
-
-	@RequestMapping("/budgetReport")
-	public String budgetReport(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		return "back/compact/budgetReport";
-	}
-	
-	@RequestMapping("/enterBudget")
-	public String enterBudget(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		return "back/compact/enterBudget";
-	}
-	
-	@RequestMapping("/income")
-	public String income(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		return "back/compact/income";
-	}
 }

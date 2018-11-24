@@ -170,4 +170,22 @@ public class DictController extends JavaEEFrameworkBaseController<Dict> implemen
 		}
 	}
 
+	//获取上级编码为查询编码的字典信息
+	@RequestMapping(value = "/getDictByType", method = { RequestMethod.POST, RequestMethod.GET })
+	public void getDictByType(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		/*String dicType = request.getParameter("dicType");
+		String page = request.getParameter("page");
+		String rows = request.getParameter("rows");
+		List<Dict>  list = dictService.getDictByTypeWithPage(dicType,page,rows);
+		List<Dict>  totalList = dictService.getDictByTypeWithoutPage(dicType,page,rows);
+
+		JqGridPageView<Dict> dictListView = new JqGridPageView<Dict>();
+		dictListView.setMaxResults(maxResults);
+		List<Dict> dictWithSubList = dictService.queryDictWithSubList(queryResult.getResultList());
+		dictListView.setRows(list);
+		dictListView.setRecords(totalList.size());
+		writeJSON(response, dictListView);*/
+
+	}
+
 }

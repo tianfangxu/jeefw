@@ -1,5 +1,6 @@
 package core.util;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -134,38 +135,6 @@ public final class DateUnit {
 
 	/**
 	 * 将传送过来的数字字符串 根据 传过来的要转化的格式 转化为需要的格式
-	 * 源格式化为：yyyy-MM-dd
-	 * @param timeStr
-	 *            ：数字字符串
-	 * @param strFormateBack
-	 *            ：需要转化的格式
-	 * @return
-	 */
-	public static String getTimeByJS(String timeStr, String strFormateBack) {
-		if (!StringUnit.isNullOrEmpty(timeStr)) {
-			if (strFormateBack.equals("yyyyMMdd") && timeStr.length() >= 10) {
-				return timeStr.substring(0, 4) + "" + timeStr.substring(5, 7)
-						+ "" + timeStr.substring(8, 10);
-			} else if (strFormateBack.equals("yyyy-MM-dd")
-					&& timeStr.length() >= 10) {
-				return timeStr.substring(0, 4) + "-" + timeStr.substring(5, 7)
-						+ "-" + timeStr.substring(8, 10);
-			} else if (strFormateBack.equals("yyyy/MM/dd")
-					&& timeStr.length() >= 10) {
-				return timeStr.substring(0, 4) + "/" + timeStr.substring(5, 7)
-						+ "/" + timeStr.substring(8, 10);
-			} else if (strFormateBack.equals("yyyy年MM月dd日")
-					&& timeStr.length() >= 10) {
-				return timeStr.substring(0, 4) + "年" + timeStr.substring(5, 7)
-						+ "月" + timeStr.substring(8, 10) + "日";
-			}
-		}
-		return timeStr==null?"":timeStr;
-	}
-
-
-	/**
-	 * 将传送过来的数字字符串 根据 传过来的要转化的格式 转化为需要的格式
 	 *
 	 * @param timeStr
 	 *            ：数字字符串
@@ -206,6 +175,12 @@ public final class DateUnit {
 			}
 		}
 		return timeStr==null?"":timeStr;
+	}
+
+	public static String getDateByMMddyyyy(String timeStr){
+		timeStr = timeStr.trim();
+		timeStr =    timeStr.split("/")[2]+"-"+timeStr.split("/")[0]+"-"+timeStr.split("/")[1];
+		return   timeStr;
 	}
 
 	/**
@@ -287,8 +262,6 @@ public final class DateUnit {
 	 *            ：第一个日期字符串
 	 * @param date2
 	 *            ：第二个日期字符串
-	 * @param dateType2
-	 *            ：第一个日子字符串的格式
 	 * @param lx
 	 *            :返回两个日期字符串的相差类型 day：天；hour：小时；......
 	 * @return date2-date1的差
@@ -398,15 +371,58 @@ public final class DateUnit {
 		return false;
 	}
 
-	public static String get14(String time){
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date date=null;
-		try {
-			date = sdf.parse(time);
-		} catch (ParseException e) {
-			e.printStackTrace();
+	/**
+	 * 将传送过来的数字字符串 根据 传过来的要转化的格式 转化为需要的格式
+	 * 源格式化为：yyyy-MM-dd
+	 * @param timeStr
+	 *            ：数字字符串
+	 * @param strFormateBack
+	 *            ：需要转化的格式
+	 * @return
+	 */
+	public static String getTimeByJS(String timeStr, String strFormateBack) {
+		if (!StringUnit.isNullOrEmpty(timeStr)) {
+			if (strFormateBack.equals("yyyyMMdd") && timeStr.length() >= 10) {
+				return timeStr.substring(0, 4) + "" + timeStr.substring(5, 7)
+						+ "" + timeStr.substring(8, 10);
+			} else if (strFormateBack.equals("yyyy-MM-dd")
+					&& timeStr.length() >= 10) {
+				return timeStr.substring(0, 4) + "-" + timeStr.substring(5, 7)
+						+ "-" + timeStr.substring(8, 10);
+			} else if (strFormateBack.equals("yyyy/MM/dd")
+					&& timeStr.length() >= 10) {
+				return timeStr.substring(0, 4) + "/" + timeStr.substring(5, 7)
+						+ "/" + timeStr.substring(8, 10);
+			} else if (strFormateBack.equals("yyyy年MM月dd日")
+					&& timeStr.length() >= 10) {
+				return timeStr.substring(0, 4) + "年" + timeStr.substring(5, 7)
+						+ "月" + timeStr.substring(8, 10) + "日";
+			}
 		}
-		SimpleDateFormat sdfddd=new SimpleDateFormat("yyyyMMddHHmmss");
-		return sdfddd.format(date);
+		return timeStr==null?"":timeStr;
 	}
+
+	public static int monthsBetween(String start, String end) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		startDate.setTime(sdf.parse(start));
+		endDate.setTime(sdf.parse(end));
+		int result = yearsBetween(start, end) * 12 + endDate.get(Calendar.MONTH) - startDate.get(Calendar.MONTH);
+		return result == 0 ? 1 : Math.abs(result);
+	}
+
+	public static int yearsBetween(String start, String end) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		startDate.setTime(sdf.parse(start));
+		endDate.setTime(sdf.parse(end));
+		return (endDate.get(Calendar.YEAR) - startDate.get(Calendar.YEAR));
+	}
+
+	public static void main(String[] args)throws ParseException {
+		System.out.println(monthsBetween("2018-11-09","2019-12-09"));
+	}
+
 }
