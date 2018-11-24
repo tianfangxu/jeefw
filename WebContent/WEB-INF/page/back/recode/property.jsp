@@ -7,6 +7,12 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/ui.jqgrid.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery.gritter.css" />
 
+<div style="margin-bottom: 10px">
+	<select class="col-xs-2" id="buildSelect" style="float: none;height: 35px;" onchange="getdatareflush()">
+		
+	</select>
+</div>
+
 <div class="row">
 	<div class="col-xs-12">
 		<div class="well well-sm">
@@ -32,7 +38,7 @@
 			</shiro:lacksPermission>
 		</div>
 		
-		<table id="jfht-table"></table>
+		<table id="lyxx-table"></table>
 			
 		<div id="grid-pager"></div>
 
@@ -61,34 +67,91 @@
 						<div class="col-xs-12 col-sm-12">
 							<div class="widget-box">
 								<div class="widget-header">
-									<h4 class="widget-title">甲方基本信息</h4>
+									<h4 class="widget-title">物业新增</h4>
 								</div>
 								<div class="widget-body">
 									<div class="widget-main">
 										<div>
 											<input type="hidden" id="id">
-											<label for="form-field-8">名称</label>
-											<input id="name" class="form-control" type="text"> 
-											<label for="form-field-8">地址</label>
-											<input id="address" class="form-control" type="text">
+											<label for="form-field-8">楼宇名称</label>
+											<select class="form-control" id="buil">
+												
+											</select>
+											<label for="form-field-8">管理单元</label>
+											<input id="name" class="form-control" type="text">
 										</div>
 										<hr />
 										<div>
-											<label for="form-field-8">联系人姓名</label>
-											<input id="contactname" class="form-control" type="text"> 
-											<label for="form-field-8">联系人电话号码</label>
-											<input id="contactnumber" class="form-control" type="text"> 
-											<label for="form-field-8">税号</label>
-											<input id="taxnumber" class="form-control" type="text"> 
-										</div>
-										<hr />
-										<div>
-											<label for="form-field-8">银行账号</label>
-											<input id="account" class="form-control" type="text"> 
-											<label for="form-field-8">户名</label>
-											<input id="accountname" class="form-control" type="text"> 
-											<label for="form-field-8">开户行</label>
-											<input id="bankname" class="form-control" type="text"> 
+											<label for="form-field-8">面积</label>
+											<input id="area" class="form-control" type="text"> 
+											<label for="form-field-8">租金</label>
+											<input id="rent" class="form-control" type="text">
+											<script type="text/javascript">
+											//费用定义离事件
+											$("#rent").blur(function(){
+												var num = $("#rent").val();
+												if(num == ''){
+													$("#rent").val("0.00");
+													return true;
+												}
+												if(num.indexOf(".") == -1){
+													if(checknumber(num) && num.length < 11){
+														$("#rent").val(num+".00");
+														return true;
+													}else{
+														errormsg();
+														$("#rent").focus();
+													}
+												}else{
+													var arrs = num.split(".");
+													if(arrs.length != 2){
+														errormsg();
+														$("#rent").focus();
+													}else{
+														if(checknumber(arrs[0]) && arrs[0].length < 11){
+															
+														}else{
+															errormsg();
+															$("#rent").focus();
+														}
+														
+														if(checknumber(arrs[1]) && arrs[1].length < 3){
+															
+														}else{
+															errormsg();
+															$("#rent").focus();
+														}
+													}
+												}
+											});
+											
+											$("#area").blur(function(){
+												var num = $("#area").val();
+												if(checknumber(num) && num.length < 11){
+													return true;
+												}else{
+													errormsg();
+													$("#area").focus();
+												}
+											});
+											
+											function checknumber(num){
+												var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/ 
+												if (!re.test(num)) {
+													return false;
+												}
+												return true;
+											}
+											function errormsg(){
+												$.gritter.add({
+													title: '输入错误',
+													text: '请输入有效数字',
+													class_name:"gritter-error  gritter-light"
+												});
+											}
+											</script>
+											<label for="form-field-8">租赁状态</label>
+											<input id="used" class="form-control" type="text">
 										</div>
 										<hr />
 									</div>
@@ -99,7 +162,7 @@
 				</div>
 				<div class="modal-footer no-margin-top">
 					<div class="text-center">
-						<button id="submitButton"  type="submit" class="btn btn-app btn-success btn-xs">
+						<button id="submitButton" type="submit" class="btn btn-app btn-success btn-xs">
 							<i class="ace-icon fa fa-floppy-o bigger-160"></i>
 							保存
 						</button>
@@ -124,7 +187,7 @@
         	// inline scripts related to this page
         	jQuery(function($) {
         		
-        		var grid_selector = "#jfht-table";
+        		var grid_selector = "#lyxx-table";
         		var pager_selector = "#grid-pager";
 
         		// resize to fit page size
@@ -141,6 +204,9 @@
         				}, 0);
         			}
         		})
+        		
+        		//楼宇信息的下拉栏
+        		getbuildSelect();
         		
         		$(document).keydown(function(event) {
 					var key = window.event ? event.keyCode : event.which;
@@ -171,50 +237,42 @@
         		
         		jQuery(grid_selector).jqGrid({
         			subGrid : false,
-        			url : "${contextPath}/recode/firstpartyContract/getfirstpartyContractByCondition",
-        			datatype : "json",
+        			url : "${contextPath}/recode/property/getPropertyByCondition",
+        			datatype : "json", //从服务器端返回的数据类型 默认xml
         			height : 450,
-        			colNames : ["编号","名称", "地址", "联系人姓名","联系人电话号码", "税号", "开户账号","户名","开户行"],
-        			colModel : [					
-        			{
-        				 name:'id',
-        				 width : 150,
-        				 hidden:true,
-        				 
-        			},
-        			{
-        				name : "name",
-        				width : 150,
-        				searchoptions : {sopt : ["cn","eq"]},
-        			},{
-        				name : "address",
-        				width : 200,
-        				searchoptions : {sopt : ["cn","eq"]},
-        			},{
-        				name : "contactname",
-        				width : 100,
-        				searchoptions : {sopt : ["cn","eq"]},
-        			}, {
-        				name : "contactnumber",
-        				width : 150,
-        				search:false,
-        			}, {
-        				name : "taxnumber",
-        				width : 150,
-        				search:false,
-        			}, {
-        				name : "account",
-        				width : 200,
-        				search:false,
-        			}, {
-        				name : "accountname",
-        				width : 200,
-        				searchoptions : {sopt : ["cn","eq"]},
-        			}, {
-        				name : "bankname",
-        				width : 200,
-        				search:false,
-        			}
+        			colNames : ["编号","楼宇编号","楼宇","管理单元", "面积", "租金","租赁状态"],
+        			colModel : [
+						{
+							 name:'id',
+							 width : 150,
+							 hidden:true,
+						},
+						{
+							 name:'build',
+							 width : 150,
+							 hidden:true,
+						},
+						{
+							name : "buildname",
+							width : 150,
+							search:false,
+						},{
+							name : "name",
+							width : 200,
+							searchoptions : {sopt : ["cn","eq"]},
+						},{
+							name : "area",
+							width : 100,
+							search:false,
+						}, {
+							name : "rent",
+							width : 150,
+							search:false,
+						}, {
+							name : "used",
+							width : 100,
+							searchoptions : {sopt : ["cn","eq"]},
+						}      
         			],
         			//scroll : 1, // set the scroll property to 1 to enable paging with scrollbar - virtual loading of records
         			sortname : "id",
@@ -237,18 +295,8 @@
         					enableTooltips(table);
         				}, 0);
         			},
-        			editurl : "${contextPath}/recode/firstpartyContract/updfirstpartyContract"
-        			//caption : "用户管理列表",
-        			//autowidth : true,
-        			/**
-        			grouping : true, 
-        			groupingView : { 
-        				 groupField : ["name"],
-        				 groupDataSorted : true,
-        				 plusicon : "fa fa-chevron-down bigger-110",
-        				 minusicon : "fa fa-chevron-up bigger-110"
-        			},
-        			*/
+        			editurl : "${contextPath}/recode/property/delProperty",
+        			
         		});
         		
         		$(window).triggerHandler("resize.jqGrid");// trigger window resize to make the grid get the correct size
@@ -320,7 +368,6 @@
         		
         		$("#editInformationButton").bind("click", function() {
         			var selectedId = $(grid_selector).jqGrid("getGridParam", "selrow");
-        			//console.log(selectedId);
         			if(null == selectedId){
         				$.gritter.add({
     		                title: "系统信息",
@@ -331,37 +378,30 @@
         				$("#modal-table").modal("toggle");
         				$("#id").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).id);
         				$("#name").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).name);
-        				$("#address").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).address);
-        				$("#contactname").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).contactname);
-        				$("#contactnumber").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).contactnumber);
-        				$("#taxnumber").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).taxnumber);
-        				$("#account").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).account);
-        				$("#accountname").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).accountname);
-        				$("#bankname").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).bankname);
+        				$("#buil").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).build);
+        				$("#area").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).area);
+        				$("#rent").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).rent);
+        				$("#used").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).used);
         			}
         		});
         		
         		$("#informationForm").on("submit", function(e) {
         			var data = new Object();
         			data.name=$("#name").val();
-        			data.address=$("#address").val();
-        			data.contactname=$("#contactname").val();
-        			data.contactnumber=$("#contactnumber").val();
-        			data.taxnumber=$("#taxnumber").val();
-        			data.account=$("#account").val();
-        			data.accountname=$("#accountname").val();
-        			data.bankname=$("#bankname").val();
-       				var url = "${contextPath}/recode/firstpartyContract/savefirstpartyContract";
+        			data.build=$("#buil").val();
+        			data.area=$("#area").val();
+        			data.rent=$("#rent").val();
+        			data.used=$("#used").val();
         			if($("#id").val() == '' || $("#id").val() == null || $("#id").val() == undefined){
         			}else{
         				data.code = $("#id").val();
         			}
    			    	$.ajax({
            				dataType : "json",
-           				url : url,
+           				url : "${contextPath}/recode/property/saveOrupdProperty",
            				type : "post",
            				contentType: 'application/json',
-           				data :JSON.stringify(data),
+              			data :JSON.stringify(data),
            				complete : function(xmlRequest) {
            					$("#modal-table").modal("toggle");
            					jQuery(grid_selector).trigger("reloadGrid");
@@ -425,8 +465,7 @@
         				form.data("styled", true);
         			},
         			onClick : function(e) {
-        				 //alert(1);
-        				
+        				// alert(1);
         			}
         		}, {
         			// search form
@@ -525,7 +564,6 @@
         		}
 
         		function beforeDeleteCallback(e) {
-        			
         			var form = $(e[0]);
         			if (form.data("styled"))
         				return false;
@@ -594,5 +632,38 @@
         		});
         		
         	});
-        });	
+        });
+		
+		function getbuildSelect(){
+			$.ajax({
+   				dataType : "json",
+   				url : "${contextPath}/recode/build/getBuildByCondition?page=1&rows=10000",
+   				type : "post",
+   				contentType: 'application/json',
+      			data :null,
+   				complete : function(xmlRequest) {
+   					console.log(xmlRequest);
+   					if(xmlRequest.status == 200){
+   						var data = JSON.parse(xmlRequest.responseText).rows;
+   	   					var html = '<option value="">请选择楼宇名称</option>';
+   	   					if(data.length >0){
+   	   						for(var i = 0;i < data.length ;i++){
+   	   							html+='<option value="'+data[i].code+'">'+data[i].name+'</option>';
+   	   						}
+   	   					}
+   	   					$('#buildSelect').html(html);
+   	   					$('#buil').html(html);
+   	   					
+   					}
+   					
+   				}
+   			});
+		}
+		function getdatareflush(){
+			jQuery("#lyxx-table").jqGrid('setGridParam',{
+                datatype:'json',
+                postData:{'build':$("#buildSelect").val()}, //发送数据
+                page:1
+            }).trigger("reloadGrid"); //重新载入
+		}
 </script>

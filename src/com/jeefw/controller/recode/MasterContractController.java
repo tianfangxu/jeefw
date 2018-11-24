@@ -7,22 +7,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,36 +15,42 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jeefw.core.Constant;
 import com.jeefw.core.JavaEEFrameworkBaseController;
-import com.jeefw.model.recode.firstpartyContractEntity;
-import com.jeefw.model.recode.param.firstpartyContractModel;
-import com.jeefw.service.recode.FirstpartyContractService;
+import com.jeefw.model.recode.MasterEntity;
+import com.jeefw.model.recode.param.MasterModel;
+import com.jeefw.service.recode.MasterContractService;
 
 import core.support.JqGridPageView;
+import core.util.ParamUtils;
 
 /**
  * 甲方合同主体
  * @author Administrator
+ * @param <G>
+ * @param <K>
  *
  */
 
 @Controller
 @RequestMapping("/recode/firstpartyContract")
-public class FirstpartyContractController extends JavaEEFrameworkBaseController<firstpartyContractEntity> implements Constant{
+public class MasterContractController<T> extends JavaEEFrameworkBaseController<MasterEntity> implements Constant{
 	
 	@Resource
-	FirstpartyContractService firstpartyContractService;
+	MasterContractService firstpartyContractService;
 	
 	/**
 	 * 获取甲方合同数据
 	 */
+	@SuppressWarnings({ "rawtypes" })
 	@RequestMapping(value = "/getfirstpartyContractByCondition", method = { RequestMethod.POST, RequestMethod.GET })
 	public void getfirstpartyContractByCondition(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		try {
-			firstpartyContractModel model = getparam(request);
-			JqGridPageView<firstpartyContractEntity> firstpartyContract = null;
+			MasterModel model = new ParamUtils<MasterModel>().getparams(request, MasterModel.class);
+			
+			JqGridPageView<MasterEntity> firstpartyContract = null;
 			firstpartyContract = firstpartyContractService.getfirstpartyContractByCondition(model);
 			writeJSON(response, firstpartyContract);
 		} catch (Exception e) {
+			e.printStackTrace();
 			HashMap<String,String> map = new HashMap<String, String>();
 			map.put("message", "系统出错，请稍后重试");
 			writeJSON(response, map);
@@ -70,12 +60,17 @@ public class FirstpartyContractController extends JavaEEFrameworkBaseController<
 	/**
 	 * 修改/保存甲方合同数据
 	 */
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/savefirstpartyContract", method = { RequestMethod.POST })
-	public void savefirstpartyContract(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody firstpartyContractModel model) throws IOException{
+	public void saveOrUpdfirstpartyContract(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody MasterModel model) throws IOException{
 		HashMap<String,String> map = new HashMap<String, String>();
 		try {
-			if(StringUtils.isEmpty(model.getId())){
+			MasterModel mo  = new ParamUtils<MasterModel>().getparams(request, MasterModel.class);
+			if(mo != null && mo.getLoginuser() != null){
+				model.setLoginuser(mo.getLoginuser());
+			}
+			if(StringUtils.isEmpty(model.getCode())){
 				firstpartyContractService.savefirstpartyContract(model);
 				map.put("message", "添加成功");
 				writeJSON(response,map);
@@ -96,11 +91,12 @@ public class FirstpartyContractController extends JavaEEFrameworkBaseController<
 	/**
 	 * 删除-甲方合同数据
 	 */
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/updfirstpartyContract", method = { RequestMethod.POST })
-	public void updfirstpartyContract(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	public void delfirstpartyContract(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		HashMap<String,String> map = new HashMap<String, String>();
 		try {
-			firstpartyContractModel model = getparam(request);
+			MasterModel model = new ParamUtils<MasterModel>().getparams(request, MasterModel.class);
 			String oper = request.getParameter("oper");
 			if(oper != null && oper.equals("del")){
 				//删除
@@ -115,36 +111,4 @@ public class FirstpartyContractController extends JavaEEFrameworkBaseController<
 		}
 	}
 	
-	/**
-	 * 参数封装
-	 * @param request
-	 * @return
-	 */
-	public firstpartyContractModel getparam(HttpServletRequest request){
-		firstpartyContractModel model = new firstpartyContractModel();
-		model.setPage(request.getParameter("page"));
-		model.setRows(request.getParameter("rows"));
-		model.setId(request.getParameter("id"));
-		model.setAddress(request.getParameter("address"));
-		model.setBank(request.getParameter("bank"));
-		model.setBankname(request.getParameter("bankname"));
-		model.setBanknumber(request.getParameter("banknumber"));
-		model.setLinkname(request.getParameter("linkname"));
-		model.setLinkphone(request.getParameter("linkphone"));
-		model.setNamea(request.getParameter("namea"));
-		
-		/*String str = request.getParameter("filters");
-		if(str != null){
-			JSONObject obj = JSONObject.fromObject(str);
-			JSONArray array = JSONArray.fromObject(obj.get("rules").toString());
-			if(array!= null && array.size() != 0){
-				for (int i = 0; i < array.size(); i++) {
-					JSONObject temp = JSONObject.fromObject(array.get(i));
-					String field = temp.get("field").toString();
-					String param = temp.get("data").toString();
-				}
-			}
-		}*/
-		return model;
-	}
 }

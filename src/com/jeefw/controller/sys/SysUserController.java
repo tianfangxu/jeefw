@@ -667,6 +667,14 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	public String firstpartyContract(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/recode/firstpartyContract";
 	}
+	@RequestMapping("/build")
+	public String build(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/recode/build";
+	}
+	@RequestMapping("/property")
+	public String property(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/recode/property";
+	}
 	/*******************new 20181107 end********************/
 
 	@RequestMapping("/report")
@@ -678,14 +686,5 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	public String budgetReport(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/compact/budgetReport";
 	}
-	
-	@RequestMapping("/enterBudget")
-	public String enterBudget(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		return "back/compact/enterBudget";
-	}
-	
-	@RequestMapping("/income")
-	public String income(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		return "back/compact/income";
-	}
+
 }

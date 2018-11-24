@@ -6,33 +6,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 /***
- * 客户管理
+ * 甲方合同主体信息
  * 
  * @author Administrator
  *
  */
 @Entity
-@Table(name = "m_customer")
-@DynamicInsert(true)
-@DynamicUpdate(true)
-public class CustomerEntity extends BaseEntity {
+@Table(name = "m_master")
+@Cache(region = "all", usage = CacheConcurrencyStrategy.READ_WRITE)
+public class MasterEntity extends BaseEntity {
 
 	@Id
 	@GenericGenerator(name = "systemUUID", strategy = "uuid")
 	@GeneratedValue(generator = "systemUUID")
 	@Column(name = "code", length = 32, nullable = false, unique = true)
 	private String code;// 编号
-	@Column(name = "idtype")
-	private String idtype;// 证件种类
-	@Column(name = "idnumber")
-	private String idnumber;// 证件号码
-	@Column(name = "idexpiresend")
-	private String idexpiresend;// 证件有效期
 	@Column(name = "name")
 	private String name;// 名称
 	@Column(name = "address")
@@ -55,24 +48,6 @@ public class CustomerEntity extends BaseEntity {
 	}
 	public void setCode(String code) {
 		this.code = code;
-	}
-	public String getIdtype() {
-		return idtype;
-	}
-	public void setIdtype(String idtype) {
-		this.idtype = idtype;
-	}
-	public String getIdnumber() {
-		return idnumber;
-	}
-	public void setIdnumber(String idnumber) {
-		this.idnumber = idnumber;
-	}
-	public String getIdexpiresend() {
-		return idexpiresend;
-	}
-	public void setIdexpiresend(String idexpiresend) {
-		this.idexpiresend = idexpiresend;
 	}
 	public String getName() {
 		return name;

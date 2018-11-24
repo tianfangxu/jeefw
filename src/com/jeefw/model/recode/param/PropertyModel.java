@@ -1,41 +1,72 @@
-package com.jeefw.model.recode;
+package com.jeefw.model.recode.param;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
+/**
+ * 楼宇物业
+ * @author Administrator
+ * 
+ */
+public class PropertyModel<T, G> extends BaseModel<T, G> implements Serializable {
 
-import com.jeefw.model.recode.param.MasterModel;
-
-import core.support.ExtJSBaseParameter;
-
-@MappedSuperclass
-public class BaseEntity extends ExtJSBaseParameter implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	//标识
 	private String id;
-
-	@Column(name = "createuser")
+	private String code;//编号
+	private String build;//楼宇
+	private String buildname;//楼宇名称
+	private String name;//管理单元
+	private String area;//面积
+	private String rent;//租金
+	private String used;//租赁状态
 	private String createuser;//创建人
-	@Column(name = "createtime")
 	private String createtime;//创建时间
-	@Column(name = "updateuser")
 	private String updateuser;//修改人
-	@Column(name = "updatetime")
 	private String updatetime;//修改时间
-	@Column(name = "deleteuser")
 	private String deleteuser;//删除人
-	@Column(name = "deletetime")
 	private String deletetime;//删除时间
-	@Column(name = "deleteflg")
 	private String deleteflg;//删除标记
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	public String getBuild() {
+		return build;
+	}
+	public void setBuild(String build) {
+		this.build = build;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
+	}
+	public String getRent() {
+		return rent;
+	}
+	public void setRent(String rent) {
+		this.rent = rent;
+	}
+	public String getUsed() {
+		return used;
+	}
+	public void setUsed(String used) {
+		this.used = used;
+	}
 	public String getCreateuser() {
 		return createuser;
 	}
@@ -78,13 +109,11 @@ public class BaseEntity extends ExtJSBaseParameter implements Serializable {
 	public void setDeleteflg(String deleteflg) {
 		this.deleteflg = deleteflg;
 	}
-	@Transient
-	public String getId() {
-		return id;
+	public String getBuildname() {
+		return buildname;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setBuildname(String buildname) {
+		this.buildname = buildname;
 	}
 
-	
 }

@@ -30,9 +30,10 @@
 					编辑记录
 				</a>			
 			</shiro:lacksPermission>
+            
 		</div>
 		
-		<table id="jfht-table"></table>
+		<table id="lyxx-table"></table>
 			
 		<div id="grid-pager"></div>
 
@@ -61,34 +62,85 @@
 						<div class="col-xs-12 col-sm-12">
 							<div class="widget-box">
 								<div class="widget-header">
-									<h4 class="widget-title">甲方基本信息</h4>
+									<h4 class="widget-title">楼宇信息新增</h4>
 								</div>
 								<div class="widget-body">
 									<div class="widget-main">
 										<div>
 											<input type="hidden" id="id">
-											<label for="form-field-8">名称</label>
+											<label for="form-field-8">楼宇名称</label>
 											<input id="name" class="form-control" type="text"> 
-											<label for="form-field-8">地址</label>
-											<input id="address" class="form-control" type="text">
+											<label for="form-field-8">楼宇地址</label>
+											<input id="address" class="form-control" type="text"> 
 										</div>
 										<hr />
 										<div>
-											<label for="form-field-8">联系人姓名</label>
-											<input id="contactname" class="form-control" type="text"> 
-											<label for="form-field-8">联系人电话号码</label>
-											<input id="contactnumber" class="form-control" type="text"> 
-											<label for="form-field-8">税号</label>
-											<input id="taxnumber" class="form-control" type="text"> 
+											<label for="form-field-8">联系电话</label>
+											<input id="contact" class="form-control" type="text"> 
+											<label for="form-field-8">楼宇经理</label>
+											<input id="manager" class="form-control" type="text"> 
 										</div>
 										<hr />
 										<div>
-											<label for="form-field-8">银行账号</label>
-											<input id="account" class="form-control" type="text"> 
-											<label for="form-field-8">户名</label>
-											<input id="accountname" class="form-control" type="text"> 
-											<label for="form-field-8">开户行</label>
-											<input id="bankname" class="form-control" type="text"> 
+											<label for="form-field-8">物业费（<span style="color:red;">0.00 ~ 999.99</span>）</label>
+											<input id="propertyfee" class="form-control" type="text">
+											<script type="text/javascript">
+												//费用定义离事件
+												$("#propertyfee").blur(function(){
+													var num = $("#propertyfee").val();
+													if(num == ''){
+														$("#propertyfee").val("0.00");
+														return true;
+													}
+													if(num.indexOf(".") == -1){
+														if(checknumber(num) && num.length < 4){
+															$("#propertyfee").val(num+".00");
+															return true;
+														}else{
+															errormsg();
+															$("#propertyfee").focus();
+														}
+													}else{
+														var arrs = num.split(".");
+														console.log(arrs);
+														console.log(arrs[0]);
+														console.log(arrs[1]);
+														if(arrs.length != 2){
+															errormsg();
+															$("#propertyfee").focus();
+														}else{
+															if(checknumber(arrs[0]) && arrs[0].length < 4){
+																
+															}else{
+																errormsg();
+																$("#propertyfee").focus();
+															}
+															if(checknumber(arrs[1]) && arrs[1].length < 3){
+																
+															}else{
+																errormsg();
+																$("#propertyfee").focus();
+															}
+														}
+													}
+												});
+												function checknumber(num){
+													var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/ 
+													if (!re.test(num)) {
+														return false;
+													}
+													return true;
+												}
+												function errormsg(){
+													$.gritter.add({
+														title: '输入错误',
+														text: '请输入0.00 - 999.99 之间的有效数字',
+														class_name:"gritter-error  gritter-light"
+													});
+												}
+											</script>
+											<label for="form-field-8">物业概况</label>
+											<textarea id="comment" class="autosize-transition form-control"></textarea>
 										</div>
 										<hr />
 									</div>
@@ -99,7 +151,7 @@
 				</div>
 				<div class="modal-footer no-margin-top">
 					<div class="text-center">
-						<button id="submitButton"  type="submit" class="btn btn-app btn-success btn-xs">
+						<button id="submitButton" type="submit" class="btn btn-app btn-success btn-xs">
 							<i class="ace-icon fa fa-floppy-o bigger-160"></i>
 							保存
 						</button>
@@ -124,7 +176,7 @@
         	// inline scripts related to this page
         	jQuery(function($) {
         		
-        		var grid_selector = "#jfht-table";
+        		var grid_selector = "#lyxx-table";
         		var pager_selector = "#grid-pager";
 
         		// resize to fit page size
@@ -171,50 +223,42 @@
         		
         		jQuery(grid_selector).jqGrid({
         			subGrid : false,
-        			url : "${contextPath}/recode/firstpartyContract/getfirstpartyContractByCondition",
+        			url : "${contextPath}/recode/build/getBuildByCondition",
         			datatype : "json",
         			height : 450,
-        			colNames : ["编号","名称", "地址", "联系人姓名","联系人电话号码", "税号", "开户账号","户名","开户行"],
-        			colModel : [					
-        			{
-        				 name:'id',
-        				 width : 150,
-        				 hidden:true,
-        				 
-        			},
-        			{
-        				name : "name",
-        				width : 150,
-        				searchoptions : {sopt : ["cn","eq"]},
-        			},{
-        				name : "address",
-        				width : 200,
-        				searchoptions : {sopt : ["cn","eq"]},
-        			},{
-        				name : "contactname",
-        				width : 100,
-        				searchoptions : {sopt : ["cn","eq"]},
-        			}, {
-        				name : "contactnumber",
-        				width : 150,
-        				search:false,
-        			}, {
-        				name : "taxnumber",
-        				width : 150,
-        				search:false,
-        			}, {
-        				name : "account",
-        				width : 200,
-        				search:false,
-        			}, {
-        				name : "accountname",
-        				width : 200,
-        				searchoptions : {sopt : ["cn","eq"]},
-        			}, {
-        				name : "bankname",
-        				width : 200,
-        				search:false,
-        			}
+        			width : 770,
+        			colNames : ["编号","楼宇名称", "楼宇地址", "联系电话","楼宇经理", "物业概况","物业费（平米每天）"],
+        			colModel : [ 
+						{
+							 name:'id',
+							 width : 150,
+							 hidden:true,
+						},
+						{
+							name : "name",
+							width : 150,
+							searchoptions : {sopt : ["cn","eq"]},
+						},{
+							name : "address",
+							width : 200,
+							searchoptions : {sopt : ["cn","eq"]},
+						},{
+							name : "contact",
+							width : 100,
+							search:false,
+						}, {
+							name : "manager",
+							width : 150,
+							searchoptions : {sopt : ["cn","eq"]},
+						}, {
+							name : "comment",
+							width : 200,
+							search:false,
+						}, {
+							name : "propertyfee",
+							width : 100,
+							search:false,
+						}
         			],
         			//scroll : 1, // set the scroll property to 1 to enable paging with scrollbar - virtual loading of records
         			sortname : "id",
@@ -237,7 +281,7 @@
         					enableTooltips(table);
         				}, 0);
         			},
-        			editurl : "${contextPath}/recode/firstpartyContract/updfirstpartyContract"
+        			editurl : "${contextPath}/recode/build/delBuild"
         			//caption : "用户管理列表",
         			//autowidth : true,
         			/**
@@ -320,7 +364,6 @@
         		
         		$("#editInformationButton").bind("click", function() {
         			var selectedId = $(grid_selector).jqGrid("getGridParam", "selrow");
-        			//console.log(selectedId);
         			if(null == selectedId){
         				$.gritter.add({
     		                title: "系统信息",
@@ -332,12 +375,10 @@
         				$("#id").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).id);
         				$("#name").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).name);
         				$("#address").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).address);
-        				$("#contactname").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).contactname);
-        				$("#contactnumber").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).contactnumber);
-        				$("#taxnumber").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).taxnumber);
-        				$("#account").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).account);
-        				$("#accountname").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).accountname);
-        				$("#bankname").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).bankname);
+        				$("#contact").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).contact);
+        				$("#manager").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).manager);
+        				$("#comment").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).comment);
+        				$("#propertyfee").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).propertyfee);
         			}
         		});
         		
@@ -345,23 +386,20 @@
         			var data = new Object();
         			data.name=$("#name").val();
         			data.address=$("#address").val();
-        			data.contactname=$("#contactname").val();
-        			data.contactnumber=$("#contactnumber").val();
-        			data.taxnumber=$("#taxnumber").val();
-        			data.account=$("#account").val();
-        			data.accountname=$("#accountname").val();
-        			data.bankname=$("#bankname").val();
-       				var url = "${contextPath}/recode/firstpartyContract/savefirstpartyContract";
+        			data.contact=$("#contact").val();
+        			data.manager=$("#manager").val();
+        			data.comment=$("#comment").val();
+        			data.propertyfee=$("#propertyfee").val();
         			if($("#id").val() == '' || $("#id").val() == null || $("#id").val() == undefined){
         			}else{
         				data.code = $("#id").val();
         			}
    			    	$.ajax({
            				dataType : "json",
-           				url : url,
+           				url : "${contextPath}/recode/build/saveOrupdatBuild",
            				type : "post",
            				contentType: 'application/json',
-           				data :JSON.stringify(data),
+              			data :JSON.stringify(data),
            				complete : function(xmlRequest) {
            					$("#modal-table").modal("toggle");
            					jQuery(grid_selector).trigger("reloadGrid");
@@ -425,8 +463,7 @@
         				form.data("styled", true);
         			},
         			onClick : function(e) {
-        				 //alert(1);
-        				
+        				// alert(1);
         			}
         		}, {
         			// search form
@@ -525,7 +562,6 @@
         		}
 
         		function beforeDeleteCallback(e) {
-        			
         			var form = $(e[0]);
         			if (form.data("styled"))
         				return false;
@@ -594,5 +630,5 @@
         		});
         		
         	});
-        });	
+        });
 </script>
