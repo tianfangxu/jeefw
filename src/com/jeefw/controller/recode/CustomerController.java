@@ -15,36 +15,35 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jeefw.core.Constant;
 import com.jeefw.core.JavaEEFrameworkBaseController;
-import com.jeefw.model.recode.PropertyEntity;
-import com.jeefw.model.recode.param.PropertyModel;
-import com.jeefw.service.recode.PropertyService;
+import com.jeefw.model.recode.CustomerEntity;
+import com.jeefw.model.recode.param.CustomerModel;
+import com.jeefw.service.recode.CustomerService;
 
 import core.support.JqGridPageView;
 import core.util.ParamUtils;
 
 /***
- *楼宇内物业信息
+ *客户信息
  * 
  * @author Administrator
  *
  */
 @Controller
-@RequestMapping("/recode/property")
-public class PropertyController extends JavaEEFrameworkBaseController<PropertyEntity> implements Constant{
-
+@RequestMapping("/recode/customer")
+public class CustomerController extends JavaEEFrameworkBaseController<CustomerEntity> implements Constant{
 	@Resource
-	PropertyService propertyService;
+	CustomerService customerService;
 	
 	/**
-	 * 楼宇内物业信息
+	 * 客户信息
 	 */
 	@SuppressWarnings({"rawtypes" })
-	@RequestMapping(value = "/getPropertyByCondition", method = { RequestMethod.POST, RequestMethod.GET })
-	public void getPropertyByCondition(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	@RequestMapping(value = "/geCustomerByCondition", method = { RequestMethod.POST, RequestMethod.GET })
+	public void geCustomerByCondition(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		try {
-			PropertyModel model = new ParamUtils<PropertyModel>().getparams(request, PropertyModel.class);
-			JqGridPageView<PropertyModel> propertyModelJqGridPageView = null;
-			propertyModelJqGridPageView = propertyService.getPropertyByCondition(model);
+			CustomerModel model = new ParamUtils<CustomerModel>().getparams(request, CustomerModel.class);
+			JqGridPageView<CustomerEntity> propertyModelJqGridPageView = null;
+			propertyModelJqGridPageView = customerService.getCustomerByCondition(model);
 			writeJSON(response, propertyModelJqGridPageView);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,24 +54,24 @@ public class PropertyController extends JavaEEFrameworkBaseController<PropertyEn
 	} 
 	
 	/***
-	 * 保存/修改楼宇内物业信息
+	 * 保存/修改客户信息
 	 */
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/saveOrupdProperty", method = { RequestMethod.POST })
-	public void saveOrupdProperty(HttpServletRequest request, HttpServletResponse response,@RequestBody PropertyModel model) throws IOException{
+	@RequestMapping(value = "/saveOrupdCustomer", method = { RequestMethod.POST })
+	public void saveOrupdCustomer(HttpServletRequest request, HttpServletResponse response,@RequestBody CustomerModel model) throws IOException{
 		HashMap<String,String> map = new HashMap<String, String>();
 		try {
-			PropertyModel mo = new ParamUtils<PropertyModel>().getparams(request, PropertyModel.class);
+			CustomerModel mo = new ParamUtils<CustomerModel>().getparams(request, CustomerModel.class);
 			if(mo != null && mo.getLoginuser() != null){
 				model.setLoginuser(mo.getLoginuser());
 			}
 			if(StringUtils.isEmpty(model.getCode())){
-				propertyService.saveProperty(model);
+				customerService.saveProperty(model);
 				map.put("message", "添加成功");
 				writeJSON(response,map);
 			}else{
 				//修改
-				String msg = propertyService.updateProperty(model);
+				String msg = customerService.updateProperty(model);
 				map.put("message", msg);
 				writeJSON(response,map);
 			}
@@ -84,18 +83,18 @@ public class PropertyController extends JavaEEFrameworkBaseController<PropertyEn
 	}
 	
 	/**
-	 * 删除楼宇内物业信息
+	 * 删除客户信息
 	 */
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/delProperty", method = { RequestMethod.POST })
-	public void delProperty(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	@RequestMapping(value = "/delCustomer", method = { RequestMethod.POST })
+	public void delCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		HashMap<String,String> map = new HashMap<String, String>();
 		try {
-			PropertyModel model = new ParamUtils<PropertyModel>().getparams(request, PropertyModel.class);
+			CustomerModel model = new ParamUtils<CustomerModel>().getparams(request, CustomerModel.class);
 			String oper = request.getParameter("oper");
 			if(oper != null && oper.equals("del")){
 				//删除
-				String string = propertyService.deleteProperty(model);
+				String string = customerService.deleteProperty(model);
 				map.put("message", string);
 				writeJSON(response,map);
 			}

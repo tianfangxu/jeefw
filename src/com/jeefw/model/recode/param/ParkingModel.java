@@ -7,6 +7,7 @@ public class ParkingModel<T, G> extends BaseModel<T, G> implements Serializable 
 	private String id;
 	private String code;// 编号
 	private String build;// 楼宇
+	private String buildname;
 	private String name;// 名称
 	private String type;// 类型
 	private String area;// 面积
@@ -138,6 +139,14 @@ public class ParkingModel<T, G> extends BaseModel<T, G> implements Serializable 
 
 	public void setDeleteflg(String deleteflg) {
 		this.deleteflg = deleteflg;
+	}
+
+	public String getBuildname() {
+		return buildname;
+	}
+
+	public void setBuildname(String buildname) {
+		this.buildname = buildname;
 	}
 
 }
