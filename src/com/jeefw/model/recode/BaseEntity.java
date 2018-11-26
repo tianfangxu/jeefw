@@ -20,7 +20,7 @@ import core.support.ExtJSBaseParameter;
 public class BaseEntity extends ExtJSBaseParameter implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	//标识
@@ -28,7 +28,7 @@ public class BaseEntity extends ExtJSBaseParameter implements Serializable {
 	@Id
 	@GenericGenerator(name = "systemUUID", strategy = "uuid")
 	@GeneratedValue(generator = "systemUUID")
-	@Column(name = "code", length = 32, nullable = false, unique = true)
+	@Column(name = "id", length = 32, nullable = false, unique = true)
 	private String id;
 
 	@Column(name = "createuser")
@@ -87,7 +87,6 @@ public class BaseEntity extends ExtJSBaseParameter implements Serializable {
 	public void setDeleteflg(String deleteflg) {
 		this.deleteflg = deleteflg;
 	}
-	@Transient
 	public String getId() {
 		return id;
 	}
@@ -95,5 +94,5 @@ public class BaseEntity extends ExtJSBaseParameter implements Serializable {
 		this.id = id;
 	}
 
-	
+
 }

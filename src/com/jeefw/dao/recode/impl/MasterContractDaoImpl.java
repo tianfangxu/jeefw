@@ -31,7 +31,7 @@ public class MasterContractDaoImpl extends
 		JqGridPageView<MasterEntity> result = new JqGridPageView<MasterEntity>();
 		Session session = this.getSession();
 		StringBuffer sb = new StringBuffer(" where deleteflg = '0' ");
-		
+
 		//等于查询
 		if(model.getEqparam() != null){
 			MasterModel eqmodel = (MasterModel) model.getEqparam();
@@ -46,6 +46,9 @@ public class MasterContractDaoImpl extends
 			}
 			if(!StringUnit.isNullOrEmpty(eqmodel.getAccountname())){
 				sb.append(" and accountname = '"+eqmodel.getAccountname()+"' ");
+			}
+			if(!StringUnit.isNullOrEmpty(eqmodel.getId())){
+				sb.append(" and id = '"+eqmodel.getId()+"' ");
 			}
 		}
 		//like查询
@@ -64,8 +67,8 @@ public class MasterContractDaoImpl extends
 				sb.append(" and accountname like '%"+likemodel.getAccountname()+"%' ");
 			}
 		}
-		
-		
+
+
 		Query query = session.createQuery("from MasterEntity "
 				+ sb.toString());
 		query.setFirstResult((Integer.parseInt(model.getPage()) - 1)
@@ -80,6 +83,7 @@ public class MasterContractDaoImpl extends
 
 		result.setRows(list);
 		result.setTotal(count/Integer.parseInt(model.getRows())+1);
+		result.setTotalNumber((int)count);
 		result.setCurrentPage(Integer.parseInt(model.getPage()));
 		return result;
 	}
@@ -88,7 +92,7 @@ public class MasterContractDaoImpl extends
 	@Override
 	public void deletefirstpartyContract(String id,String userid) {
 		Query query = this.getSession().createSQLQuery(
-				"update m_master set deleteflg = '1',deleteuser = '"+userid+"',deletetime = '"+DateUnit.getTime14()+"' where code = ?");
+				"update m_master set deleteflg = '1',deleteuser = '"+userid+"',deletetime = '"+DateUnit.getTime14()+"' where id = ?");
 		query.setParameter(0, id);
 		query.executeUpdate();
 	}
@@ -96,13 +100,13 @@ public class MasterContractDaoImpl extends
 	@Override
 	public void savedata(MasterEntity entity) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void updatadata(MasterEntity entity) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
