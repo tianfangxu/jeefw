@@ -690,5 +690,17 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	public String property(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/recode/property";
 	}
+	@RequestMapping("/parking")
+	public String parking(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/recode/parking";
+	}
+	@RequestMapping("/customer")
+	public String customer(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/recode/customer";
+	}
+	@RequestMapping("/customerPerson")
+	public String customerPerson(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/recode/customerPerson";
+	}
 	/*******************new 20181107 end********************/
 }
