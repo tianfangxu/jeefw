@@ -226,31 +226,35 @@
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="customerid">承租方：</label>
                                     <div class="col-sm-4">
                                         <select class="select2" id="customerid" style="width: 100%">
-                                            <option value="1111">无匹配用户</option>
-                                            <option value="2222">张三</option>
-                                            <option value="3333">李四</option>
                                         </select>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="czfdz">地址：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="type">类型：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="czfdz" class="width-100"/>
+                                        <select class="select2" id="type" style="width: 100%">
+                                            <option value="0">企业</option>
+                                            <option value="1">个人</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="space-4"></div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="czfname">法定代表人：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbaddress">地址：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="czfname" class="width-100"/>
+                                        <input type="text" id="partbaddress" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="czflxdh">联系电话：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="name">法定代表人：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="czflxdh" class="width-100"/>
+                                        <input type="text" id="name" class="width-100"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="czfsh">税 号：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="contactnumber">联系电话：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="czfsh" class="width-100" />
+                                        <input type="text" id="contactnumber" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="taxnumber">税 号：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="taxnumber" class="width-100" />
                                     </div>
                                 </div>
                             </div>
@@ -438,6 +442,7 @@
             initBuildSelect2('buildid');
             initPartaSelect2('partacode');
             initPaytypeSelect2('paytype','WYYJ');
+            initPartbSelect2('customerid');
             $(document).keydown(function (event) {
                 var key = window.event ? event.keyCode : event.which;
                 if (key == 13) {
@@ -1462,6 +1467,73 @@
             all = all.substring(0,all.length-1);
         }
         $('#showPropertyIds').val(all);
+    }
+
+    function initPartbSelect2(id) {
+        $('#'+id).select2({
+            ajax: {
+                type:"get",
+                url: "${contextPath}/recode/customer/geCustomerByCondition",
+                contentType: 'application/json',
+                dataType:"JSON",
+                delay: 550,
+                data: function (params) {
+                    var rule = new Object();
+                    var rules = new Array();
+                    rule.field = 'contactname';
+                    rule.op = 'cn';
+                    rule.data =  checkIsNull(params.term) ? "" : params.term;
+                    rules.push(rule);
+                    return generateParams(params,rules);
+                },
+                processResults: function (data, params) {
+                    params.page = checkIsNull(params.page) ? 1 : params.page;
+                    var itemList = [];
+                    var row = data.rows;
+                    itemList.push({id: 99999, text: '暂无信息,选此项可添加'});
+                    for(var i=0;i<row.length;i++){
+                        itemList.push({id: row[i].id, text: row[i].name});
+                    }
+                    return {
+                        results: itemList,
+                        pagination: {
+                            more: (params.page * 10) < data.totalNumber
+                        }
+                    };
+                },
+                cache: true
+            },
+            multiBoolean:false,
+            language: "zh-CN",
+            placeholder:'--请选择--',//默认文字提示
+            allowClear: true,//允许清空
+            escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
+            templateResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
+            templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
+        }).on("select2:select",function(e){
+            var rule = new Object();
+            rule.field = 'id';
+            rule.op = 'eq';
+            rule.data =  e.params.data.id;
+            var rules = new Array();
+            rules.push(rule);
+            $.ajax({
+                dataType : "json",
+                url : "${contextPath}/recode/customer/geCustomerByCondition",
+                type : "get",
+                contentType: 'application/json',
+                data :generateParams(new Object(),rules),
+                complete : function(data) {
+                    if(data.statusText=='success'){
+                        $('#partbaddress').val(JSON.parse(data.responseText).rows[0].address);
+                        $('#name').val(JSON.parse(data.responseText).rows[0].name);
+                        $('#contactnumber').val(JSON.parse(data.responseText).rows[0].contactnumber);
+                        $('#taxnumber').val(JSON.parse(data.responseText).rows[0].taxnumber);
+                        $("#type").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
+                    }
+                }
+            });
+        });
     }
 
     function checkIsNull(value){
