@@ -606,7 +606,7 @@
     				data.bankname  = $("#bankname").val();
         			if($("#id").val() == '' || $("#id").val() == null || $("#id").val() == undefined){
         			}else{
-        				data.code = $("#id").val();
+        				data.id = $("#id").val();
         			}
    			    	$.ajax({
            				dataType : "json",

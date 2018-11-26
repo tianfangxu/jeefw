@@ -82,7 +82,17 @@
 										<hr />
 										<div>
 											<label for="form-field-8">类型</label>
-											<input id="type" class="form-control" type="text"> 
+											<!-- <input id="type" class="form-control" type="text">  -->
+											<div class="radio" style="border: 1px solid #d5d5d5;padding: 5px 4px 6px;">
+												<label>
+													<input name="type" type="radio" class="ace" value="0" />
+													<span class="lbl">地面</span>
+												</label>
+												<label>
+													<input name="type" type="radio" class="ace" value="1"  />
+													<span class="lbl">地下</span>
+												</label>
+											</div>
 											<label for="form-field-8">面积</label>
 											<input id="area" class="form-control" type="text">
 										</div>
@@ -91,7 +101,17 @@
 											<label for="form-field-8">价格</label>
 											<input id="price" class="form-control" type="text"> 
 											<label for="form-field-8">租赁状态</label>
-											<input id="used" class="form-control" type="text">
+											<!-- <input id="used" class="form-control" type="text"> -->
+											<div class="radio" style="border: 1px solid #d5d5d5;padding: 5px 4px 6px;">
+												<label>
+													<input name=used type="radio" class="ace" value="0" />
+													<span class="lbl">未出租</span>
+												</label>
+												<label>
+													<input name="used" type="radio" class="ace" value="1"  />
+													<span class="lbl">已出租</span>
+												</label>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -204,6 +224,13 @@
 							name : "type",
 							width : 200,
 							searchoptions : {sopt : ["cn","eq"]},
+							formatter:function(val){
+								if(val == '1'){
+									return '地下';
+								}else{
+									return '地面';
+								}
+							}
 						},{
 							name : "area",
 							width : 100,
@@ -216,6 +243,13 @@
 							name : "used",
 							width : 100,
 							searchoptions : {sopt : ["cn","eq"]},
+							formatter:function(val){
+								if(val == '1'){
+									return '已出租';
+								}else{
+									return '未出租';
+								}
+							}
 						}  
         			],
         			//scroll : 1, // set the scroll property to 1 to enable paging with scrollbar - virtual loading of records
@@ -335,9 +369,23 @@
         				$("#name").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).name);
         				$("#buil").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).build);
         				$("#area").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).area);
-        				$("#type").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).type);
+        				//$("#type").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).type);
         				$("#price").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).price);
-        				$("#used").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).used);
+        				//$("#used").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).used);
+        				var used_ = '0';
+        				if(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).used == '已出租'){
+        					used_ =  '1';
+						}else{
+							used_ = '0';
+						}
+        				var type_ = '0';
+        				if(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).type == '地下'){
+        					type_ =  '1';
+						}else{
+							type_ = '0';
+						}
+        				$("input[name='used'][value='"+used_+"']").attr('checked',true);
+        				$("input[name='type'][value='"+type_+"']").attr('checked',true);
         			}
         		});
         		
@@ -347,11 +395,11 @@
         			data.build=$("#buil").val();
         			data.area=$("#area").val();
         			data.price=$("#price").val();
-        			data.used=$("#used").val();
-        			data.type=$("#type").val();
+        			data.used=$("input[name='used']:checked").val();
+        			data.type=$("input[name='type']:checked").val();
         			if($("#id").val() == '' || $("#id").val() == null || $("#id").val() == undefined){
         			}else{
-        				data.code = $("#id").val();
+        				data.id = $("#id").val();
         			}
    			    	$.ajax({
            				dataType : "json",
@@ -604,7 +652,7 @@
    	   					var html = '<option value="">请选择楼宇名称</option>';
    	   					if(data.length >0){
    	   						for(var i = 0;i < data.length ;i++){
-   	   							html+='<option value="'+data[i].code+'">'+data[i].name+'</option>';
+   	   							html+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
    	   						}
    	   					}
    	   					$('#buildSelect').html(html);
