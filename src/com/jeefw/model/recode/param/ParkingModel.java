@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class ParkingModel<T, G> extends BaseModel<T, G> implements Serializable {
 
 	private String id;
-	private String code;// 编号
 	private String build;// 楼宇
 	private String buildname;
 	private String name;// 名称
@@ -27,14 +26,6 @@ public class ParkingModel<T, G> extends BaseModel<T, G> implements Serializable 
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
 	}
 
 	public String getBuild() {

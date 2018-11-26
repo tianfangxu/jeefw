@@ -13,7 +13,6 @@ import core.support.ExtJSBaseParameter;
 public class MasterModel<T,G> extends BaseModel<T,G> implements Serializable{
 
 	private String id;
-	private String code;// 编号
 	private String name;// 名称
 	private String address;// 地址
 	private String contactname;// 联系人
@@ -29,12 +28,7 @@ public class MasterModel<T,G> extends BaseModel<T,G> implements Serializable{
 	private String deleteuser;// 删除人
 	private String deletetime;// 删除时间
 	private String deleteflg;//删除标记
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
+
 	public String getName() {
 		return name;
 	}

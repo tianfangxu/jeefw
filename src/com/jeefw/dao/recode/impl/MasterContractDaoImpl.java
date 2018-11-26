@@ -78,9 +78,6 @@ public class MasterContractDaoImpl extends
 				.uniqueResult();
 		long count = Long.parseLong(cout.toString());
 
-		for (MasterEntity masterEntity : list) {
-			masterEntity.setId(masterEntity.getCode());
-		}
 		result.setRows(list);
 		result.setTotal(count/Integer.parseInt(model.getRows())+1);
 		result.setCurrentPage(Integer.parseInt(model.getPage()));

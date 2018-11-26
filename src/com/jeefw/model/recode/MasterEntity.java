@@ -20,12 +20,6 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "m_master")
 @Cache(region = "all", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MasterEntity extends BaseEntity {
-
-	@Id
-	@GenericGenerator(name = "systemUUID", strategy = "uuid")
-	@GeneratedValue(generator = "systemUUID")
-	@Column(name = "code", length = 32, nullable = false, unique = true)
-	private String code;// 编号
 	@Column(name = "name")
 	private String name;// 名称
 	@Column(name = "address")
@@ -43,12 +37,6 @@ public class MasterEntity extends BaseEntity {
 	@Column(name = "bankname")
 	private String bankname;// 开户行
 	
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
 	public String getName() {
 		return name;
 	}

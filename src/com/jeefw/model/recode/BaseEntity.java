@@ -5,8 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.jeefw.model.recode.param.MasterModel;
 
@@ -20,6 +24,11 @@ public class BaseEntity extends ExtJSBaseParameter implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	//标识
+
+	@Id
+	@GenericGenerator(name = "systemUUID", strategy = "uuid")
+	@GeneratedValue(generator = "systemUUID")
+	@Column(name = "code", length = 32, nullable = false, unique = true)
 	private String id;
 
 	@Column(name = "createuser")

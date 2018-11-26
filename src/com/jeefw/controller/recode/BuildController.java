@@ -65,7 +65,7 @@ public class BuildController extends JavaEEFrameworkBaseController<BuildEntity> 
 			if(mo != null && mo.getLoginuser() != null){
 				model.setLoginuser(mo.getLoginuser());
 			}
-			if(StringUtils.isEmpty(model.getCode())){
+			if(StringUtils.isEmpty(model.getId())){
 				buildService.saveBuild(model);
 				map.put("message", "添加成功");
 				writeJSON(response,map);

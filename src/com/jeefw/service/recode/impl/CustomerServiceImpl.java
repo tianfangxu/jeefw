@@ -34,7 +34,6 @@ public class CustomerServiceImpl implements CustomerService {
 	public void saveProperty(CustomerModel model) {
 		CustomerEntity entity = new CustomerEntity();
 		BeanUtils.copyProperties(model, entity);
-		entity.setCode(MD5.crypt(DateUnit.getTime14()));
 		entity.setDeleteflg("0");
 		entity.setCreatetime(DateUnit.getTime14());
 		entity.setCreateuser(model.getLoginuser().getUserName().toString());
@@ -44,15 +43,14 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public String updateProperty(CustomerModel model) {
-		if(StringUtils.isEmpty(model.getCode())){
+		if(StringUtils.isEmpty(model.getId())){
 			return "id为空";
 		}
-		CustomerEntity entity = customerDao.get(model.getCode());
+		CustomerEntity entity = customerDao.get(model.getId());
 		if(entity != null){
 			model.setDeleteflg(entity.getDeleteflg());
 			model.setCreatetime(entity.getCreatetime());
 			model.setCreateuser(entity.getCreateuser());
-			model.setCode(entity.getCode());
 			BeanUtils.copyProperties(model, entity);
 			entity.setUpdatetime(DateUnit.getTime14());
 			entity.setUpdateuser(model.getLoginuser().getId().toString());

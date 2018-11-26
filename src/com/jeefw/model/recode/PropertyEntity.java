@@ -21,12 +21,6 @@ import org.hibernate.annotations.GenericGenerator;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class PropertyEntity extends BaseEntity{
-
-	@Id
-	@GenericGenerator(name = "systemUUID", strategy = "uuid")
-	@GeneratedValue(generator = "systemUUID")
-	@Column(name = "code", length = 32, nullable = false, unique = true)
-	private String code ;//编号
 	@Column(name = "build")
 	private String build;//楼宇
 	@Column(name = "name")
@@ -37,12 +31,7 @@ public class PropertyEntity extends BaseEntity{
 	private String rent ;//租金
 	@Column(name = "used")
 	private String used ;//租赁状态
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
+
 	public String getBuild() {
 		return build;
 	}

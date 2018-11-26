@@ -21,12 +21,6 @@ import org.hibernate.annotations.GenericGenerator;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class CustomerEntity extends BaseEntity {
-
-	@Id
-	@GenericGenerator(name = "systemUUID", strategy = "uuid")
-	@GeneratedValue(generator = "systemUUID")
-	@Column(name = "code", length = 32, nullable = false, unique = true)
-	private String code;// 编号
 	@Column(name = "type")
 	private String type;// 客户种类：0：企业；1：个人
 	@Column(name = "idtype")
@@ -52,12 +46,7 @@ public class CustomerEntity extends BaseEntity {
 	@Column(name = "bankname")
 	private String bankname;// 开户行
 	
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
+
 	public String getIdtype() {
 		return idtype;
 	}

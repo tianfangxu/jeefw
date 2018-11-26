@@ -65,7 +65,7 @@ public class CustomerController extends JavaEEFrameworkBaseController<CustomerEn
 			if(mo != null && mo.getLoginuser() != null){
 				model.setLoginuser(mo.getLoginuser());
 			}
-			if(StringUtils.isEmpty(model.getCode())){
+			if(StringUtils.isEmpty(model.getId())){
 				customerService.saveProperty(model);
 				map.put("message", "添加成功");
 				writeJSON(response,map);

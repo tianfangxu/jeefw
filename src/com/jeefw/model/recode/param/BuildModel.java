@@ -12,7 +12,6 @@ import java.io.Serializable;
 public class BuildModel<T, G> extends BaseModel<T, G> implements Serializable {
 
 	private String id;
-	private String code;// 楼宇编号
 	private String name;// 楼宇名称
 	private String address;// 楼宇地址
 	private String contact;// 联系电话
@@ -26,14 +25,6 @@ public class BuildModel<T, G> extends BaseModel<T, G> implements Serializable {
 	private String deleteuser;// 删除人
 	private String deletetime;// 删除时间
 	private String deleteflg;// 删除标记
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
 
 	public String getName() {
 		return name;

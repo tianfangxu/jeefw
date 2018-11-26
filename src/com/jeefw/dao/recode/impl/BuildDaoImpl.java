@@ -70,9 +70,6 @@ public class BuildDaoImpl extends BaseDao<BuildEntity> implements BuildDao{
 				.uniqueResult();
 		long count = Long.parseLong(cout.toString());
 
-		for (BuildEntity entity : list) {
-			entity.setId(entity.getCode());
-		}
 		result.setRows(list);
 		result.setTotal(count/Integer.parseInt(model.getRows())+1);
 		result.setCurrentPage(Integer.parseInt(model.getPage()));

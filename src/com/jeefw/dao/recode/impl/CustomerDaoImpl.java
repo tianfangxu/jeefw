@@ -87,9 +87,6 @@ public class CustomerDaoImpl extends BaseDao<CustomerEntity> implements Customer
 				.uniqueResult();
 		long count = Long.parseLong(cout.toString());
 
-		for (CustomerEntity entity : list) {
-			entity.setId(entity.getCode());
-		}
 		result.setRows(list);
 		result.setTotal(count/Integer.parseInt(model.getRows())+1);
 		result.setCurrentPage(Integer.parseInt(model.getPage()));

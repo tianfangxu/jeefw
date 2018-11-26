@@ -10,7 +10,6 @@ import java.io.Serializable;
 public class PropertyModel<T, G> extends BaseModel<T, G> implements Serializable {
 
 	private String id;
-	private String code;//编号
 	private String build;//楼宇
 	private String buildname;//楼宇名称
 	private String name;//管理单元
@@ -30,12 +29,6 @@ public class PropertyModel<T, G> extends BaseModel<T, G> implements Serializable
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
 	}
 	public String getBuild() {
 		return build;

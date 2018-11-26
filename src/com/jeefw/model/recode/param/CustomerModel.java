@@ -6,7 +6,6 @@ public class CustomerModel<T, G> extends BaseModel<T, G> implements
 		Serializable {
 
 	private String id;
-	private String code;// 编号
 	private String type;// 客户种类：0：企业；1：个人
 	private String idtype;// 证件种类
 	private String idnumber;// 证件号码
@@ -26,14 +25,6 @@ public class CustomerModel<T, G> extends BaseModel<T, G> implements
 	private String deleteuser;// 删除人
 	private String deletetime;// 删除时间
 	private String deleteflg;// 删除标记
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
 
 	public String getIdtype() {
 		return idtype;

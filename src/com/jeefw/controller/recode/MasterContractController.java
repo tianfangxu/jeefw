@@ -70,7 +70,7 @@ public class MasterContractController<T> extends JavaEEFrameworkBaseController<M
 			if(mo != null && mo.getLoginuser() != null){
 				model.setLoginuser(mo.getLoginuser());
 			}
-			if(StringUtils.isEmpty(model.getCode())){
+			if(StringUtils.isEmpty(model.getId())){
 				firstpartyContractService.savefirstpartyContract(model);
 				map.put("message", "添加成功");
 				writeJSON(response,map);

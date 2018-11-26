@@ -14,7 +14,6 @@ import com.jeefw.service.recode.BuildService;
 
 import core.support.JqGridPageView;
 import core.util.DateUnit;
-import core.util.MD5;
 
 @Service
 @Transactional
@@ -33,7 +32,6 @@ public class BuildServiceImpl implements BuildService {
 	public void saveBuild(BuildModel model) {
 		BuildEntity entity = new BuildEntity();
 		BeanUtils.copyProperties(model, entity);
-		entity.setCode(MD5.crypt(DateUnit.getTime14()));
 		entity.setDeleteflg("0");
 		entity.setCreatetime(DateUnit.getTime14());
 		entity.setCreateuser(model.getLoginuser().getUserName().toString());
@@ -42,15 +40,14 @@ public class BuildServiceImpl implements BuildService {
 
 	@Override
 	public String updateBuild(BuildModel model) {
-		if(StringUtils.isEmpty(model.getCode())){
+		if(StringUtils.isEmpty(model.getId())){
 			return "id为空";
 		}
-		BuildEntity entity = buildDao.get(model.getCode());
+		BuildEntity entity = buildDao.get(model.getId());
 		if(entity != null){
 			model.setDeleteflg(entity.getDeleteflg());
 			model.setCreatetime(entity.getCreatetime());
 			model.setCreateuser(entity.getCreateuser());
-			model.setCode(entity.getCode());
 			BeanUtils.copyProperties(model, entity);
 			entity.setUpdatetime(DateUnit.getTime14());
 			entity.setUpdateuser(model.getLoginuser().getId().toString());

@@ -34,7 +34,6 @@ public class PropertyServiceImpl implements PropertyService {
 	public void saveProperty(PropertyModel model) {
 		PropertyEntity entity = new PropertyEntity();
 		BeanUtils.copyProperties(model, entity);
-		entity.setCode(MD5.crypt(DateUnit.getTime14()));
 		entity.setDeleteflg("0");
 		entity.setCreatetime(DateUnit.getTime14());
 		entity.setCreateuser(model.getLoginuser().getUserName().toString());
@@ -44,15 +43,14 @@ public class PropertyServiceImpl implements PropertyService {
 
 	@Override
 	public String updateProperty(PropertyModel model) {
-		if(StringUtils.isEmpty(model.getCode())){
+		if(StringUtils.isEmpty(model.getId())){
 			return "id为空";
 		}
-		PropertyEntity entity = PropertyDao.get(model.getCode());
+		PropertyEntity entity = PropertyDao.get(model.getId());
 		if(entity != null){
 			model.setDeleteflg(entity.getDeleteflg());
 			model.setCreatetime(entity.getCreatetime());
 			model.setCreateuser(entity.getCreateuser());
-			model.setCode(entity.getCode());
 			BeanUtils.copyProperties(model, entity);
 			entity.setUpdatetime(DateUnit.getTime14());
 			entity.setUpdateuser(model.getLoginuser().getId().toString());

@@ -33,7 +33,6 @@ public class ParkingServiceImpl implements ParkingService {
 	public void saveParking(ParkingModel model) {
 		ParkingEntity entity = new ParkingEntity();
 		BeanUtils.copyProperties(model, entity);
-		entity.setCode(MD5.crypt(DateUnit.getTime14()));
 		entity.setDeleteflg("0");
 		entity.setCreatetime(DateUnit.getTime14());
 		entity.setCreateuser(model.getLoginuser().getUserName().toString());
@@ -43,15 +42,14 @@ public class ParkingServiceImpl implements ParkingService {
 
 	@Override
 	public String updateParking(ParkingModel model) {
-		if(StringUtils.isEmpty(model.getCode())){
+		if(StringUtils.isEmpty(model.getId())){
 			return "id为空";
 		}
-		ParkingEntity entity = parkingDao.get(model.getCode());
+		ParkingEntity entity = parkingDao.get(model.getId());
 		if(entity != null){
 			model.setDeleteflg(entity.getDeleteflg());
 			model.setCreatetime(entity.getCreatetime());
 			model.setCreateuser(entity.getCreateuser());
-			model.setCode(entity.getCode());
 			BeanUtils.copyProperties(model, entity);
 			entity.setUpdatetime(DateUnit.getTime14());
 			entity.setUpdateuser(model.getLoginuser().getId().toString());
