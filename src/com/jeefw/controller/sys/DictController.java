@@ -11,6 +11,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jeefw.model.sys.param.DicModel;
+import core.util.ParamUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -170,22 +172,19 @@ public class DictController extends JavaEEFrameworkBaseController<Dict> implemen
 		}
 	}
 
-	//获取上级编码为查询编码的字典信息
-	@RequestMapping(value = "/getDictByType", method = { RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping(value = "/getDictByCondition", method = { RequestMethod.POST, RequestMethod.GET })
 	public void getDictByType(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		/*String dicType = request.getParameter("dicType");
-		String page = request.getParameter("page");
-		String rows = request.getParameter("rows");
-		List<Dict>  list = dictService.getDictByTypeWithPage(dicType,page,rows);
-		List<Dict>  totalList = dictService.getDictByTypeWithoutPage(dicType,page,rows);
-
-		JqGridPageView<Dict> dictListView = new JqGridPageView<Dict>();
-		dictListView.setMaxResults(maxResults);
-		List<Dict> dictWithSubList = dictService.queryDictWithSubList(queryResult.getResultList());
-		dictListView.setRows(list);
-		dictListView.setRecords(totalList.size());
-		writeJSON(response, dictListView);*/
-
+		try {
+			DicModel model = new ParamUtils<DicModel>().getparams(request, DicModel.class);
+			JqGridPageView<Dict> dicEntityJqGridPageView = null;
+			dicEntityJqGridPageView = dictService.getDicByCondition(model);
+			writeJSON(response, dicEntityJqGridPageView);
+		} catch (Exception e) {
+			e.printStackTrace();
+			HashMap<String,String> map = new HashMap<String, String>();
+			map.put("message", "系统出错，请稍后重试");
+			writeJSON(response, map);
+		}
 	}
 
 }

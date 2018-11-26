@@ -31,11 +31,11 @@ public class PropertyDaoImpl extends BaseDao<PropertyEntity> implements Property
 		JqGridPageView<PropertyModel> result = new JqGridPageView<PropertyModel>();
 		Session session = this.getSession();
 		StringBuffer sb = new StringBuffer(" where t.deleteflg = '0' ");
-		
+
 		if(!StringUnit.isNullOrEmpty(model.getBuild())){
 			sb.append(" and t.build = '"+model.getBuild()+"' ");
 		}
-		
+
 		//等于查询
 		if(model.getEqparam() != null){
 			PropertyModel eqmodel = (PropertyModel) model.getEqparam();
@@ -44,6 +44,12 @@ public class PropertyDaoImpl extends BaseDao<PropertyEntity> implements Property
 			}
 			if(!StringUnit.isNullOrEmpty(eqmodel.getUsed())){
 				sb.append(" and t.used = '"+eqmodel.getUsed()+"' ");
+			}
+			if(!StringUnit.isNullOrEmpty(eqmodel.getBuild())){
+				sb.append(" and t.build = '"+eqmodel.getBuild()+"' ");
+			}
+			if(!StringUnit.isNullOrEmpty(eqmodel.getId())){
+				sb.append(" and t.id = '"+eqmodel.getId()+"' ");
 			}
 		}
 		//like查询
@@ -56,9 +62,9 @@ public class PropertyDaoImpl extends BaseDao<PropertyEntity> implements Property
 				sb.append(" and t.used like '%"+likemodel.getUsed()+"%' ");
 			}
 		}
-		
-		Query query = session.createSQLQuery("select t.code id,b.name buildname,t.build build,t.name name,t.area area,t.rent rent,t.used used"
-				+ " from m_property t left join m_build b on t.build = b.code "+ sb.toString())
+
+		Query query = session.createSQLQuery("select t.id id,b.name buildname,t.build build,t.name name,t.area area,t.rent rent,t.used used"
+				+ " from m_property t left join m_build b on t.build = b.id "+ sb.toString())
 				.addScalar("id", StandardBasicTypes.STRING)
 				.addScalar("buildname", StandardBasicTypes.STRING)
 				.addScalar("build", StandardBasicTypes.STRING)
@@ -66,20 +72,21 @@ public class PropertyDaoImpl extends BaseDao<PropertyEntity> implements Property
 				.addScalar("area", StandardBasicTypes.STRING)
 				.addScalar("rent", StandardBasicTypes.STRING)
 				.addScalar("used", StandardBasicTypes.STRING)
-				.setResultTransformer(Transformers.aliasToBean(PropertyModel.class)); 
+				.setResultTransformer(Transformers.aliasToBean(PropertyModel.class));
 		query.setFirstResult((Integer.parseInt(model.getPage()) - 1)
 				* Integer.parseInt(model.getRows()));
 		query.setMaxResults(Integer.parseInt(model.getRows()));
-		
+
 		List<PropertyModel> list = query.list();
-		
+
 		Object cout = session.createSQLQuery(
-				"select count(1) from m_property  t left join m_build b on t.build = b.code " + sb.toString())
+				"select count(1) from m_property  t left join m_build b on t.build = b.id " + sb.toString())
 				.uniqueResult();
 		long count = Long.parseLong(cout.toString());
 
 		result.setRows(list);
 		result.setTotal(count/Integer.parseInt(model.getRows())+1);
+		result.setTotalNumber((int)count);
 		result.setCurrentPage(Integer.parseInt(model.getPage()));
 		return result;
 	}
@@ -87,10 +94,10 @@ public class PropertyDaoImpl extends BaseDao<PropertyEntity> implements Property
 	@Override
 	public void deleteEntity(String id, String userid) {
 		Query query = this.getSession().createSQLQuery(
-				"update m_property set deleteflg = '1' ,deleteuser = '"+userid+"',deletetime = '"+DateUnit.getTime14()+"' where code = ?");
+				"update m_property set deleteflg = '1' ,deleteuser = '"+userid+"',deletetime = '"+DateUnit.getTime14()+"' where id = ?");
 		query.setParameter(0, id);
 		query.executeUpdate();
-		
+
 	}
 
 

@@ -29,7 +29,7 @@ public class BuildDaoImpl extends BaseDao<BuildEntity> implements BuildDao{
 		JqGridPageView<BuildEntity> result = new JqGridPageView<BuildEntity>();
 		Session session = this.getSession();
 		StringBuffer sb = new StringBuffer(" where deleteflg = '0' ");
-		
+
 		//等于查询
 		if(model.getEqparam() != null){
 			BuildModel eqmodel = (BuildModel) model.getEqparam();
@@ -41,6 +41,9 @@ public class BuildDaoImpl extends BaseDao<BuildEntity> implements BuildDao{
 			}
 			if(!StringUnit.isNullOrEmpty(eqmodel.getManager())){
 				sb.append(" and manager = '"+eqmodel.getManager()+"' ");
+			}
+			if(!StringUnit.isNullOrEmpty(eqmodel.getId())){
+				sb.append(" and id = '"+eqmodel.getId()+"' ");
 			}
 		}
 		//like查询
@@ -56,15 +59,15 @@ public class BuildDaoImpl extends BaseDao<BuildEntity> implements BuildDao{
 				sb.append(" and manager like '%"+likemodel.getManager()+"%' ");
 			}
 		}
-		
+
 		Query query = session.createQuery("from BuildEntity "
 				+ sb.toString());
 		query.setFirstResult((Integer.parseInt(model.getPage()) - 1)
 				* Integer.parseInt(model.getRows()));
 		query.setMaxResults(Integer.parseInt(model.getRows()));
-		
+
 		List<BuildEntity> list = query.list();
-		
+
 		Object cout = session.createSQLQuery(
 				"select count(1) from m_build " + sb.toString())
 				.uniqueResult();
@@ -72,6 +75,7 @@ public class BuildDaoImpl extends BaseDao<BuildEntity> implements BuildDao{
 
 		result.setRows(list);
 		result.setTotal(count/Integer.parseInt(model.getRows())+1);
+		result.setTotalNumber((int)count);
 		result.setCurrentPage(Integer.parseInt(model.getPage()));
 		return result;
 	}
@@ -79,7 +83,7 @@ public class BuildDaoImpl extends BaseDao<BuildEntity> implements BuildDao{
 	@Override
 	public void deleteEntity(String id,String userid) {
 		Query query = this.getSession().createSQLQuery(
-				"update m_build set deleteflg = '1' ,deleteuser = '"+userid+"',deletetime = '"+DateUnit.getTime14()+"' where code = ?");
+				"update m_build set deleteflg = '1' ,deleteuser = '"+userid+"',deletetime = '"+DateUnit.getTime14()+"' where id = ?");
 		query.setParameter(0, id);
 		query.executeUpdate();
 	}

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.jeefw.model.sys.param.DicModel;
+import core.support.JqGridPageView;
 import org.springframework.stereotype.Service;
 
 import com.jeefw.dao.sys.DictDao;
@@ -40,6 +42,11 @@ public class DictServiceImpl extends BaseService<Dict> implements DictService {
 			dictList.add(dict);
 		}
 		return dictList;
+	}
+
+	@Override
+	public JqGridPageView<Dict> getDicByCondition(DicModel model) {
+		return dictDao.getDicByCondition(model);
 	}
 
 }

@@ -109,9 +109,9 @@
                             <div class="widget-main">
                                 <div class="form-group">
                                     <div><input type="hidden" id="id" /></div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="type">合同类型：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="contype">合同类型：</label>
                                     <div class="col-sm-4">
-                                        <select class="select2 width-100" id="type">
+                                        <select class="select2" id="contype" style="width: 100%">
                                             <option value="">--请选择--</option>
                                             <option value="1">物业管理服务合同</option>
                                             <option value="2">协议停车合同</option>
@@ -130,29 +130,20 @@
                                 </div>
                                 <div class="form-group" >
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="buildid">租赁地址：</label>
-                                    <div class="col-sm-2">
-                                        <select class="select2 width-100" id="buildid">
-                                            <option value="">--请选择--</option>
-                                            <option value="1">楼宇A</option>
-                                            <option value="2">楼宇B</option>
-                                            <option value="3">楼宇C</option>
-                                            <option value="4">楼宇D</option>
-                                        </select>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="buildid" style="width: 100%"></select>
                                     </div>
                                     <div class="col-sm-4" style="display: none" id="div1">
-                                        <select class="select2 width-100" id="propertyid">
-                                            <option value="">--请选择--</option>
-                                            <option value="11">xx区xx路xx号201室</option>
-                                            <option value="12">xx区xx路xx号202室</option>
-                                            <option value="13">xx区xx路xx号203室</option>
-                                            <option value="14">xx区xx路xx号204室</option>
-                                        </select>
+                                        <select class="select2" id="propertyid" style="width: 100%" multiple="multiple" ></select>
                                     </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" placeholder="区路号" class="width-100" readonly/>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="showAddressId"></label>
+                                    <div class="col-sm-4">
+                                        <input type="text" placeholder="区路号" class="width-100" id="showAddressId" readonly/>
                                     </div>
-                                    <div class="col-sm-1" style="display: none" id="div2">
-                                        <input type="text" placeholder="室" class="width-100" readonly/>
+                                    <div class="col-sm-4" style="display: none" id="div2">
+                                        <input type="text" placeholder="室" class="width-100"  id="showPropertyIds" readonly/>
                                     </div>
                                 </div>
                                 <div class="form-group" >
@@ -177,46 +168,43 @@
                         <div class="widget-body">
                             <div class="widget-main">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="firstpartyid">管理方：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partacode">管理方：</label>
                                     <div class="col-sm-4">
-                                        <select class="select2 width-100" id="firstpartyid">
-                                            <option value="111">上海交投物业管理有限公司1</option>
-                                            <option value="222">上海交投物业管理有限公司2</option>
-                                        </select>
+                                        <select class="select2 width-100" id="partacode" style="width: 100%"></select>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="glfdz">地址：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partaaddress">地址：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="glfdz" class="width-100" readonly value="上海市徐汇区吴中东路555号8楼"/>
+                                        <input type="text" id="partaaddress" class="width-100" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="glfname">法定代表人：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partalegalperson">法定代表人：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="glfname" class="width-100" readonly value="邵重业"/>
+                                        <input type="text" id="partalegalperson" class="width-100"  />
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="glflxdh">联系电话：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partancontact">联系电话：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="glflxdh" class="width-100" readonly value="021-34770192"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="glfzhmc">帐户名称：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="glfzhmc" class="width-100" readonly value="上海交投物业管理有限公司"/>
-                                    </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="glfkhyh">开户银行：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="glfkhyh" class="width-100" readonly value="上海浦东发展银行卢湾支行"/>
+                                        <input type="text" id="partancontact" class="width-100" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="glfzh">帐 号：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partaaccount">帐户名称：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="glfzh" class="width-100" readonly value="98990158000000493"/>
+                                        <input type="text" id="partaaccount" class="width-100" />
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="glfsh">税 号：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="bankname">开户银行：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="glfsh" class="width-100" readonly value="913123299958782109N"/>
+                                        <input type="text" id="bankname" class="width-100" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partaaccountname">帐 号：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partaaccountname" class="width-100" />
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partataxnumber">税 号：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partataxnumber" class="width-100" />
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +225,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="customerid">承租方：</label>
                                     <div class="col-sm-4">
-                                        <select class="select2 width-100" id="customerid">
+                                        <select class="select2" id="customerid" style="width: 100%">
                                             <option value="1111">无匹配用户</option>
                                             <option value="2222">张三</option>
                                             <option value="3333">李四</option>
@@ -295,12 +283,9 @@
                                     <div class="col-sm-4">
                                         <input type="text" id="managefee" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="payway">付款方式：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="paytype">付款方式：</label>
                                     <div class="col-sm-4">
-                                        <select class="select2 width-100" id="payway">
-                                            <option value="123">押一付一</option>
-                                            <option value="124">押一付三</option>
-                                            <option value="125">押二付二</option>
+                                        <select class="select2" id="paytype" style="width: 100%">
                                         </select>
                                     </div>
 
@@ -448,8 +433,11 @@
                         $(grid_selector).jqGrid("setGridWidth", parent_column.width());
                     }, 0);
                 }
-            })
+            });
 
+            initBuildSelect2('buildid');
+            initPartaSelect2('partacode');
+            initPaytypeSelect2('paytype','WYYJ');
             $(document).keydown(function (event) {
                 var key = window.event ? event.keyCode : event.which;
                 if (key == 13) {
@@ -1163,13 +1151,14 @@
                 $(".ui-jqdialog").remove();
             });
 
-            $('#type').change(function () {
-                if ($('#type').val() == '1') {
+            $('#contype').change(function () {
+                if ($('#contype').val() == '1') {
                     $(".wyxx").css("display", "");
                     $(".cwxx").css("display", "none");
                     $("#div1").css("display", "");
                     $("#div2").css("display", "");
-                } else if ($('#type').val() == '2') {
+
+                } else if ($('#contype').val() == '2') {
                     $(".wyxx").css("display", "none");
                     $(".cwxx").css("display", "");
                     $("#div1").css("display", "none");
@@ -1210,6 +1199,303 @@
 
         });
     });
+
+
+    /**
+     * 楼宇下拉框
+     * @param id
+     */
+    function initBuildSelect2(id){
+        $('#'+id).select2({
+            ajax: {
+                type:"get",
+                url: "${contextPath}/recode/build/getBuildByCondition",
+                contentType: 'application/json',
+                dataType:"JSON",
+                delay: 550,
+                data: function (params) {
+                    var rule = new Object();
+                    rule.field = 'name';
+                    rule.op = 'cn';
+                    rule.data =  checkIsNull(params.term) ? "" : params.term;
+                    var rules = new Array();
+                    rules.push(rule);
+                    return generateParams(params,rules);
+                },
+                processResults: function (data, params) {
+                    params.page = checkIsNull(params.page) ? 1 : params.page;
+                    var itemList = [];
+                    var row = data.rows;
+                    for(var i=0;i<row.length;i++){
+                        itemList.push({id: row[i].id, text: row[i].name});
+                    }
+                    return {
+                        results: itemList,
+                        pagination: {
+                            more: (params.page * 10) < data.totalNumber
+                        }
+                    };
+                },
+                cache: true
+            },
+            multiBoolean:false,
+            language: "zh-CN",
+            placeholder:'--请选择--',//默认文字提示
+            allowClear: true,//允许清空
+            escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
+            templateResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
+            templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
+        }).on("select2:select",function(e){
+            var rule = new Object();
+            rule.field = 'id';
+            rule.op = 'eq';
+            rule.data =  e.params.data.id;
+            var rules = new Array();
+            rules.push(rule);
+            $.ajax({
+                dataType : "json",
+                url : "${contextPath}/recode/build/getBuildByCondition",
+                type : "get",
+                contentType: 'application/json',
+                data :generateParams(new Object(),rules),
+                complete : function(data) {
+                    if(data.statusText=='success'){
+                        $('#showAddressId').val(JSON.parse(data.responseText).rows[0].address);
+                        if($('#contype').val() == '1'){
+                            $('#propertyid').select2("val", " ");
+                            $('#showPropertyIds').val("");
+                            initPropertySelect2(e.params.data.id,'propertyid');
+                        }
+                    }
+                }
+            });
+        });
+    }
+
+    /**
+     * 楼宇物业下拉框
+     * @param buildid
+     * @param propertyid
+     */
+    function initPropertySelect2(buildid,propertyid){
+        $('#'+propertyid).select2({
+            ajax: {
+                type:"get",
+                url: "${contextPath}/recode/property/getPropertyByCondition",
+                contentType: 'application/json',
+                dataType:"JSON",
+                delay: 550,
+                data: function (params) {
+                    var rule = new Object();
+                    var rules = new Array();
+                    rule.field = 'name';
+                    rule.op = 'cn';
+                    rule.data =  checkIsNull(params.term) ? "" : params.term;
+                    rules.push(rule);
+                    rule = new Object();
+                    rule.field = 'build';
+                    rule.op = 'eq';
+                    rule.data =  buildid;
+                    rules.push(rule);
+                    return generateParams(params,rules);
+                },
+                processResults: function (data, params) {
+                    params.page = checkIsNull(params.page) ? 1 : params.page;
+                    var itemList = [];
+                    var row = data.rows;
+                    for(var i=0;i<row.length;i++){
+                        itemList.push({id: row[i].id, text: row[i].name});
+                    }
+                    return {
+                        results: itemList,
+                        pagination: {
+                            more: (params.page * 10) < data.totalNumber
+                        }
+                    };
+                },
+                cache: true
+            },
+            multiBoolean:true,
+            language: "zh-CN",
+            placeholder:'--请选择--',//默认文字提示
+            allowClear: true,//允许清空
+            escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
+            templateResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
+            templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
+        }).on("select2:select",function(e){
+            showProperty();
+        }).on("select2:unselect",function(e){
+            showProperty();
+        });
+    }
+
+
+    function initPartaSelect2(id){
+        $('#'+id).select2({
+            ajax: {
+                type:"get",
+                url: "${contextPath}/recode/firstpartyContract/getfirstpartyContractByCondition",
+                contentType: 'application/json',
+                dataType:"JSON",
+                delay: 550,
+                data: function (params) {
+                    var rule = new Object();
+                    var rules = new Array();
+                    rule.field = 'name';
+                    rule.op = 'cn';
+                    rule.data =  checkIsNull(params.term) ? "" : params.term;
+                    rules.push(rule);
+                    return generateParams(params,rules);
+                },
+                processResults: function (data, params) {
+                    params.page = checkIsNull(params.page) ? 1 : params.page;
+                    var itemList = [];
+                    var row = data.rows;
+                    for(var i=0;i<row.length;i++){
+                        itemList.push({id: row[i].id, text: row[i].name});
+                    }
+                    return {
+                        results: itemList,
+                        pagination: {
+                            more: (params.page * 10) < data.totalNumber
+                        }
+                    };
+                },
+                cache: true
+            },
+            multiBoolean:false,
+            language: "zh-CN",
+            placeholder:'--请选择--',//默认文字提示
+            allowClear: true,//允许清空
+            escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
+            templateResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
+            templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
+        }).on("select2:select",function(e){
+            var rule = new Object();
+            rule.field = 'id';
+            rule.op = 'eq';
+            rule.data =  e.params.data.id;
+            var rules = new Array();
+            rules.push(rule);
+            $.ajax({
+                dataType : "json",
+                url : "${contextPath}/recode/firstpartyContract/getfirstpartyContractByCondition",
+                type : "get",
+                contentType: 'application/json',
+                data :generateParams(new Object(),rules),
+                complete : function(data) {
+                    if(data.statusText=='success'){
+                        $('#partaaddress').val(JSON.parse(data.responseText).rows[0].address);
+                        $('#partalegalperson').val(JSON.parse(data.responseText).rows[0].contactname);
+                        $('#partancontact').val(JSON.parse(data.responseText).rows[0].contactnumber);
+                        $('#partaaccount').val(JSON.parse(data.responseText).rows[0].account);
+                        $('#partaaccountname').val(JSON.parse(data.responseText).rows[0].accountname);
+                        $('#bankname').val(JSON.parse(data.responseText).rows[0].bankname);
+                        $('#partataxnumber').val(JSON.parse(data.responseText).rows[0].taxnumber);
+                    }
+                }
+            });
+        })
+    }
+
+    function initPaytypeSelect2(id,type){
+        $('#'+id).select2({
+            ajax: {
+                type:"get",
+                url: "${contextPath}/sys/dict/getDictByCondition",
+                contentType: 'application/json',
+                dataType:"JSON",
+                delay: 550,
+                data: function (params) {
+                    var rule = new Object();
+                    var rules = new Array();
+                    rule.field = 'parentDictkey';
+                    rule.op = 'eq';
+                    rule.data = type;
+                    rules.push(rule);
+                    rule = new Object();
+                    rule.field = 'dicValue';
+                    rule.op = 'cn';
+                    rule.data = checkIsNull(params.term) ? "" : params.term;
+                    rules.push(rule);
+                    return generateParams(params,rules);
+                },
+                processResults: function (data, params) {
+                    params.page = checkIsNull(params.page) ? 1 : params.page;
+                    var itemList = [];
+                    var row = data.rows;
+                    for(var i=0;i<row.length;i++){
+                        itemList.push({id: row[i].id, text: row[i].dictValue});
+                    }
+                    return {
+                        results: itemList,
+                        pagination: {
+                            more: (params.page * 10) < data.totalNumber
+                        }
+                    };
+                },
+                cache: true
+            },
+            multiBoolean:false,
+            language: "zh-CN",
+            placeholder:'--请选择--',//默认文字提示
+            allowClear: true,//允许清空
+            escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
+            templateResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
+            templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
+        })
+    }
+
+
+    /**
+     * 室号显示
+     */
+    function showProperty(){
+        var o=document.getElementById('propertyid').getElementsByTagName('option');
+        var all="";
+        for(var i=0;i<o.length;i++){
+            if(o[i].selected){
+                all+=o[i].text+",";
+            }
+        }
+        if(all!=''){
+            all = all.substring(0,all.length-1);
+        }
+        $('#showPropertyIds').val(all);
+    }
+
+    function checkIsNull(value){
+        if(typeof(value)=="undefined" || value=='' || value==null){
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * 组织请求条件
+     * @param params
+     * @param rule
+     * @returns {Object}
+     */
+    function generateParams(params,rule) {
+        var query = new Object();
+        query._search=true;
+        query.rows = '10';
+        query.page = ''+(checkIsNull(params.page) ? 1 : params.page);
+        query.sidx = 'id';
+        query.sord = 'asc';
+        var filter = new Object();
+        filter.groupOp = 'AND';
+        var ruleSz = new Array();
+        for(var i=0;i<rule.length;i++){
+            ruleSz.push(rule[i]);
+        }
+        filter.rules = ruleSz;
+        query.filters = JSON.stringify(filter) ;
+        return query;
+    }
+
 
 
 </script>

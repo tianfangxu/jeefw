@@ -18,6 +18,8 @@ public class JqGridPageView<E> {
 	/** total record qty * */
 	private long records;
 
+	private int totalNumber;
+
 	public JqGridPageView() {
 
 	}
@@ -77,4 +79,11 @@ public class JqGridPageView<E> {
 		this.currentPage = currentPage;
 	}
 
+	public int getTotalNumber() {
+		return totalNumber;
+	}
+
+	public void setTotalNumber(int totalNumber) {
+		this.totalNumber = totalNumber;
+	}
 }
