@@ -7,6 +7,7 @@ public class CustomerModel<T, G> extends BaseModel<T, G> implements
 
 	private String id;
 	private String code;// 编号
+	private String type;// 客户种类：0：企业；1：个人
 	private String idtype;// 证件种类
 	private String idnumber;// 证件号码
 	private String idexpiresend;// 证件有效期
@@ -184,6 +185,14 @@ public class CustomerModel<T, G> extends BaseModel<T, G> implements
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

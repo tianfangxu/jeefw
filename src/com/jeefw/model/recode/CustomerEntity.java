@@ -27,6 +27,8 @@ public class CustomerEntity extends BaseEntity {
 	@GeneratedValue(generator = "systemUUID")
 	@Column(name = "code", length = 32, nullable = false, unique = true)
 	private String code;// 编号
+	@Column(name = "type")
+	private String type;// 客户种类：0：企业；1：个人
 	@Column(name = "idtype")
 	private String idtype;// 证件种类
 	@Column(name = "idnumber")
@@ -121,6 +123,12 @@ public class CustomerEntity extends BaseEntity {
 	}
 	public void setBankname(String bankname) {
 		this.bankname = bankname;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	

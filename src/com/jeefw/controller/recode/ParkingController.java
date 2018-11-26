@@ -15,36 +15,37 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jeefw.core.Constant;
 import com.jeefw.core.JavaEEFrameworkBaseController;
-import com.jeefw.model.recode.PropertyEntity;
-import com.jeefw.model.recode.param.PropertyModel;
-import com.jeefw.service.recode.PropertyService;
+import com.jeefw.model.recode.ParkingEntity;
+import com.jeefw.model.recode.param.ParkingModel;
+import com.jeefw.service.recode.ParkingService;
 
 import core.support.JqGridPageView;
 import core.util.ParamUtils;
 
+
 /***
- *楼宇内物业信息
+ *停车位信息
  * 
  * @author Administrator
  *
  */
 @Controller
-@RequestMapping("/recode/property")
-public class PropertyController extends JavaEEFrameworkBaseController<PropertyEntity> implements Constant{
+@RequestMapping("/recode/parking")
+public class ParkingController extends JavaEEFrameworkBaseController<ParkingEntity> implements Constant{
 
 	@Resource
-	PropertyService propertyService;
+	ParkingService parkingService;
 	
 	/**
-	 * 楼宇内物业信息
+	 * 停车位信息
 	 */
 	@SuppressWarnings({"rawtypes" })
-	@RequestMapping(value = "/getPropertyByCondition", method = { RequestMethod.POST, RequestMethod.GET })
-	public void getPropertyByCondition(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	@RequestMapping(value = "/getParkingByCondition", method = { RequestMethod.POST, RequestMethod.GET })
+	public void getParkingByCondition(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		try {
-			PropertyModel model = new ParamUtils<PropertyModel>().getparams(request, PropertyModel.class);
-			JqGridPageView<PropertyModel> propertyModelJqGridPageView = null;
-			propertyModelJqGridPageView = propertyService.getPropertyByCondition(model);
+			ParkingModel model = new ParamUtils<ParkingModel>().getparams(request, ParkingModel.class);
+			JqGridPageView<ParkingModel> propertyModelJqGridPageView = null;
+			propertyModelJqGridPageView = parkingService.getParkingByCondition(model);
 			writeJSON(response, propertyModelJqGridPageView);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,24 +56,24 @@ public class PropertyController extends JavaEEFrameworkBaseController<PropertyEn
 	} 
 	
 	/***
-	 * 保存/修改楼宇内物业信息
+	 * 保存/修改停车位信息
 	 */
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/saveOrupdProperty", method = { RequestMethod.POST })
-	public void saveOrupdProperty(HttpServletRequest request, HttpServletResponse response,@RequestBody PropertyModel model) throws IOException{
+	@RequestMapping(value = "/saveOrupdParking", method = { RequestMethod.POST })
+	public void saveOrupdParking(HttpServletRequest request, HttpServletResponse response,@RequestBody ParkingModel model) throws IOException{
 		HashMap<String,String> map = new HashMap<String, String>();
 		try {
-			PropertyModel mo = new ParamUtils<PropertyModel>().getparams(request, PropertyModel.class);
+			ParkingModel mo = new ParamUtils<ParkingModel>().getparams(request, ParkingModel.class);
 			if(mo != null && mo.getLoginuser() != null){
 				model.setLoginuser(mo.getLoginuser());
 			}
 			if(StringUtils.isEmpty(model.getCode())){
-				propertyService.saveProperty(model);
+				parkingService.saveParking(model);
 				map.put("message", "添加成功");
 				writeJSON(response,map);
 			}else{
 				//修改
-				String msg = propertyService.updateProperty(model);
+				String msg = parkingService.updateParking(model);
 				map.put("message", msg);
 				writeJSON(response,map);
 			}
@@ -84,18 +85,18 @@ public class PropertyController extends JavaEEFrameworkBaseController<PropertyEn
 	}
 	
 	/**
-	 * 删除楼宇内物业信息
+	 * 删除停车位信息
 	 */
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/delProperty", method = { RequestMethod.POST })
-	public void delProperty(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	@RequestMapping(value = "/delParking", method = { RequestMethod.POST })
+	public void delParking(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		HashMap<String,String> map = new HashMap<String, String>();
 		try {
-			PropertyModel model = new ParamUtils<PropertyModel>().getparams(request, PropertyModel.class);
+			ParkingModel model = new ParamUtils<ParkingModel>().getparams(request, ParkingModel.class);
 			String oper = request.getParameter("oper");
 			if(oper != null && oper.equals("del")){
 				//删除
-				String string = propertyService.deleteProperty(model);
+				String string = parkingService.deleteParking(model);
 				map.put("message", string);
 				writeJSON(response,map);
 			}
