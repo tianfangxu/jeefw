@@ -1,8 +1,7 @@
 package com.jeefw.model.sys;
 
-import com.jeefw.model.sys.param.ContractFiletParameter;
-import com.jeefw.model.sys.param.ContractFlowParameter;
 import core.support.DateTimeSerializer;
+import core.support.ExtJSBaseParameter;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.annotations.Cache;
@@ -11,7 +10,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -26,14 +24,14 @@ import java.util.Objects;
 @Cache(region = "all", usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties(value = {"maxResults", "firstResult", "topCount", "sortColumns", "cmd", "queryDynamicConditions", "sortedConditions", "dynamicProperties", "success", "message", "sortColumnsString", "flag"})
 @Indexed
-public class ContractFlow extends ContractFlowParameter {
+public class ContractFlow extends ExtJSBaseParameter {
 
     private static final long serialVersionUID = -5203647994042621382L;
     @Id
     @GenericGenerator(name = "systemUUID", strategy = "uuid")
     @GeneratedValue(generator = "systemUUID")
-    @Column(name = "code", length = 32, nullable = false, unique = true)
-    private String code;
+    @Column(name = "id", length = 32, nullable = false, unique = true)
+    private String id;
 
     @Column(name = "contractcode")
     private String contractcode;
@@ -56,12 +54,12 @@ public class ContractFlow extends ContractFlowParameter {
     @Column(name = "handlertime")
     private Date handlertime;
 
-    public String getCode() {
-        return code;
+    public String getId() {
+        return id;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getContractcode() {
@@ -127,7 +125,7 @@ public class ContractFlow extends ContractFlowParameter {
         if (o == null || getClass() != o.getClass()) return false;
         ContractFlow that = (ContractFlow) o;
         return decision == that.decision &&
-                Objects.equals(code, that.code) &&
+                Objects.equals(id, that.id) &&
                 Objects.equals(contractcode, that.contractcode) &&
                 Objects.equals(opinion, that.opinion) &&
                 Objects.equals(dealuser, that.dealuser) &&
@@ -138,6 +136,6 @@ public class ContractFlow extends ContractFlowParameter {
 
     @Override
     public int hashCode() {
-        return Objects.hash(code, contractcode, opinion, decision, dealuser, dealname, nexthandler, handlertime);
+        return Objects.hash(id, contractcode, opinion, decision, dealuser, dealname, nexthandler, handlertime);
     }
 }

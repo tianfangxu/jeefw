@@ -1,6 +1,6 @@
 package com.jeefw.model.sys;
 
-import com.jeefw.model.sys.param.ContractParkingParameter;
+import core.support.ExtJSBaseParameter;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -22,14 +22,14 @@ import java.util.Objects;
 @Cache(region = "all", usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties(value = {"maxResults", "firstResult", "topCount", "sortColumns", "cmd", "queryDynamicConditions", "sortedConditions", "dynamicProperties", "success", "message", "sortColumnsString", "flag"})
 @Indexed
-public class ContractParking extends ContractParkingParameter {
+public class ContractParking extends ExtJSBaseParameter {
 
     private static final long serialVersionUID = 6460181855547786321L;
     @Id
     @GenericGenerator(name = "systemUUID", strategy = "uuid")
     @GeneratedValue(generator = "systemUUID")
-    @Column(name = "code", length = 32, nullable = false, unique = true)
-    private  String code;
+    @Column(name = "id", length = 32, nullable = false, unique = true)
+    private  String id;
     @Column(name = "contractcode")
     private String contractcode;
     @Column(name = "address")
@@ -39,11 +39,11 @@ public class ContractParking extends ContractParkingParameter {
     @Column(name = "undergroundunit",columnDefinition="number(10,2)")
     private BigDecimal undergroundunit;
     @Column(name = "undergroundnumber")
-    private String undergroundnumber;
+    private int undergroundnumber;
     @Column(name = "surfaceunit",columnDefinition="number(10,2)")
     private BigDecimal surfaceunit;
     @Column(name = "surfacenumber")
-    private String surfacenumber;
+    private int surfacenumber;
     @Column(name = "rent",columnDefinition="number(10,2)")
     private BigDecimal rent;
     @Column(name = "prepay")
@@ -53,12 +53,12 @@ public class ContractParking extends ContractParkingParameter {
     @Column(name = "reissuecardfee",columnDefinition="number(5,2)")
     private BigDecimal reissuecardfee;
 
-    public String getCode() {
-        return code;
+    public String getId() {
+        return id;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getContractcode() {
@@ -93,11 +93,11 @@ public class ContractParking extends ContractParkingParameter {
         this.undergroundunit = undergroundunit;
     }
 
-    public String getUndergroundnumber() {
+    public int getUndergroundnumber() {
         return undergroundnumber;
     }
 
-    public void setUndergroundnumber(String undergroundnumber) {
+    public void setUndergroundnumber(int undergroundnumber) {
         this.undergroundnumber = undergroundnumber;
     }
 
@@ -109,11 +109,11 @@ public class ContractParking extends ContractParkingParameter {
         this.surfaceunit = surfaceunit;
     }
 
-    public String getSurfacenumber() {
+    public int getSurfacenumber() {
         return surfacenumber;
     }
 
-    public void setSurfacenumber(String surfacenumber) {
+    public void setSurfacenumber(int surfacenumber) {
         this.surfacenumber = surfacenumber;
     }
 
@@ -155,7 +155,7 @@ public class ContractParking extends ContractParkingParameter {
         if (o == null || getClass() != o.getClass()) return false;
         ContractParking that = (ContractParking) o;
         return prepay == that.prepay &&
-                Objects.equals(code, that.code) &&
+                Objects.equals(id, that.id) &&
                 Objects.equals(contractcode, that.contractcode) &&
                 Objects.equals(address, that.address) &&
                 Objects.equals(manager, that.manager) &&
@@ -170,6 +170,6 @@ public class ContractParking extends ContractParkingParameter {
 
     @Override
     public int hashCode() {
-        return Objects.hash(code, contractcode, address, manager, undergroundunit, undergroundnumber, surfaceunit, surfacenumber, rent, prepay, cardfee, reissuecardfee);
+        return Objects.hash(id, contractcode, address, manager, undergroundunit, undergroundnumber, surfaceunit, surfacenumber, rent, prepay, cardfee, reissuecardfee);
     }
 }

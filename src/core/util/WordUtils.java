@@ -33,7 +33,7 @@ public class WordUtils {
     }
 
     public static String createDoc(Map<?, ?> dataMap, String compactName,String templateName) throws IOException {
-        String name =  templateFolder+"/static/word/"+compactName+".docx";
+        String name =  templateFolder+"static/word/"+compactName+".docx";
         File f = new File(name);
         if(f.exists()){
             try{

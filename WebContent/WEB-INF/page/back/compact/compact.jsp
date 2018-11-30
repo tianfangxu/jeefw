@@ -11,9 +11,10 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/daterangepicker.css"/>
 <link rel="stylesheet" href="${contextPath}/static/assets/css/bootstrap-datetimepicker.css"/>
 <link rel="stylesheet" href="${contextPath}/static/assets/css/select2.css" />
+<link rel="stylesheet" href="${contextPath}/static/assets/css/load.css" />
 
 
-
+<!--操作按钮-->
 <div class="row">
     <div class="col-xs-12">
         <div class="well well-sm">
@@ -32,25 +33,30 @@
                     编辑合同
                 </a>
             </shiro:hasPermission>
-            <a id="viewCompactButton" role="button" class="btn btn-inverse btn-sm" data-toggle="modal">
-                合同预览
-            </a>
-            <a id="examineCompactButton" role="button" class="btn btn-pink btn-sm" data-toggle="modal">
-                提交审核
-            </a>
             <shiro:lacksPermission name="${ROLE_KEY}:compact:edit">
                 <a id="editCompactButton" role="button" disabled="disabled" class="btn btn-purple btn-sm"
                    data-toggle="modal">
                     编辑合同
                 </a>
             </shiro:lacksPermission>
-            <form id="compactHibernateSearchForm" class="nav-search form-search">
-                <span class="input-icon" style="position: relative;top: -30px;">
-                    <input type="text" placeholder="全文检索 ..." class="nav-search-input" id="search-input"
-                           autocomplete="off"/>
-                    <i class="ace-icon fa fa-search nav-search-icon"></i>
-                </span>
-            </form>
+            <shiro:hasPermission name="${ROLE_KEY}:compact:delete">
+                <a id="delCompactButton" role="button" class="btn btn-danger btn-sm" data-toggle="modal">
+                    删除合同
+                </a>
+            </shiro:hasPermission>
+            <shiro:lacksPermission name="${ROLE_KEY}:compact:delete">
+                <a id="delCompactButton" role="button" disabled="disabled" class="btn btn-danger btn-sm"
+                   data-toggle="modal">
+                    删除合同
+                </a>
+            </shiro:lacksPermission>
+            <a id="viewCompactButton" role="button" class="btn btn-inverse btn-sm" data-toggle="modal">
+                合同预览
+            </a>
+            <a id="examineCompactButton" role="button" class="btn btn-pink btn-sm" data-toggle="modal">
+                提交审核
+            </a>
+
         </div>
 
         <table id="grid-table"></table>
@@ -58,15 +64,13 @@
         <div id="grid-pager"></div>
 
         <script type="text/javascript">
-            var $path_base = "${contextPath}/static";//in Ace demo this will be used for editurl parameter
+            var $path_base = "${contextPath}/static";
         </script>
 
-        <!-- PAGE CONTENT ENDS -->
-    </div><!-- /.col -->
+    </div>
 </div>
-<!-- /.row -->
 
-
+<!--合同预览-->
 <div id="modal-table1" class="modal fade" data-backdrop="static">
     <div class="modal-dialog" style="width: 90%;height: 90%">
             <div class="modal-content">
@@ -81,7 +85,7 @@
     </div>
 </div>
 
-
+<!--合同新增-->
 <div id="modal-table" class="modal fade" data-backdrop="static">
     <div class="modal-dialog" style="min-width: 820px;">
         <form id="compactForm" class="form-horizontal">
@@ -223,14 +227,14 @@
                         <div class="widget-body">
                             <div class="widget-main">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="customerid">承租方：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbcode">承租方：</label>
                                     <div class="col-sm-4">
-                                        <select class="select2" id="customerid" style="width: 100%">
+                                        <select class="select2" id="partbcode" style="width: 100%">
                                         </select>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="type">类型：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtype">类型：</label>
                                     <div class="col-sm-4">
-                                        <select class="select2" id="type" style="width: 100%">
+                                        <select class="select2" id="partbtype" style="width: 100%">
                                             <option value="0">企业</option>
                                             <option value="1">个人</option>
                                         </select>
@@ -242,19 +246,25 @@
                                     <div class="col-sm-4">
                                         <input type="text" id="partbaddress" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="name">法定代表人：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson">法定代表人：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="name" class="width-100"/>
+                                        <input type="text" id="partblegalperson" class="width-100"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="contactnumber">联系电话：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbncontact">联系电话：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="contactnumber" class="width-100"/>
+                                        <input type="text" id="partbncontact" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="taxnumber">税 号：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber">税 号：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="taxnumber" class="width-100" />
+                                        <input type="text" id="partbtaxnumber" class="width-100" />
+                                    </div>
+                                </div>
+                                <div class="form-group" id="div3" style="display: none;">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbname">承租方名称：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbname" class="width-100"/>
                                     </div>
                                 </div>
                             </div>
@@ -283,9 +293,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="managefee">物业管理费(元)：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="propertyfee">物业管理费(元)：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="managefee" class="width-100"/>
+                                        <input type="text" id="propertyfee" class="width-100"/>
                                     </div>
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="paytype">付款方式：</label>
                                     <div class="col-sm-4">
@@ -295,13 +305,13 @@
 
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="prodeposit">物业费押金(元)：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="deposit">物业费押金(元)：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="prodeposit" class="width-100"/>
+                                        <input type="text" id="deposit" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="eleprice">电费单价(元/千瓦小时)：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="electric">电费单价(元/千瓦小时)：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="eleprice" class="width-100"/>
+                                        <input type="text" id="electric" class="width-100"/>
                                     </div>
                                 </div>
                             </div>
@@ -320,49 +330,49 @@
                         <div class="widget-body">
                             <div class="widget-main">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="parkowner">停车场地资产产权单位：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="manager">停车场地资产产权单位：</label>
                                     <div class="col-sm-10">
-                                        <input type="text" id="parkowner" class="width-100"/>
+                                        <input type="text" id="manager" class="width-100"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="downparkprice">地下车位价格(元/月/车)：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="undergroundunit">地下车位价格(元/月/车)：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="downparkprice" class="width-100"/>
+                                        <input type="text" id="undergroundunit" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="upparkprice">地面车位价格(元/月/车)：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="surfaceunit">地面车位价格(元/月/车)：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="upparkprice" class="width-100"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="downparknum">地下车位数量(个)：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="downparknum" class="width-100"/>
-                                    </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="upparknum">地面车位数量(个)：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="upparknum" class="width-100"/>
+                                        <input type="text" id="surfaceunit" class="width-100"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="rentalfee">车位租赁费(元/月)：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="undergroundnumber">地下车位数量(个)：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="rentalfee" class="width-100"/>
+                                        <input type="text" id="undergroundnumber" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="parkpayway">支付方式(月预付)：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="surfacenumber">地面车位数量(个)：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="parkpayway" class="width-100"/>
+                                        <input type="text" id="surfacenumber" class="width-100"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="licensefee">停车证制作费：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="rent">车位租赁费(元/月)：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="licensefee" class="width-100"/>
+                                        <input type="text" id="rent" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="permitfee">停车证补办费：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="prepay">支付方式(月预付)：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="permitfee" class="width-100"/>
+                                        <input type="text" id="prepay" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="cardfee">停车证制作费：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="cardfee" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="reissuecardfee">停车证补办费：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="reissuecardfee" class="width-100"/>
                                     </div>
                                 </div>
                             </div>
@@ -403,36 +413,366 @@
                         </button>
                     </div>
                 </div>
-            </div><!-- /.modal-content -->
+            </div>
         </form>
-    </div><!-- /.modal-dialog -->
+    </div>
 </div>
 
-<!-- page specific plugin scripts -->
+<!--合同编辑-->
+<div id="modal-table-edit" class="modal fade" data-backdrop="static">
+    <div class="modal-dialog" style="min-width: 820px;">
+        <form id="compactForm_Edit" class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        编辑合同信息
+                    </div>
+                </div>
+                <div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
+                    <div id="modal-tip-edit" class="red clearfix"></div>
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">基本条款</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <div><input type="hidden" id="id_edit" /></div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="contype_edit">合同类型：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="contype_edit" style="width: 100%" >
+                                            <option value="">--请选择--</option>
+                                            <option value="1">物业管理服务合同</option>
+                                            <option value="2">协议停车合同</option>
+                                            <option value="3">其他合同</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="htsj_edit">合同时间：</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+											<span class="input-group-addon">
+												<i class="fa fa-calendar bigger-110"></i>
+											</span>
+                                            <input class="form-control" type="text" name="date-range-picker" id="htsj_edit"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="buildid_edit">租赁地址：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="buildid_edit" style="width: 100%"></select>
+                                    </div>
+                                    <div class="col-sm-4" style="display: none" id="div1_edit">
+                                        <select class="select2" id="propertyid_edit" style="width: 100%" multiple="multiple" ></select>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="showAddressId_edit"></label>
+                                    <div class="col-sm-4">
+                                        <input type="text" placeholder="区路号" class="width-100" id="showAddressId_edit" readonly/>
+                                    </div>
+                                    <div class="col-sm-4" style="display: none" id="div2_edit">
+                                        <input type="text" placeholder="室" class="width-100"  id="showPropertyIds_edit" readonly/>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price_edit">合同金额（元）：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" placeholder="" class="width-100" id="price_edit" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">甲方信息</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partacode">管理方：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2 width-100" id="partacode_edit" style="width: 100%"></select>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partaaddress_edit">地址：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partaaddress_edit" class="width-100" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partalegalperson_edit">法定代表人：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partalegalperson_edit"_edit class="width-100"  />
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partancontact_edit">联系电话：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partancontact_edit" class="width-100" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partaaccount_edit">帐户名称：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partaaccount_edit" class="width-100" />
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="bankname_edit">开户银行：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="bankname_edit" class="width-100" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partaaccountname_edit">帐 号：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partaaccountname_edit" class="width-100" />
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partataxnumber_edit">税 号：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partataxnumber_edit" class="width-100" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">乙方信息</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbcode_edit">承租方：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="partbcode_edit" style="width: 100%">
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtype_edit">类型：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="partbtype_edit" style="width: 100%">
+                                            <option value="0">企业</option>
+                                            <option value="1">个人</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="space-4"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbaddress_edit">地址：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbaddress_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson">法定代表人：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partblegalperson_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbncontact_edit">联系电话：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbncontact_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">税 号：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbtaxnumber_edit" class="width-100" />
+                                    </div>
+                                </div>
+                                <div class="form-group" id="div3_edit" style="display: none;">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbname_edit">承租方名称：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbname_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-box wyxx" style="display: none">
+                        <div class="widget-header">
+                            <h4 class="widget-title">基本条款</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="buildarera_edit">房屋建筑面积(平方米)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="buildarera_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="tenantarea_edit">承租建筑面积(平方米)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="tenantarea_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="propertyfee_edit">物业管理费(元)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="propertyfee_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="paytype_edit">付款方式：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="paytype_edit" style="width: 100%">
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="deposit_edit">物业费押金(元)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="deposit_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="electric_edit">电费单价(元/千瓦小时)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="electric_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-box cwxx" style="display: none">
+                        <div class="widget-header">
+                            <h4 class="widget-title">基本条款</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="manager_edit">停车场地资产产权单位：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="manager_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="undergroundunit_edit">地下车位价格(元/月/车)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="undergroundunit_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="surfaceunit_edit">地面车位价格(元/月/车)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="surfaceunit_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="undergroundnumber_edit">地下车位数量(个)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="undergroundnumber_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="surfacenumber_edit">地面车位数量(个)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="surfacenumber_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="rent_edit">车位租赁费(元/月)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="rent_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="prepay_edit">支付方式(月预付)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="prepay_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="cardfee_edit">停车证制作费：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="cardfee_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="reissuecardfee_edit">停车证补办费：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="reissuecardfee_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">补充条款</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="supplementaryterms_edit">其他条款：</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="width-100" id="supplementaryterms_edit" placeholder="补充合同条款使用" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer no-margin-top">
+                    <div class="text-center">
+                        <button id="submitButton_edit" type="button" class="btn btn-app btn-success btn-xs">
+                            <i class="ace-icon fa fa-floppy-o bigger-160"></i>
+                            保存
+                        </button>
+                        <button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
+                            <i class="ace-icon fa fa-share bigger-160"></i>
+                            取消
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 <script type="text/javascript">
     var scripts = [null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
         "${contextPath}/static/assets/js/jquery.ui.touch-punch.js", "${contextPath}/static/assets/js/markdown/markdown.js", "${contextPath}/static/assets/js/markdown/bootstrap-markdown.js",
         "${contextPath}/static/assets/js/jquery.hotkeys.js", "${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js",
         "${contextPath}/static/assets/js/jquery.gritter.js","${contextPath}/static/assets/js/date-time/moment.js", "${contextPath}/static/assets/js/date-time/bootstrap-datepicker.js",
         "${contextPath}/static/assets/js/date-time/bootstrap-timepicker.js", "${contextPath}/static/assets/js/date-time/daterangepicker.js", "${contextPath}/static/assets/js/date-time/bootstrap-datetimepicker.js",
-        "${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.media.js",null]
+        "${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.media.js","${contextPath}/static/assets/js/load-min.js",null]
     $(".page-content-area").ace_ajax("loadScripts", scripts, function () {
-        // inline scripts related to this page
         jQuery(function ($) {
             $('.select2').select2({allowClear:true})
 
             var grid_selector = "#grid-table";
             var pager_selector = "#grid-pager";
 
-            // resize to fit page size
             $(window).on("resize.jqGrid", function () {
                 $(grid_selector).jqGrid("setGridWidth", $(".page-content").width());
             })
-            // resize on sidebar collapse/expand
+
             var parent_column = $(grid_selector).closest("[class*='col-']");
             $(document).on("settings.ace.jqGrid", function (ev, event_name, collapsed) {
                 if (event_name === "sidebar_collapsed" || event_name === "main_container_fixed") {
-                    // setTimeout is for webkit only to give time for DOM changes and then redraw!!!
                     setTimeout(function () {
                         $(grid_selector).jqGrid("setGridWidth", parent_column.width());
                     }, 0);
@@ -442,17 +782,13 @@
             initBuildSelect2('buildid');
             initPartaSelect2('partacode');
             initPaytypeSelect2('paytype','WYYJ');
-            initPartbSelect2('customerid');
+            initPartbSelect2('partbcode');
+
             $(document).keydown(function (event) {
                 var key = window.event ? event.keyCode : event.which;
                 if (key == 13) {
                     if ($("#search-input").val() == "") {
-                        $.gritter.add({
-                            title: "系统信息",
-                            text: "请输入检索词",
-                            class_name: "gritter-info gritter-center"
-                        });
-                        return;
+                        toastMessage('系统信息', '请输入检索词！');
                     } else {
                         $.ajax({
                             dataType: "json",
@@ -472,105 +808,65 @@
 
             jQuery(grid_selector).jqGrid({
                 subGrid: false,
-                url: "${contextPath}/static/json/compact.json",
+                url: "${contextPath}/sys/contract/getContractByCondition",
                 datatype: "json",
                 height: 450,
-                colNames: ["ID", "合同编号", "管理方", "承租方", "合同类型", "承租方联系电话", "租赁时间", "合同状态",
-                            "租赁地址", "其他条款", "范围建筑面积", "承租建筑面积", "付款方式", "物业费押金(元)", "电费单价(元/千瓦小时)", "停车场地资产产权单位",
-                            "地下车位价格(元/月/车)", "地面车位价格(元/月/车)", "地下车位数量(个)", "地面车位数量(个)", "车位租赁费(元/月)", "支付方式(月预付)",
-                            "停车证制作费", "停车证补办费", "管理方地址", "管理方法定代表人", "管理方联系电话", "管理方帐户名称", "管理方开户银行", "管理方账号",
-                            "管理方税号", "承租方地址", "承租方法定代表人", "承租方税号"],
+                colNames: ["ID", "合同编号", "管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态"],
                 colModel: [{
                     name: "id",
-                    index: "id",
-                    label: "ID",
                     width: 60,
-                    sorttype: "long",
+                    hidden:true
+                }, {
+                    name: "sysnumber",
+                    width: 120,
+                    searchoptions: {sopt: ["cn","eq"]}
+                }, {
+                    name: "partaname",
+                    width: 150,
                     search: false
                 }, {
-                    name: "htbh",
-                    index: "htbh",
-                    label: "合同编号",
-                    width: 150,
-                    editable: true,
-                    editoptions: {size: "20", maxlength: "50"},
-                    editrules: {required: true},
-                    searchoptions: {sopt: ["cn"]}
-                }, {
-                    name: "glf",
-                    index: "glf",
-                    label: "管理方",
-                    width: 150,
-                    editable: true,
-                    editoptions: {size: "20", maxlength: "100"},
-                    searchoptions: {sopt: ["cn"]}
-                }, {
-                    name: "czf",
-                    index: "czf",
-                    label: "承租方",
+                    name: "partbname",
                     width: 110,
-                    editable: true,
-                    editoptions: {size: "20", maxlength: "15"},
-                    search: false,
+                    searchoptions: {sopt: ["cn","eq"]}
                 }, {
-                    name: "htlx",
-                    index: "htlx",
-                    label: "合同类型",
+                    name: "contype",
                     width: 110,
-                    editable: true,
-                    editoptions: {size: "20", maxlength: "15"},
-                    search: false,
+                    searchoptions: {sopt: ["eq"]},
+                    formatter:function(celval, options, rowdata){
+                        if(celval=='1'){
+                            return "物业合同";
+                        }else if(celval=='2'){
+                            return "停车合同";
+                        }else if(celval=='3'){
+                            return "其他合同";
+                        }
+                    }
                 }, {
-                    name: "czflxdh",
-                    index: "czflxdh",
-                    label: "承租方联系电话",
+                    name: "partbcontact",
                     width: 150,
-                    sorttype: "date",
-                    searchoptions: {sopt: ["cn"]}
+                    search: false
                 }, {
-                    name: "htsj",
-                    index: "htsj",
-                    label: "租赁时间",
-                    width: 200,
-                    editable: true,
-                    search: false,
-                    edittype: "textarea",
-                    editoptions: {rows: "2", cols: "18", maxlength: "200"}
+                    name: "startdate",
+                    width: 150,
+                    search: false
+                },{
+                    name: "enddate",
+                    width: 150,
+                    search: false
                 }, {
-                    name: "survey",
-                    index: "survey",
+                    name: "auditstate",
                     width: 100,
-                    label: "合同状态",
-                    search: false
-                },
-                    {name: "zldz", index: "zldz",hidden: true, width: 100,label: "租赁地址"},
-                    {name: "qttk", index: "qttk", hidden: true, label: "其他条款"},
-                    {name: "fwjzmj", index: "fwjzmj", hidden: true, label: "范围建筑面积"},
-                    {name: "czjzmj", index: "czjzmj", hidden: true, label: "承租建筑面积"},
-                    {name: "fkfs", index: "fkfs", hidden: true, label: "付款方式"},
-                    {name: "wyyj", index: "wyyj", hidden: true, label: "物业费押金(元)"},
-                    {name: "dfdj", index: "dfdj", hidden: true, label: "电费单价(元/千瓦小时)"},
-                    {name: "cqdw", index: "cqdw", hidden: true, label: "停车场地资产产权单位"},
-                    {name: "dxcwjg", index: "dxcwjg", hidden: true, label: "地下车位价格(元/月/车)"},
-                    {name: "dscwjg", index: "dscwjg", hidden: true, label: "地面车位价格(元/月/车)"},
-                    {name: "dxcwsl", index: "dxcwsl", hidden: true, label: "地下车位数量(个)"},
-                    {name: "dscwsl", index: "dscwsl", hidden: true, label: "地面车位数量(个)"},
-                    {name: "cwzlf", index: "cwzlf", hidden: true, label: "车位租赁费(元/月)"},
-                    {name: "zffs", index: "zffs", hidden: true, label: "支付方式(月预付)"},
-                    {name: "zzf", index: "zzf", hidden: true, label: "停车证制作费"},
-                    {name: "bbf", index: "bbf", hidden: true, label: "停车证补办费"},
-                    {name: "glfdz", index: "glfdz", hidden: true, label: "管理方地址"},
-                    {name: "glfname", index: "glfname", hidden: true, label: "管理方法定代表人"},
-                    {name: "glflxdh", index: "glflxdh", hidden: true, label: "管理方联系电话"},
-                    {name: "glfzhmc", index: "glfzhmc", hidden: true, label: "管理方帐户名称"},
-                    {name: "glfkhyh", index: "glfkhyh", hidden: true, label: "管理方开户银行"},
-                    {name: "glfzh", index: "glfzh", hidden: true, label: "管理方账号"},
-                    {name: "glfsh", index: "glfsh", hidden: true, label: "管理方税号"},
-                    {name: "czfdz", index: "czfdz", hidden: true, label: "承租方地址"},
-                    {name: "czfname", index: "czfname", hidden: true, label: "承租方法定代表人"},
-                    {name: "czfsh", index: "czfsh", hidden: true, label: "承租方税号"}
-                ],
-                //scroll : 1, // set the scroll property to 1 to enable paging with scrollbar - virtual loading of records
+                    search: false,
+                    formatter:function(celval, options, rowdata){
+                        if(celval=='1'){
+                            return "待提交";
+                        }else if(celval=='2'){
+                            return "审核中";
+                        }else if(celval=='3'){
+                            return "已完成";
+                        }
+                    }
+                }],
                 sortname: "id",
                 sortorder: "asc",
                 viewrecords: true,
@@ -594,17 +890,20 @@
                 editurl: "${contextPath}/sys/compact/operateCompact",
                 gridComplete:function(){
                     var ids = $(grid_selector).getDataIDs();
-                    for(var i=0;i<ids.length;i++){
+                    for (var i = 0; i < ids.length; i++) {
                         var rowData = $(grid_selector).getRowData(ids[i]);
-                        if(rowData.htsj=='2016-11-06 2018-11-06'){//如果天数等于0，则背景色置灰显示
-                            $('#'+ids[i]).find("td").css("background-color","#FFB6C1");
+                        var httime = rowData.enddate;
+                        var today = new Date();
+                        var date = new Date(today);
+                        var today_time = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+                        if (httime <= today_time) {
+                            $('#' + ids[i]).find("td").css("background-color", "#FFB6C1");
                         }
                     }
                 }
             });
 
             $(window).triggerHandler("resize.jqGrid");
-
 
             function aceSwitch(cellvalue, options, cell) {
                 setTimeout(function () {
@@ -615,32 +914,24 @@
             $("#survey").ace_wysiwyg({
                 toolbar:
                     [
-                        "font",
-                        null,
-                        "fontSize",
-                        null,
+                        "font", null,
+                        "fontSize", null,
                         {name: "bold", className: "btn-info"},
                         {name: "italic", className: "btn-info"},
                         {name: "strikethrough", className: "btn-info"},
-                        {name: "underline", className: "btn-info"},
-                        null,
+                        {name: "underline", className: "btn-info"}, null,
                         {name: "insertunorderedlist", className: "btn-success"},
                         {name: "insertorderedlist", className: "btn-success"},
                         {name: "outdent", className: "btn-purple"},
-                        {name: "indent", className: "btn-purple"},
-                        null,
+                        {name: "indent", className: "btn-purple"}, null,
                         {name: "justifyleft", className: "btn-primary"},
                         {name: "justifycenter", className: "btn-primary"},
                         {name: "justifyright", className: "btn-primary"},
-                        {name: "justifyfull", className: "btn-inverse"},
-                        null,
+                        {name: "justifyfull", className: "btn-inverse"}, null,
                         {name: "createLink", className: "btn-pink"},
-                        {name: "unlink", className: "btn-pink"},
-                        null,
-                        {name: "insertImage", className: "btn-success"},
-                        null,
-                        "foreColor",
-                        null,
+                        {name: "unlink", className: "btn-pink"}, null,
+                        {name: "insertImage", className: "btn-success"}, null,
+                        "foreColor", null,
                         {name: "undo", className: "btn-grey"},
                         {name: "redo", className: "btn-grey"}
                     ],
@@ -668,82 +959,30 @@
             $("#editCompactButton").bind("click", function () {
                 var selectedId = $(grid_selector).jqGrid("getGridParam", "selrow");
                 if (null == selectedId) {
-                    $.gritter.add({
-                        title: "系统信息",
-                        text: "请选择记录",
-                        class_name: "gritter-info gritter-center"
-                    });
+                    toastMessage('系统信息', '请选择记录！');
                 } else {
-                    $("#modal-table").modal("toggle");
-                    /**
-                     * "id": 1,
-                     "htbh": "WY201811090001",
-                     "htlx": "物业管理服务合同",
-                     "htsj": "2018-11-06 2019-11-06",
-                     "zldz": "上海市徐汇区吴中东路555号8楼",
-                     "qttk":"9.1未尽事宜，双方经协商一致可以补充协议形式予以约定；<br>9.2《租户守则》为本合同之附件，为本合同有效组成部分;9.3本合同一式四份，双方各执二份；本合同自签署之日起生效；9.4合同期满，本合同自然终止。",
-                     "fwjzmj":"300",
-                     "czjzmj":"300",
-                     "fkfs":"押一付一",
-                     "wyyj":"20000",
-                     "dfdj":"1",
-                     "cqdw":"上海交投物业管理有限公司",
-                     "dxcwjg":"1000",
-                     "dscwjg":"800",
-                     "dxcwsl":"3",
-                     "dscwsl":"1",
-                     "cwzlf":"3800",
-                     "zffs":"3",
-                     "zzf":"200",
-                     "bbf":"50",
-                     "glf":"上海交投物业管理有限公司",
-                     "glfdz":"上海市徐汇区吴中东路555号8楼",
-                     "glfname":"王思聪",
-                     "glflxdh":"021-34770192",
-                     "glfzhmc":"上海交投物业管理有限公司",
-                     "glfkhyh":"上海浦东发展银行卢湾支行",
-                     "glfzh":"98990158000000493",
-                     "glfsh":"913123299958782109N",
-                     "czf":"张三",
-                     "czfdz":"上海市徐汇区吴中东路555号8楼",
-                     "czfname":"张三",
-                     "czflxdh": "021-34770192",
-                     "czfsh":"913123299958782109N",
-                     "survey": "已审核"
-                     */
-                    $("#id").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).id);
-                    $("#htbh").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).htbh);
-                    $("#htlx").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).htlx);
-                    $("#htsj").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).htsj);
-                    $("#qttk").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).qttk);
-                    $("#fwjzmj").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).fwjzmj);
-                    $("#czjzmj").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).czjzmj);
-                    $("#fkfs").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).fkfs);
-                    $("#wyyj").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).wyyj);
-                    $("#dfdj").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).dfdj);
-                    $("#cqdw").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).cqdw);
-                    $("#dxcwjg").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).dxcwjg);
-                    $("#dscwjg").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).dscwjg);
-                    $("#dxcwsl").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).dxcwsl);
-                    $("#dscwsl").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).dscwsl);
-                    $("#cwzlf").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).cwzlf);
-                    $("#zffs").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).zffs);
-                    $("#zzf").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).zzf);
-                    $("#bbf").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).bbf);
-                    $("#glf").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).glf);
-                    $("#glfdz").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).glfdz);
-                    $("#glfname").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).glfname);
-                    $("#glflxdh").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).glflxdh);
-                    $("#glfzhmc").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).glfzhmc);
-                    $("#glfkhyh").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).glfkhyh);
-                    $("#glfzh").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).glfzh);
-                    $("#glfsh").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).glfsh);
-                    $("#czf").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).czf);
-                    $("#czfdz").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).czfdz);
-                    $("#czfname").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).czfname);
-                    $("#czflxdh").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).czflxdh);
-                    $("#czfsh").html(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).czfsh);
-                    $("#survey").val(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).survey);
+                    var params = new Object();
+                    params.id =  selectedId;
+                    $.ajax({
+                        dataType : "json",
+                        url : "${contextPath}/sys/contract/getContractWithInfoById",
+                        type : "post",
+                        contentType: 'application/json',
+                        data :JSON.stringify(params),
+                        beforeSend: function () {
+                            $.mask_fullscreen();
+                        },
+                        complete: function (xmlRequest) {
+                            $.mask_close_all();
+                            if(xmlRequest.statusText=='success'){
+                                echoEditForm(JSON.parse(xmlRequest.responseText).rows[0]);
+                            }
+                        },
+                        error: function () {
+                            $.mask_close_all();
+                        }
+                    });
+
 
                 }
             });
@@ -751,11 +990,7 @@
             $("#examineCompactButton").bind("click", function () {
                 var selectedId = $(grid_selector).jqGrid("getGridParam", "selrow");
                 if (null == selectedId) {
-                    $.gritter.add({
-                        title: "系统信息",
-                        text: "请选择记录",
-                        class_name: "gritter-info gritter-center"
-                    });
+                    toastMessage('系统信息', '请选择记录！');
                 } else {
                     if (jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).survey != '待提交') {
                         toastMessage('系统信息', '该合同已在审核中！');
@@ -765,7 +1000,6 @@
                                  bootbox.alert("提交成功！");
                              }
                          });*/
-
                         bootbox.confirm({
                             message: "确定提交审核？",
                             buttons: {
@@ -784,15 +1018,67 @@
                                 }
                             }
                         });
-
                     }
                 }
             });
 
-            $("#compactForm").on("click", function (e) {
-                //window.location.href="${contextPath}/sys/compact/exportSellPlan";
+            $("#delCompactButton").bind("click", function () {
+                var selectedId = $(grid_selector).jqGrid("getGridParam", "selrow");
+                if (null == selectedId) {
+                    toastMessage('系统信息', '请选择记录！');
+                } else {
+                    if (jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).auditstate == '审核中') {
+                        toastMessage('系统信息', '该合同已在审核中！');
+                    } else if(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).auditstate == '已完成'){
+                        toastMessage('系统信息', '该合同已经审核完毕！');
+                    } else {
+                        bootbox.confirm({
+                            message: "确定删除？",
+                            buttons: {
+                                confirm: {
+                                    label: '确定',
+                                    className: 'btn-success'
+                                },
+                                cancel: {
+                                    label: '取消',
+                                    className: 'btn-danger'
+                                }
+                            },
+                            callback: function (result) {
+                                if (result) {
+                                    var params = new Object();
+                                    params.id =  selectedId;
+                                    $.ajax({
+                                        dataType : "json",
+                                        url : "${contextPath}/sys/contract/deleteContract",
+                                        type : "post",
+                                        contentType: 'application/json',
+                                        data :JSON.stringify(params),
+                                        beforeSend: function () {
+                                            $.mask_fullscreen();
+                                        },
+                                        complete: function (xmlRequest) {
+                                            jQuery(grid_selector).trigger("reloadGrid");
+                                            $.mask_close_all();
+                                            toastMessage("系统提示","删除成功！");
+                                        },
+                                        error: function () {
+                                            $.mask_close_all();
+                                        }
+                                    });
+                                }
+                            }
+
+                        });
+                    }
+                }
+            });
+
+            $("#submitButton").on("click", function (e) {
                 var re = /^[0-9]+.?[0-9]*$/;
-                if ($.trim($("#type").val()) == "") {
+
+                //基础信息校验
+                if ($.trim($("#contype").val()) == "") {
                     $("#modal-tip").html("请选择合同类型");
                     return;
                 }
@@ -804,21 +1090,78 @@
                     $("#modal-tip").html("请选择楼宇");
                     return;
                 }
-                if($("#type").val() == '1'){
+                if($("#contype").val() == '1'){
                     if($('#propertyid').val() == ''){
-                        $("#modal-tip").html("请选择楼宇具体管理单元");
+                        $("#modal-tip").html("请选择楼宇具体的管理单元");
                         return;
                     }
                 }
-                if($('#firstpartyid').val()==''){
+                if($("#contype").val() == '3'){
+                     if($.trim($('#price').val())==''||!re.test($.trim($('#price').val()))) {
+                         $("#modal-tip").html("请填写合同金额，只能为数字");
+                         return;
+                     }
+                }
+
+                //甲方信息校验
+                if($('#partacode').val()==''){
                     $("#modal-tip").html("请选择甲方基本资料");
                     return;
                 }
-                if($('#customerid').val()==''){
-                    $("#modal-tip").html("请选择乙方基本资料");
+                if($.trim($('#partaaddress').val())==''){
+                    $("#modal-tip").html("请填写甲方地址");
                     return;
                 }
-                if($("#type").val() == '1'){
+                if($.trim($('#partalegalperson').val())==''){
+                    $("#modal-tip").html("请填写甲方法定代表人");
+                    return;
+                }
+                if($.trim($('#partancontact').val())==''){
+                    $("#modal-tip").html("请填写甲方联系电话");
+                    return;
+                }
+                if($.trim($('#partaaccount').val())==''){
+                    $("#modal-tip").html("请填写甲方联系电话");
+                    return;
+                }
+                if($.trim($('#bankname').val())==''){
+                    $("#modal-tip").html("请填写甲方开户银行");
+                    return;
+                }
+                if($.trim($('#partaaccountname').val())==''){
+                    $("#modal-tip").html("请填写甲方帐号");
+                    return;
+                }
+                if($.trim($('#partataxnumber').val())==''){
+                    $("#modal-tip").html("请填写甲方税号");
+                    return;
+                }
+
+                //乙方信息校验
+                if($.trim($('#partbaddress').val())==''){
+                    $("#modal-tip").html("请填写乙方地址");
+                    return;
+                }
+                if($.trim($('#partblegalperson').val())==''){
+                    $("#modal-tip").html("请填写乙方法定代表人");
+                    return;
+                }
+                if($.trim($('#partbncontact').val())==''){
+                    $("#modal-tip").html("请填写乙方联系电话");
+                    return;
+                }
+                if($.trim($('#partbtaxnumber').val())==''){
+                    $("#modal-tip").html("请填写乙方税号");
+                    return;
+                }
+                if($('#partbcode').val()=='99999'){
+                    if($.trim($('#partbname').val())==''){
+                        $("#modal-tip").html("请填写承租方名称");
+                        return;
+                    }
+                }
+                if($("#contype").val() == '1'){
+                    //校验房屋
                     if($.trim($('#buildarera').val())==''){
                         $("#modal-tip").html("请填写房屋建筑面积");
                         return;
@@ -827,94 +1170,79 @@
                         $("#modal-tip").html("请填写承租建筑面积");
                         return;
                     }
-                    if($.trim($('#managefee').val())==''){
+                    if($.trim($('#propertyfee').val())==''){
                         $("#modal-tip").html("请填写物业管理费");
                         return;
                     }
-                    if($.trim($('#payway').val())==''){
+                    if($('#paytype').val()==''){
                         $("#modal-tip").html("请选择付款方式");
                         return;
                     }
-                    if($.trim($('#prodeposit').val())==''){
+                    if($.trim($('#deposit').val())==''){
                         $("#modal-tip").html("请填写物业费押金");
                         return;
                     }
-                    if($.trim($('#eleprice').val())==''){
+                    if($.trim($('#electric').val())==''){
                         $("#modal-tip").html("请填写电费单价");
                         return;
                     }
-                }else if($("#type").val() == '2'){
-                    if($.trim($('#parkowner').val())==''){
+                }else if($("#contype").val() == '2'){
+                    //校验停车
+                    if($.trim($('#manager').val())==''){
                         $("#modal-tip").html("请填写停车场地资产产权单位");
                         return;
                     }
-                    if($.trim($('#downparkprice').val())==''){
-                        $("#modal-tip").html("请填写地下车位价格");
+                    if($.trim($('#undergroundunit').val())==''||!re.test($.trim($('#undergroundunit').val()))){
+                        $("#modal-tip").html("请填写地下车位价格,只能为数字");
                         return;
                     }
-                    if($.trim($('#upparkprice').val())==''){
-                        $("#modal-tip").html("请填写地面车位价格");
+                    if($.trim($('#surfaceunit').val())==''||!re.test($.trim($('#surfaceunit').val()))){
+                        $("#modal-tip").html("请填写地面车位价格,只能为数字");
                         return;
                     }
-                    if($.trim($('#downparknum').val())==''){
-                        $("#modal-tip").html("请填写地下车位数量");
+                    if($.trim($('#undergroundnumber').val())==''||!re.test($.trim($('#undergroundnumber').val()))){
+                        $("#modal-tip").html("请填写地下车位数量,只能为数字");
                         return;
                     }
-                    if($.trim($('#upparknum').val())==''){
-                        $("#modal-tip").html("请填写地面车位数量");
+                    if($.trim($('#surfacenumber').val())==''||!re.test($.trim($('#surfacenumber').val()))){
+                        $("#modal-tip").html("请填写地面车位数量,只能为数字");
                         return;
                     }
-                    if($.trim($('#rentalfee').val())==''){
-                        $("#modal-tip").html("请填写车位租赁费");
+                    if($.trim($('#rent').val())==''||!re.test($.trim($('#rent').val()))){
+                        $("#modal-tip").html("请填写车位租赁费,只能为数字");
                         return;
                     }
-                    if($.trim($('#parkpayway').val())==''||!re.test($.trim($('#parkpayway').val()))){
+                    if($.trim($('#prepay').val())==''||!re.test($.trim($('#prepay').val()))){
                         $("#modal-tip").html("请填写支付方式(月预付),只能为数字");
                         return;
                     }
-                    if($.trim($('#licensefee').val())==''){
-                        $("#modal-tip").html("请填写停车证制作费");
+                    if($.trim($('#cardfee').val())==''||!re.test($.trim($('#cardfee').val()))){
+                        $("#modal-tip").html("请填写停车证制作费,只能为数字");
                         return;
                     }
-                    if($.trim($('#permitfee').val())==''){
-                        $("#modal-tip").html("请填写停车证补办费");
+                    if($.trim($('#reissuecardfee').val())==''||!re.test($.trim($('#reissuecardfee').val()))){
+                        $("#modal-tip").html("请填写停车证补办费,只能为数字");
                         return;
                     }
                 }
+                var params = generateAddData();
                 $.ajax({
                     dataType: "json",
-                    url: "${contextPath}/sys/compact/operateCompact?oper=save",
+                    url: "${contextPath}/sys/contract/saveContract",
                     type: "post",
-                    data: {
-                        id: $("#id").val(),
-                        type: $('#type').val(),
-                        htsj: $('#htsj').val(),
-                        price:$('#price').val(),
-                        buildid:$('#buildid').val(),
-                        propertyid:$('#propertyid').val(),
-                        firstpartyid:$('#firstpartyid').val(),
-                        customerid:$('#customerid').val(),
-                        supplementaryterms:$('#supplementaryterms').val(),
-                        buildarera:$.trim($('#buildarera').val()),
-                        tenantarea: $.trim($('#tenantarea').val()),
-                        payway:$('#payway').val(),
-                        prodeposit:$.trim($('#prodeposit').val()),
-                        managefee:$.trim($('#managefee').val()),
-                        eleprice:$.trim($('#eleprice').val()),
-                        parkowner:$.trim($('#parkowner').val()),
-                        downparkprice:$.trim($('#downparkprice').val()),
-                        upparkprice:$.trim($('#upparkprice').val()),
-                        downparknum:$.trim($('#downparknum').val()),
-                        upparknum:$.trim($('#upparknum').val()),
-                        rentalfee:$.trim($('#rentalfee').val()),
-                        parkpayway:$.trim($('#parkpayway').val()),
-                        licensefee:$.trim($('#licensefee').val()),
-                        permitfee:$.trim($('#permitfee').val()),
-                        auditstate:1
+                    contentType: 'application/json',
+                    data: JSON.stringify(params),
+                    beforeSend: function () {
+                        $("#modal-table").modal("toggle");
+                        $.mask_fullscreen();
                     },
                     complete: function (xmlRequest) {
-                        $("#modal-table").modal("toggle");
                         jQuery(grid_selector).trigger("reloadGrid");
+                        $.mask_close_all();
+                        toastMessage("系统提示","保存成功！")
+                    },
+                    error: function () {
+                        $.mask_close_all();
                     }
                 });
             });
@@ -935,14 +1263,11 @@
                 $(this).next().focus();
             });
 
-            // navButtons
-            jQuery(grid_selector).jqGrid("navGrid", pager_selector, { // navbar options
+            jQuery(grid_selector).jqGrid("navGrid", pager_selector, {
                 edit: false,
                 editicon: "ace-icon fa fa-pencil blue",
                 add: false,
                 addicon: "ace-icon fa fa-plus-circle purple",
-                del: <shiro:hasPermission name="${ROLE_KEY}:compact:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:compact:delete">false</shiro:lacksPermission>,
-                delicon: "ace-icon fa fa-trash-o red",
                 search: <shiro:hasPermission name="${ROLE_KEY}:compact:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:compact:search">false</shiro:lacksPermission>,
                 searchicon: "ace-icon fa fa-search orange",
                 refresh: true,
@@ -950,9 +1275,6 @@
                 view: <shiro:hasPermission name="${ROLE_KEY}:compact:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:compact:view">false</shiro:lacksPermission>,
                 viewicon: "ace-icon fa fa-search-plus grey"
             }, {
-                // edit record form
-                // closeAfterEdit: true,
-                // width: 700,
                 recreateForm: true,
                 beforeShowForm: function (e) {
                     var form = $(e[0]);
@@ -964,8 +1286,6 @@
                     return result.message;
                 }
             }, {
-                // new record form
-                // width: 700,
                 closeAfterAdd: true,
                 recreateForm: true,
                 viewPagerButtons: false,
@@ -979,7 +1299,6 @@
                     return result.message;
                 }
             }, {
-                // delete record form
                 recreateForm: true,
                 beforeShowForm: function (e) {
                     var form = $(e[0]);
@@ -990,10 +1309,8 @@
                     form.data("styled", true);
                 },
                 onClick: function (e) {
-                    //alert(1);
                 }
             }, {
-                // search form
                 recreateForm: true,
                 afterShowSearch: function (e) {
                     var form = $(e[0]);
@@ -1004,11 +1321,8 @@
                     style_search_filters($(this));
                 },
                 multipleSearch: true
-                /**
-                 * multipleGroup:true, showQuery: true
-                 */
+
             }, {
-                // view record form
                 recreateForm: true,
                 beforeShowForm: function (e) {
                     var form = $(e[0]);
@@ -1016,7 +1330,6 @@
                 }
             })
 
-            // add custom button to export the data to excel
             if (<shiro:hasPermission name="${ROLE_KEY}:compact:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:compact:export">false</shiro:lacksPermission>) {
                 jQuery(grid_selector).jqGrid("navButtonAdd", pager_selector, {
                     caption: "",
@@ -1039,7 +1352,7 @@
                             rows = rows + "\n"; // output each row with end of line
                         }
                         rows = rows + "\n"; // end of line at the end
-                        var form = "<form name='csvexportform' action='${contextPath}/sys/compact/operateCompact?oper=excel' method='post'>";
+                        var form = "<form name='csvexportform' action='${contextPath}/sys/contract/exportContract' method='post'>";
                         form = form + "<input type='hidden' name='csvBuffer' value='" + encodeURIComponent(rows) + "'>";
                         form = form + "</form><script>document.csvexportform.submit();</sc" + "ript>";
                         OpenWindow = window.open("", "");
@@ -1050,11 +1363,6 @@
             }
 
             function style_edit_form(form) {
-                // form.find("input[name=statusCn]").addClass("ace ace-switch ace-switch-5").after("<span class="lbl"></span>");
-                // don"t wrap inside a label element, the checkbox value won"t be submitted (POST"ed)
-                // .addClass("ace ace-switch ace-switch-5").wrap("<label class="inline" />").after("<span class="lbl"></span>");
-
-                // update buttons classes
                 var buttons = form.next().find(".EditButton .fm-button");
                 buttons.addClass("btn btn-sm").find("[class*='-icon']").hide();// ui-icon, s-icon
                 buttons.eq(0).addClass("btn-primary").prepend("<i class='ace-icon fa fa-check'></i>");
@@ -1103,9 +1411,6 @@
                 style_edit_form(form);
             }
 
-            // it causes some flicker when reloading or navigating grid
-            // it may be possible to have some custom formatter to do this as the grid is being created to prevent this
-            // or go back to default browser checkbox styles for the grid
             function styleCheckbox(table) {
                 /**
                  * $(table).find("input:checkbox").addClass("ace") .wrap("<label />") .after("<span class="lbl align-top" />") $(".ui-jqgrid-labels th[id*="_cb"]:first-child")
@@ -1113,8 +1418,6 @@
                  */
             }
 
-            // unlike navButtons icons, action icons in rows seem to be hard-coded
-            // you can change them like this in here if you want
             function updateActionIcons(table) {
                 /**
                  * var replacement = { "ui-ace-icon fa fa-pencil" : "ace-icon fa fa-pencil blue", "ui-ace-icon fa fa-trash-o" : "ace-icon fa fa-trash-o red", "ui-icon-disk" : "ace-icon fa fa-check green", "ui-icon-cancel" :
@@ -1123,7 +1426,6 @@
                  */
             }
 
-            // replace icons with FontAwesome icons like above
             function updatePagerIcons(table) {
                 var replacement = {
                     "ui-icon-seek-first": "ace-icon fa fa-angle-double-left bigger-140",
@@ -1149,8 +1451,6 @@
                 });
             }
 
-            // var selr = jQuery(grid_selector).jqGrid("getGridParam","selrow");
-
             $(document).one("ajaxloadstart.page", function (e) {
                 $(grid_selector).jqGrid("GridUnload");
                 $(".ui-jqdialog").remove();
@@ -1175,37 +1475,62 @@
                 $.gritter.add({
                     title: title,
                     text: text,
-                    class_name: 'gritter-info gritter-center'
+                    position: 'top-right',
+                    time:2000,
+                    class_name: 'gritter-info'
                 });
                 return;
             }
 
-
+            //预览合同
             $("#viewCompactButton").bind("click", function () {
                 var selectedId = $(grid_selector).jqGrid("getGridParam", "selrow");
                 if (null == selectedId) {
-                    $.gritter.add({
-                        title: "系统信息",
-                        text: "请选择记录",
-                        class_name: "gritter-info gritter-center"
-                    });
+                    toastMessage("系统信息","请选择记录");
                 } else {
-                    $("#modal-table1").modal("toggle");
-                    $('#handout_wrap_inner').media({
-                        width: '100%',
-                        height: '900px',
-                        autoplay: true,
-                        src:'${contextPath}/static/word/wyglht.pdf',
+                    var rowData = $(grid_selector).getRowData(selectedId);
+                    if(rowData.contype=='其他合同') {
+                        toastMessage("系统信息", "其他合同没有pdf文件预览！");
+                    }
+                    //通过合同id找到pdfurl;
+                    var rule = new Object();
+                    rule.field = 'id';
+                    rule.op = 'eq';
+                    rule.data =  selectedId;
+                    var rules = new Array();
+                    rules.push(rule);
+                    rule = new Object();
+                    rule.field = 'filetype';
+                    rule.op = 'eq';
+                    rule.data =  "2";
+                    rules.push(rule);
+                    $.ajax({
+                        dataType : "json",
+                        url : "${contextPath}/sys/contract/getContractFileByCondition",
+                        type : "get",
+                        contentType: 'application/json',
+                        data :generateParams(new Object(),rules),
+                        complete : function(data) {
+                            if(data.statusText=='success'){
+                                var pdfurl =  JSON.parse(data.responseText).rows[0].fileurl;
+                                $("#modal-table1").modal("toggle");
+                                $('#handout_wrap_inner').media({
+                                    width: '100%',
+                                    height: '900px',
+                                    autoplay: true,
+                                    src:"${contextPath}"+pdfurl.split("${contextPath}")[1],
+                                });
+                            }else{
+                                toastMessage("系统信息","预览失败，请稍后重试！");
+                            }
+                        }
                     });
                 }
             });
-
-
-
         });
     });
 
-
+    var buildInfo;
     /**
      * 楼宇下拉框
      * @param id
@@ -1265,11 +1590,20 @@
                 data :generateParams(new Object(),rules),
                 complete : function(data) {
                     if(data.statusText=='success'){
-                        $('#showAddressId').val(JSON.parse(data.responseText).rows[0].address);
-                        if($('#contype').val() == '1'){
-                            $('#propertyid').select2("val", " ");
-                            $('#showPropertyIds').val("");
-                            initPropertySelect2(e.params.data.id,'propertyid');
+                        if(id=='buildid') {
+                            $('#showAddressId').val(JSON.parse(data.responseText).rows[0].address);
+                            if($('#contype').val() == '1'){
+                                $('#propertyid').select2("val", " ");
+                                $('#showPropertyIds').val("");
+                                initPropertySelect2(e.params.data.id,'propertyid');
+                            }
+                        }else if(id=="buildid_edit"){
+                            $('#showAddressId_edit').val(JSON.parse(data.responseText).rows[0].address);
+                            if($('#contype_edit').val() == '1'){
+                                $('#propertyid_edit').select2("val", " ");
+                                $('#showPropertyIds_edit').val("");
+                                initPropertySelect2(e.params.data.id,'propertyid_edit');
+                            }
                         }
                     }
                 }
@@ -1333,7 +1667,6 @@
             showProperty();
         });
     }
-
 
     function initPartaSelect2(id){
         $('#'+id).select2({
@@ -1451,7 +1784,6 @@
         })
     }
 
-
     /**
      * 室号显示
      */
@@ -1526,13 +1858,18 @@
                 complete : function(data) {
                     if(data.statusText=='success'){
                         $('#partbaddress').val(JSON.parse(data.responseText).rows[0].address);
-                        $('#name').val(JSON.parse(data.responseText).rows[0].name);
-                        $('#contactnumber').val(JSON.parse(data.responseText).rows[0].contactnumber);
-                        $('#taxnumber').val(JSON.parse(data.responseText).rows[0].taxnumber);
-                        $("#type").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
+                        $('#partblegalperson').val(JSON.parse(data.responseText).rows[0].name);
+                        $('#partbncontact').val(JSON.parse(data.responseText).rows[0].contactnumber);
+                        $('#partbtaxnumber').val(JSON.parse(data.responseText).rows[0].taxnumber);
+                        $("#partbtype").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
                     }
                 }
             });
+            if(e.params.data.id=='99999'){
+                $('#div3').css("display","");
+            }else{
+                $('#div3').css("display","none");
+            }
         });
     }
 
@@ -1542,7 +1879,6 @@
         }
         return false;
     }
-
 
     /**
      * 组织请求条件
@@ -1568,6 +1904,129 @@
         return query;
     }
 
+    function generateAddData(){
+        var data = new Object();
+        var propertyids = $('#propertyid').val();
+        if(propertyids!=null&&propertyids.indexOf(",")){
+            var ps = propertyids.toString().split(",");
+            var propertys = "";
+            for(var i=0;i<ps.length;i++){
+                propertys +=   ps[i]+",";
+            }
+            data.propertyid = propertys.substring(0,propertys.length-1);
+        }
+        data.id =  $("#id").val();
+        data.contype = $('#contype').val();
+        data.htsj = $('#htsj').val();
+        data.totalamount = $.trim($('#price').val());
+        data.buildid = $('#buildid').val();
+        data.partacode = $('#partacode').val();
+        data.partaname = $("#partacode option:checked").text();
+        data.partaaddress = $.trim($('#partaaddress').val());
+        data.partalegalperson = $.trim($('#partalegalperson').val());
+        data.partancontact = $.trim($('#partancontact').val());
+        data.partaaccount = $.trim($('#partaaccount').val());
+        data.bankname = $.trim($('#bankname').val());
+        data.partaaccountname = $.trim($('#partaaccountname').val());
+        data.partataxnumber = $.trim($('#partataxnumber').val());
+        var  partbcode =  $('#partbcode').val();
+        if(partbcode=='99999'){
+            data.partbcode = '';
+            data.partbname = $.trim($("#partbname").val());
+        }else{
+            data.partbcode = partbcode;
+            data.partbname = $("#partbcode option:checked").text();
+        }
+        data.partbaddress = $.trim($('#partbaddress').val());
+        data.partblegalperson = $.trim($('#partblegalperson').val());
+        data.partbcontact = $.trim($('#partbncontact').val());
+        data.partbtaxnumber = $.trim($('#partbtaxnumber').val());
+        data.partbtype = $('#partbtype').val();
+        data.subsidiary = $.trim($('#supplementaryterms').val());
+        data.buildarea = $.trim($('#buildarera').val());
+        data.tenantarea = $.trim($('#tenantarea').val());
+        data.propertyfee =  $.trim($('#propertyfee').val());
+        data.paytype = $('#paytype').val();
+        data.deposit = $.trim($('#deposit').val());
+        data.electric = $.trim($('#electric').val());
+        data.manager = $.trim($('#manager').val());
+        data.undergroundunit = $.trim($('#undergroundunit').val());
+        data.surfaceunit = $.trim($('#surfaceunit').val());
+        data.undergroundnumber = $.trim($('#undergroundnumber').val());
+        data.surfacenumber = $.trim($('#surfacenumber').val());
+        data.rent = $.trim($('#rent').val());
+        data.prepay = $.trim($('#prepay').val());
+        data.cardfee = $.trim($('#cardfee').val());
+        data.reissuecardfee = $.trim($('#reissuecardfee').val());
+        data.auditstate = 1;
+        return data;
+    }
+
+    function echoEditForm(data) {
+        $('#id_edit').val(data.id);
+        $('#price_edit').val(data.totalamount);
+        $('#contype_edit').val(data.contype).trigger("change");
+        $('#contype_edit').prop("disabled", true);
+        var begin = formatDate(data.startdate);
+        var end = formatDate(data.enddate);
+        $("#htsj_edit").val(begin+" - "+end);
+        $('#htsj_edit').data('daterangepicker').setStartDate(begin);
+        $('#htsj_edit').data('daterangepicker').setEndDate(end);
+        initBuildSelect2('buildid_edit');
+        getBuildInfoByid(data.buildid);
+        $('#buildid_edit').append(new Option(buildInfo.name,data.buildid,true,true)).trigger("change");
+        $('#showAddressId_edit').val(buildInfo.address);
+
+        if (data.contype=='1') {
+            $(".wyxx").css("display", "");
+            $(".cwxx").css("display", "none");
+            $("#div1_edit").css("display", "");
+            $("#div2_edit").css("display", "");
+            var propertys = new Array();
+            var property = data.propertyids.split(",");
+            for(var i=0;i<property.length;i++){
+                propertys.push(property[i]);
+            }
+            initPropertySelect2(data.buildid,'propertyid_edit');
+
+            $('#propertyid_edit').val(property).trigger('change');
+            alert(property);
+        } else if (data.contype=='2') {
+            $(".wyxx").css("display", "none");
+            $(".cwxx").css("display", "");
+            $("#div1_edit").css("display", "none");
+            $("#div2_edit").css("display", "none");
+        }
 
 
+        $("#modal-table-edit").modal("toggle");
+
+    }
+
+    function formatDate(date){
+        return date.split("-")[1]+"/"+date.split("-")[2]+"/"+date.split("-")[0];
+    }
+
+
+    function getBuildInfoByid(id){
+        var rule = new Object();
+        rule.field = 'id';
+        rule.op = 'eq';
+        rule.data =  id;
+        var rules = new Array();
+        rules.push(rule);
+        $.ajax({
+            dataType : "json",
+            url : "${contextPath}/recode/build/getBuildByCondition",
+            type : "get",
+            contentType: 'application/json',
+            async:false,
+            data :generateParams(new Object(),rules),
+            complete : function(data) {
+                if(data.statusText=='success'){
+                    buildInfo =  JSON.parse(data.responseText).rows[0];
+                }
+            }
+        });
+    }
 </script>

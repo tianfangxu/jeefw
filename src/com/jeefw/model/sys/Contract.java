@@ -1,8 +1,8 @@
 package com.jeefw.model.sys;
 
-import com.jeefw.model.sys.param.ContractParameter;
 import core.support.DateSerializer;
 import core.support.DateTimeSerializer;
+import core.support.ExtJSBaseParameter;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.annotations.Cache;
@@ -25,14 +25,14 @@ import java.util.Objects;
 @Cache(region = "all", usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties(value = {"maxResults", "firstResult", "topCount", "sortColumns", "cmd", "queryDynamicConditions", "sortedConditions", "dynamicProperties", "success", "message", "sortColumnsString", "flag"})
 @Indexed
-public class Contract extends ContractParameter {
+public class Contract extends ExtJSBaseParameter {
 
     private static final long serialVersionUID = 2440131588937524651L;
     @Id
     @GenericGenerator(name = "systemUUID", strategy = "uuid")
     @GeneratedValue(generator = "systemUUID")
-    @Column(name = "code", length = 32, nullable = false, unique = true)
-    private String code;
+    @Column(name = "id", length = 32, nullable = false, unique = true)
+    private String id;
     @Column(name = "sysnumber")
     private String sysnumber;
     @Column(name = "startdate")
@@ -61,18 +61,20 @@ public class Contract extends ContractParameter {
     private String partaaccountname;
     @Column(name = "bankname")
     private String bankname;
-    @Column(name = "partbcode")
-    private String partbcode;
     @Column(name = "partataxnumber")
     private String partataxnumber;
+    @Column(name = "partbcode")
+    private String partbcode;
+    @Column(name = "partbtype")
+    private String partbtype;
     @Column(name = "partbname")
     private String partbname;
     @Column(name = "partbaddress")
     private String partbaddress;
     @Column(name = "partblegalperson")
     private String partblegalperson;
-    @Column(name = "partbncontact")
-    private String partbncontact;
+    @Column(name = "partbcontact")
+    private String partbcontact;
     @Column(name = "partbtaxnumber")
     private String partbtaxnumber;
     @Column(name = "subsidiary")
@@ -81,6 +83,10 @@ public class Contract extends ContractParameter {
     private int auditstate;
     @Column(name = "dealusers")
     private String dealusers;
+    @Column(name = "buildcode")
+    private String buildcode;
+    @Column(name = "propertycodes")
+    private String propertycodes;
     @Column(name = "createuser")
     private String createuser;
     @Column(name = "createtime")
@@ -96,12 +102,12 @@ public class Contract extends ContractParameter {
     @Column(name = "deleteflg")
     private boolean deleteflg;
 
-    public String getCode() {
-        return code;
+    public String getId() {
+        return id;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getSysnumber() {
@@ -250,12 +256,12 @@ public class Contract extends ContractParameter {
         this.partblegalperson = partblegalperson;
     }
 
-    public String getPartbncontact() {
-        return partbncontact;
+    public String getPartbcontact() {
+        return partbcontact;
     }
 
-    public void setPartbncontact(String partbncontact) {
-        this.partbncontact = partbncontact;
+    public void setPartbcontact(String partbcontact) {
+        this.partbcontact = partbcontact;
     }
 
     public String getPartbtaxnumber() {
@@ -349,18 +355,42 @@ public class Contract extends ContractParameter {
         this.deleteflg = deleteflg;
     }
 
+    public String getPartbtype() {
+        return partbtype;
+    }
+
+    public void setPartbtype(String partbtype) {
+        this.partbtype = partbtype;
+    }
+
+    public String getBuildcode() {
+        return buildcode;
+    }
+
+    public void setBuildcode(String buildcode) {
+        this.buildcode = buildcode;
+    }
+
+    public String getPropertycodes() {
+        return propertycodes;
+    }
+
+    public void setPropertycodes(String propertycodes) {
+        this.propertycodes = propertycodes;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Contract contract = (Contract) o;
-        return auditstate == contract.auditstate &&
+        return contype == contract.contype &&
+                auditstate == contract.auditstate &&
                 deleteflg == contract.deleteflg &&
-                Objects.equals(code, contract.code) &&
+                Objects.equals(id, contract.id) &&
                 Objects.equals(sysnumber, contract.sysnumber) &&
                 Objects.equals(startdate, contract.startdate) &&
                 Objects.equals(enddate, contract.enddate) &&
-                Objects.equals(contype, contract.contype) &&
                 Objects.equals(totalamount, contract.totalamount) &&
                 Objects.equals(partacode, contract.partacode) &&
                 Objects.equals(partaname, contract.partaname) &&
@@ -370,15 +400,18 @@ public class Contract extends ContractParameter {
                 Objects.equals(partaaccount, contract.partaaccount) &&
                 Objects.equals(partaaccountname, contract.partaaccountname) &&
                 Objects.equals(bankname, contract.bankname) &&
-                Objects.equals(partbcode, contract.partbcode) &&
                 Objects.equals(partataxnumber, contract.partataxnumber) &&
+                Objects.equals(partbcode, contract.partbcode) &&
+                Objects.equals(partbtype, contract.partbtype) &&
                 Objects.equals(partbname, contract.partbname) &&
                 Objects.equals(partbaddress, contract.partbaddress) &&
                 Objects.equals(partblegalperson, contract.partblegalperson) &&
-                Objects.equals(partbncontact, contract.partbncontact) &&
+                Objects.equals(partbcontact, contract.partbcontact) &&
                 Objects.equals(partbtaxnumber, contract.partbtaxnumber) &&
                 Objects.equals(subsidiary, contract.subsidiary) &&
                 Objects.equals(dealusers, contract.dealusers) &&
+                Objects.equals(buildcode, contract.buildcode) &&
+                Objects.equals(propertycodes, contract.propertycodes) &&
                 Objects.equals(createuser, contract.createuser) &&
                 Objects.equals(createtime, contract.createtime) &&
                 Objects.equals(updateuser, contract.updateuser) &&
@@ -389,6 +422,6 @@ public class Contract extends ContractParameter {
 
     @Override
     public int hashCode() {
-        return Objects.hash(code, sysnumber, startdate, enddate, contype, totalamount, partacode, partaname, partaaddress, partalegalperson, partancontact, partaaccount, partaaccountname, bankname, partbcode, partataxnumber, partbname, partbaddress, partblegalperson, partbncontact, partbtaxnumber, subsidiary, auditstate, dealusers, createuser, createtime, updateuser, updatetime, deleteuser, deletetime, deleteflg);
+        return Objects.hash(id, sysnumber, startdate, enddate, contype, totalamount, partacode, partaname, partaaddress, partalegalperson, partancontact, partaaccount, partaaccountname, bankname, partataxnumber, partbcode, partbtype, partbname, partbaddress, partblegalperson, partbcontact, partbtaxnumber, subsidiary, auditstate, dealusers, buildcode, propertycodes, createuser, createtime, updateuser, updatetime, deleteuser, deletetime, deleteflg);
     }
 }
