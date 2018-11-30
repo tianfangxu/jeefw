@@ -1,9 +1,7 @@
 package com.jeefw.model.sys;
 
-import com.jeefw.model.sys.param.ContractFiletParameter;
-import com.jeefw.model.sys.param.ContractParameter;
-import core.support.DateSerializer;
 import core.support.DateTimeSerializer;
+import core.support.ExtJSBaseParameter;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.annotations.Cache;
@@ -12,8 +10,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
@@ -28,20 +24,20 @@ import java.util.Objects;
 @Cache(region = "all", usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties(value = {"maxResults", "firstResult", "topCount", "sortColumns", "cmd", "queryDynamicConditions", "sortedConditions", "dynamicProperties", "success", "message", "sortColumnsString", "flag"})
 @Indexed
-public class ContractFile extends ContractFiletParameter {
+public class ContractFile extends ExtJSBaseParameter {
 
     private static final long serialVersionUID = 1090014693663977139L;
     @Id
     @GenericGenerator(name = "systemUUID", strategy = "uuid")
     @GeneratedValue(generator = "systemUUID")
-    @Column(name = "code", length = 32, nullable = false, unique = true)
-    private String code;
+    @Column(name = "id", length = 32, nullable = false, unique = true)
+    private String id;
     @Column(name = "contractcode")
     private String contractcode;
     @Column(name = "filetype")
     private int filetype;
-    @Column(name = "filerurl")
-    private String filerurl;
+    @Column(name = "fileurl")
+    private String fileurl;
     @Column(name = "createuser")
     private String createuser;
     @Column(name = "createtime")
@@ -57,12 +53,12 @@ public class ContractFile extends ContractFiletParameter {
     @Column(name = "deleteflg")
     private boolean deleteflg;
 
-    public String getCode() {
-        return code;
+    public String getId() {
+        return id;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getContractcode() {
@@ -81,12 +77,12 @@ public class ContractFile extends ContractFiletParameter {
         this.filetype = filetype;
     }
 
-    public String getFilerurl() {
-        return filerurl;
+    public String getFileurl() {
+        return fileurl;
     }
 
-    public void setFilerurl(String filerurl) {
-        this.filerurl = filerurl;
+    public void setFileurl(String fileurl) {
+        this.fileurl = fileurl;
     }
 
     public String getCreateuser() {
@@ -153,11 +149,11 @@ public class ContractFile extends ContractFiletParameter {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContractFile that = (ContractFile) o;
-        return deleteflg == that.deleteflg &&
-                Objects.equals(code, that.code) &&
+        return filetype == that.filetype &&
+                deleteflg == that.deleteflg &&
+                Objects.equals(id, that.id) &&
                 Objects.equals(contractcode, that.contractcode) &&
-                Objects.equals(filetype, that.filetype) &&
-                Objects.equals(filerurl, that.filerurl) &&
+                Objects.equals(fileurl, that.fileurl) &&
                 Objects.equals(createuser, that.createuser) &&
                 Objects.equals(createtime, that.createtime) &&
                 Objects.equals(updateuser, that.updateuser) &&
@@ -168,6 +164,6 @@ public class ContractFile extends ContractFiletParameter {
 
     @Override
     public int hashCode() {
-        return Objects.hash(code, contractcode, filetype, filerurl, createuser, createtime, updateuser, updatetime, deleteuser, deletetime, deleteflg);
+        return Objects.hash(id, contractcode, filetype, fileurl, createuser, createtime, updateuser, updatetime, deleteuser, deletetime, deleteflg);
     }
 }

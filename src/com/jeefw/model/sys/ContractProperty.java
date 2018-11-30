@@ -1,6 +1,6 @@
 package com.jeefw.model.sys;
 
-import com.jeefw.model.sys.param.ContractPropertyParameter;
+import core.support.ExtJSBaseParameter;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -22,14 +22,14 @@ import java.util.Objects;
 @Cache(region = "all", usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties(value = {"maxResults", "firstResult", "topCount", "sortColumns", "cmd", "queryDynamicConditions", "sortedConditions", "dynamicProperties", "success", "message", "sortColumnsString", "flag"})
 @Indexed
-public class ContractProperty  extends ContractPropertyParameter {
+public class ContractProperty  extends ExtJSBaseParameter {
 
     private static final long serialVersionUID = 7261688784801457243L;
     @Id
     @GenericGenerator(name = "systemUUID", strategy = "uuid")
     @GeneratedValue(generator = "systemUUID")
-    @Column(name = "code", length = 32, nullable = false, unique = true)
-    private String code;
+    @Column(name = "id", length = 32, nullable = false, unique = true)
+    private String id;
     @Column(name = "contractcode")
     private String contractcode;
     @Column(name = "address")
@@ -47,12 +47,12 @@ public class ContractProperty  extends ContractPropertyParameter {
     @Column(name = "electric",columnDefinition="number(10,2)")
     private BigDecimal electric;
 
-    public String getCode() {
-        return code;
+    public String getId() {
+        return id;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getContractcode() {
@@ -124,7 +124,7 @@ public class ContractProperty  extends ContractPropertyParameter {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContractProperty that = (ContractProperty) o;
-        return Objects.equals(code, that.code) &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(contractcode, that.contractcode) &&
                 Objects.equals(address, that.address) &&
                 Objects.equals(tenantarea, that.tenantarea) &&
@@ -137,6 +137,6 @@ public class ContractProperty  extends ContractPropertyParameter {
 
     @Override
     public int hashCode() {
-        return Objects.hash(code, contractcode, address, tenantarea, buildarea, propertyfee, paytype, deposit, electric);
+        return Objects.hash(id, contractcode, address, tenantarea, buildarea, propertyfee, paytype, deposit, electric);
     }
 }
