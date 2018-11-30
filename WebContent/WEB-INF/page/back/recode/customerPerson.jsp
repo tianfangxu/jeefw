@@ -68,7 +68,11 @@
 										<input type="hidden" id="id">
 										<div>
 											<label for="form-field-8">证件种类</label>
-											<input id="idtype" class="form-control" type="text"> 
+											<!-- <input id="idtype" class="form-control" type="text">  -->
+											<select id="idtype" class="form-control">
+												<option value="身份证">身份证</option>
+												<option value="护照">护照</option>
+											</select>
 											<label for="form-field-8">证件号码</label>
 											<input id="idnumber" class="form-control" type="text">
 											<label for="form-field-8">证件有效期</label>
@@ -606,7 +610,7 @@
     				data.bankname  = $("#bankname").val();
         			if($("#id").val() == '' || $("#id").val() == null || $("#id").val() == undefined){
         			}else{
-        				data.code = $("#id").val();
+        				data.id = $("#id").val();
         			}
    			    	$.ajax({
            				dataType : "json",

@@ -61,13 +61,20 @@
                     <span class="icon-bar">
                     </span>
                 </button>
+                <div class="navbar-header pull-left">
+                    <a href="#" class="navbar-brand">
+                        <small>
+                            <img style="width: 22px;" src="../../static/assets/img/photo.jpg">&nbsp;&nbsp;资产管理智能平台
+                        </small>
+                    </a>
+                </div>
                 <!-- #section:basics/navbar.dropdown -->
                 <div class="navbar-buttons navbar-header pull-right" role="navigation">
                     <ul class="nav ace-nav">
                         <!-- #section:basics/navbar.user_menu -->
                         <li class="light-blue">
                             <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                                <img class="nav-user-photo" src="${contextPath}/static/assets/avatars/user.jpg" alt="Jason's Photo" />
+                                <%-- <img class="nav-user-photo" src="${contextPath}/static/assets/avatars/user.jpg" alt="Jason's Photo" /> --%>
                                 <span class="user-info">
                                     <small>
 										欢迎您,

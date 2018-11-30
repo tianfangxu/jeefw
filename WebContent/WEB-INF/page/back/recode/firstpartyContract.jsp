@@ -354,7 +354,7 @@
        				var url = "${contextPath}/recode/firstpartyContract/savefirstpartyContract";
         			if($("#id").val() == '' || $("#id").val() == null || $("#id").val() == undefined){
         			}else{
-        				data.code = $("#id").val();
+        				data.id = $("#id").val();
         			}
    			    	$.ajax({
            				dataType : "json",

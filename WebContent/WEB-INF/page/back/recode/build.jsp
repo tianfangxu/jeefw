@@ -78,7 +78,36 @@
 											<label for="form-field-8">联系电话</label>
 											<input id="contact" class="form-control" type="text"> 
 											<label for="form-field-8">楼宇经理</label>
-											<input id="manager" class="form-control" type="text"> 
+											<!-- <input id="manager" class="form-control" type="text"> --> 
+											<select id="manager" class="form-control">
+												
+											</select>
+											<script type="text/javascript">
+												getbuildSelect();
+												function getbuildSelect(){
+													$.ajax({
+										   				dataType : "json",
+										   				url : "${contextPath}/sys/sysuser/getSysUser?page=1&rows=10000",
+										   				type : "post",
+										   				contentType: 'application/json',
+										      			data :null,
+										   				complete : function(xmlRequest) {
+										   					console.log(xmlRequest);
+										   					if(xmlRequest.status == 200){
+										   						var data = JSON.parse(xmlRequest.responseText).rows;
+										   	   					var html = '<option value="">请选择楼宇名称</option>';
+										   	   					if(data.length >0){
+										   	   						for(var i = 0;i < data.length ;i++){
+										   	   							html+='<option value="'+data[i].userName+'">'+data[i].userName+'</option>';
+										   	   						}
+										   	   					}
+										   	   					$('#manager').html(html);
+										   					}
+										   					
+										   				}
+										   			});
+												}
+											</script>
 										</div>
 										<hr />
 										<div>
@@ -392,7 +421,7 @@
         			data.propertyfee=$("#propertyfee").val();
         			if($("#id").val() == '' || $("#id").val() == null || $("#id").val() == undefined){
         			}else{
-        				data.code = $("#id").val();
+        				data.id = $("#id").val();
         			}
    			    	$.ajax({
            				dataType : "json",
