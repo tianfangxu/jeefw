@@ -9,4 +9,6 @@ import core.dao.Dao;
  */
 public interface ContractPropertyDao extends Dao<ContractProperty> {
 
+    ContractProperty getContractPropertyByContractId(String contractCode);
+
 }

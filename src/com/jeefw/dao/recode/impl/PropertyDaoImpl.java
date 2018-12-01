@@ -1,7 +1,13 @@
 package com.jeefw.dao.recode.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.alibaba.druid.support.json.JSONUtils;
+import com.alibaba.fastjson.JSON;
+import com.jeefw.model.sys.param.model.BigContractModel;
+import com.jeefw.model.sys.param.model.DropDownModel;
+import core.util.CommonUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
@@ -100,5 +106,25 @@ public class PropertyDaoImpl extends BaseDao<PropertyEntity> implements Property
 
 	}
 
+	@Override
+	public String getPropertyJsonByCondition(BigContractModel model) {
+		Session session = this.getSession();
+		StringBuffer sb = new StringBuffer(" from PropertyEntity  where deleteflg = '0' and build = '" + model.getBuildid() + "'");
+		List<PropertyEntity> list = session.createQuery(sb.toString()).list();
+		List<DropDownModel> dropDownModels = new ArrayList<>();
+		DropDownModel dropDownModel = new DropDownModel();
+		for (PropertyEntity propertyEntity : list) {
+			dropDownModel = new DropDownModel();
+			if (CommonUtil.isNotNull(model.getPropertyids()) && model.getPropertyids().indexOf(propertyEntity.getId()) > -1) {
+				dropDownModel.setSelected(true);
+			} else {
+				dropDownModel.setSelected(false);
+			}
+			dropDownModel.setId(propertyEntity.getId());
+			dropDownModel.setName(propertyEntity.getName());
+			dropDownModels.add(dropDownModel);
+		}
+		return JSON.toJSONString(dropDownModels);
+	}
 
 }

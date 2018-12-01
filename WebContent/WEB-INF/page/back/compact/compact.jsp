@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
-
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery-ui.css"/>
 <link rel="stylesheet" href="${contextPath}/static/assets/css/ui.jqgrid.css"/>
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery.gritter.css"/>
@@ -12,6 +11,7 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/bootstrap-datetimepicker.css"/>
 <link rel="stylesheet" href="${contextPath}/static/assets/css/select2.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/load.css" />
+
 
 
 <!--操作按钮-->
@@ -73,15 +73,15 @@
 <!--合同预览-->
 <div id="modal-table1" class="modal fade" data-backdrop="static">
     <div class="modal-dialog" style="width: 90%;height: 90%">
-            <div class="modal-content">
-                <div class="table-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        <span class="white">&times;</span>
-                    </button>
-                    合同预览
-                </div>
-                <div id="handout_wrap_inner"></div>
+        <div class="modal-content">
+            <div class="table-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <span class="white">&times;</span>
+                </button>
+                合同预览
             </div>
+            <div id="handout_wrap_inner"></div>
+        </div>
     </div>
 </div>
 
@@ -471,7 +471,9 @@
                                         <select class="select2" id="buildid_edit" style="width: 100%"></select>
                                     </div>
                                     <div class="col-sm-4" style="display: none" id="div1_edit">
-                                        <select class="select2" id="propertyid_edit" style="width: 100%" multiple="multiple" ></select>
+                                        <select class="select2" id="propertyid_edit" style="width:100%" multiple>
+
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group" >
@@ -754,11 +756,11 @@
 
 <script type="text/javascript">
     var scripts = [null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
-        "${contextPath}/static/assets/js/jquery.ui.touch-punch.js", "${contextPath}/static/assets/js/markdown/markdown.js", "${contextPath}/static/assets/js/markdown/bootstrap-markdown.js",
+        "${contextPath}/static/assets/js/jquery.ui.touch-punch.js", "${contextPath}/static/assets/js/markdown/markdown.js","${contextPath}/static/assets/js/markdown/bootstrap-markdown.js",
         "${contextPath}/static/assets/js/jquery.hotkeys.js", "${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js",
         "${contextPath}/static/assets/js/jquery.gritter.js","${contextPath}/static/assets/js/date-time/moment.js", "${contextPath}/static/assets/js/date-time/bootstrap-datepicker.js",
         "${contextPath}/static/assets/js/date-time/bootstrap-timepicker.js", "${contextPath}/static/assets/js/date-time/daterangepicker.js", "${contextPath}/static/assets/js/date-time/bootstrap-datetimepicker.js",
-        "${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.media.js","${contextPath}/static/assets/js/load-min.js",null]
+        "${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.media.js","${contextPath}/static/assets/js/load-min.js" ,null]
     $(".page-content-area").ace_ajax("loadScripts", scripts, function () {
         jQuery(function ($) {
             $('.select2').select2({allowClear:true})
@@ -992,7 +994,7 @@
                 if (null == selectedId) {
                     toastMessage('系统信息', '请选择记录！');
                 } else {
-                    if (jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).survey != '待提交') {
+                    if (jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).auditstate != '待提交') {
                         toastMessage('系统信息', '该合同已在审核中！');
                     } else {
                         /* bootbox.confirm("确定提交审核？", function(result) {
@@ -1086,25 +1088,25 @@
                     $("#modal-tip").html("请选择合同时间");
                     return;
                 }
-                if($('#buildid').val() == ''){
+                if($('#buildid').val() == null){
                     $("#modal-tip").html("请选择楼宇");
                     return;
                 }
                 if($("#contype").val() == '1'){
-                    if($('#propertyid').val() == ''){
+                    if($('#propertyid').val() == null){
                         $("#modal-tip").html("请选择楼宇具体的管理单元");
                         return;
                     }
                 }
                 if($("#contype").val() == '3'){
-                     if($.trim($('#price').val())==''||!re.test($.trim($('#price').val()))) {
-                         $("#modal-tip").html("请填写合同金额，只能为数字");
-                         return;
-                     }
+                    if($.trim($('#price').val())==''||!re.test($.trim($('#price').val()))) {
+                        $("#modal-tip").html("请填写合同金额，只能为数字");
+                        return;
+                    }
                 }
 
                 //甲方信息校验
-                if($('#partacode').val()==''){
+                if($('#partacode').val()==null){
                     $("#modal-tip").html("请选择甲方基本资料");
                     return;
                 }
@@ -1174,7 +1176,7 @@
                         $("#modal-tip").html("请填写物业管理费");
                         return;
                     }
-                    if($('#paytype').val()==''){
+                    if($('#paytype').val()==null){
                         $("#modal-tip").html("请选择付款方式");
                         return;
                     }
@@ -1240,6 +1242,179 @@
                         jQuery(grid_selector).trigger("reloadGrid");
                         $.mask_close_all();
                         toastMessage("系统提示","保存成功！")
+                    },
+                    error: function () {
+                        $.mask_close_all();
+                    }
+                });
+            });
+
+            $("#submitButton_edit").on("click", function (e) {
+                var re = /^[0-9]+.?[0-9]*$/;
+
+                //基础信息校验
+                if ($.trim($("#contype_edit").val()) == "") {
+                    $("#modal-tip-edit").html("请选择合同类型");
+                    return;
+                }
+                if($.trim($('#htsj_edit').val())== ""){
+                    $("#modal-tip-edit").html("请选择合同时间");
+                    return;
+                }
+                if($('#buildid_edit').val() == null){
+                    $("#modal-tip-edit").html("请选择楼宇");
+                    return;
+                }
+                if($("#contype_edit").val() == '1'){
+                    if($('#propertyid_edit').val() == null){
+                        $("#modal-tip-edit").html("请选择楼宇具体的管理单元");
+                        return;
+                    }
+                }
+                if($("#contype_edit").val() == '3'){
+                    if($.trim($('#price_edit').val())==''||!re.test($.trim($('#price_edit').val()))) {
+                        $("#modal-tip-edit").html("请填写合同金额，只能为数字");
+                        return;
+                    }
+                }
+
+                //甲方信息校验
+                if($('#partacode_edit').val()==null){
+                    $("#modal-tip-edit").html("请选择甲方基本资料");
+                    return;
+                }
+                if($.trim($('#partaaddress_edit').val())==''){
+                    $("#modal-tip-edit").html("请填写甲方地址");
+                    return;
+                }
+                if($.trim($('#partalegalperson_edit').val())==''){
+                    $("#modal-tip-edit").html("请填写甲方法定代表人");
+                    return;
+                }
+                if($.trim($('#partancontact_edit').val())==''){
+                    $("#modal-tip-edit").html("请填写甲方联系电话");
+                    return;
+                }
+                if($.trim($('#partaaccount_edit').val())==''){
+                    $("#modal-tip-edit").html("请填写甲方联系电话");
+                    return;
+                }
+                if($.trim($('#bankname_edit').val())==''){
+                    $("#modal-tip-edit").html("请填写甲方开户银行");
+                    return;
+                }
+                if($.trim($('#partaaccountname_edit').val())==''){
+                    $("#modal-tip-edit").html("请填写甲方帐号");
+                    return;
+                }
+                if($.trim($('#partataxnumber_edit').val())==''){
+                    $("#modal-tip-edit").html("请填写甲方税号");
+                    return;
+                }
+
+                //乙方信息校验
+                if($.trim($('#partbaddress_edit').val())==''){
+                    $("#modal-tip-edit").html("请填写乙方地址");
+                    return;
+                }
+                if($.trim($('#partblegalperson_edit').val())==''){
+                    $("#modal-tip-edit").html("请填写乙方法定代表人");
+                    return;
+                }
+                if($.trim($('#partbncontact_edit').val())==''){
+                    $("#modal-tip-edit").html("请填写乙方联系电话");
+                    return;
+                }
+                if($.trim($('#partbtaxnumber_edit').val())==''){
+                    $("#modal-tip-edit").html("请填写乙方税号");
+                    return;
+                }
+                if($('#partbcode_edit').val()=='99999'){
+                    if($.trim($('#partbname_edit').val())==''){
+                        $("#modal-tip-edit").html("请填写承租方名称");
+                        return;
+                    }
+                }
+                if($("#contype_edit").val() == '1'){
+                    //校验房屋
+                    if($.trim($('#buildarera_edit').val())==''){
+                        $("#modal-tip-edit").html("请填写房屋建筑面积");
+                        return;
+                    }
+                    if($.trim($('#tenantarea_edit').val())==''){
+                        $("#modal-tip-edit").html("请填写承租建筑面积");
+                        return;
+                    }
+                    if($.trim($('#propertyfee_edit').val())==''){
+                        $("#modal-tip-edit").html("请填写物业管理费");
+                        return;
+                    }
+                    if($('#paytype_edit').val()==null){
+                        $("#modal-tip-edit").html("请选择付款方式");
+                        return;
+                    }
+                    if($.trim($('#deposit_edit').val())==''){
+                        $("#modal-tip-edit").html("请填写物业费押金");
+                        return;
+                    }
+                    if($.trim($('#electric_edit').val())==''){
+                        $("#modal-tip-edit").html("请填写电费单价");
+                        return;
+                    }
+                }else if($("#contype_edit").val() == '2'){
+                    //校验停车
+                    if($.trim($('#manager_edit').val())==''){
+                        $("#modal-tip-edit").html("请填写停车场地资产产权单位");
+                        return;
+                    }
+                    if($.trim($('#undergroundunit_edit').val())==''||!re.test($.trim($('#undergroundunit_edit').val()))){
+                        $("#modal-tip-edit").html("请填写地下车位价格,只能为数字");
+                        return;
+                    }
+                    if($.trim($('#surfaceunit_edit').val())==''||!re.test($.trim($('#surfaceunit_edit').val()))){
+                        $("#modal-tip-edit").html("请填写地面车位价格,只能为数字");
+                        return;
+                    }
+                    if($.trim($('#undergroundnumber_edit').val())==''||!re.test($.trim($('#undergroundnumber_edit').val()))){
+                        $("#modal-tip-edit").html("请填写地下车位数量,只能为数字");
+                        return;
+                    }
+                    if($.trim($('#surfacenumber_edit').val())==''||!re.test($.trim($('#surfacenumber_edit').val()))){
+                        $("#modal-tip-edit").html("请填写地面车位数量,只能为数字");
+                        return;
+                    }
+                    if($.trim($('#rent_edit').val())==''||!re.test($.trim($('#rent_edit').val()))){
+                        $("#modal-tip-edit").html("请填写车位租赁费,只能为数字");
+                        return;
+                    }
+                    if($.trim($('#prepay_edit').val())==''||!re.test($.trim($('#prepay_edit').val()))){
+                        $("#modal-tip-edit").html("请填写支付方式(月预付),只能为数字");
+                        return;
+                    }
+                    if($.trim($('#cardfee_edit').val())==''||!re.test($.trim($('#cardfee_edit').val()))){
+                        $("#modal-tip-edit").html("请填写停车证制作费,只能为数字");
+                        return;
+                    }
+                    if($.trim($('#reissuecardfee_edit').val())==''||!re.test($.trim($('#reissuecardfee_edit').val()))){
+                        $("#modal-tip-edit").html("请填写停车证补办费,只能为数字");
+                        return;
+                    }
+                }
+                var params = generateEditData();
+                $.ajax({
+                    dataType: "json",
+                    url: "${contextPath}/sys/contract/updateContract",
+                    type: "post",
+                    contentType: 'application/json',
+                    data: JSON.stringify(params),
+                    beforeSend: function () {
+                        $("#modal-table-edit").modal("toggle");
+                        $.mask_fullscreen();
+                    },
+                    complete: function (xmlRequest) {
+                        jQuery(grid_selector).trigger("reloadGrid");
+                        $.mask_close_all();
+                        toastMessage("系统提示","编辑成功！")
                     },
                     error: function () {
                         $.mask_close_all();
@@ -1662,9 +1837,18 @@
             templateResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
             templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
         }).on("select2:select",function(e){
-            showProperty();
+            if(propertyid=='propertyid'){
+                showProperty('propertyid','showPropertyIds');
+            }else{
+                showProperty('propertyid_edit','showPropertyIds_edit');
+            }
         }).on("select2:unselect",function(e){
-            showProperty();
+            if(propertyid=='propertyid'){
+                showProperty('propertyid','showPropertyIds');
+            }else{
+                showProperty('propertyid_edit','showPropertyIds_edit');
+            }
+
         });
     }
 
@@ -1723,13 +1907,23 @@
                 data :generateParams(new Object(),rules),
                 complete : function(data) {
                     if(data.statusText=='success'){
-                        $('#partaaddress').val(JSON.parse(data.responseText).rows[0].address);
-                        $('#partalegalperson').val(JSON.parse(data.responseText).rows[0].contactname);
-                        $('#partancontact').val(JSON.parse(data.responseText).rows[0].contactnumber);
-                        $('#partaaccount').val(JSON.parse(data.responseText).rows[0].account);
-                        $('#partaaccountname').val(JSON.parse(data.responseText).rows[0].accountname);
-                        $('#bankname').val(JSON.parse(data.responseText).rows[0].bankname);
-                        $('#partataxnumber').val(JSON.parse(data.responseText).rows[0].taxnumber);
+                        if(id=='partacode'){
+                            $('#partaaddress').val(JSON.parse(data.responseText).rows[0].address);
+                            $('#partalegalperson').val(JSON.parse(data.responseText).rows[0].contactname);
+                            $('#partancontact').val(JSON.parse(data.responseText).rows[0].contactnumber);
+                            $('#partaaccount').val(JSON.parse(data.responseText).rows[0].account);
+                            $('#partaaccountname').val(JSON.parse(data.responseText).rows[0].accountname);
+                            $('#bankname').val(JSON.parse(data.responseText).rows[0].bankname);
+                            $('#partataxnumber').val(JSON.parse(data.responseText).rows[0].taxnumber);
+                        }else if(id=='partacode_edit'){
+                            $('#partaaddress_edit').val(JSON.parse(data.responseText).rows[0].address);
+                            $('#partalegalperson_edit').val(JSON.parse(data.responseText).rows[0].contactname);
+                            $('#partancontact_edit').val(JSON.parse(data.responseText).rows[0].contactnumber);
+                            $('#partaaccount_edit').val(JSON.parse(data.responseText).rows[0].account);
+                            $('#partaaccountname_edit').val(JSON.parse(data.responseText).rows[0].accountname);
+                            $('#bankname_edit').val(JSON.parse(data.responseText).rows[0].bankname);
+                            $('#partataxnumber_edit').val(JSON.parse(data.responseText).rows[0].taxnumber);
+                        }
                     }
                 }
             });
@@ -1787,8 +1981,8 @@
     /**
      * 室号显示
      */
-    function showProperty(){
-        var o=document.getElementById('propertyid').getElementsByTagName('option');
+    function showProperty(id,showid){
+        var o=document.getElementById(id).getElementsByTagName('option');
         var all="";
         for(var i=0;i<o.length;i++){
             if(o[i].selected){
@@ -1798,7 +1992,7 @@
         if(all!=''){
             all = all.substring(0,all.length-1);
         }
-        $('#showPropertyIds').val(all);
+        $('#'+showid).val(all);
     }
 
     function initPartbSelect2(id) {
@@ -1857,18 +2051,28 @@
                 data :generateParams(new Object(),rules),
                 complete : function(data) {
                     if(data.statusText=='success'){
-                        $('#partbaddress').val(JSON.parse(data.responseText).rows[0].address);
-                        $('#partblegalperson').val(JSON.parse(data.responseText).rows[0].name);
-                        $('#partbncontact').val(JSON.parse(data.responseText).rows[0].contactnumber);
-                        $('#partbtaxnumber').val(JSON.parse(data.responseText).rows[0].taxnumber);
-                        $("#partbtype").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
+                        if(id=='partbcode'){
+                            $('#partbaddress').val(JSON.parse(data.responseText).rows[0].address);
+                            $('#partblegalperson').val(JSON.parse(data.responseText).rows[0].name);
+                            $('#partbncontact').val(JSON.parse(data.responseText).rows[0].contactnumber);
+                            $('#partbtaxnumber').val(JSON.parse(data.responseText).rows[0].taxnumber);
+                            $("#partbtype").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
+                        }else if(id=='partbcode_edit'){
+                            $('#partbaddress_edit').val(JSON.parse(data.responseText).rows[0].address);
+                            $('#partblegalperson_edit').val(JSON.parse(data.responseText).rows[0].name);
+                            $('#partbncontact_edit').val(JSON.parse(data.responseText).rows[0].contactnumber);
+                            $('#partbtaxnumber_edit').val(JSON.parse(data.responseText).rows[0].taxnumber);
+                            $("#partbtype_edit").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
+                        }
                     }
                 }
             });
             if(e.params.data.id=='99999'){
                 $('#div3').css("display","");
+                $('#div3_edit').css("display","");
             }else{
                 $('#div3').css("display","none");
+                $('#div3_edit').css("display","none");
             }
         });
     }
@@ -1964,7 +2168,6 @@
 
     function echoEditForm(data) {
         $('#id_edit').val(data.id);
-        $('#price_edit').val(data.totalamount);
         $('#contype_edit').val(data.contype).trigger("change");
         $('#contype_edit').prop("disabled", true);
         var begin = formatDate(data.startdate);
@@ -1982,23 +2185,50 @@
             $(".cwxx").css("display", "none");
             $("#div1_edit").css("display", "");
             $("#div2_edit").css("display", "");
-            var propertys = new Array();
-            var property = data.propertyids.split(",");
-            for(var i=0;i<property.length;i++){
-                propertys.push(property[i]);
-            }
-            initPropertySelect2(data.buildid,'propertyid_edit');
-
-            $('#propertyid_edit').val(property).trigger('change');
-            alert(property);
+            initPropertySelect2_html(data.buildid,'propertyid_edit',data.propertyids);
         } else if (data.contype=='2') {
             $(".wyxx").css("display", "none");
             $(".cwxx").css("display", "");
             $("#div1_edit").css("display", "none");
             $("#div2_edit").css("display", "none");
         }
-
-
+        $('#price_edit').val(data.totalamount);
+        initPartaSelect2('partacode_edit');
+        $('#partacode_edit').append(new Option(data.partaname,data.partacode,true,true)).trigger("change");
+        $('#partaaddress_edit').val(data.partaaddress);
+        $('#partalegalperson_edit').val(data.partalegalperson);
+        $('#partancontact_edit').val(data.partancontact);
+        $('#partaaccount_edit').val(data.partaaccount);
+        $('#partaaccountname_edit').val(data.partaaccountname);
+        $('#bankname_edit').val(data.bankname);
+        $('#partataxnumber_edit').val(data.partataxnumber);
+        initPartbSelect2('partbcode_edit');
+        $('#partbcode_edit').append(new Option(data.partbname,data.partbcode,true,true)).trigger("change");
+        $('#partbaddress_edit').val(data.partbaddress);
+        $('#partblegalperson_edit').val(data.partblegalperson);
+        $('#partbncontact_edit').val(data.partbcontact);
+        $('#partbtaxnumber_edit').val(data.partbtaxnumber);
+        $("#partbtype_edit").val(data.partbtype).trigger("change");
+        if (data.contype=='1') {
+            $('#buildarera_edit').val(data.buildarea);
+            $('#tenantarea_edit').val(data.tenantarea);
+            $('#propertyfee_edit').val(data.propertyfee);
+            initPaytypeSelect2('paytype_edit','WYYJ');
+            $('#paytype_edit').append(new Option(data.paytype,data.paytypecode,true,true)).trigger("change");
+            $('#deposit_edit').val(data.deposit);
+            $('#electric_edit').val(data.electric);
+        }  else if (data.contype=='2') {
+            $('#manager_edit').val(data.manager);
+            $('#undergroundunit_edit').val(data.undergroundunit);
+            $('#surfaceunit_edit').val(data.surfaceunit);
+            $('#undergroundnumber_edit').val(data.undergroundnumber);
+            $('#surfacenumber_edit').val(data.surfacenumber);
+            $('#rent_edit').val(data.rent);
+            $('#prepay_edit').val(data.prepay);
+            $('#cardfee_edit').val(data.cardfee);
+            $('#reissuecardfee_edit').val(data.reissuecardfee);
+        }
+        $('#supplementaryterms_edit').val(data.subsidiary);
         $("#modal-table-edit").modal("toggle");
 
     }
@@ -2006,7 +2236,6 @@
     function formatDate(date){
         return date.split("-")[1]+"/"+date.split("-")[2]+"/"+date.split("-")[0];
     }
-
 
     function getBuildInfoByid(id){
         var rule = new Object();
@@ -2029,4 +2258,92 @@
             }
         });
     }
+
+    function initPropertySelect2_html(buildid,id,propertyids) {
+        var rule = new Object();
+        var rules = new Array();
+        rule.field = 'build';
+        rule.op = 'eq';
+        rule.data =  buildid;
+        rules.push(rule);
+        $.ajax({
+            type:"get",
+            url: "${contextPath}/recode/property/getPropertyByCondition",
+            contentType: 'application/json',
+            dataType:"JSON",
+            delay: 550,
+            data:generateParams(new Object(),rules),
+            success : function(data) {
+                var html = "";
+                $('#'+id).html(html);
+                var row = data.rows;
+                for(var i=0;i<row.length;i++){
+                    html += "<option value='"+row[i].id+"'>"+row[i].name+"</option>";
+                }
+                $('#'+id).append(html);
+                $('#'+id).select2();
+                $('#'+id).val(propertyids.split(",")).trigger("change");
+                showProperty('propertyid_edit','showPropertyIds_edit');
+            }
+        });
+    }
+
+    function generateEditData(){
+        var data = new Object();
+        var propertyids = $('#propertyid_edit').val();
+        if(propertyids!=null&&propertyids.indexOf(",")){
+            var ps = propertyids.toString().split(",");
+            var propertys = "";
+            for(var i=0;i<ps.length;i++){
+                propertys +=   ps[i]+",";
+            }
+            data.propertyid = propertys.substring(0,propertys.length-1);
+        }
+        data.id =  $("#id_edit").val();
+        data.contype = $('#contype_edit').val();
+        data.htsj = $('#htsj_edit').val();
+        data.totalamount = $.trim($('#price_edit').val());
+        data.buildid = $('#buildid_edit').val();
+        data.partacode = $('#partacode_edit').val();
+        data.partaname = $("#partacode_edit option:checked").text();
+        data.partaaddress = $.trim($('#partaaddress_edit').val());
+        data.partalegalperson = $.trim($('#partalegalperson_edit').val());
+        data.partancontact = $.trim($('#partancontact_edit').val());
+        data.partaaccount = $.trim($('#partaaccount_edit').val());
+        data.bankname = $.trim($('#bankname_edit').val());
+        data.partaaccountname = $.trim($('#partaaccountname_edit').val());
+        data.partataxnumber = $.trim($('#partataxnumber_edit').val());
+        var  partbcode =  $('#partbcode_edit').val();
+        if(partbcode=='99999'){
+            data.partbcode = '';
+            data.partbname = $.trim($("#partbname_edit").val());
+        }else{
+            data.partbcode = partbcode;
+            data.partbname = $("#partbcode_edit option:checked").text();
+        }
+        data.partbaddress = $.trim($('#partbaddress_edit').val());
+        data.partblegalperson = $.trim($('#partblegalperson_edit').val());
+        data.partbcontact = $.trim($('#partbncontact_edit').val());
+        data.partbtaxnumber = $.trim($('#partbtaxnumber_edit').val());
+        data.partbtype = $('#partbtype_edit').val();
+        data.subsidiary = $.trim($('#supplementaryterms_edit').val());
+        data.buildarea = $.trim($('#buildarera_edit').val());
+        data.tenantarea = $.trim($('#tenantarea_edit').val());
+        data.propertyfee =  $.trim($('#propertyfee_edit').val());
+        data.paytype = $('#paytype_edit').val();
+        data.deposit = $.trim($('#deposit_edit').val());
+        data.electric = $.trim($('#electric_edit').val());
+        data.manager = $.trim($('#manager_edit').val());
+        data.undergroundunit = $.trim($('#undergroundunit_edit').val());
+        data.surfaceunit = $.trim($('#surfaceunit_edit').val());
+        data.undergroundnumber = $.trim($('#undergroundnumber_edit').val());
+        data.surfacenumber = $.trim($('#surfacenumber_edit').val());
+        data.rent = $.trim($('#rent_edit').val());
+        data.prepay = $.trim($('#prepay_edit').val());
+        data.cardfee = $.trim($('#cardfee_edit').val());
+        data.reissuecardfee = $.trim($('#reissuecardfee_edit').val());
+        data.auditstate = 1;
+        return data;
+    }
+
 </script>

@@ -159,4 +159,23 @@ public class ContractController extends JavaEEFrameworkBaseController<Contract> 
             writeJSON(response, map);
         }
     }
+
+    /***
+     * 保存
+     */
+    @RequestMapping(value = "/updateContract", method = {RequestMethod.POST})
+    public void updateContract(HttpServletRequest request, HttpServletResponse response, @RequestBody BigContractModel model) throws IOException {
+        HashMap<String, String> map = new HashMap<String, String>();
+        try {
+            SysUser sysuser = sysUserService.get(((SysUser) request.getSession().getAttribute(SESSION_SYS_USER)).getId());
+            model.setLoginuser(sysuser);
+            contractService.updateContract(model);
+            map.put("message", "编辑成功");
+            writeJSON(response, map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("message", "系统出错，请稍后重试");
+            writeJSON(response, map);
+        }
+    }
 }
