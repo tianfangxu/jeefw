@@ -23,6 +23,7 @@ public class ContractPropertyModel<T, G> extends BaseModel<T, G> implements Seri
     private String paytype;
     private BigDecimal deposit;
     private BigDecimal electric;
+    private String paytypecode;
 
     public String getId() {
         return id;
@@ -94,5 +95,13 @@ public class ContractPropertyModel<T, G> extends BaseModel<T, G> implements Seri
 
     public void setElectric(BigDecimal electric) {
         this.electric = electric;
+    }
+
+    public String getPaytypecode() {
+        return paytypecode;
+    }
+
+    public void setPaytypecode(String paytypecode) {
+        this.paytypecode = paytypecode;
     }
 }

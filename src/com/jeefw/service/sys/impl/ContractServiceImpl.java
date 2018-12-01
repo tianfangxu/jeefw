@@ -121,6 +121,7 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 				contractProperty.setDeposit(new BigDecimal(model.getDeposit()));
 				contractProperty.setElectric(new BigDecimal(model.getElectric()));
 				contractProperty.setPaytype(dictDao.get(Long.valueOf(model.getPaytype())).getDictValue());
+				contractProperty.setPaytypecode(model.getPaytype());
 				contractPropertyDao.persist(contractProperty);
 				//组织物业合同模板数据
 				map = generateWyWordMap(contract,contractProperty);
@@ -156,6 +157,66 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 			}
 
 		}
+	}
+
+	@Override
+	public void updateContract(BigContractModel model) throws ParseException {
+		//更新合同主表
+		updateContract_edit(model);
+		Contract contract = contractDao.get(model.getId());
+		Map<String, Object> map = null;
+		if(model.getContype().equals("1")){
+			//更新物业合同
+			ContractProperty contractProperty = contractPropertyDao. getContractPropertyByContractId(model.getId());
+			BuildEntity buildEntity =  buildDao.get(model.getBuildid());
+			String[] propertyIds = model.getPropertyid().split(",");
+			String address =buildEntity.getAddress();
+			String names = "";
+			for(int i=0;i<propertyIds.length;i++){
+				PropertyEntity propertyEntity =  propertyDao.get(propertyIds[i]);
+				names += propertyEntity.getName()+",";
+			}
+			if(!names.equals("")){
+				address  = address + names.substring(0,names.length()-1);
+			}
+			contractProperty.setAddress(address);
+			contractProperty.setBuildarea(new BigDecimal(model.getBuildarea()));
+			contractProperty.setTenantarea(new BigDecimal(model.getTenantarea()));
+			contractProperty.setPropertyfee(new BigDecimal(model.getPropertyfee()));
+			contractProperty.setDeposit(new BigDecimal(model.getDeposit()));
+			contractProperty.setElectric(new BigDecimal(model.getElectric()));
+			contractProperty.setPaytype(dictDao.get(Long.valueOf(model.getPaytype())).getDictValue());
+			contractProperty.setPaytypecode(model.getPaytype());
+			contractPropertyDao.update(contractProperty);
+			//组织物业合同模板数据
+			map = generateWyWordMap(contract,contractProperty);
+		}else if(model.getContype().equals("2")){
+			//停车合同
+			ContractParking contractParking = contractParkingDao.getContractParkingByContractId(model.getId());
+			BuildEntity buildEntity =  buildDao.get(model.getBuildid());
+			String address = buildEntity.getAddress()+buildEntity.getName();
+			contractParking.setAddress(address);
+			contractParking.setManager(model.getManager());
+			contractParking.setUndergroundunit(new BigDecimal(model.getUndergroundunit()));
+			contractParking.setUndergroundnumber(Integer.parseInt(model.getUndergroundnumber()));
+			contractParking.setSurfaceunit(new BigDecimal(model.getSurfaceunit()));
+			contractParking.setSurfacenumber(Integer.parseInt(model.getSurfacenumber()));
+			contractParking.setRent(new BigDecimal(model.getRent()));
+			contractParking.setPrepay(Integer.parseInt(model.getPrepay()));
+			contractParking.setCardfee(new BigDecimal(model.getCardfee()));
+			contractParking.setReissuecardfee(new BigDecimal(model.getReissuecardfee()));
+			contractParkingDao.update(contractParking);
+			//组织停车合同模板数据
+			map = generateTcWordMap(contract,contractParking,buildEntity.getName());
+		}
+
+		if("1,2".indexOf(model.getContype())>-1){
+			//生成word
+			String wordPath = createWordFile(contract,map);
+			//生成pdf
+			String pdfPath = createpdfFile(wordPath);
+		}
+
 	}
 
 	@Override
@@ -207,7 +268,7 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 				customerEntity.setId(createUUID());
 				customerEntity.setType(model.getPartbtype());
 				customerEntity.setAddress(model.getPartbaddress());
-				customerEntity.setName(model.getPartblegalperson());
+				customerEntity.setName(model.getPartbname());
 				customerEntity.setContactname(model.getPartblegalperson());
 				customerEntity.setContactnumber(model.getPartbcontact());
 				customerEntity.setTaxnumber(model.getPartbtaxnumber());
@@ -371,5 +432,35 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 		contractFile.setFiletype(type);
 		contractFile.setFileurl(url);
 		contractFileDao.persist(contractFile);
+	}
+
+	private void  updateContract_edit(BigContractModel model) throws  ParseException{
+		String htsj = model.getHtsj();
+		if(CommonUtil.isNull(model.getPartbcode())){
+			//生成乙方信息
+			CustomerEntity customerEntity = new CustomerEntity();
+			customerEntity.setId(createUUID());
+			customerEntity.setType(model.getPartbtype());
+			customerEntity.setAddress(model.getPartbaddress());
+			customerEntity.setName(model.getPartbname());
+			customerEntity.setContactname(model.getPartblegalperson());
+			customerEntity.setContactnumber(model.getPartbcontact());
+			customerEntity.setTaxnumber(model.getPartbtaxnumber());
+			customerEntity.setCreateuser(model.getLoginuser().getUserName());
+			customerEntity.setCreatetime(DateUnit.getTime14());
+			customerEntity.setDeleteflg("0");
+			customerDao.persist(customerEntity);
+			model.setPartbcode(customerEntity.getId());
+		}
+		Contract contract = contractDao.get(model.getId());
+		BeanUtils.copyPropertiesIgnoreNull(model,contract);
+		contract.setTotalamount(new BigDecimal(model.getTotalamount()));
+		contract.setStartdate(new SimpleDateFormat("yyyy-MM-dd").parse(DateUnit.getDateByMMddyyyy(htsj.split("-")[0])));
+		contract.setEnddate(new SimpleDateFormat("yyyy-MM-dd").parse(DateUnit.getDateByMMddyyyy(htsj.split("-")[1])));
+		contract.setBuildcode(model.getBuildid());
+		contract.setPropertycodes(model.getPropertyid());
+		contract.setUpdatetime(new Date());
+		contract.setUpdateuser(model.getLoginuser().getId()+"");
+		contractDao.update(contract);
 	}
 }

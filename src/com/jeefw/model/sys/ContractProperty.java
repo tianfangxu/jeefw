@@ -46,6 +46,8 @@ public class ContractProperty  extends ExtJSBaseParameter {
     private BigDecimal deposit;
     @Column(name = "electric",columnDefinition="number(10,2)")
     private BigDecimal electric;
+    @Column(name = "paytypecode")
+    private String  paytypecode;
 
     public String getId() {
         return id;
@@ -117,6 +119,14 @@ public class ContractProperty  extends ExtJSBaseParameter {
 
     public void setElectric(BigDecimal electric) {
         this.electric = electric;
+    }
+
+    public String getPaytypecode() {
+        return paytypecode;
+    }
+
+    public void setPaytypecode(String paytypecode) {
+        this.paytypecode = paytypecode;
     }
 
     @Override

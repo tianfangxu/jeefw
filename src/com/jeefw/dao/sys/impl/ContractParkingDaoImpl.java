@@ -1,10 +1,10 @@
 package com.jeefw.dao.sys.impl;
 
 import com.jeefw.dao.sys.ContractParkingDao;
-import com.jeefw.dao.sys.ContractPropertyDao;
 import com.jeefw.model.sys.ContractParking;
-import com.jeefw.model.sys.ContractProperty;
 import core.dao.BaseDao;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,5 +17,14 @@ public class ContractParkingDaoImpl extends BaseDao<ContractParking> implements 
 	public ContractParkingDaoImpl() {
 		super(ContractParking.class);
 	}
+
+	@Override
+	public ContractParking getContractParkingByContractId(String contractCode) {
+		Session session = this.getSession();
+		Query query =  session.createQuery(" from ContractParking where contractcode = '"+contractCode+"'");
+		ContractParking contractParking = (ContractParking)query.uniqueResult();
+		return  contractParking;
+	}
+
 
 }

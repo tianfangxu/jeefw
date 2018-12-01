@@ -19,6 +19,8 @@ public interface ContractService extends Service<Contract> {
 
     void saveContract(BigContractModel model) throws ParseException;
 
+    void updateContract(BigContractModel model) throws ParseException;
+
     JqGridPageView<Contract> getContractByCondition(BigContractModel model);
 
     JqGridPageView<ContractFile> getContractFileByCondition(BigContractModel model);

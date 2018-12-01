@@ -3,6 +3,8 @@ package com.jeefw.dao.sys.impl;
 import com.jeefw.dao.sys.ContractPropertyDao;
 import com.jeefw.model.sys.ContractProperty;
 import core.dao.BaseDao;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,4 +18,11 @@ public class ContractPropertyDaoImpl extends BaseDao<ContractProperty> implement
 		super(ContractProperty.class);
 	}
 
+	@Override
+	public ContractProperty getContractPropertyByContractId(String contractCode) {
+		Session session = this.getSession();
+		Query query =  session.createQuery(" from ContractProperty where contractcode = '"+contractCode+"'");
+		ContractProperty contractProperty = (ContractProperty)query.uniqueResult();
+		return  contractProperty;
+	}
 }

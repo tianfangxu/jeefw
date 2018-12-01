@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jeefw.model.sys.param.model.BigContractModel;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +25,7 @@ import core.util.ParamUtils;
 
 /***
  *楼宇内物业信息
- * 
+ *
  * @author Administrator
  *
  */
@@ -34,7 +35,7 @@ public class PropertyController extends JavaEEFrameworkBaseController<PropertyEn
 
 	@Resource
 	PropertyService propertyService;
-	
+
 	/**
 	 * 楼宇内物业信息
 	 */
@@ -52,8 +53,8 @@ public class PropertyController extends JavaEEFrameworkBaseController<PropertyEn
 			map.put("message", "系统出错，请稍后重试");
 			writeJSON(response, map);
 		}
-	} 
-	
+	}
+
 	/***
 	 * 保存/修改楼宇内物业信息
 	 */
@@ -82,7 +83,7 @@ public class PropertyController extends JavaEEFrameworkBaseController<PropertyEn
 			writeJSON(response, map);
 		}
 	}
-	
+
 	/**
 	 * 删除楼宇内物业信息
 	 */
@@ -99,6 +100,23 @@ public class PropertyController extends JavaEEFrameworkBaseController<PropertyEn
 				map.put("message", string);
 				writeJSON(response,map);
 			}
+		} catch (Exception e) {
+			map.put("message", "系统出错，请稍后重试");
+			writeJSON(response, map);
+		}
+	}
+
+	/**
+	 *  楼宇内物业信息JSON
+	 */
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "/getPropertyJsonByCondition", method = { RequestMethod.POST })
+	public void getPropertyJsonByCondition(HttpServletRequest request, HttpServletResponse response,@RequestBody BigContractModel model) throws IOException{
+		HashMap<String,String> map = new HashMap<String, String>();
+		try {
+			String responses= propertyService.getPropertyJsonByCondition(model);
+			map.put("message", responses);
+			writeJSON(response,map);
 		} catch (Exception e) {
 			map.put("message", "系统出错，请稍后重试");
 			writeJSON(response, map);

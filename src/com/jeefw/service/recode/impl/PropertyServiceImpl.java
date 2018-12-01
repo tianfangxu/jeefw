@@ -2,6 +2,7 @@ package com.jeefw.service.recode.impl;
 
 import javax.annotation.Resource;
 
+import com.jeefw.model.sys.param.model.BigContractModel;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class PropertyServiceImpl implements PropertyService {
 
 	@Resource
 	PropertyDao PropertyDao;
-	
+
 	@Override
 	public JqGridPageView<PropertyModel> getPropertyByCondition(
 			PropertyModel model) {
@@ -74,6 +75,14 @@ public class PropertyServiceImpl implements PropertyService {
 			PropertyDao.deleteEntity(model.getId(),model.getLoginuser().getId().toString());
 		}
 		return "删除成功";
+	}
+
+	@Override
+	public String getPropertyJsonByCondition(BigContractModel model) {
+		if(StringUtils.isEmpty(model.getBuildid())){
+			return "buildid为空";
+		}
+		return PropertyDao.getPropertyJsonByCondition(model);
 	}
 
 }

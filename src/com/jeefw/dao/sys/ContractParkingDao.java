@@ -8,5 +8,6 @@ import core.dao.Dao;
  * @JC
  */
 public interface ContractParkingDao extends Dao<ContractParking> {
+    ContractParking getContractParkingByContractId(String contractCode);
 
 }

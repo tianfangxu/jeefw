@@ -111,7 +111,7 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 		columns.append(" a.partbcode,a.partbtype,a.partbname,a.partbaddress,a.partblegalperson,a.partbcontact,a.partbtaxnumber,a.subsidiary,");
 
 		columns.append(" b.id parkingid,b.address parkingaddress,b.manager,b.undergroundunit,b.undergroundnumber,b.surfaceunit,b.surfacenumber,b.rent,b.prepay,b.cardfee,b.reissuecardfee,");
-		columns.append(" c.id propertyid,c.address propertyaddress,c.tenantarea,c.buildarea,c.propertyfee,c.paytype,c.deposit,c.electric,a.buildcode buildid,a.propertycodes propertyids");
+		columns.append(" c.id propertyid,c.address propertyaddress,c.tenantarea,c.buildarea,c.propertyfee,c.paytype,c.deposit,c.electric,a.buildcode buildid,a.propertycodes propertyids,c.paytypecode");
 		StringBuffer sb = new StringBuffer(" select "+columns.toString()+" from t_contract a left join t_contract_property c on a.id = c.contractcode  left join t_contract_parking b on a.id =b.contractcode  where a.id = '"+model.getId()+"'");
 		Query query =  session.createSQLQuery(sb.toString()).addScalar("id", StandardBasicTypes.STRING)
 				.addScalar("startdate",StandardBasicTypes.DATE).addScalar("enddate",StandardBasicTypes.DATE)
@@ -135,6 +135,7 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 				.addScalar("propertyfee",StandardBasicTypes.STRING).addScalar("paytype",StandardBasicTypes.STRING)
 				.addScalar("deposit",StandardBasicTypes.STRING).addScalar("electric",StandardBasicTypes.STRING)
 				.addScalar("buildid",StandardBasicTypes.STRING).addScalar("propertyids",StandardBasicTypes.STRING)
+				.addScalar("paytypecode",StandardBasicTypes.STRING)
 				.setResultTransformer(Transformers.aliasToBean(BigContractModel.class));
 		 List<BigContractModel> list = query.list();
 		result.setRows(list);

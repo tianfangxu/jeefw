@@ -64,6 +64,7 @@ public class BigContractModel <T, G> extends BaseModel<T, G> implements Serializ
     private String propertyids;
     private String parkingaddress;
     private String propertyaddress;
+    private String paytypecode;
 
     public String getId() {
         return id;
@@ -463,5 +464,13 @@ public class BigContractModel <T, G> extends BaseModel<T, G> implements Serializ
 
     public void setPropertyaddress(String propertyaddress) {
         this.propertyaddress = propertyaddress;
+    }
+
+    public String getPaytypecode() {
+        return paytypecode;
+    }
+
+    public void setPaytypecode(String paytypecode) {
+        this.paytypecode = paytypecode;
     }
 }
