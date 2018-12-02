@@ -14,7 +14,7 @@ import com.jeefw.model.recode.param.BaseModel;
 import com.jeefw.model.sys.SysUser;
 
 public class ParamUtils<T> {
-	
+
 	public T getparams(HttpServletRequest request,Class<T> clazz) throws Exception{
 		T obj = clazz.newInstance();
 		Field[] fields = clazz.getDeclaredFields();
@@ -85,7 +85,7 @@ public class ParamUtils<T> {
 		pageMethod.invoke(obj, request.getParameter("page"));
 		return obj;
 	}
-	
+
 	public static String toUpperCaseFirstOne(String s){
 		if(Character.isUpperCase(s.charAt(0)))
 			return s;

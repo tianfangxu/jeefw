@@ -3,6 +3,7 @@ package com.jeefw.dao.sys;
 import com.jeefw.model.sys.Contract;
 import com.jeefw.model.sys.SysUser;
 import com.jeefw.model.sys.param.model.BigContractModel;
+import com.jeefw.model.sys.param.model.SmallContractModel;
 import core.dao.Dao;
 import core.support.JqGridPageView;
 
@@ -19,4 +20,6 @@ public interface ContractDao extends Dao<Contract> {
     void deleteEntity(String id, SysUser sysUser);
 
     JqGridPageView<BigContractModel> getContractWithInfoById(BigContractModel model);
+
+    JqGridPageView<SmallContractModel> getContractByAudit(BigContractModel model);
 }

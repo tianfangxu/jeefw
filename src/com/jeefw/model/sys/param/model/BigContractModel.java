@@ -65,6 +65,8 @@ public class BigContractModel <T, G> extends BaseModel<T, G> implements Serializ
     private String parkingaddress;
     private String propertyaddress;
     private String paytypecode;
+    private int contypeInt;
+    private String selectState;
 
     public String getId() {
         return id;
@@ -472,5 +474,21 @@ public class BigContractModel <T, G> extends BaseModel<T, G> implements Serializ
 
     public void setPaytypecode(String paytypecode) {
         this.paytypecode = paytypecode;
+    }
+
+    public int getContypeInt() {
+        return contypeInt;
+    }
+
+    public void setContypeInt(int contypeInt) {
+        this.contypeInt = contypeInt;
+    }
+
+    public String getSelectState() {
+        return selectState;
+    }
+
+    public void setSelectState(String selectState) {
+        this.selectState = selectState;
     }
 }

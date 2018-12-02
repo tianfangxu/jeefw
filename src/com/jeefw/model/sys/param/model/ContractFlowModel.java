@@ -22,6 +22,8 @@ public class ContractFlowModel<T, G> extends BaseModel<T, G> implements Serializ
     private String nexthandler;
     private Date handlertime;
 
+    private String contype;
+
     public String getId() {
         return id;
     }

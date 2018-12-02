@@ -1,12 +1,11 @@
 package com.jeefw.dao.sys.impl;
 
 import com.jeefw.dao.sys.ContractDao;
-import com.jeefw.model.recode.BuildEntity;
-import com.jeefw.model.recode.param.BuildModel;
-import com.jeefw.model.recode.param.ParkingModel;
 import com.jeefw.model.sys.Contract;
+import com.jeefw.model.sys.Role;
 import com.jeefw.model.sys.SysUser;
 import com.jeefw.model.sys.param.model.BigContractModel;
+import com.jeefw.model.sys.param.model.SmallContractModel;
 import core.dao.BaseDao;
 import core.support.JqGridPageView;
 import core.util.DateUnit;
@@ -17,8 +16,9 @@ import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 合同主体信息的数据持久层的实现类
@@ -72,6 +72,19 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 			if(!StringUnit.isNullOrEmpty(likemodel.getSysnumber())){
 				sb.append(" and sysnumber like '%"+likemodel.getSysnumber()+"%' ");
 			}
+		}
+
+		String roleKeyStr = "";
+		Set<Role> set =  model.getLoginuser().getRoles();
+		Iterator<Role> it = set.iterator();
+		while(it.hasNext()){
+			Role role = it.next();
+			roleKeyStr += role.getRoleKey()+",";
+		}
+		if(roleKeyStr.indexOf("ROLE_KF")>-1){
+			sb.append(" and contype in ('1','3') ");
+		}else if(roleKeyStr.indexOf("ROLE_AQ")>-1){
+			sb.append(" and contype in ('2','3') ");
 		}
 
 		Query query = session.createQuery("from Contract "
@@ -139,6 +152,77 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 				.setResultTransformer(Transformers.aliasToBean(BigContractModel.class));
 		 List<BigContractModel> list = query.list();
 		result.setRows(list);
+		return result;
+	}
+
+	@Override
+	public JqGridPageView<SmallContractModel> getContractByAudit(BigContractModel model) {
+		JqGridPageView<SmallContractModel> result = new JqGridPageView<SmallContractModel>();
+		Session session = this.getSession();
+		StringBuffer sb = new StringBuffer(" where a.deleteflg = '0' ");
+		//等于查询
+		if(model.getEqparam() != null){
+			BigContractModel eqmodel = (BigContractModel) model.getEqparam();
+			if(!StringUnit.isNullOrEmpty(eqmodel.getPartbname())){
+				sb.append(" and a.partbname = '"+eqmodel.getPartbname()+"' ");
+			}
+			if(!StringUnit.isNullOrEmpty(eqmodel.getContype())){
+				sb.append(" and a.contype = '"+eqmodel.getContype()+"' ");
+			}
+			if(!StringUnit.isNullOrEmpty(eqmodel.getSysnumber())){
+				sb.append(" and a.sysnumber = '"+eqmodel.getSysnumber()+"' ");
+			}
+			if(!StringUnit.isNullOrEmpty(eqmodel.getId())){
+				sb.append(" and a.id = '"+eqmodel.getId()+"' ");
+			}
+		}
+		//like查询
+		if(model.getLikeparam() != null){
+			BigContractModel likemodel = (BigContractModel) model.getLikeparam();
+			if(!StringUnit.isNullOrEmpty(likemodel.getPartbname())){
+				sb.append(" and a.partbname like '%"+likemodel.getPartbname()+"%' ");
+			}
+			if(!StringUnit.isNullOrEmpty(likemodel.getSysnumber())){
+				sb.append(" and a.sysnumber like '%"+likemodel.getSysnumber()+"%' ");
+			}
+		}
+		String roleKeyStr = "";
+		Set<Role> set =  model.getLoginuser().getRoles();
+		Iterator<Role> it = set.iterator();
+		while(it.hasNext()){
+			Role role = it.next();
+			roleKeyStr += "'"+role.getRoleKey()+"',";
+		}
+		if(!roleKeyStr.equals("")){
+			roleKeyStr = "("+roleKeyStr.substring(0,roleKeyStr.length()-1)+")";
+		}
+		if(model.getSelectState().equals("1")){
+			//查看等待客服或者安全人员处理的单子
+			sb.append(" and  (b.nexthandler in "+roleKeyStr+" or b.nexthandler = '"+model.getLoginuser().getId()+"' )");
+		}else if(model.getSelectState().equals("2")){
+			sb.append(" and a.auditstate = 2 and  (a.dealusers like '%,"+model.getLoginuser().getId()+"%' or a.dealusers like '%"+model.getLoginuser().getId()+",%' )");
+		}else if(model.getSelectState().equals("3")){
+			sb.append(" and a.auditstate = 3 and  a.dealusers like '%'"+model.getLoginuser().getId()+"'%'");
+		}
+		Query query = session.createSQLQuery(" select a.id,a.sysnumber,a.partaname,a.partbname,a.contype ,a.partbcontact,a.startdate,a.enddate,a.auditstate from t_contract a ,t_contract_flow b " + sb.toString()+" and a.id = b.contractcode order by a.createtime desc ")
+				.addScalar("id",StandardBasicTypes.STRING).addScalar("sysnumber",StandardBasicTypes.STRING)
+				.addScalar("partaname",StandardBasicTypes.STRING).addScalar("partbname",StandardBasicTypes.STRING)
+				.addScalar("contype",StandardBasicTypes.INTEGER).addScalar("partbcontact",StandardBasicTypes.STRING)
+				.addScalar("startdate",StandardBasicTypes.DATE).addScalar("enddate",StandardBasicTypes.DATE)
+				.addScalar("auditstate",StandardBasicTypes.STRING)
+				.setResultTransformer(Transformers.aliasToBean(SmallContractModel .class));
+		query.setFirstResult((Integer.parseInt(model.getPage()) - 1)
+				* Integer.parseInt(model.getRows()));
+		query.setMaxResults(Integer.parseInt(model.getRows()));
+
+		List<SmallContractModel> list = query.list();
+
+		Object cout = session.createSQLQuery(" select count(1) from t_contract a ,t_contract_flow b " + sb.toString()+" and  a.id = b.contractcode  ").uniqueResult();
+		long count = Long.parseLong(cout.toString());
+		result.setRows(list);
+		result.setTotal(count/Integer.parseInt(model.getRows())+1);
+		result.setTotalNumber((int)count);
+		result.setCurrentPage(Integer.parseInt(model.getPage()));
 		return result;
 	}
 }
