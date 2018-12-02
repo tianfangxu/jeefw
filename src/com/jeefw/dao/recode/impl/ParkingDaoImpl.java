@@ -30,11 +30,11 @@ public class ParkingDaoImpl extends BaseDao<ParkingEntity> implements ParkingDao
 		JqGridPageView<ParkingModel> result = new JqGridPageView<ParkingModel>();
 		Session session = this.getSession();
 		StringBuffer sb = new StringBuffer(" where t.deleteflg = '0' ");
-
+		
 		if(!StringUnit.isNullOrEmpty(model.getBuild())){
 			sb.append(" and t.build = '"+model.getBuild()+"' ");
 		}
-
+		
 		//等于查询
 		if(model.getEqparam() != null){
 			ParkingModel eqmodel = (ParkingModel) model.getEqparam();
@@ -46,9 +46,6 @@ public class ParkingDaoImpl extends BaseDao<ParkingEntity> implements ParkingDao
 			}
 			if(!StringUnit.isNullOrEmpty(eqmodel.getType())){
 				sb.append(" and t.type = '"+eqmodel.getType()+"' ");
-			}
-			if(!StringUnit.isNullOrEmpty(eqmodel.getId())){
-				sb.append(" and t.id = '"+eqmodel.getId()+"' ");
 			}
 		}
 		//like查询
@@ -64,7 +61,7 @@ public class ParkingDaoImpl extends BaseDao<ParkingEntity> implements ParkingDao
 				sb.append(" and t.type like '%"+likemodel.getType()+"%' ");
 			}
 		}
-
+		
 		Query query = session.createSQLQuery("select t.id id,b.name buildname,t.build build,t.name name,t.area area,t.price price,t.used used,t.type type"
 				+ " from m_parking t left join m_build b on t.build = b.id "+ sb.toString())
 				.addScalar("id", StandardBasicTypes.STRING)
@@ -75,13 +72,13 @@ public class ParkingDaoImpl extends BaseDao<ParkingEntity> implements ParkingDao
 				.addScalar("price", StandardBasicTypes.STRING)
 				.addScalar("used", StandardBasicTypes.STRING)
 				.addScalar("type", StandardBasicTypes.STRING)
-				.setResultTransformer(Transformers.aliasToBean(ParkingModel.class));
+				.setResultTransformer(Transformers.aliasToBean(ParkingModel.class)); 
 		query.setFirstResult((Integer.parseInt(model.getPage()) - 1)
 				* Integer.parseInt(model.getRows()));
 		query.setMaxResults(Integer.parseInt(model.getRows()));
-
+		
 		List<ParkingModel> list = query.list();
-
+		
 		Object cout = session.createSQLQuery(
 				"select count(1) from m_parking  t left join m_build b on t.build = b.id " + sb.toString())
 				.uniqueResult();
@@ -89,7 +86,6 @@ public class ParkingDaoImpl extends BaseDao<ParkingEntity> implements ParkingDao
 
 		result.setRows(list);
 		result.setTotal(count/Integer.parseInt(model.getRows())+1);
-		result.setTotalNumber((int)count);
 		result.setCurrentPage(Integer.parseInt(model.getPage()));
 		return result;
 	}
