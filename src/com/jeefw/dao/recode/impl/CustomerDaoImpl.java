@@ -28,12 +28,12 @@ public class CustomerDaoImpl extends BaseDao<CustomerEntity> implements Customer
 		JqGridPageView<CustomerEntity> result = new JqGridPageView<CustomerEntity>();
 		Session session = this.getSession();
 		StringBuffer sb = new StringBuffer(" where deleteflg = '0' ");
-
+		
 		//区分个人与企业客户
 		if(!StringUnit.isNullOrEmpty(model.getType())){
 			sb.append(" and type = '"+model.getType()+"' ");
 		}
-
+		
 		//等于查询
 		if(model.getEqparam() != null){
 			CustomerModel eqmodel = (CustomerModel) model.getEqparam();
@@ -52,10 +52,7 @@ public class CustomerDaoImpl extends BaseDao<CustomerEntity> implements Customer
 			if(!StringUnit.isNullOrEmpty(eqmodel.getContactname())){
 				sb.append(" and contactname = '"+eqmodel.getContactname()+"' ");
 			}
-			if(!StringUnit.isNullOrEmpty(eqmodel.getId())){
-				sb.append(" and id = '"+eqmodel.getId()+"' ");
-			}
-
+			
 		}
 		//like查询
 		if(model.getLikeparam() != null){
@@ -76,15 +73,15 @@ public class CustomerDaoImpl extends BaseDao<CustomerEntity> implements Customer
 				sb.append(" and contactname like '%"+likemodel.getContactname()+"%' ");
 			}
 		}
-
+		
 		Query query = session.createQuery("from CustomerEntity "
 				+ sb.toString());
 		query.setFirstResult((Integer.parseInt(model.getPage()) - 1)
 				* Integer.parseInt(model.getRows()));
 		query.setMaxResults(Integer.parseInt(model.getRows()));
-
+		
 		List<CustomerEntity> list = query.list();
-
+		
 		Object cout = session.createSQLQuery(
 				"select count(1) from m_customer " + sb.toString())
 				.uniqueResult();
@@ -92,7 +89,6 @@ public class CustomerDaoImpl extends BaseDao<CustomerEntity> implements Customer
 
 		result.setRows(list);
 		result.setTotal(count/Integer.parseInt(model.getRows())+1);
-		result.setTotalNumber((int)count);
 		result.setCurrentPage(Integer.parseInt(model.getPage()));
 		return result;
 	}
@@ -100,10 +96,10 @@ public class CustomerDaoImpl extends BaseDao<CustomerEntity> implements Customer
 	@Override
 	public void deleteEntity(String id, String userid) {
 		Query query = this.getSession().createSQLQuery(
-				"update m_customer set deleteflg = '1' ,deleteuser = '"+userid+"',deletetime = '"+DateUnit.getTime14()+"' where id = ?");
+				"update m_customer set deleteflg = '1' ,deleteuser = '"+userid+"',deletetime = '"+DateUnit.getTime14()+"' where ID = ?");
 		query.setParameter(0, id);
 		query.executeUpdate();
-
+		
 	}
 
 }
