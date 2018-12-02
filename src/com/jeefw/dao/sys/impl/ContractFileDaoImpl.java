@@ -40,6 +40,7 @@ public class ContractFileDaoImpl extends BaseDao<ContractFile> implements Contra
 			}
 		}
 
+
 		Query query = session.createQuery("from ContractFile "
 				+ sb.toString());
 		query.setFirstResult((Integer.parseInt(model.getPage()) - 1)

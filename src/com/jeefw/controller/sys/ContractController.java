@@ -44,6 +44,8 @@ public class ContractController extends JavaEEFrameworkBaseController<Contract> 
     public void getCompact(HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             BigContractModel model = new ParamUtils<BigContractModel>().getparams(request, BigContractModel.class);
+            SysUser sysuser = sysUserService.get(((SysUser) request.getSession().getAttribute(SESSION_SYS_USER)).getId());
+            model.setLoginuser(sysuser);
             JqGridPageView<Contract> contractJqGridPageView = null;
             contractJqGridPageView = contractService.getContractByCondition(model);
             writeJSON(response, contractJqGridPageView);

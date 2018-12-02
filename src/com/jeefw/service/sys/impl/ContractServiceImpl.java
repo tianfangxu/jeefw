@@ -9,6 +9,7 @@ import com.jeefw.model.recode.CustomerEntity;
 import com.jeefw.model.recode.PropertyEntity;
 import com.jeefw.model.sys.*;
 import com.jeefw.model.sys.param.model.BigContractModel;
+import com.jeefw.model.sys.param.model.SmallContractModel;
 import com.jeefw.service.sys.ContractService;
 import core.service.BaseService;
 import core.support.JqGridPageView;
@@ -244,6 +245,11 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 	@Override
 	public JqGridPageView<BigContractModel> getContractWithInfoById(BigContractModel model) {
 		return contractDao.getContractWithInfoById(model);
+	}
+
+	@Override
+	public JqGridPageView<SmallContractModel> getContractByAudit(BigContractModel model) {
+		return contractDao.getContractByAudit(model);
 	}
 
 

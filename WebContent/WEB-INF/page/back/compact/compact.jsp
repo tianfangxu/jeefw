@@ -24,7 +24,7 @@
                 </a>
             </shiro:hasPermission>
             <shiro:lacksPermission name="${ROLE_KEY}:compact:add">
-                <a id="addCompactButton" disabled="disabled" role="button" class="btn btn-info btn-sm" data-toggle="modal">
+                <a id="addCompactButton" role="button" class="btn btn-info btn-sm" data-toggle="modal">
                     添加合同
                 </a>
             </shiro:lacksPermission>
@@ -34,7 +34,7 @@
                 </a>
             </shiro:hasPermission>
             <shiro:lacksPermission name="${ROLE_KEY}:compact:edit">
-                <a id="editCompactButton" role="button" disabled="disabled" class="btn btn-purple btn-sm"
+                <a id="editCompactButton" role="button" class="btn btn-purple btn-sm"
                    data-toggle="modal">
                     编辑合同
                 </a>
@@ -45,7 +45,7 @@
                 </a>
             </shiro:hasPermission>
             <shiro:lacksPermission name="${ROLE_KEY}:compact:delete">
-                <a id="delCompactButton" role="button" disabled="disabled" class="btn btn-danger btn-sm"
+                <a id="delCompactButton" role="button" class="btn btn-danger btn-sm"
                    data-toggle="modal">
                     删除合同
                 </a>
@@ -507,7 +507,7 @@
                         <div class="widget-body">
                             <div class="widget-main">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partacode">管理方：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partacode_edit">管理方：</label>
                                     <div class="col-sm-4">
                                         <select class="select2 width-100" id="partacode_edit" style="width: 100%"></select>
                                     </div>
@@ -581,7 +581,7 @@
                                     <div class="col-sm-4">
                                         <input type="text" id="partbaddress_edit" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson">法定代表人：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson_edit">法定代表人：</label>
                                     <div class="col-sm-4">
                                         <input type="text" id="partblegalperson_edit" class="width-100"/>
                                     </div>
@@ -984,8 +984,6 @@
                             $.mask_close_all();
                         }
                     });
-
-
                 }
             });
 
@@ -997,13 +995,8 @@
                     if (jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).auditstate != '待提交') {
                         toastMessage('系统信息', '该合同已在审核中！');
                     } else {
-                        /* bootbox.confirm("确定提交审核？", function(result) {
-                             if(result) {
-                                 bootbox.alert("提交成功！");
-                             }
-                         });*/
-                        bootbox.confirm({
-                            message: "确定提交审核？",
+                        bootbox.prompt({
+                            title: "确定提交审核？",
                             buttons: {
                                 confirm: {
                                     label: '确定',
@@ -1015,9 +1008,28 @@
                                 }
                             },
                             callback: function (result) {
-                                if (result) {
-                                    bootbox.alert("提交成功！");
-                                }
+                                var params = new Object();
+                                params.id =  selectedId;
+                                params.opinion = result;
+                                $.ajax({
+                                    dataType : "json",
+                                    url : "${contextPath}/sys/flow/submitAudit",
+                                    type : "post",
+                                    contentType: 'application/json',
+                                    data :JSON.stringify(params),
+                                    beforeSend: function () {
+                                        $.mask_fullscreen();
+                                    },
+                                    complete: function (xmlRequest) {
+                                        console.log("xmlRequest"+xmlRequest);
+                                        jQuery(grid_selector).trigger("reloadGrid");
+                                        $.mask_close_all();
+                                        toastMessage("系统提示","提交成功！")
+                                    },
+                                    error: function () {
+                                        $.mask_close_all();
+                                    }
+                                });
                             }
                         });
                     }

@@ -1,6 +1,7 @@
 package com.jeefw.service.sys;
 
 import com.jeefw.model.sys.ContractFlow;
+import com.jeefw.model.sys.param.model.ContractFlowModel;
 import core.service.Service;
 
 /**
@@ -9,5 +10,7 @@ import core.service.Service;
  * @JC
  */
 public interface ContractFlowService extends Service<ContractFlow> {
+
+    void submitAudit(ContractFlowModel model);
 
 }

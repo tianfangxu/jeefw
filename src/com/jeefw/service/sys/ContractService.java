@@ -3,6 +3,7 @@ package com.jeefw.service.sys;
 import com.jeefw.model.sys.Contract;
 import com.jeefw.model.sys.ContractFile;
 import com.jeefw.model.sys.param.model.BigContractModel;
+import com.jeefw.model.sys.param.model.SmallContractModel;
 import core.service.Service;
 import core.support.JqGridPageView;
 
@@ -28,4 +29,7 @@ public interface ContractService extends Service<Contract> {
     String deleteCompact(BigContractModel model);
 
     JqGridPageView<BigContractModel> getContractWithInfoById(BigContractModel model);
+
+    JqGridPageView<SmallContractModel> getContractByAudit(BigContractModel model);
+
 }
