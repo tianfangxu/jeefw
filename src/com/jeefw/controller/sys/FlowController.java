@@ -2,10 +2,10 @@ package com.jeefw.controller.sys;
 
 import com.jeefw.core.Constant;
 import com.jeefw.core.JavaEEFrameworkBaseController;
-import com.jeefw.model.sys.Contract;
 import com.jeefw.model.sys.ContractFlow;
 import com.jeefw.model.sys.SysUser;
 import com.jeefw.model.sys.param.model.BigContractModel;
+import com.jeefw.model.sys.param.model.ContractFlowHisModel;
 import com.jeefw.model.sys.param.model.ContractFlowModel;
 import com.jeefw.model.sys.param.model.SmallContractModel;
 import com.jeefw.service.sys.ContractFlowHisService;
@@ -76,6 +76,24 @@ public class FlowController extends JavaEEFrameworkBaseController<ContractFlow> 
             contractFlowService.submitAudit(model);
             map.put("message", "提交审核成功");
             writeJSON(response, map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("message", "系统出错，请稍后重试");
+            writeJSON(response, map);
+        }
+    }
+
+    /***
+     * 查看审核记录
+     */
+    @RequestMapping(value = "/getAuditRecords", method = {RequestMethod.POST})
+    public void getAuditRecords(HttpServletRequest request, HttpServletResponse response, @RequestBody ContractFlowModel model) throws IOException {
+        HashMap<String, String> map = new HashMap<String, String>();
+        try {
+            SysUser sysuser = sysUserService.get(((SysUser) request.getSession().getAttribute(SESSION_SYS_USER)).getId());
+            model.setLoginuser(sysuser);
+            JqGridPageView<ContractFlowHisModel> contractFlowHisModelJqGridPageView = contractFlowService.getAuditRecords(model);
+            writeJSON(response, contractFlowHisModelJqGridPageView);
         } catch (Exception e) {
             e.printStackTrace();
             map.put("message", "系统出错，请稍后重试");

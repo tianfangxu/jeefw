@@ -13,8 +13,9 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/select2.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/load.css" />
 
+<body>
 
-<div class="row">
+	<div class="row">
 	<div class="col-xs-12">
 
 		<div class="well well-sm">
@@ -63,7 +64,7 @@
 	</div>
 </div>
 
-<div id="modal-table1" class="modal fade" data-backdrop="static">
+	<div id="modal-table1" class="modal fade" data-backdrop="static">
 	<div class="modal-dialog" style="width: 90%;height: 90%">
 		<div class="modal-content">
 			<div class="table-header">
@@ -77,7 +78,7 @@
 	</div>
 </div>
 
-<div id="modal-table-edit" class="modal fade" data-backdrop="static">
+	<div id="modal-table-edit" class="modal fade" data-backdrop="static">
 	<div class="modal-dialog" style="min-width: 820px;">
 		<form id="compactForm_Edit" class="form-horizontal">
 			<div class="modal-content">
@@ -409,72 +410,9 @@
 									</span>
 									<div class="timeline-items">
 
-										<div class="timeline-item clearfix">
-											<div class="timeline-info">
-												<span class="timeline-date">张三</span>
-												<i class="timeline-indicator btn btn-success no-hover"></i>
-											</div>
-											<div class="widget-box transparent">
-												<div class="widget-body">
-													<div class="widget-main no-padding">
-														<div class="clearfix">
-															<div class="pull-left">
-																<span class="orange2 bolder">同意</span>&nbsp;&nbsp;&nbsp;备注：请审核
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
+										<div id="dealDiv"></div>
 
-										<div class="timeline-item clearfix">
-											<div class="timeline-info">
-												<span class="timeline-date">李四</span>
-
-												<i class="timeline-indicator btn btn-success no-hover"></i>
-											</div>
-
-											<div class="widget-box transparent">
-												<div class="widget-body">
-													<div class="widget-main no-padding">
-														<div class="pull-left">
-															<span class="orange2 bolder">同意</span>&nbsp;&nbsp;&nbsp;备注：
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="timeline-item clearfix">
-											<div class="timeline-info">
-												<span class="timeline-date">王五</span>
-												<i class="timeline-indicator btn btn-success no-hover"></i>
-											</div>
-
-											<div class="widget-box transparent">
-												<div class="widget-body">
-													<div class="widget-main no-padding">
-														<span class="pink2 bolder">回退</span>&nbsp;&nbsp;&nbsp;备注：证件信息不完整
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="timeline-item clearfix">
-											<div class="timeline-info">
-												<span class="timeline-date">李四</span>
-
-												<i class="timeline-indicator btn btn-success no-hover"></i>
-											</div>
-											<div class="widget-box transparent">
-												<div class="widget-body">
-													<div class="widget-main no-padding">
-														<span class="orange2 bolder">同意</span>&nbsp;&nbsp;&nbsp;备注：证件信息已经补全完整
-													</div>
-												</div>
-											</div>
-										</div>
-
+										<br><br>
 										<div class="form-group">
 											<div class="col-sm-12">
 												<textarea class="width-100"  placeholder="请输入意见备注"></textarea>
@@ -502,6 +440,7 @@
 	</div>
 </div>
 
+</body>
 <script type="text/javascript">
 	    var nowTab = "";
 		var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
@@ -528,21 +467,21 @@
                         grid_selector = "#grid-table";
                         pager_selector = "#grid-pager";
                         getjqGrid("1");
-                        $(grid_selector).jqGrid("setGridWidth", $(".page-content").width());
+                        $(grid_selector).jqGrid("setGridWidth", parent_column.width());
                         getNavGrid();
                         nowTab = "#dsh";
                     }else if(url=='#shz'){
                         grid_selector = "#grid-table—shz";
                         pager_selector = "#grid-pager—shz";
                         getjqGrid("2");
-                        $(grid_selector).jqGrid("setGridWidth", $(".page-content").width());
+                        $(grid_selector).jqGrid("setGridWidth", parent_column.width());
                         getNavGrid();
                         nowTab = "#shz";
 					}else if(url=='#ysh'){
                         grid_selector = "#grid-table—ysh";
                         pager_selector = "#grid-pager—ysh";
                         getjqGrid("3");
-                        $(grid_selector).jqGrid("setGridWidth", $(".page-content").width());
+                        $(grid_selector).jqGrid("setGridWidth", parent_column.width());
                         getNavGrid();
                         nowTab = "#ysh";
                     }
@@ -931,7 +870,6 @@
                             $('#agreeButton').css("display","");
                             $('#backButton').css("display","");
 						}
-
                         var params = new Object();
                         params.id =  selectedId;
                         $.ajax({
@@ -951,6 +889,76 @@
                             },
                             error: function () {
                                 $.mask_close_all();
+                            }
+                        });
+
+                        /**
+						 *
+						 *
+						 *
+						 * <div class="timeline-item clearfix">
+                         <div class="timeline-info">
+                         <span class="timeline-date">张三</span>
+                         <i class="timeline-indicator btn btn-success no-hover"></i>
+                         </div>
+                         <div class="widget-box transparent">
+                         <div class="widget-body">
+                         <div class="widget-main no-padding">
+                         <div class="clearfix">
+                         <div class="pull-left">
+                         <span class="orange2 bolder">同意</span>&nbsp;&nbsp;&nbsp;备注：请审核
+                         </div>
+                         </div>
+                         </div>
+                         </div>
+                         </div>
+                         </div>
+						 *
+						 *
+						 *
+						 *
+						 * */
+
+
+                        $.ajax({
+                            dataType : "json",
+                            url : "${contextPath}/sys/flow/getAuditRecords",
+                            type : "post",
+                            contentType: 'application/json',
+                            data :JSON.stringify(params),
+                            beforeSend: function () {
+                            },
+                            complete: function (xmlRequest) {
+                                if(xmlRequest.statusText=='success'){
+									 var rows = JSON.parse(xmlRequest.responseText).rows;
+									 var html = "";
+									 for(var i=0;i<rows.length;i++){
+									    html += '<div class="timeline-item clearfix">'
+											+'<div class="timeline-info">'
+											+'<span class="timeline-date">'+rows[i].dealname+'</span>'
+											+'<i class="timeline-indicator btn btn-success no-hover"></i>'
+										 	+'</div>'
+										 	+'<div class="widget-box transparent">'
+										 	+'<div class="widget-body">'
+										 	+'<div class="widget-main no-padding">'
+										 	+'<div class="clearfix">'
+										 	+'<div class="pull-left">';
+										if(rows[i].decision==1){
+											 html +='<span class="orange2 bolder">同意</span><span class="bolder">&nbsp;&nbsp;处理时间</span>'+getMyDate(rows[i].handlertime)+'&nbsp;&nbsp;&nbsp;备注：'+rows[i].opinion;
+										}else if(rows[i].decision==2){
+                                            html +='<span class="pink2 bolder">退回</span><span class="bolder">&nbsp;&nbsp;处理时间</span>'+getMyDate(rows[i].handlertime)+'&nbsp;&nbsp;&nbsp;备注：'+rows[i].opinion;
+                                        }else if(rows[i].decision==3){
+                                            html +='<span class="orange2 bolder">提交</span><span class="bolder">&nbsp;&nbsp;处理时间</span>'+getMyDate(rows[i].handlertime)+'&nbsp;&nbsp;&nbsp;备注：'+rows[i].opinion;
+                                        }else if(rows[i].decision==4){
+                                            html +='<span class="orange2 bolder">完成</span><span class="bolder">&nbsp;&nbsp;处理时间</span>'+getMyDate(rows[i].handlertime)+'&nbsp;&nbsp;&nbsp;备注：'+rows[i].opinion;
+                                        }
+                                        html +='</div></div></div></div></div></div>';
+										$('#dealDiv').html(html);
+                                     }
+                                }
+                            },
+                            error: function () {
+
                             }
                         });
                     }
@@ -1478,5 +1486,26 @@
                 templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
             })
         }
+
+        //获得年月日      得到日期oTime
+        function getMyDate(str){
+            var oDate = new Date(str),
+                oYear = oDate.getFullYear(),
+                oMonth = oDate.getMonth()+1,
+                oDay = oDate.getDate(),
+                oHour = oDate.getHours(),
+                oMin = oDate.getMinutes(),
+                oSen = oDate.getSeconds(),
+                oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//最后拼接时间
+            return oTime;
+        };
+        //补0操作
+        function getzf(num){
+            if(parseInt(num) < 10){
+                num = '0'+num;
+            }
+            return num;
+        }
+
 
 </script>

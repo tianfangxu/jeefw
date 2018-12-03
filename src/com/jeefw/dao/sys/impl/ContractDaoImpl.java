@@ -202,7 +202,7 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 		}else if(model.getSelectState().equals("2")){
 			sb.append(" and a.auditstate = 2 and  (a.dealusers like '%,"+model.getLoginuser().getId()+"%' or a.dealusers like '%"+model.getLoginuser().getId()+",%' )");
 		}else if(model.getSelectState().equals("3")){
-			sb.append(" and a.auditstate = 3 and  a.dealusers like '%'"+model.getLoginuser().getId()+"'%'");
+			sb.append(" and a.auditstate = 3 and (a.dealusers like '%,"+model.getLoginuser().getId()+"%' or a.dealusers like '%"+model.getLoginuser().getId()+",%' )");
 		}
 		Query query = session.createSQLQuery(" select a.id,a.sysnumber,a.partaname,a.partbname,a.contype ,a.partbcontact,a.startdate,a.enddate,a.auditstate from t_contract a ,t_contract_flow b " + sb.toString()+" and a.id = b.contractcode order by a.createtime desc ")
 				.addScalar("id",StandardBasicTypes.STRING).addScalar("sysnumber",StandardBasicTypes.STRING)

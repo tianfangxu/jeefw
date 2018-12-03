@@ -15,6 +15,7 @@ import core.service.BaseService;
 import core.support.JqGridPageView;
 import core.util.*;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,6 +35,7 @@ import java.util.UUID;
  */
 @Service
 public class ContractServiceImpl extends BaseService<Contract> implements ContractService {
+	Logger logger = Logger.getLogger(ContractServiceImpl.class);
 	private ContractDao contractDao;
 
 	@Resource
@@ -424,6 +426,8 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 	 * @return
 	 */
 	public String createpdfFile(String wordPath){
+		logger.error("1111111111111111111111111"+wordPath);
+		logger.info("1111111111111111111111111"+wordPath);
 		WordToPdf.wordToPDF(wordPath,wordPath.replace("docx","pdf"));
 		return wordPath.replace("docx","pdf");
 	}

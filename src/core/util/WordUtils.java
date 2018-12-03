@@ -1,16 +1,10 @@
 package core.util;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.Map;
-
-
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+
+import java.io.*;
+import java.util.Map;
 
 public class WordUtils {
     //配置信息,代码本身写的还是很可读的,就不过多注解了
