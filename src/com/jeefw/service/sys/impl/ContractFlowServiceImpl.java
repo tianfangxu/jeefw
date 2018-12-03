@@ -6,16 +6,20 @@ import com.jeefw.dao.sys.ContractFlowHisDao;
 import com.jeefw.model.sys.Contract;
 import com.jeefw.model.sys.ContractFlow;
 import com.jeefw.model.sys.ContractFlowHis;
+import com.jeefw.model.sys.param.model.ContractFlowHisModel;
 import com.jeefw.model.sys.param.model.ContractFlowModel;
 import com.jeefw.service.sys.ContractFlowService;
 import core.service.BaseService;
+import core.support.JqGridPageView;
 import core.util.BeanUtils;
+import core.util.CommonUtil;
 import core.util.ConfigUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.FileNotFoundException;
 import java.util.Date;
+import java.util.HashMap;
 
 
 /**
@@ -68,5 +72,10 @@ public class ContractFlowServiceImpl extends BaseService<ContractFlow> implement
 		ContractFlowHis contractFlowHis = new ContractFlowHis();
 		BeanUtils.copyPropertiesIgnoreNull(contractFlow,contractFlowHis);
 		contractFlowHisDao.persist(contractFlowHis);
+	}
+
+	@Override
+	public JqGridPageView<ContractFlowHisModel> getAuditRecords(ContractFlowModel model) {
+		return contractFlowHisDao.getAuditRecords(model.getId());
 	}
 }

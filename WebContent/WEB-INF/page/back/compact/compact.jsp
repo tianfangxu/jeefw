@@ -12,66 +12,66 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/select2.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/load.css" />
 
+<body>
 
+    <!--操作按钮-->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="well well-sm">
+                <shiro:hasPermission name="${ROLE_KEY}:compact:add">
+                    <a id="addCompactButton" role="button" class="btn btn-info btn-sm" data-toggle="modal">
+                        添加合同
+                    </a>
+                </shiro:hasPermission>
+                <shiro:lacksPermission name="${ROLE_KEY}:compact:add">
+                    <a id="addCompactButton" role="button" class="btn btn-info btn-sm" data-toggle="modal">
+                        添加合同
+                    </a>
+                </shiro:lacksPermission>
+                <shiro:hasPermission name="${ROLE_KEY}:compact:edit">
+                    <a id="editCompactButton" role="button" class="btn btn-purple btn-sm" data-toggle="modal">
+                        编辑合同
+                    </a>
+                </shiro:hasPermission>
+                <shiro:lacksPermission name="${ROLE_KEY}:compact:edit">
+                    <a id="editCompactButton" role="button" class="btn btn-purple btn-sm"
+                       data-toggle="modal">
+                        编辑合同
+                    </a>
+                </shiro:lacksPermission>
+                <shiro:hasPermission name="${ROLE_KEY}:compact:delete">
+                    <a id="delCompactButton" role="button" class="btn btn-danger btn-sm" data-toggle="modal">
+                        删除合同
+                    </a>
+                </shiro:hasPermission>
+                <shiro:lacksPermission name="${ROLE_KEY}:compact:delete">
+                    <a id="delCompactButton" role="button" class="btn btn-danger btn-sm"
+                       data-toggle="modal">
+                        删除合同
+                    </a>
+                </shiro:lacksPermission>
+                <a id="viewCompactButton" role="button" class="btn btn-inverse btn-sm" data-toggle="modal">
+                    合同预览
+                </a>
+                <a id="examineCompactButton" role="button" class="btn btn-pink btn-sm" data-toggle="modal">
+                    提交审核
+                </a>
 
-<!--操作按钮-->
-<div class="row">
-    <div class="col-xs-12">
-        <div class="well well-sm">
-            <shiro:hasPermission name="${ROLE_KEY}:compact:add">
-                <a id="addCompactButton" role="button" class="btn btn-info btn-sm" data-toggle="modal">
-                    添加合同
-                </a>
-            </shiro:hasPermission>
-            <shiro:lacksPermission name="${ROLE_KEY}:compact:add">
-                <a id="addCompactButton" role="button" class="btn btn-info btn-sm" data-toggle="modal">
-                    添加合同
-                </a>
-            </shiro:lacksPermission>
-            <shiro:hasPermission name="${ROLE_KEY}:compact:edit">
-                <a id="editCompactButton" role="button" class="btn btn-purple btn-sm" data-toggle="modal">
-                    编辑合同
-                </a>
-            </shiro:hasPermission>
-            <shiro:lacksPermission name="${ROLE_KEY}:compact:edit">
-                <a id="editCompactButton" role="button" class="btn btn-purple btn-sm"
-                   data-toggle="modal">
-                    编辑合同
-                </a>
-            </shiro:lacksPermission>
-            <shiro:hasPermission name="${ROLE_KEY}:compact:delete">
-                <a id="delCompactButton" role="button" class="btn btn-danger btn-sm" data-toggle="modal">
-                    删除合同
-                </a>
-            </shiro:hasPermission>
-            <shiro:lacksPermission name="${ROLE_KEY}:compact:delete">
-                <a id="delCompactButton" role="button" class="btn btn-danger btn-sm"
-                   data-toggle="modal">
-                    删除合同
-                </a>
-            </shiro:lacksPermission>
-            <a id="viewCompactButton" role="button" class="btn btn-inverse btn-sm" data-toggle="modal">
-                合同预览
-            </a>
-            <a id="examineCompactButton" role="button" class="btn btn-pink btn-sm" data-toggle="modal">
-                提交审核
-            </a>
+            </div>
+
+            <table id="grid-table"></table>
+
+            <div id="grid-pager"></div>
+
+            <script type="text/javascript">
+                var $path_base = "${contextPath}/static";
+            </script>
 
         </div>
-
-        <table id="grid-table"></table>
-
-        <div id="grid-pager"></div>
-
-        <script type="text/javascript">
-            var $path_base = "${contextPath}/static";
-        </script>
-
     </div>
-</div>
 
-<!--合同预览-->
-<div id="modal-table1" class="modal fade" data-backdrop="static">
+    <!--合同预览-->
+    <div id="modal-table1" class="modal fade" data-backdrop="static">
     <div class="modal-dialog" style="width: 90%;height: 90%">
         <div class="modal-content">
             <div class="table-header">
@@ -85,8 +85,8 @@
     </div>
 </div>
 
-<!--合同新增-->
-<div id="modal-table" class="modal fade" data-backdrop="static">
+    <!--合同新增-->
+    <div id="modal-table" class="modal fade" data-backdrop="static">
     <div class="modal-dialog" style="min-width: 820px;">
         <form id="compactForm" class="form-horizontal">
             <div class="modal-content">
@@ -418,8 +418,8 @@
     </div>
 </div>
 
-<!--合同编辑-->
-<div id="modal-table-edit" class="modal fade" data-backdrop="static">
+    <!--合同编辑-->
+    <div id="modal-table-edit" class="modal fade" data-backdrop="static">
     <div class="modal-dialog" style="min-width: 820px;">
         <form id="compactForm_Edit" class="form-horizontal">
             <div class="modal-content">
@@ -753,7 +753,7 @@
     </div>
 </div>
 
-
+</body>
 <script type="text/javascript">
     var scripts = [null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
         "${contextPath}/static/assets/js/jquery.ui.touch-punch.js", "${contextPath}/static/assets/js/markdown/markdown.js","${contextPath}/static/assets/js/markdown/bootstrap-markdown.js",
