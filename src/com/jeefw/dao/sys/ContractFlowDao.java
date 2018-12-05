@@ -8,5 +8,5 @@ import core.dao.Dao;
  * @JC
  */
 public interface ContractFlowDao extends Dao<ContractFlow> {
-
+    ContractFlow getContractFlowByContractCode(String contractCode);
 }

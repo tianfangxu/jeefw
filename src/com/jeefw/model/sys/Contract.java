@@ -87,6 +87,8 @@ public class Contract extends ExtJSBaseParameter {
     private String buildcode;
     @Column(name = "propertycodes")
     private String propertycodes;
+    @Column(name = "propertytext")
+    private String propertytext;
     @Column(name = "createuser")
     private String createuser;
     @Column(name = "createtime")
@@ -379,6 +381,14 @@ public class Contract extends ExtJSBaseParameter {
         this.propertycodes = propertycodes;
     }
 
+    public String getPropertytext() {
+        return propertytext;
+    }
+
+    public void setPropertytext(String propertytext) {
+        this.propertytext = propertytext;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -412,6 +422,7 @@ public class Contract extends ExtJSBaseParameter {
                 Objects.equals(dealusers, contract.dealusers) &&
                 Objects.equals(buildcode, contract.buildcode) &&
                 Objects.equals(propertycodes, contract.propertycodes) &&
+                Objects.equals(propertytext, contract.propertytext) &&
                 Objects.equals(createuser, contract.createuser) &&
                 Objects.equals(createtime, contract.createtime) &&
                 Objects.equals(updateuser, contract.updateuser) &&
@@ -422,6 +433,6 @@ public class Contract extends ExtJSBaseParameter {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, sysnumber, startdate, enddate, contype, totalamount, partacode, partaname, partaaddress, partalegalperson, partancontact, partaaccount, partaaccountname, bankname, partataxnumber, partbcode, partbtype, partbname, partbaddress, partblegalperson, partbcontact, partbtaxnumber, subsidiary, auditstate, dealusers, buildcode, propertycodes, createuser, createtime, updateuser, updatetime, deleteuser, deletetime, deleteflg);
+        return Objects.hash(id, sysnumber, startdate, enddate, contype, totalamount, partacode, partaname, partaaddress, partalegalperson, partancontact, partaaccount, partaaccountname, bankname, partataxnumber, partbcode, partbtype, partbname, partbaddress, partblegalperson, partbcontact, partbtaxnumber, subsidiary, auditstate, dealusers, buildcode, propertycodes, propertytext, createuser, createtime, updateuser, updatetime, deleteuser, deletetime, deleteflg);
     }
 }

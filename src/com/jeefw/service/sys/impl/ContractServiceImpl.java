@@ -107,16 +107,16 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 				contractProperty.setContractcode(contract.getId());
 				contractProperty.setId(createUUID());
 				BuildEntity buildEntity =  buildDao.get(model.getBuildid());
-				String[] propertyIds = model.getPropertyid().split(",");
-				String address =buildEntity.getAddress();
-				String names = "";
+				//String[] propertyIds = model.getPropertyid().split(",");
+				String address =buildEntity.getAddress()+model.getPropertyText();
+				/*String names = "";
 				for(int i=0;i<propertyIds.length;i++){
 					PropertyEntity propertyEntity =  propertyDao.get(propertyIds[i]);
 					names += propertyEntity.getName()+",";
 				}
 				if(!names.equals("")){
 					 address  = address + names.substring(0,names.length()-1);
-				}
+				}*/
 				contractProperty.setAddress(address);
 				contractProperty.setBuildarea(new BigDecimal(model.getBuildarea()));
 				contractProperty.setTenantarea(new BigDecimal(model.getTenantarea()));
@@ -172,16 +172,16 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 			//更新物业合同
 			ContractProperty contractProperty = contractPropertyDao. getContractPropertyByContractId(model.getId());
 			BuildEntity buildEntity =  buildDao.get(model.getBuildid());
-			String[] propertyIds = model.getPropertyid().split(",");
-			String address =buildEntity.getAddress();
-			String names = "";
+			//String[] propertyIds = model.getPropertyid().split(",");
+			String address =buildEntity.getAddress()+model.getPropertyText();
+			/*String names = "";
 			for(int i=0;i<propertyIds.length;i++){
 				PropertyEntity propertyEntity =  propertyDao.get(propertyIds[i]);
 				names += propertyEntity.getName()+",";
 			}
 			if(!names.equals("")){
 				address  = address + names.substring(0,names.length()-1);
-			}
+			}*/
 			contractProperty.setAddress(address);
 			contractProperty.setBuildarea(new BigDecimal(model.getBuildarea()));
 			contractProperty.setTenantarea(new BigDecimal(model.getTenantarea()));
@@ -270,6 +270,7 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 			contract.setEnddate(new SimpleDateFormat("yyyy-MM-dd").parse(DateUnit.getDateByMMddyyyy(htsj.split("-")[1])));
 			contract.setBuildcode(model.getBuildid());
 			contract.setPropertycodes(model.getPropertyid());
+			contract.setPropertytext(model.getPropertyText());
 			if(CommonUtil.isNull(model.getPartbcode())){
 				//生成乙方信息
 				CustomerEntity customerEntity = new CustomerEntity();
@@ -426,8 +427,6 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 	 * @return
 	 */
 	public String createpdfFile(String wordPath){
-		logger.error("1111111111111111111111111"+wordPath);
-		logger.info("1111111111111111111111111"+wordPath);
 		WordToPdf.wordToPDF(wordPath,wordPath.replace("docx","pdf"));
 		return wordPath.replace("docx","pdf");
 	}
@@ -471,6 +470,7 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 		contract.setPropertycodes(model.getPropertyid());
 		contract.setUpdatetime(new Date());
 		contract.setUpdateuser(model.getLoginuser().getId()+"");
+		contract.setPropertytext(model.getPropertyText());
 		contractDao.update(contract);
 	}
 }

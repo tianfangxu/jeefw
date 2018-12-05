@@ -12,4 +12,7 @@ import core.support.JqGridPageView;
 public interface ContractFlowHisDao extends Dao<ContractFlowHis> {
 
     public JqGridPageView<ContractFlowHisModel> getAuditRecords(String contractcode);
+
+    ContractFlowHis getBackDealuser(String contractcode,String role);
+
 }

@@ -130,8 +130,9 @@
 										<select class="select2" id="buildid_edit" style="width: 100%" disabled></select>
 									</div>
 									<div class="col-sm-4" style="display: none" id="div1_edit">
-										<select class="select2" id="propertyid_edit" style="width:100%" multiple disabled>
-										</select>
+										<%--<select class="select2" id="propertyid_edit" style="width:100%" multiple disabled>
+										</select>--%>
+										<input type="text"  class="width-100"  id="PropertyIds_edit"   />
 									</div>
 								</div>
 								<div class="form-group" >
@@ -415,7 +416,7 @@
 										<br><br>
 										<div class="form-group">
 											<div class="col-sm-12">
-												<textarea class="width-100"  placeholder="请输入意见备注"></textarea>
+												<textarea class="width-100"  placeholder="请输入意见备注" rows="5" id="opinion"></textarea>
 											</div>
 										</div>
 
@@ -1015,6 +1016,69 @@
                     }
                 });
 
+                //同意
+                $("#agreeButton").bind("click", function () {
+                    var selectedId = $(grid_selector).jqGrid("getGridParam", "selrow");
+                    if (null == selectedId) {
+                        toastMessage("系统信息","请选择记录");
+                    } else {
+                        var opinion = $('#opinion').val();
+                        var params = new Object();
+                        params.opinion = opinion;
+                        params.decision = 1;
+                        params.contractcode = selectedId;
+                        $.ajax({
+                            dataType : "json",
+                            url : "${contextPath}/sys/flow/dealActiviti",
+                            type : "post",
+                            contentType: 'application/json',
+                            data :JSON.stringify(params),
+                            beforeSend: function () {
+                            },
+                            complete: function (xmlRequest) {
+                                jQuery(grid_selector).trigger("reloadGrid");
+                                toastMessage("系统提示","审核成功！");
+                            },
+                            error: function () {
+                            }
+                        });
+
+                    }
+                });
+
+                //退回
+                $("#backButton").bind("click", function () {
+                    var selectedId = $(grid_selector).jqGrid("getGridParam", "selrow");
+                    if (null == selectedId) {
+                        toastMessage("系统信息","请选择记录");
+                    } else {
+                        var opinion = $.trim($('#opinion').val());
+                        if(opinion==''){
+                            toastMessage("系统信息","回退合同，请写上理由");
+                        }
+                        var params = new Object();
+                        params.opinion = opinion;
+                        params.decision = 2;
+                        params.contractcode = selectedId;
+                        $.ajax({
+                            dataType : "json",
+                            url : "${contextPath}/sys/flow/dealActiviti",
+                            type : "post",
+                            contentType: 'application/json',
+                            data :JSON.stringify(params),
+                            beforeSend: function () {
+                            },
+                            complete: function (xmlRequest) {
+                                jQuery(grid_selector).trigger("reloadGrid");
+                                toastMessage("系统提示","回退成功！");
+                            },
+                            error: function () {
+                            }
+                        });
+
+                    }
+                });
+
         	});
         });
 
@@ -1048,7 +1112,9 @@
                 $(".cwxx").css("display", "none");
                 $("#div1_edit").css("display", "");
                 $("#div2_edit").css("display", "");
-                initPropertySelect2_html(data.buildid,'propertyid_edit',data.propertyids);
+                /*initPropertySelect2_html(data.buildid,'propertyid_edit',data.propertyids);*/
+                $('#PropertyIds_edit').val(data.propertyids);
+                $('#showPropertyIds_edit').val(data.propertyids);
             } else if (data.contype=='2') {
                 $(".wyxx").css("display", "none");
                 $(".cwxx").css("display", "");
@@ -1506,6 +1572,5 @@
             }
             return num;
         }
-
 
 </script>

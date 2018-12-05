@@ -68,6 +68,8 @@ public class BigContractModel <T, G> extends BaseModel<T, G> implements Serializ
     private int contypeInt;
     private String selectState;
 
+    private String propertyText;//楼宇具体管理单元文本
+
     public String getId() {
         return id;
     }
@@ -490,5 +492,13 @@ public class BigContractModel <T, G> extends BaseModel<T, G> implements Serializ
 
     public void setSelectState(String selectState) {
         this.selectState = selectState;
+    }
+
+    public String getPropertyText() {
+        return propertyText;
+    }
+
+    public void setPropertyText(String propertyText) {
+        this.propertyText = propertyText;
     }
 }
