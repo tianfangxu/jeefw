@@ -100,4 +100,22 @@ public class FlowController extends JavaEEFrameworkBaseController<ContractFlow> 
             writeJSON(response, map);
         }
     }
+
+    /***
+     * 合同审核
+     */
+    @RequestMapping(value = "/dealActiviti", method = {RequestMethod.POST})
+    public void dealActiviti(HttpServletRequest request, HttpServletResponse response, @RequestBody ContractFlowModel model) throws IOException {
+        HashMap<String, String> map = new HashMap<String, String>();
+        try {
+            SysUser sysuser = sysUserService.get(((SysUser) request.getSession().getAttribute(SESSION_SYS_USER)).getId());
+            model.setLoginuser(sysuser);
+            contractFlowService.dealActiviti(model);
+            writeJSON(response, map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("message", "系统出错，请稍后重试");
+            writeJSON(response, map);
+        }
+    }
 }

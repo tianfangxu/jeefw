@@ -138,7 +138,8 @@
                                         <select class="select2" id="buildid" style="width: 100%"></select>
                                     </div>
                                     <div class="col-sm-4" style="display: none" id="div1">
-                                        <select class="select2" id="propertyid" style="width: 100%" multiple="multiple" ></select>
+                                        <%--<select class="select2" id="propertyid" style="width: 100%" multiple="multiple" ></select>--%>
+                                        <input type="text" placeholder="室" class="width-100"  id="PropertyIds"   />
                                     </div>
                                 </div>
                                 <div class="form-group" >
@@ -471,9 +472,8 @@
                                         <select class="select2" id="buildid_edit" style="width: 100%"></select>
                                     </div>
                                     <div class="col-sm-4" style="display: none" id="div1_edit">
-                                        <select class="select2" id="propertyid_edit" style="width:100%" multiple>
-
-                                        </select>
+                                        <%--<select class="select2" id="propertyid_edit" style="width:100%" multiple></select>--%>
+                                        <input type="text"  class="width-100"  id="PropertyIds_edit"   />
                                     </div>
                                 </div>
                                 <div class="form-group" >
@@ -905,6 +905,16 @@
                 }
             });
 
+            $('#PropertyIds').on('input propertychange',function(){
+                var result = $(this).val();
+                $('#showPropertyIds').val(result);
+            });
+
+            $('#PropertyIds_edit').on('input propertychange',function(){
+                var result = $(this).val();
+                $('#showPropertyIds_edit').val(result);
+            });
+
             $(window).triggerHandler("resize.jqGrid");
 
             function aceSwitch(cellvalue, options, cell) {
@@ -963,6 +973,10 @@
                 if (null == selectedId) {
                     toastMessage('系统信息', '请选择记录！');
                 } else {
+                    if(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).auditstate == '已完成'){
+                        toastMessage('系统信息', '该合同已经审核完毕无法更改！');
+                        return;
+                    }
                     var params = new Object();
                     params.id =  selectedId;
                     $.ajax({
@@ -1105,8 +1119,8 @@
                     return;
                 }
                 if($("#contype").val() == '1'){
-                    if($('#propertyid').val() == null){
-                        $("#modal-tip").html("请选择楼宇具体的管理单元");
+                    if($.trim($('#PropertyIds').val()) == ""){
+                        $("#modal-tip").html("请输入楼宇具体的管理单元");
                         return;
                     }
                 }
@@ -1278,7 +1292,7 @@
                     return;
                 }
                 if($("#contype_edit").val() == '1'){
-                    if($('#propertyid_edit').val() == null){
+                    if($('#PropertyIds_edit').val() == ""){
                         $("#modal-tip-edit").html("请选择楼宇具体的管理单元");
                         return;
                     }
@@ -1779,18 +1793,18 @@
                     if(data.statusText=='success'){
                         if(id=='buildid') {
                             $('#showAddressId').val(JSON.parse(data.responseText).rows[0].address);
-                            if($('#contype').val() == '1'){
+                            /*if($('#contype').val() == '1'){
                                 $('#propertyid').select2("val", " ");
                                 $('#showPropertyIds').val("");
                                 initPropertySelect2(e.params.data.id,'propertyid');
-                            }
+                            }*/
                         }else if(id=="buildid_edit"){
                             $('#showAddressId_edit').val(JSON.parse(data.responseText).rows[0].address);
-                            if($('#contype_edit').val() == '1'){
+                            /*if($('#contype_edit').val() == '1'){
                                 $('#propertyid_edit').select2("val", " ");
                                 $('#showPropertyIds_edit').val("");
                                 initPropertySelect2(e.params.data.id,'propertyid_edit');
-                            }
+                            }*/
                         }
                     }
                 }
@@ -2122,7 +2136,7 @@
 
     function generateAddData(){
         var data = new Object();
-        var propertyids = $('#propertyid').val();
+        /*var propertyids = $('#propertyid').val();
         if(propertyids!=null&&propertyids.indexOf(",")){
             var ps = propertyids.toString().split(",");
             var propertys = "";
@@ -2130,7 +2144,8 @@
                 propertys +=   ps[i]+",";
             }
             data.propertyid = propertys.substring(0,propertys.length-1);
-        }
+        }*/
+        data.propertyText = $.trim($("#PropertyIds").val());
         data.id =  $("#id").val();
         data.contype = $('#contype').val();
         data.htsj = $('#htsj').val();
@@ -2197,7 +2212,9 @@
             $(".cwxx").css("display", "none");
             $("#div1_edit").css("display", "");
             $("#div2_edit").css("display", "");
-            initPropertySelect2_html(data.buildid,'propertyid_edit',data.propertyids);
+            $('#PropertyIds_edit').val(data.propertyids);
+            $('#showPropertyIds_edit').val(data.propertyids);
+            //initPropertySelect2_html(data.buildid,'propertyid_edit',data.propertyids);
         } else if (data.contype=='2') {
             $(".wyxx").css("display", "none");
             $(".cwxx").css("display", "");
@@ -2302,7 +2319,7 @@
 
     function generateEditData(){
         var data = new Object();
-        var propertyids = $('#propertyid_edit').val();
+        /*var propertyids = $('#propertyid_edit').val();
         if(propertyids!=null&&propertyids.indexOf(",")){
             var ps = propertyids.toString().split(",");
             var propertys = "";
@@ -2310,7 +2327,8 @@
                 propertys +=   ps[i]+",";
             }
             data.propertyid = propertys.substring(0,propertys.length-1);
-        }
+        }*/
+        data.propertyText = $.trim($("#PropertyIds_edit").val());
         data.id =  $("#id_edit").val();
         data.contype = $('#contype_edit').val();
         data.htsj = $('#htsj_edit').val();

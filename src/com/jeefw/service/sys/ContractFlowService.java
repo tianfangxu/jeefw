@@ -15,6 +15,8 @@ public interface ContractFlowService extends Service<ContractFlow> {
 
     void submitAudit(ContractFlowModel model);
 
+    void dealActiviti(ContractFlowModel model);
+
     JqGridPageView<ContractFlowHisModel> getAuditRecords(ContractFlowModel model);
 
 }

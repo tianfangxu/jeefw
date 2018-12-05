@@ -44,4 +44,13 @@ public class ContractFlowHisDaoImpl extends BaseDao<ContractFlowHis> implements 
 		result.setTotalNumber((int)contractFlowHisModels.size());
 		return result;
 	}
+
+	@Override
+	public ContractFlowHis getBackDealuser(String contractcode, String role) {
+		Session session = this.getSession();
+		StringBuffer sb = new StringBuffer(" where contractcode = '"+contractcode+"' and nexthandler = '"+role+"' order by handlertime desc ");
+		Query query =  session.createQuery(" from ContractFlowHis "+sb.toString());
+		List<ContractFlowHis> list =  query.list();
+		return  list.get(0);
+	}
 }
