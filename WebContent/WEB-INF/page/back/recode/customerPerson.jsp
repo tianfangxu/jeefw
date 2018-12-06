@@ -404,7 +404,7 @@
         			datatype : "json",
         			height : 450,
         			align:'center',
-        			colNames : ["编号",'证件种类','证件号码','证件有效期','名称','地址','联系人','联系电话','税号','银行账号','户名','开户行','' ],
+        			colNames : ["编号",'证件种类','证件号码','证件有效期','名称','地址','联系人','联系电话','税号','银行账号','户名','开户行'],
         			colModel : [ 
 			       {
 						 name:'id',
@@ -455,7 +455,7 @@
 						name : "bankname",
 						width : 100,
 						search:false,
-					},
+					}/* ,
         			{
         				label : "",
         				width : 200,
@@ -466,7 +466,8 @@
         					return '<a class="btn btn-info btn-sm" onclick="getmsg()">合同信息</a>';
         				}
         				
-        			}],
+        			} */
+					],
         			//scroll : 1, // set the scroll property to 1 to enable paging with scrollbar - virtual loading of records
         			sortname : "id",
         			sortorder : "asc",
