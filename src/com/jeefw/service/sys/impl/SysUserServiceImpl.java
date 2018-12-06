@@ -6,9 +6,13 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.jeefw.app.bean.UpdateUserPwdRequestBean;
 import com.jeefw.dao.sys.AttachmentDao;
 import com.jeefw.dao.sys.DepartmentDao;
@@ -41,8 +45,15 @@ public class SysUserServiceImpl extends BaseService<SysUser> implements SysUserS
 
 	// 获取用户信息（将数据库查询出来的信息再处理，增加字段的中文意思）
 	public List<SysUser> querySysUserCnList(List<SysUser> resultList) {
+		Subject subject = SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		String key = get(((SysUser) session.getAttribute("SESSION_SYS_USER")).getId()).getDepartmentKey();
+		
 		List<SysUser> sysUserList = new ArrayList<SysUser>();
 		for (SysUser entity : resultList) {
+			if(key != null && !key.equals(entity.getDepartmentKey())){
+				continue;
+			}
 			SysUser sysUser = new SysUser();
 			sysUser.setId(entity.getId());
 			sysUser.setUserName(entity.getUserName());
