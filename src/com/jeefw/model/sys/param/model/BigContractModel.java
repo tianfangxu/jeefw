@@ -69,6 +69,9 @@ public class BigContractModel <T, G> extends BaseModel<T, G> implements Serializ
     private String selectState;
 
     private String propertyText;//楼宇具体管理单元文本
+    private String partbaccount;
+    private String partbaccountname;
+    private String partbbankname;
 
     public String getId() {
         return id;
@@ -500,5 +503,29 @@ public class BigContractModel <T, G> extends BaseModel<T, G> implements Serializ
 
     public void setPropertyText(String propertyText) {
         this.propertyText = propertyText;
+    }
+
+    public String getPartbaccount() {
+        return partbaccount;
+    }
+
+    public void setPartbaccount(String partbaccount) {
+        this.partbaccount = partbaccount;
+    }
+
+    public String getPartbaccountname() {
+        return partbaccountname;
+    }
+
+    public void setPartbaccountname(String partbaccountname) {
+        this.partbaccountname = partbaccountname;
+    }
+
+    public String getPartbbankname() {
+        return partbbankname;
+    }
+
+    public void setPartbbankname(String partbbankname) {
+        this.partbbankname = partbbankname;
     }
 }

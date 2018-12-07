@@ -2,6 +2,7 @@ package com.jeefw.model.sys.param.model;
 
 import com.jeefw.model.recode.param.BaseModel;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -36,6 +37,9 @@ public class ContractModel<T, G> extends BaseModel<T, G> implements Serializable
     private String partbncontact;
     private String partbtaxnumber;
     private String subsidiary;
+    private String partbaccount;
+    private String partbaccountname;
+    private String partbbankname;
     private int auditstate;
     private String dealusers;
     private String createuser;
@@ -292,5 +296,29 @@ public class ContractModel<T, G> extends BaseModel<T, G> implements Serializable
 
     public void setDeleteflg(boolean deleteflg) {
         this.deleteflg = deleteflg;
+    }
+
+    public String getPartbaccount() {
+        return partbaccount;
+    }
+
+    public void setPartbaccount(String partbaccount) {
+        this.partbaccount = partbaccount;
+    }
+
+    public String getPartbaccountname() {
+        return partbaccountname;
+    }
+
+    public void setPartbaccountname(String partbaccountname) {
+        this.partbaccountname = partbaccountname;
+    }
+
+    public String getPartbbankname() {
+        return partbbankname;
+    }
+
+    public void setPartbbankname(String partbbankname) {
+        this.partbbankname = partbbankname;
     }
 }

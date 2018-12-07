@@ -255,10 +255,26 @@
 										<input type="text" id="partbtaxnumber_edit" class="width-100" readonly/>
 									</div>
 								</div>
-								<div class="form-group" id="div3_edit" style="display: none;">
-									<label class="col-sm-2 control-label blue" style="text-align: left" for="partbname_edit">承租方名称：</label>
+								<div class="form-group">
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="partbncontact_edit">开户行：</label>
 									<div class="col-sm-4">
-										<input type="text" id="partbname_edit" class="width-100" readonly/>
+										<input type="text" id="partbbankname_edit" class="width-100"/>
+									</div>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">银行账号：</label>
+									<div class="col-sm-4">
+										<input type="text" id="partbaccount_edit" class="width-100" />
+									</div>
+								</div>
+								<div class="form-group" >
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">户名：</label>
+									<div class="col-sm-4">
+										<input type="text" id="partbaccountname_edit" class="width-100" />
+									</div>
+									<div id="div3_edit" style="display: none;">
+										<label class="col-sm-2 control-label blue" style="text-align: left" for="partbname_edit">承租方名称：</label>
+										<div class="col-sm-4">
+											<input type="text" id="partbname_edit" class="width-100"/>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -1137,6 +1153,9 @@
             $('#partblegalperson_edit').val(data.partblegalperson);
             $('#partbncontact_edit').val(data.partbcontact);
             $('#partbtaxnumber_edit').val(data.partbtaxnumber);
+            $('#partbaccount_edit').val(data.partbaccount);
+            $('#partbaccountname_edit').val(data.partbaccountname);
+            $('#partbbankname_edit').val(data.partbbankname);
             $("#partbtype_edit").val(data.partbtype).trigger("change");
             if (data.contype=='1') {
                 $('#buildarera_edit').val(data.buildarea);
