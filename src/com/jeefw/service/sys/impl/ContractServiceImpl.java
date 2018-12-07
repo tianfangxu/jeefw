@@ -281,6 +281,9 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 				customerEntity.setContactname(model.getPartblegalperson());
 				customerEntity.setContactnumber(model.getPartbcontact());
 				customerEntity.setTaxnumber(model.getPartbtaxnumber());
+				customerEntity.setAccount(model.getPartbaccount());
+				customerEntity.setAccountname(model.getPartbaccountname());
+				customerEntity.setBankname(model.getPartbbankname());
 				customerEntity.setCreateuser(model.getLoginuser().getUserName());
 				customerEntity.setCreatetime(DateUnit.getTime14());
 				customerEntity.setDeleteflg("0");
@@ -292,6 +295,9 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 				contract.setPartbtaxnumber(customerEntity.getTaxnumber());
 				contract.setPartbcontact(customerEntity.getContactnumber());
 				contract.setPartbname(customerEntity.getName());
+				contract.setPartbaccount(customerEntity.getAccount());
+				contract.setPartbaccountname(customerEntity.getAccountname());
+				contract.setPartbbankname(customerEntity.getBankname());
 			}
 			contract.setCreatetime(new Date());
 			contract.setCreateuser(model.getLoginuser().getId()+"");
@@ -385,8 +391,8 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 
 		map.put("undergroundunit", contractParking.getUndergroundunit());
 		map.put("surfaceunit", contractParking.getSurfaceunit());
-		map.put("undergroundnumber", contractParking.getUndergroundnumber());
-		map.put("surfacenumber", contractParking.getUndergroundunit());
+		map.put("undergroundnumber", contractParking.getUndergroundnumber()+"");
+		map.put("surfacenumber", contractParking.getUndergroundunit()+"");
 		map.put("rent", contractParking.getRent());
 		map.put("prepay", contractParking.getPrepay());
 		map.put("cardfee", contractParking.getCardfee());
@@ -455,6 +461,9 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 			customerEntity.setContactname(model.getPartblegalperson());
 			customerEntity.setContactnumber(model.getPartbcontact());
 			customerEntity.setTaxnumber(model.getPartbtaxnumber());
+			customerEntity.setAccount(model.getPartbaccount());
+			customerEntity.setAccountname(model.getPartbaccountname());
+			customerEntity.setBankname(model.getPartbbankname());
 			customerEntity.setCreateuser(model.getLoginuser().getUserName());
 			customerEntity.setCreatetime(DateUnit.getTime14());
 			customerEntity.setDeleteflg("0");

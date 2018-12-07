@@ -8,6 +8,7 @@ import com.jeefw.model.sys.param.model.BigContractModel;
 import com.jeefw.model.sys.param.model.SmallContractModel;
 import core.dao.BaseDao;
 import core.support.JqGridPageView;
+import core.util.ConfigUtil;
 import core.util.DateUnit;
 import core.util.StringUnit;
 import org.hibernate.Query;
@@ -16,6 +17,7 @@ import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.stereotype.Repository;
 
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -81,11 +83,16 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 			Role role = it.next();
 			roleKeyStr += role.getRoleKey()+",";
 		}
-		if(roleKeyStr.indexOf("ROLE_KF")>-1){
-			sb.append(" and contype in ('1','3') ");
-		}else if(roleKeyStr.indexOf("ROLE_AQ")>-1){
-			sb.append(" and contype in ('2','3') ");
+		try{
+			if(roleKeyStr.indexOf(ConfigUtil.getConfig("kf"))>-1){
+				sb.append(" and contype in ('1','3') ");
+			}else if(roleKeyStr.indexOf(ConfigUtil.getConfig("aq"))>-1){
+				sb.append(" and contype in ('2','3') ");
+			}
+		} catch(FileNotFoundException e){
+
 		}
+
 
 		Query query = session.createQuery("from Contract "
 				+ sb.toString());
@@ -124,7 +131,7 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 		columns.append(" a.partbcode,a.partbtype,a.partbname,a.partbaddress,a.partblegalperson,a.partbcontact,a.partbtaxnumber,a.subsidiary,");
 
 		columns.append(" b.id parkingid,b.address parkingaddress,b.manager,b.undergroundunit,b.undergroundnumber,b.surfaceunit,b.surfacenumber,b.rent,b.prepay,b.cardfee,b.reissuecardfee,");
-		columns.append(" c.id propertyid,c.address propertyaddress,c.tenantarea,c.buildarea,c.propertyfee,c.paytype,c.deposit,c.electric,a.buildcode buildid,a.propertytext propertyids,c.paytypecode");
+		columns.append(" c.id propertyid,c.address propertyaddress,c.tenantarea,c.buildarea,c.propertyfee,c.paytype,c.deposit,c.electric,a.buildcode buildid,a.propertytext propertyids,c.paytypecode,a.partbaccount,a.partbaccountname,a.partbbankname");
 		StringBuffer sb = new StringBuffer(" select "+columns.toString()+" from t_contract a left join t_contract_property c on a.id = c.contractcode  left join t_contract_parking b on a.id =b.contractcode  where a.id = '"+model.getId()+"'");
 		Query query =  session.createSQLQuery(sb.toString()).addScalar("id", StandardBasicTypes.STRING)
 				.addScalar("startdate",StandardBasicTypes.DATE).addScalar("enddate",StandardBasicTypes.DATE)
@@ -148,7 +155,8 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 				.addScalar("propertyfee",StandardBasicTypes.STRING).addScalar("paytype",StandardBasicTypes.STRING)
 				.addScalar("deposit",StandardBasicTypes.STRING).addScalar("electric",StandardBasicTypes.STRING)
 				.addScalar("buildid",StandardBasicTypes.STRING).addScalar("propertyids",StandardBasicTypes.STRING)
-				.addScalar("paytypecode",StandardBasicTypes.STRING)
+				.addScalar("paytypecode",StandardBasicTypes.STRING).addScalar("partbaccount",StandardBasicTypes.STRING)
+				.addScalar("partbaccountname",StandardBasicTypes.STRING).addScalar("partbbankname",StandardBasicTypes.STRING)
 				.setResultTransformer(Transformers.aliasToBean(BigContractModel.class));
 		 List<BigContractModel> list = query.list();
 		result.setRows(list);

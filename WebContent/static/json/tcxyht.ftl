@@ -768,7 +768,7 @@
 <w:sz-cs w:val="28"/>
 <w:u w:val="single"/>
 </w:rPr>
-<w:t>上海市</w:t>
+<w:t></w:t>
 </w:r>
 <w:r>
 <w:rPr>
@@ -1283,7 +1283,6 @@
 <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:hint="fareast"/>
 <w:sz w:val="28"/>
 <w:sz-cs w:val="28"/>
-<w:lang w:val="EN-US" w:fareast="ZH-CN"/>
 </w:rPr>
 <w:t> </w:t>
 </w:r>
@@ -1335,11 +1334,10 @@
 </w:r>
 <w:r>
 <w:rPr>
-<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:hint="fareast"/>
+<w:rFonts w:fareast="仿宋_GB2312" w:hint="fareast"/>
 <w:sz w:val="28"/>
 <w:sz-cs w:val="28"/>
 <w:u w:val="single"/>
-<w:lang w:val="EN-US" w:fareast="ZH-CN"/>
 </w:rPr>
 <w:t>${undergroundnumber}</w:t>
 </w:r>
@@ -1381,11 +1379,10 @@
 </w:r>
 <w:r>
 <w:rPr>
-<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:hint="fareast"/>
+<w:rFonts w:fareast="仿宋_GB2312" w:hint="fareast"/>
 <w:sz w:val="28"/>
 <w:sz-cs w:val="28"/>
 <w:u w:val="single"/>
-<w:lang w:val="EN-US" w:fareast="ZH-CN"/>
 </w:rPr>
 <w:t>${surfacenumber}</w:t>
 </w:r>
@@ -1431,7 +1428,6 @@
 <w:sz w:val="28"/>
 <w:sz-cs w:val="28"/>
 <w:u w:val="single"/>
-<w:lang w:val="EN-US" w:fareast="ZH-CN"/>
 </w:rPr>
 <w:t>${rent}</w:t>
 </w:r>
@@ -1488,7 +1484,6 @@
 <w:sz w:val="28"/>
 <w:sz-cs w:val="28"/>
 <w:u w:val="single"/>
-<w:lang w:val="EN-US" w:fareast="ZH-CN"/>
 </w:rPr>
 <w:t>${prepay}</w:t>
 </w:r>
@@ -1601,7 +1596,6 @@
 <w:sz w:val="28"/>
 <w:sz-cs w:val="28"/>
 <w:u w:val="single"/>
-<w:lang w:val="EN-US" w:fareast="ZH-CN"/>
 </w:rPr>
 <w:t>${cardfee}</w:t>
 </w:r>
@@ -1656,7 +1650,6 @@
 <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:hint="fareast"/>
 <w:sz w:val="28"/>
 <w:sz-cs w:val="28"/>
-<w:lang w:val="EN-US" w:fareast="ZH-CN"/>
 </w:rPr>
 <w:t> ${reissuecardfee} </w:t>
 </w:r>

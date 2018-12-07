@@ -77,6 +77,12 @@ public class Contract extends ExtJSBaseParameter {
     private String partbcontact;
     @Column(name = "partbtaxnumber")
     private String partbtaxnumber;
+    @Column(name = "partbaccount")
+    private String partbaccount;
+    @Column(name = "partbaccountname")
+    private String partbaccountname;
+    @Column(name = "partbbankname")
+    private String partbbankname;
     @Column(name = "subsidiary")
     private String subsidiary;
     @Column(name = "auditstate")
@@ -389,6 +395,30 @@ public class Contract extends ExtJSBaseParameter {
         this.propertytext = propertytext;
     }
 
+    public String getPartbaccount() {
+        return partbaccount;
+    }
+
+    public void setPartbaccount(String partbaccount) {
+        this.partbaccount = partbaccount;
+    }
+
+    public String getPartbaccountname() {
+        return partbaccountname;
+    }
+
+    public void setPartbaccountname(String partbaccountname) {
+        this.partbaccountname = partbaccountname;
+    }
+
+    public String getPartbbankname() {
+        return partbbankname;
+    }
+
+    public void setPartbbankname(String partbbankname) {
+        this.partbbankname = partbbankname;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -418,6 +448,9 @@ public class Contract extends ExtJSBaseParameter {
                 Objects.equals(partblegalperson, contract.partblegalperson) &&
                 Objects.equals(partbcontact, contract.partbcontact) &&
                 Objects.equals(partbtaxnumber, contract.partbtaxnumber) &&
+                Objects.equals(partbaccount, contract.partbaccount) &&
+                Objects.equals(partbaccountname, contract.partbaccountname) &&
+                Objects.equals(partbbankname, contract.partbbankname) &&
                 Objects.equals(subsidiary, contract.subsidiary) &&
                 Objects.equals(dealusers, contract.dealusers) &&
                 Objects.equals(buildcode, contract.buildcode) &&
@@ -433,6 +466,6 @@ public class Contract extends ExtJSBaseParameter {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, sysnumber, startdate, enddate, contype, totalamount, partacode, partaname, partaaddress, partalegalperson, partancontact, partaaccount, partaaccountname, bankname, partataxnumber, partbcode, partbtype, partbname, partbaddress, partblegalperson, partbcontact, partbtaxnumber, subsidiary, auditstate, dealusers, buildcode, propertycodes, propertytext, createuser, createtime, updateuser, updatetime, deleteuser, deletetime, deleteflg);
+        return Objects.hash(id, sysnumber, startdate, enddate, contype, totalamount, partacode, partaname, partaaddress, partalegalperson, partancontact, partaaccount, partaaccountname, bankname, partataxnumber, partbcode, partbtype, partbname, partbaddress, partblegalperson, partbcontact, partbtaxnumber, partbaccount, partbaccountname, partbbankname, subsidiary, auditstate, dealusers, buildcode, propertycodes, propertytext, createuser, createtime, updateuser, updatetime, deleteuser, deletetime, deleteflg);
     }
 }

@@ -262,10 +262,26 @@
                                         <input type="text" id="partbtaxnumber" class="width-100" />
                                     </div>
                                 </div>
-                                <div class="form-group" id="div3" style="display: none;">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbname">承租方名称：</label>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbncontact">开户行：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="partbname" class="width-100"/>
+                                        <input type="text" id="partbbankname" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber">银行账号：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbaccount" class="width-100" />
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber">户名：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbaccountname" class="width-100" />
+                                    </div>
+                                    <div id="div3" style="display: none;">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbname">承租方名称：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partbname" class="width-100"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -596,12 +612,29 @@
                                         <input type="text" id="partbtaxnumber_edit" class="width-100" />
                                     </div>
                                 </div>
-                                <div class="form-group" id="div3_edit" style="display: none;">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbname_edit">承租方名称：</label>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbncontact_edit">开户行：</label>
                                     <div class="col-sm-4">
-                                        <input type="text" id="partbname_edit" class="width-100"/>
+                                        <input type="text" id="partbbankname_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">银行账号：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbaccount_edit" class="width-100" />
                                     </div>
                                 </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">户名：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbaccountname_edit" class="width-100" />
+                                    </div>
+                                    <div id="div3_edit" style="display: none;">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbname_edit">承租方名称：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partbname_edit" class="width-100"/>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -1009,12 +1042,12 @@
                     if (jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).auditstate != '待提交') {
                         toastMessage('系统信息', '该合同已在审核中！');
                     } else {
-                        bootbox.prompt({
-                            title: "确定提交审核？",
+                        bootbox.confirm({
+                            message: "确定提交审核？",
                             buttons: {
                                 confirm: {
                                     label: '确定',
-                                    className: 'btn-success'
+                                    className: 'btn-success',
                                 },
                                 cancel: {
                                     label: '取消',
@@ -1022,28 +1055,30 @@
                                 }
                             },
                             callback: function (result) {
-                                var params = new Object();
-                                params.id =  selectedId;
-                                params.opinion = result;
-                                $.ajax({
-                                    dataType : "json",
-                                    url : "${contextPath}/sys/flow/submitAudit",
-                                    type : "post",
-                                    contentType: 'application/json',
-                                    data :JSON.stringify(params),
-                                    beforeSend: function () {
-                                        $.mask_fullscreen();
-                                    },
-                                    complete: function (xmlRequest) {
-                                        console.log("xmlRequest"+xmlRequest);
-                                        jQuery(grid_selector).trigger("reloadGrid");
-                                        $.mask_close_all();
-                                        toastMessage("系统提示","提交成功！")
-                                    },
-                                    error: function () {
-                                        $.mask_close_all();
-                                    }
-                                });
+                                if(result){
+                                    var params = new Object();
+                                    params.id =  selectedId;
+                                    params.opinion = "";
+                                    $.ajax({
+                                        dataType : "json",
+                                        url : "${contextPath}/sys/flow/submitAudit",
+                                        type : "post",
+                                        contentType: 'application/json',
+                                        data :JSON.stringify(params),
+                                        beforeSend: function () {
+                                            $.mask_fullscreen();
+                                        },
+                                        complete: function (xmlRequest) {
+                                            console.log("xmlRequest"+xmlRequest);
+                                            jQuery(grid_selector).trigger("reloadGrid");
+                                            $.mask_close_all();
+                                            toastMessage("系统提示","提交成功！")
+                                        },
+                                        error: function () {
+                                            $.mask_close_all();
+                                        }
+                                    });
+                                }
                             }
                         });
                     }
@@ -1180,6 +1215,18 @@
                 }
                 if($.trim($('#partbtaxnumber').val())==''){
                     $("#modal-tip").html("请填写乙方税号");
+                    return;
+                }
+                if($.trim($('#partbbankname').val())==''){
+                    $("#modal-tip").html("请填写乙方开户行");
+                    return;
+                }
+                if($.trim($('#partbaccount').val())==''){
+                    $("#modal-tip").html("请填写银行账号");
+                    return;
+                }
+                if($.trim($('#partbaccountname').val())==''){
+                    $("#modal-tip").html("请填写乙方户名");
                     return;
                 }
                 if($('#partbcode').val()=='99999'){
@@ -1355,6 +1402,20 @@
                     $("#modal-tip-edit").html("请填写乙方税号");
                     return;
                 }
+
+                if($.trim($('#partbbankname_edit').val())==''){
+                    $("#modal-tip").html("请填写乙方开户行");
+                    return;
+                }
+                if($.trim($('#partbaccount_edit').val())==''){
+                    $("#modal-tip").html("请填写银行账号");
+                    return;
+                }
+                if($.trim($('#partbaccountname_edit').val())==''){
+                    $("#modal-tip").html("请填写乙方户名");
+                    return;
+                }
+
                 if($('#partbcode_edit').val()=='99999'){
                     if($.trim($('#partbname_edit').val())==''){
                         $("#modal-tip-edit").html("请填写承租方名称");
@@ -2082,12 +2143,18 @@
                             $('#partblegalperson').val(JSON.parse(data.responseText).rows[0].name);
                             $('#partbncontact').val(JSON.parse(data.responseText).rows[0].contactnumber);
                             $('#partbtaxnumber').val(JSON.parse(data.responseText).rows[0].taxnumber);
+                            $('#partbaccount').val(JSON.parse(data.responseText).rows[0].account);
+                            $('#partbaccountname').val(JSON.parse(data.responseText).rows[0].accountname);
+                            $('#partbbankname').val(JSON.parse(data.responseText).rows[0].bankname);
                             $("#partbtype").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
                         }else if(id=='partbcode_edit'){
                             $('#partbaddress_edit').val(JSON.parse(data.responseText).rows[0].address);
                             $('#partblegalperson_edit').val(JSON.parse(data.responseText).rows[0].name);
                             $('#partbncontact_edit').val(JSON.parse(data.responseText).rows[0].contactnumber);
                             $('#partbtaxnumber_edit').val(JSON.parse(data.responseText).rows[0].taxnumber);
+                            $('#partbaccount_edit').val(JSON.parse(data.responseText).rows[0].account);
+                            $('#partbaccountname_edit').val(JSON.parse(data.responseText).rows[0].accountname);
+                            $('#partbbankname_edit').val(JSON.parse(data.responseText).rows[0].bankname);
                             $("#partbtype_edit").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
                         }
                     }
@@ -2172,6 +2239,9 @@
         data.partblegalperson = $.trim($('#partblegalperson').val());
         data.partbcontact = $.trim($('#partbncontact').val());
         data.partbtaxnumber = $.trim($('#partbtaxnumber').val());
+        data.partbaccount = $.trim($('#partbaccount').val());
+        data.partbaccountname = $.trim($('#partbaccountname').val());
+        data.partbbankname = $.trim($('#partbbankname').val());
         data.partbtype = $('#partbtype').val();
         data.subsidiary = $.trim($('#supplementaryterms').val());
         data.buildarea = $.trim($('#buildarera').val());
@@ -2237,6 +2307,9 @@
         $('#partblegalperson_edit').val(data.partblegalperson);
         $('#partbncontact_edit').val(data.partbcontact);
         $('#partbtaxnumber_edit').val(data.partbtaxnumber);
+        $('#partbaccount_edit').val(data.partbaccount);
+        $('#partbaccountname_edit').val(data.partbaccountname);
+        $('#partbbankname_edit').val(data.partbbankname);
         $("#partbtype_edit").val(data.partbtype).trigger("change");
         if (data.contype=='1') {
             $('#buildarera_edit').val(data.buildarea);
@@ -2355,6 +2428,9 @@
         data.partblegalperson = $.trim($('#partblegalperson_edit').val());
         data.partbcontact = $.trim($('#partbncontact_edit').val());
         data.partbtaxnumber = $.trim($('#partbtaxnumber_edit').val());
+        data.partbaccountname = $.trim($('#partbaccountname_edit').val());
+        data.partbaccount = $.trim($('#partbaccount_edit').val());
+        data.partbbankname = $.trim($('#partbbankname_edit').val());
         data.partbtype = $('#partbtype_edit').val();
         data.subsidiary = $.trim($('#supplementaryterms_edit').val());
         data.buildarea = $.trim($('#buildarera_edit').val());
