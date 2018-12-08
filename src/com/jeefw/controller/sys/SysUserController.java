@@ -713,4 +713,9 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 		return "back/compact/compact_other";
 	}
 
+	@RequestMapping("/compact_wy")
+	public String compact_wy(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/compact_wy";
+	}
+
 }
