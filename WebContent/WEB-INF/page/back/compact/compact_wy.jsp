@@ -841,8 +841,16 @@
                 }
             });
 
+            var rule = new Object();
+            rule.field = 'contype';
+            rule.op = 'eq';
+            rule.data = '1';
+            var rules = new Array();
+            rules.push(rule);
+
             jQuery(grid_selector).jqGrid({
                 subGrid: false,
+                postData:generateParams(new Object(),rules),
                 url: "${contextPath}/sys/contract/getContractByCondition",
                 datatype: "json",
                 height: 450,
@@ -866,7 +874,6 @@
                 }, {
                     name: "contype",
                     width: 110,
-                    searchoptions: {sopt: ["eq"]},
                     formatter:function(celval, options, rowdata){
                         if(celval=='1'){
                             return "物业合同";
