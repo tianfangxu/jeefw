@@ -481,7 +481,7 @@
                                     aria-hidden="true">
                                 <span class="white">&times;</span>
                             </button>
-                            预算成本表
+                            实绩表
                         </div>
                     </div>
                     <div class="modal-body"
@@ -505,7 +505,7 @@
                                         <table class="table table-striped table-bordered table-hover">
                                             <tr>
                                                 <td colspan="2" style="text-align: center;">项目</td>
-                                                <td style="text-align: center;">全年预算</td>
+                                                <td style="text-align: center;">当月实绩</td>
                                                 <td style="text-align: center;">备注</td>
                                             </tr>
                                             <tr>
@@ -589,7 +589,7 @@
                                         <table class="table table-striped table-bordered table-hover">
                                             <tr>
                                                 <td colspan="3" style="text-align: center;">项目</td>
-                                                <td style="text-align: center;">全年预算</td>
+                                                <td style="text-align: center;">当月实绩</td>
                                                 <td style="text-align: center;">备注</td>
                                             </tr>
                                             <tr>
@@ -616,7 +616,7 @@
                                         <table class="table table-striped table-bordered table-hover">
                                             <tr>
                                                 <td colspan="3" style="text-align: center;">项目</td>
-                                                <td style="text-align: center;">全年预算</td>
+                                                <td style="text-align: center;">当月实绩</td>
                                                 <td style="text-align: center;">备注</td>
                                             </tr>
                                             <tr>
