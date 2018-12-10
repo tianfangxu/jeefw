@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery-ui.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/ui.jqgrid.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery.gritter.css" />
+<link rel="stylesheet"
+	href="${contextPath}/static/assets/css/select2.css" />
 
 <div style="margin-bottom: 10px">
 	<select class="col-xs-2" id="buildSelect" style="float: none;height: 35px;" onchange="getdatareflush()">
@@ -140,7 +142,7 @@
 <script type="text/javascript">
 		var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
 		        		"${contextPath}/static/assets/js/jquery.ui.touch-punch.js", "${contextPath}/static/assets/js/markdown/markdown.js", "${contextPath}/static/assets/js/markdown/bootstrap-markdown.js",
-		        		"${contextPath}/static/assets/js/jquery.hotkeys.js", "${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js", "${contextPath}/static/assets/js/jquery.gritter.js", null ]
+		        		"${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.hotkeys.js", "${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js", "${contextPath}/static/assets/js/jquery.gritter.js", null ]
       
 		$(".page-content-area").ace_ajax("loadScripts", scripts, function() {
         	// inline scripts related to this page
@@ -655,13 +657,51 @@
    	   							html+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
    	   						}
    	   					}
-   	   					$('#buildSelect').html(html);
+   	   					//$('#buildSelect').html(html);
    	   					$('#buil').html(html);
    	   					
    					}
    					
    				}
    			});
+			
+			$('#buildSelect').select2({
+	            ajax: {
+	                type:"get",
+	                url : "${contextPath}/recode/build/getBuildByCondition",
+	                contentType: 'application/json',
+	                dataType:"JSON",
+	                delay: 550,
+	                data: function (params) {
+	                	params.page = 1;
+	                	params.rows = 10;
+	                	params.filters = '{"groupOp":"AND","rules":[{"field":"name","op":"cn","data":"'+checknull(params.term)+'"}]}';
+	                    return params;
+	                },
+	                processResults: function (data, params) {
+	                    params.page = params.page ? 1 : params.page;
+	                    var itemList = [];
+	                    var row = data.rows;
+	                    for(var i=0;i<row.length;i++){
+	                        itemList.push({id: row[i].id, text: row[i].name});
+	                    }
+	                    return {
+	                        results: itemList,
+	                        pagination: {
+	                            more: (params.page * 10) < data.totalNumber
+	                        }
+	                    };
+	                },
+	                cache: true
+	            },
+	            multiBoolean:false,
+	            language: "zh-CN",
+	            placeholder:'--请选择--',//默认文字提示
+	            allowClear: true,//允许清空
+	            escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
+	            templateResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
+	            templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
+	        });
 		}
 		function getdatareflush(){
 			jQuery("#lyxx-table").jqGrid('setGridParam',{
@@ -669,5 +709,11 @@
                 postData:{'build':$("#buildSelect").val()}, //发送数据
                 page:1
             }).trigger("reloadGrid"); //重新载入
+		}
+		function checknull(val){
+			if(val == null || val == undefined || val == "undefined" || val == 'null' ){
+				return '';
+			}
+			return val;
 		}
 </script>
