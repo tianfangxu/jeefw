@@ -63,6 +63,67 @@
 
             <table id="grid-table"></table>
             <table id="grid-pager"></table>
+            <div class="row" style="display: none" id="div1">
+				<div class="col-xs-4">
+					<div class="panel panel-green">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<i class="fa fa-pie-chart"></i>实绩收入支出占比图
+							</h3>
+						</div>
+						<div class="panel-body">
+							<div class="flot-chart">
+								<div class="flot-chart-content" id="main"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="panel panel-green">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<i class="fa fa-pie-chart"></i>收入明细图
+							</h3>
+						</div>
+						<div class="panel-body">
+							<div class="flot-chart">
+								<div class="flot-chart-content" id="main2"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="panel panel-green">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<i class="fa fa-pie-chart"></i>能源费明细图
+							</h3>
+						</div>
+						<div class="panel-body">
+							<div class="flot-chart">
+								<div class="flot-chart-content" id="main3"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row" style="display: none" id="div2">
+				<div class="col-xs-4">
+					<div class="panel panel-green">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<i class="fa fa-pie-chart"></i>办公总务明细图
+							</h3>
+						</div>
+						<div class="panel-body">
+							<div class="flot-chart">
+								<div class="flot-chart-content" id="main4"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<!-- /.span -->
 	</div>
@@ -928,6 +989,9 @@
                     }, 0);
                 },
                 editurl : "${contextPath}/recode/achievement/delAchievement",
+                onSelectRow: function (id){
+                    rentPhotot(id);
+                }
             });
 
             $(window).triggerHandler("resize.jqGrid");// trigger window resize to make the grid get the correct size
@@ -1265,7 +1329,7 @@
     });
 
     function getbuildMsg(){
-        $.ajax({
+        /* $.ajax({
             dataType : "json",
             url : "${contextPath}/recode/build/getBuildByCondition?page=1&rows=10000",
             type : "post",
@@ -1286,6 +1350,43 @@
                 }
 
             }
+        }); */
+    	$('#lyxx').select2({
+            ajax: {
+                type:"get",
+                url : "${contextPath}/recode/build/getBuildByCondition",
+                contentType: 'application/json',
+                dataType:"JSON",
+                delay: 550,
+                data: function (params) {
+                	params.page = 1;
+                	params.rows = 10;
+                	params.filters = '{"groupOp":"AND","rules":[{"field":"name","op":"cn","data":"'+checknull(params.term)+'"}]}';
+                    return params;
+                },
+                processResults: function (data, params) {
+                    params.page = params.page ? 1 : params.page;
+                    var itemList = [];
+                    var row = data.rows;
+                    for(var i=0;i<row.length;i++){
+                        itemList.push({id: row[i].id, text: row[i].name});
+                    }
+                    return {
+                        results: itemList,
+                        pagination: {
+                            more: (params.page * 10) < data.totalNumber
+                        }
+                    };
+                },
+                cache: true
+            },
+            multiBoolean:false,
+            language: "zh-CN",
+            placeholder:'--请选择--',//默认文字提示
+            allowClear: true,//允许清空
+            escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
+            templateResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
+            templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
         });
     }
 
@@ -1573,4 +1674,243 @@
         });
         $("#modal-htxx_test").modal("show");
     }
+    
+    //图标信息
+	function rentPhotot(id){
+        $.ajax({
+            dataType : "json",
+            url : "${contextPath}//recode/achievement/getAchievementByCondition?page=1&rows=1&id="+id,
+            type : "post",
+            contentType: 'application/json',
+            data :null,
+            complete : function(xmlRequest) {
+                console.log(xmlRequest);
+                if(xmlRequest.status == 200){
+                    var data = JSON.parse(xmlRequest.responseText).rows;
+                    showEcharts(data[0]);
+                }
+
+            }
+        });
+	}
+    
+  //图标
+    function showEcharts(data) {
+        $('#div1').css("display","");
+        $('#div2').css("display","");
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'right',
+                data:['收入','能源费','办公总务费','业务外包费','日常修理费','其他']
+            },
+            series: [
+                {
+                    name:'预算',
+                    type:'pie',
+                    selectedMode: 'single',
+                    radius: [0, '30%'],
+                    label: {
+                        normal: {
+                            position: 'inner'
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:data.sumincome, name:'收入', selected:true},
+                        {value:data.sumcost, name:'支出'}
+                    ]
+                },
+                {
+                    name:'',
+                    type:'pie',
+                    radius: ['40%', '55%'],
+                    label: {
+                        normal: {
+                            formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                            backgroundColor: '#eee',
+                            borderColor: '#aaa',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            rich: {
+                                a: {
+                                    color: '#999',
+                                    lineHeight: 22,
+                                    align: 'center'
+                                },
+                                hr: {
+                                    borderColor: '#aaa',
+                                    width: '100%',
+                                    borderWidth: 0.5,
+                                    height: 0
+                                },
+                                b: {
+                                    fontSize: 16,
+                                    lineHeight: 33
+                                },
+                                per: {
+                                    color: '#eee',
+                                    backgroundColor: '#334455',
+                                    padding: [2, 4],
+                                    borderRadius: 2
+                                }
+                            }
+                        }
+                    },
+                    data:[
+                        {value:data.sumincome, name:'收入'},
+                        {value:data.sumenergy, name:'能源费'},
+                        {value:data.sumoffice, name:'办公总务费'},
+                        {value:data.sumelsed, name:'其他'}
+                    ]
+                }
+            ]
+        };
+        myChart.setOption(option);
+
+        var myChart2 = echarts.init(document.getElementById('main2'));
+        var option2 = {
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['租金','物业管理费','固定停车费','临时停车费','广告费','其他经营收入'
+                    ,'维修材料','电费收入','水费收入']
+            },
+            series : [
+                {
+                    name: '收入',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:data.rent, name:'租金'},
+                        {value:data.property, name:'物业管理费'},
+                        {value:data.fixedparking, name:'固定停车费'},
+                        {value:data.tempparking, name:'临时停车费'},
+                        {value:data.advertising, name:'广告费'},
+                        {value:data.rest, name:'其他经营收入'},
+                        {value:data.servicing, name:'维修材料'},
+                        {value:data.electricin, name:'电费收入'},
+                        {value:data.waterin, name:'水费收入'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        myChart2.setOption(option2);
+
+
+        var myChart3 = echarts.init(document.getElementById('main3'));
+        var option3 = {
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['水费','电费','燃气费']
+            },
+            series : [
+                {
+                    name: '收入',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:data.water, name:'水费'},
+                        {value:data.electricout, name:'电费'},
+                        {value:data.gas, name:'燃气费'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        myChart3.setOption(option3);
+
+        var myChart4 = echarts.init(document.getElementById('main4'));
+        var option4 = {
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['办公用品','电话、通信费','饮用水','门牌制作','节假日布置','保洁用品'
+                    ,'绿化费','劳防用品','垃圾清运费','应急物资','外墙、水箱清洗','报警服务费'
+                    ,'灭虫害服务费','污水处理（疏通）费','地坪保养费','其他']
+            },
+            series : [
+                {
+                    name: '收入',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:data.stationery, name:'办公用品'},
+                        {value:data.communication, name:'电话、通信费'},
+                        {value:data.drinkwater, name:'饮用水'},
+                        {value:data.doorplate, name:'门牌制作'},
+                        {value:data.decorate, name:'节假日布置'},
+                        {value:data.cleanser, name:'保洁用品'},
+                        {value:data.afforestation, name:'绿化费'},
+                        {value:data.ppe, name:'劳防用品'},
+                        {value:data.trashcleaning, name:'垃圾清运费'},
+                        {value:data.emergencymaterial, name:'应急物资'},
+                        {value:data.wallwashing, name:'外墙、水箱清洗'},
+                        {value:data.alarmservice, name:'报警服务费'},
+                        {value:data.pestcontrol, name:'灭虫害服务费'},
+                        {value:data.sewerage, name:'污水处理（疏通）费'},
+                        {value:data.maintenance, name:'地坪保养费'},
+                        {value:data.office, name:'其他'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        myChart4.setOption(option4);
+
+        /*myChart5.setOption(option5);
+
+        myChart6.setOption(option6);*/
+
+    }
+    function checknull(val){
+		if(val == null || val == undefined || val == "undefined" || val == 'null' ){
+			return '';
+		}
+		return val;
+	}
 </script>
