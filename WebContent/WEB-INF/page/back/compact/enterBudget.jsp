@@ -42,7 +42,6 @@
 					style="margin-right: 20px;">
 
 				</select>
-				<%--<div class="btn btn-info" onclick="budgetInto()" style="    height: 30px;padding-top: 0px;">录入</div>--%>
 
 				<shiro:hasPermission name="${ROLE_KEY}:information:add">
 					<a id="addInformationButton" role="button"
@@ -1487,7 +1486,7 @@
     }
     
     function getbuildMsg(){
-    	$.ajax({
+    	/* $.ajax({
 			dataType : "json",
 			url : "${contextPath}/recode/build/getBuildByCondition?page=1&rows=10000",
 			type : "post",
@@ -1508,7 +1507,44 @@
 				}
 				
 			}
-		});
+		}); */
+    	$('#lyxx').select2({
+            ajax: {
+                type:"get",
+                url : "${contextPath}/recode/build/getBuildByCondition",
+                contentType: 'application/json',
+                dataType:"JSON",
+                delay: 550,
+                data: function (params) {
+                	params.page = 1;
+                	params.rows = 10;
+                	params.filters = '{"groupOp":"AND","rules":[{"field":"name","op":"cn","data":"'+checknull(params.term)+'"}]}';
+                    return params;
+                },
+                processResults: function (data, params) {
+                    params.page = params.page ? 1 : params.page;
+                    var itemList = [];
+                    var row = data.rows;
+                    for(var i=0;i<row.length;i++){
+                        itemList.push({id: row[i].id, text: row[i].name});
+                    }
+                    return {
+                        results: itemList,
+                        pagination: {
+                            more: (params.page * 10) < data.totalNumber
+                        }
+                    };
+                },
+                cache: true
+            },
+            multiBoolean:false,
+            language: "zh-CN",
+            placeholder:'--请选择--',//默认文字提示
+            allowClear: true,//允许清空
+            escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
+            templateResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
+            templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
+        });
     }
     
     function isnumber(){
@@ -1888,4 +1924,10 @@
         myChart6.setOption(option6);*/
 
     }
+    function checknull(val){
+		if(val == null || val == undefined || val == "undefined" || val == 'null' ){
+			return '';
+		}
+		return val;
+	}
 </script>
