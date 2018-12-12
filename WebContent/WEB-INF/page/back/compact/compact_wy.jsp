@@ -1539,6 +1539,8 @@
                 edit: false,
                 editicon: "ace-icon fa fa-pencil blue",
                 add: false,
+                del :false,
+                delicon : "ace-icon fa fa-trash-o red",
                 addicon: "ace-icon fa fa-plus-circle purple",
                 search: <shiro:hasPermission name="${ROLE_KEY}:compact_wy:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:compact_wy:search">false</shiro:lacksPermission>,
                 searchicon: "ace-icon fa fa-search orange",

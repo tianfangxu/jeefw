@@ -1528,6 +1528,8 @@
             jQuery(grid_selector).jqGrid("navGrid", pager_selector, {
                 edit: false,
                 editicon: "ace-icon fa fa-pencil blue",
+                del :false,
+                delicon : "ace-icon fa fa-trash-o red",
                 add: false,
                 addicon: "ace-icon fa fa-plus-circle purple",
                 search: <shiro:hasPermission name="${ROLE_KEY}:compact_park:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:compact_park:search">false</shiro:lacksPermission>,
