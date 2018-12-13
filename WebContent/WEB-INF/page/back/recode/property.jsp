@@ -85,7 +85,7 @@
 										<div>
 											<label for="form-field-8">面积</label>
 											<input id="area" class="form-control" type="text"> 
-											<label for="form-field-8">租金</label>
+											<label for="form-field-8">物业费（元）</label>
 											<input id="rent" class="form-control" type="text">
 											<script type="text/javascript">
 											//费用定义离事件
@@ -251,7 +251,7 @@
         			url : "${contextPath}/recode/property/getPropertyByCondition",
         			datatype : "json", //从服务器端返回的数据类型 默认xml
         			height : 450,
-        			colNames : ["编号","楼宇编号","楼宇","管理单元", "面积", "租金","租赁状态"],
+        			colNames : ["编号","楼宇编号","楼宇","管理单元", "面积", "物业费（元）","租赁状态"],
         			colModel : [
 						{
 							 name:'id',
