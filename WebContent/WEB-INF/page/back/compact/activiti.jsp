@@ -902,40 +902,14 @@
                                 $.mask_close_all();
                                 if(xmlRequest.statusText=='success'){
                                     echoEditForm(JSON.parse(xmlRequest.responseText).rows[0]);
+                                }else{
+                                    toastMessage('系统信息', xmlRequest.responseJSON.message);
                                 }
                             },
                             error: function () {
                                 $.mask_close_all();
                             }
                         });
-
-                        /**
-						 *
-						 *
-						 *
-						 * <div class="timeline-item clearfix">
-                         <div class="timeline-info">
-                         <span class="timeline-date">张三</span>
-                         <i class="timeline-indicator btn btn-success no-hover"></i>
-                         </div>
-                         <div class="widget-box transparent">
-                         <div class="widget-body">
-                         <div class="widget-main no-padding">
-                         <div class="clearfix">
-                         <div class="pull-left">
-                         <span class="orange2 bolder">同意</span>&nbsp;&nbsp;&nbsp;备注：请审核
-                         </div>
-                         </div>
-                         </div>
-                         </div>
-                         </div>
-                         </div>
-						 *
-						 *
-						 *
-						 *
-						 * */
-
 
                         $.ajax({
                             dataType : "json",
@@ -972,6 +946,8 @@
                                         html +='</div></div></div></div></div></div>';
 										$('#dealDiv').html(html);
                                      }
+                                }else{
+                                    toastMessage('系统信息', xmlRequest.responseJSON.message);
                                 }
                             },
                             error: function () {
@@ -1052,8 +1028,13 @@
                             beforeSend: function () {
                             },
                             complete: function (xmlRequest) {
+                                $("#modal-table-edit").modal("toggle");
                                 jQuery(grid_selector).trigger("reloadGrid");
-                                toastMessage("系统提示","审核成功！");
+                                if(xmlRequest.statusText=='success'){
+                                    toastMessage("系统提示","审核成功！");
+                                }else{
+                                    toastMessage('系统信息', xmlRequest.responseJSON.message);
+                                }
                             },
                             error: function () {
                             }
@@ -1069,8 +1050,9 @@
                         toastMessage("系统信息","请选择记录");
                     } else {
                         var opinion = $.trim($('#opinion').val());
-                        if(opinion==''){
+                        if(opinion==null||opinion==''||opinion==undefined){
                             toastMessage("系统信息","回退合同，请写上理由");
+                            return;
                         }
                         var params = new Object();
                         params.opinion = opinion;
@@ -1085,8 +1067,13 @@
                             beforeSend: function () {
                             },
                             complete: function (xmlRequest) {
+                                $("#modal-table-edit").modal("toggle");
                                 jQuery(grid_selector).trigger("reloadGrid");
-                                toastMessage("系统提示","回退成功！");
+                                if(xmlRequest.statusText=='success'){
+                                    toastMessage("系统提示","回退成功！");
+                                }else{
+                                    toastMessage('系统信息', xmlRequest.responseJSON.message);
+                                }
                             },
                             error: function () {
                             }
