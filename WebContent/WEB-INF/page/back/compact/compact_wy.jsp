@@ -18,33 +18,33 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="well well-sm">
-                <shiro:hasPermission name="${ROLE_KEY}:compact:add">
+                <shiro:hasPermission name="${ROLE_KEY}:compact_wy:add">
                     <a id="addCompactButton" role="button" class="btn btn-info btn-sm" data-toggle="modal">
                         添加合同
                     </a>
                 </shiro:hasPermission>
-                <shiro:lacksPermission name="${ROLE_KEY}:compact:add">
+                <shiro:lacksPermission name="${ROLE_KEY}:compact_wy:add">
                     <a id="addCompactButton" role="button" class="btn btn-info btn-sm" data-toggle="modal">
                         添加合同
                     </a>
                 </shiro:lacksPermission>
-                <shiro:hasPermission name="${ROLE_KEY}:compact:edit">
+                <shiro:hasPermission name="${ROLE_KEY}:compact_wy:edit">
                     <a id="editCompactButton" role="button" class="btn btn-purple btn-sm" data-toggle="modal">
                         编辑合同
                     </a>
                 </shiro:hasPermission>
-                <shiro:lacksPermission name="${ROLE_KEY}:compact:edit">
+                <shiro:lacksPermission name="${ROLE_KEY}:compact_wy:edit">
                     <a id="editCompactButton" role="button" class="btn btn-purple btn-sm"
                        data-toggle="modal">
                         编辑合同
                     </a>
                 </shiro:lacksPermission>
-                <shiro:hasPermission name="${ROLE_KEY}:compact:delete">
+                <shiro:hasPermission name="${ROLE_KEY}:compact_wy:delete">
                     <a id="delCompactButton" role="button" class="btn btn-danger btn-sm" data-toggle="modal">
                         删除合同
                     </a>
                 </shiro:hasPermission>
-                <shiro:lacksPermission name="${ROLE_KEY}:compact:delete">
+                <shiro:lacksPermission name="${ROLE_KEY}:compact_wy:delete">
                     <a id="delCompactButton" role="button" class="btn btn-danger btn-sm"
                        data-toggle="modal">
                         删除合同
@@ -116,10 +116,10 @@
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="contype">合同类型：</label>
                                     <div class="col-sm-4">
                                         <select class="select2" id="contype" style="width: 100%">
-                                            <option value="">--请选择--</option>
-                                            <option value="1">物业管理服务合同</option>
-                                            <option value="2">协议停车合同</option>
-                                            <option value="3">其他合同</option>
+                                            <%--<option value="">--请选择--</option>--%>
+                                            <option value="1" selected>物业管理服务合同</option>
+                                           <%-- <option value="2">协议停车合同</option>
+                                            <option value="3">其他合同</option>--%>
                                         </select>
                                     </div>
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="htsj">合同时间：</label>
@@ -137,7 +137,7 @@
                                     <div class="col-sm-4">
                                         <select class="select2" id="buildid" style="width: 100%"></select>
                                     </div>
-                                    <div class="col-sm-4" style="display: none" id="div1">
+                                    <div class="col-sm-4"  id="div1">
                                         <%--<select class="select2" id="propertyid" style="width: 100%" multiple="multiple" ></select>--%>
                                         <input type="text" placeholder="室" class="width-100"  id="PropertyIds"   />
                                     </div>
@@ -147,7 +147,7 @@
                                     <div class="col-sm-4">
                                         <input type="text" placeholder="区路号" class="width-100" id="showAddressId" readonly/>
                                     </div>
-                                    <div class="col-sm-4" style="display: none" id="div2">
+                                    <div class="col-sm-4"  id="div2">
                                         <input type="text" placeholder="室" class="width-100"  id="showPropertyIds" readonly/>
                                     </div>
                                 </div>
@@ -288,7 +288,7 @@
                         </div>
                     </div>
 
-                    <div class="widget-box wyxx" style="display: none">
+                    <div class="widget-box wyxx" >
                         <div class="widget-header">
                             <h4 class="widget-title">基本条款</h4>
                             <div class="widget-toolbar">
@@ -840,6 +840,7 @@
                     }
                 }
             });
+
             var rule = new Object();
             rule.field = 'contype';
             rule.op = 'eq';
@@ -873,7 +874,6 @@
                 }, {
                     name: "contype",
                     width: 110,
-                    searchoptions: {sopt: ["eq"]},
                     formatter:function(celval, options, rowdata){
                         if(celval=='1'){
                             return "物业合同";
@@ -1539,12 +1539,14 @@
                 edit: false,
                 editicon: "ace-icon fa fa-pencil blue",
                 add: false,
+                del :false,
+                delicon : "ace-icon fa fa-trash-o red",
                 addicon: "ace-icon fa fa-plus-circle purple",
-                search: <shiro:hasPermission name="${ROLE_KEY}:compact:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:compact:search">false</shiro:lacksPermission>,
+                search: <shiro:hasPermission name="${ROLE_KEY}:compact_wy:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:compact_wy:search">false</shiro:lacksPermission>,
                 searchicon: "ace-icon fa fa-search orange",
                 refresh: true,
                 refreshicon: "ace-icon fa fa-refresh blue",
-                view: <shiro:hasPermission name="${ROLE_KEY}:compact:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:compact:view">false</shiro:lacksPermission>,
+                view: <shiro:hasPermission name="${ROLE_KEY}:compact_wy:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:compact_wy:view">false</shiro:lacksPermission>,
                 viewicon: "ace-icon fa fa-search-plus grey"
             }, {
                 recreateForm: true,
@@ -1602,7 +1604,7 @@
                 }
             })
 
-            if (<shiro:hasPermission name="${ROLE_KEY}:compact:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:compact:export">false</shiro:lacksPermission>) {
+            if (<shiro:hasPermission name="${ROLE_KEY}:compact_wy:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:compact_wy:export">false</shiro:lacksPermission>) {
                 jQuery(grid_selector).jqGrid("navButtonAdd", pager_selector, {
                     caption: "",
                     title: "导出Excel",

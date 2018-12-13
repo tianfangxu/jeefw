@@ -703,4 +703,23 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 		return "back/recode/customerPerson";
 	}
 	/*******************new 20181107 end********************/
+	@RequestMapping("/compact_park")
+	public String compact_park(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/compact_park";
+	}
+
+	@RequestMapping("/compact_other")
+	public String compact_other(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/compact_other";
+	}
+
+	@RequestMapping("/compact_wy")
+	public String compact_wy(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/compact_wy";
+	}
+
+	@RequestMapping("/countReport")
+	public String countReport(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/compact/countReport";
+	}
 }
