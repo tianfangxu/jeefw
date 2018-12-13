@@ -1,6 +1,7 @@
 package com.jeefw.controller.recode;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
@@ -17,9 +18,12 @@ import com.jeefw.core.Constant;
 import com.jeefw.core.JavaEEFrameworkBaseController;
 import com.jeefw.model.recode.AchievementEntity;
 import com.jeefw.model.recode.param.AchievementModel;
+import com.jeefw.model.recode.param.AchievementSumExportModel;
+import com.jeefw.model.recode.param.AchievementSumResponseModel;
 import com.jeefw.service.recode.AchievementService;
 
 import core.support.JqGridPageView;
+import core.util.ExcleReportUtil;
 import core.util.ParamUtils;
 
 /**
@@ -103,4 +107,60 @@ public class AchievementController extends JavaEEFrameworkBaseController<Achieve
 			writeJSON(response, map);
 		}
 	}
+	
+	/**
+	 * 分月信息
+	 */
+	@RequestMapping(value = "/getsumToTable", method = { RequestMethod.POST, RequestMethod.GET })
+	public void getsumToTable(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		try {
+			AchievementModel model = new ParamUtils<AchievementModel>().getparams(request, AchievementModel.class);
+			JqGridPageView<AchievementSumResponseModel> entityJqGridPageView = null;
+			entityJqGridPageView = achievementService.getsumToTable(model);
+			writeJSON(response, entityJqGridPageView);
+		} catch (Exception e) {
+			e.printStackTrace();
+			HashMap<String,String> map = new HashMap<String, String>();
+			map.put("message", "系统出错，请稍后重试");
+			writeJSON(response, map);
+		}
+	} 
+	
+	/**
+	 * 对比信息
+	 */
+	@RequestMapping(value = "/getsumToExport", method = { RequestMethod.POST, RequestMethod.GET })
+	public void getsumToExport(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		try {
+			AchievementModel model = new ParamUtils<AchievementModel>().getparams(request, AchievementModel.class);
+			ArrayList<String> list = achievementService.getsumToExport(model);
+			//writeJSON(response, entityJqGridPageView);
+		} catch (Exception e) {
+			e.printStackTrace();
+			HashMap<String,String> map = new HashMap<String, String>();
+			map.put("message", "系统出错，请稍后重试");
+			writeJSON(response, map);
+		}
+	} 
+	
+	/**
+	 * 导出
+	 */
+	@RequestMapping(value = "/getExport", method = { RequestMethod.POST, RequestMethod.GET })
+	public void getExport(HttpServletRequest request, HttpServletResponse response ,@RequestBody AchievementModel model) throws IOException{
+		try {
+			ArrayList<String> list = achievementService.getsumToExport(model);
+			String path1 = request.getSession().getServletContext().getRealPath("/static/word/model.xlsx");
+			String path2 = request.getSession().getServletContext().getRealPath("/static/word/20180001.xlsx");
+			System.out.println(path1);
+			System.out.println(path2);
+			new ExcleReportUtil().gettemp(list, path1, path2);
+			writeJSON(response, "999");
+		} catch (Exception e) {
+			e.printStackTrace();
+			HashMap<String,String> map = new HashMap<String, String>();
+			map.put("message", "系统出错，请稍后重试");
+			writeJSON(response, map);
+		}
+	} 
 }
