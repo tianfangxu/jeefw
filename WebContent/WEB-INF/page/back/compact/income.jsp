@@ -901,7 +901,7 @@
                 url: "${contextPath}//recode/achievement/getAchievementByCondition",
                 datatype: "json",
                 height: 450,
-                colNames: ["ID","楼宇", "年份","月份", "收入预算合计", "成本预算合计", "能源费合计", "办公总务合计", "业务外包合计", "修理费合计", "其他合计", "操作"],
+                colNames: ["ID","楼宇", "年份","月份", "收入合计", "成本合计", "能源费合计", "办公总务合计", "业务外包合计", "修理费合计", "其他合计", "操作"],
                 colModel: [{
                     name: "id",
                     width: 50,

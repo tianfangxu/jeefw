@@ -2,6 +2,7 @@ package com.jeefw.service.sys.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -19,6 +20,7 @@ import com.jeefw.dao.sys.DepartmentDao;
 import com.jeefw.dao.sys.SysUserDao;
 import com.jeefw.model.sys.Attachment;
 import com.jeefw.model.sys.Department;
+import com.jeefw.model.sys.Role;
 import com.jeefw.model.sys.SysUser;
 import com.jeefw.service.sys.SysUserService;
 
@@ -47,12 +49,20 @@ public class SysUserServiceImpl extends BaseService<SysUser> implements SysUserS
 	public List<SysUser> querySysUserCnList(List<SysUser> resultList) {
 		Subject subject = SecurityUtils.getSubject();
 		Session session = subject.getSession();
+		SysUser user = get(((SysUser) session.getAttribute("SESSION_SYS_USER")).getId());
 		String key = get(((SysUser) session.getAttribute("SESSION_SYS_USER")).getId()).getDepartmentKey();
-		
+		System.out.println("----------------------------------------"+JSON.toJSONString(get(((SysUser) session.getAttribute("SESSION_SYS_USER")).getId())));
+		Set<Role> roles = user.getRoles();
+		String rolestring = "";
+		for (Role role : roles) {
+			rolestring += role.getRoleValue();
+		}
 		List<SysUser> sysUserList = new ArrayList<SysUser>();
 		for (SysUser entity : resultList) {
-			if(key != null && !key.equals(entity.getDepartmentKey())){
-				continue;
+			if(rolestring.indexOf("超级管理员") == -1){
+				if(key != null && !key.equals(entity.getDepartmentKey())){
+					continue;
+				}
 			}
 			SysUser sysUser = new SysUser();
 			sysUser.setId(entity.getId());
