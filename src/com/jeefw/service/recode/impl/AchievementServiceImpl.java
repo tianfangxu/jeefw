@@ -139,57 +139,96 @@ public class AchievementServiceImpl<E> implements AchievementService {
 		list.add(model.getRent() );
 		list.add(model.getSumrent() );
 		list.add(divide);
-		list.add(ArithmeticUtil.divide(model.getSumrent(), ArithmeticUtil.multiply(model.getRent(), divide)));
-		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumrent(), ArithmeticUtil.multiply(model.getRent(), divide)), divide));
+		try {
+			list.add(ArithmeticUtil.divide(model.getSumrent(), ArithmeticUtil.multiply(model.getRent(), divide)));
+			list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumrent(), ArithmeticUtil.multiply(model.getRent(), divide)), divide));
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
+		
 		
 		list.add(model.getProperty());
 		list.add(model.getSumproperty());
 		list.add(divide);
+		try {
 		list.add(ArithmeticUtil.divide(model.getSumproperty(), ArithmeticUtil.multiply(model.getProperty(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumproperty(), ArithmeticUtil.multiply(model.getProperty(), divide)), divide));
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		
 		list.add(model.getFixedparking() );
 		list.add(model.getSumfixedparking() );
 		list.add(divide);
+		try {
 		list.add(ArithmeticUtil.divide(model.getSumfixedparking(), ArithmeticUtil.multiply(model.getFixedparking(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumfixedparking(), ArithmeticUtil.multiply(model.getFixedparking(), divide)), divide));
-		
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		list.add(model.getTempparking() );
 		list.add(model.getSumtempparking() );
 		list.add(divide);
+		try {
 		list.add(ArithmeticUtil.divide(model.getSumtempparking(), ArithmeticUtil.multiply(model.getTempparking(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumtempparking(), ArithmeticUtil.multiply(model.getTempparking(), divide)), divide));
-		
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		list.add(model.getAdvertising() );
 		list.add(model.getSumadvertising() );
 		list.add(divide);
+		try {
 		list.add(ArithmeticUtil.divide(model.getSumadvertising(), ArithmeticUtil.multiply(model.getAdvertising(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumadvertising(), ArithmeticUtil.multiply(model.getAdvertising(), divide)), divide));
-		
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		list.add(model.getRest() );
 		list.add(model.getSumrest() );
 		list.add(divide);
+		try {
 		list.add(ArithmeticUtil.divide(model.getSumrest(), ArithmeticUtil.multiply(model.getRest(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumrest(), ArithmeticUtil.multiply(model.getRest(), divide)), divide));
-		
+	} catch (Exception e) {
+		list.add("0");
+		list.add("0");
+	}
 		list.add(model.getServicing() );
 		list.add(model.getSumservicing() );
 		list.add(divide);
+		try {
 		list.add(ArithmeticUtil.divide(model.getSumservicing(), ArithmeticUtil.multiply(model.getServicing(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumservicing(), ArithmeticUtil.multiply(model.getServicing(), divide)), divide));
-		
+	} catch (Exception e) {
+		list.add("0");
+		list.add("0");
+	}
 		list.add(model.getElectricin() );
 		list.add(model.getSumelectricin() );
 		list.add(divide);
+		try {
 		list.add(ArithmeticUtil.divide(model.getSumelectricin(), ArithmeticUtil.multiply(model.getElectricin(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumelectricin(), ArithmeticUtil.multiply(model.getElectricin(), divide)), divide));
-		
+	} catch (Exception e) {
+		list.add("0");
+		list.add("0");
+	}
 		list.add(model.getWaterin() );
 		list.add(model.getSumwaterin() );
 		list.add(divide);
+		try {
 		list.add(ArithmeticUtil.divide(model.getSumwaterin(), ArithmeticUtil.multiply(model.getWaterin(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumwaterin(), ArithmeticUtil.multiply(model.getWaterin(), divide)), divide));
-		
+	} catch (Exception e) {
+		list.add("0");
+		list.add("0");
+	}
 		list.add("");
 		list.add("");
 		list.add("");
@@ -201,21 +240,33 @@ public class AchievementServiceImpl<E> implements AchievementService {
 		list.add(model.getElectricout() );
 		list.add(model.getSumelectricout() );
 		list.add(divide);
+		try {
 		list.add(ArithmeticUtil.divide(model.getSumelectricout(), ArithmeticUtil.multiply(model.getElectricout(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumelectricout(), ArithmeticUtil.multiply(model.getElectricout(), divide)), divide));
-		
+		} catch (Exception e) {
+		list.add("0");
+		list.add("0");
+		}
 		list.add(model.getWater() );
 		list.add(model.getSumwater() );
 		list.add(divide);
+		try {
 		list.add(ArithmeticUtil.divide(model.getSumwater(), ArithmeticUtil.multiply(model.getWater(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumwater(), ArithmeticUtil.multiply(model.getWater(), divide)), divide));
-		
+		} catch (Exception e) {
+		list.add("0");
+		list.add("0");
+		}
 		list.add(model.getGas() );
 		list.add(model.getSumgas() );
 		list.add(divide);
+		try {
 		list.add(ArithmeticUtil.divide(model.getSumgas(), ArithmeticUtil.multiply(model.getGas(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumgas(), ArithmeticUtil.multiply(model.getGas(), divide)), divide));
-		
+		} catch (Exception e) {
+		list.add("0");
+		list.add("0");
+		}
 		list.add("");
 		list.add("");
 		list.add("");
@@ -225,99 +276,150 @@ public class AchievementServiceImpl<E> implements AchievementService {
 		list.add(model.getStationery() );
 		list.add(model.getSumstationery() );
 		list.add(divide);
+		try {
 		list.add(ArithmeticUtil.divide(model.getSumstationery(), ArithmeticUtil.multiply(model.getStationery(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumstationery(), ArithmeticUtil.multiply(model.getStationery(), divide)), divide));
-		
+		} catch (Exception e) {
+		list.add("0");
+		list.add("0");
+		}
 		list.add(model.getCommunication() );
 		list.add(model.getSumcommunication() );
 		list.add(divide);
+		try {
 		list.add(ArithmeticUtil.divide(model.getSumcommunication(), ArithmeticUtil.multiply(model.getCommunication(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumcommunication(), ArithmeticUtil.multiply(model.getCommunication(), divide)), divide));
-		
+		} catch (Exception e) {
+		list.add("0");
+		list.add("0");
+		}
 		list.add(model.getDrinkwater() );
 		list.add(model.getSumdrinkwater() );
-		list.add(divide);
+		list.add(divide);try {
 		list.add(ArithmeticUtil.divide(model.getSumdrinkwater(), ArithmeticUtil.multiply(model.getDrinkwater(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumdrinkwater(), ArithmeticUtil.multiply(model.getDrinkwater(), divide)), divide));
-		
+		} catch (Exception e) {
+		list.add("0");
+		list.add("0");
+		}
 		list.add(model.getDoorplate() );
 		list.add(model.getSumdoorplate() );
 		list.add(divide);
+		try {
 		list.add(ArithmeticUtil.divide(model.getSumdoorplate(), ArithmeticUtil.multiply(model.getDoorplate(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumdoorplate(), ArithmeticUtil.multiply(model.getDoorplate(), divide)), divide));
-		
+		} catch (Exception e) {
+		list.add("0");
+		list.add("0");
+		}
 		list.add(model.getDecorate() );
 		list.add(model.getSumdecorate() );
-		list.add(divide);
+		list.add(divide);try {
 		list.add(ArithmeticUtil.divide(model.getSumdecorate(), ArithmeticUtil.multiply(model.getDecorate(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumdecorate(), ArithmeticUtil.multiply(model.getDecorate(), divide)), divide));
-		
+		} catch (Exception e) {
+		list.add("0");
+		list.add("0");
+		}
 		list.add(model.getCleanser() );
 		list.add(model.getSumcleanser() );
-		list.add(divide);
+		list.add(divide);try {
 		list.add(ArithmeticUtil.divide(model.getSumcleanser(), ArithmeticUtil.multiply(model.getCleanser(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumcleanser(), ArithmeticUtil.multiply(model.getCleanser(), divide)), divide));
-		
+		} catch (Exception e) {
+		list.add("0");
+		list.add("0");
+		}
 		list.add(model.getAfforestation() );
 		list.add(model.getSumafforestation() );
-		list.add(divide);
+		list.add(divide);try {
 		list.add(ArithmeticUtil.divide(model.getSumafforestation(), ArithmeticUtil.multiply(model.getAfforestation(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumafforestation(), ArithmeticUtil.multiply(model.getAfforestation(), divide)), divide));
-		
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		list.add(model.getPpe() );
 		list.add(model.getSumppe() );
-		list.add(divide);
+		list.add(divide);try {
 		list.add(ArithmeticUtil.divide(model.getSumppe(), ArithmeticUtil.multiply(model.getPpe(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumppe(), ArithmeticUtil.multiply(model.getPpe(), divide)), divide));
-		
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		list.add(model.getTrashcleaning() );
 		list.add(model.getSumtrashcleaning() );
-		list.add(divide);
+		list.add(divide);try {
 		list.add(ArithmeticUtil.divide(model.getSumtrashcleaning(), ArithmeticUtil.multiply(model.getTrashcleaning(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumtrashcleaning(), ArithmeticUtil.multiply(model.getTrashcleaning(), divide)), divide));
-		
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		list.add(model.getEmergencymaterial() );
 		list.add(model.getSumemergencymaterial() );
-		list.add(divide);
+		list.add(divide);try {
 		list.add(ArithmeticUtil.divide(model.getSumemergencymaterial(), ArithmeticUtil.multiply(model.getEmergencymaterial(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumemergencymaterial(), ArithmeticUtil.multiply(model.getEmergencymaterial(), divide)), divide));
-		
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		list.add(model.getWallwashing() );
 		list.add(model.getSumwallwashing() );
-		list.add(divide);
+		list.add(divide);try {
 		list.add(ArithmeticUtil.divide(model.getSumwallwashing(), ArithmeticUtil.multiply(model.getWallwashing(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumwallwashing(), ArithmeticUtil.multiply(model.getWallwashing(), divide)), divide));
-		
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		list.add(model.getAlarmservice() );
 		list.add(model.getSumalarmservice() );
-		list.add(divide);
+		list.add(divide);try {
 		list.add(ArithmeticUtil.divide(model.getSumalarmservice(), ArithmeticUtil.multiply(model.getAlarmservice(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumalarmservice(), ArithmeticUtil.multiply(model.getAlarmservice(), divide)), divide));
-		
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		list.add(model.getPestcontrol() );
 		list.add(model.getSumpestcontrol() );
-		list.add(divide);
+		list.add(divide);try {
 		list.add(ArithmeticUtil.divide(model.getSumpestcontrol(), ArithmeticUtil.multiply(model.getPestcontrol(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumpestcontrol(), ArithmeticUtil.multiply(model.getPestcontrol(), divide)), divide));
-		
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		list.add(model.getSewerage() );
 		list.add(model.getSumsewerage() );
-		list.add(divide);
+		list.add(divide);try {
 		list.add(ArithmeticUtil.divide(model.getSumsewerage(), ArithmeticUtil.multiply(model.getSewerage(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumsewerage(), ArithmeticUtil.multiply(model.getSewerage(), divide)), divide));
-		
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		list.add(model.getMaintenance() );
 		list.add(model.getSummaintenance() );
-		list.add(divide);
+		list.add(divide);try {
 		list.add(ArithmeticUtil.divide(model.getSummaintenance(), ArithmeticUtil.multiply(model.getMaintenance(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSummaintenance(), ArithmeticUtil.multiply(model.getMaintenance(), divide)), divide));
-		
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		list.add(model.getOffice() );
 		list.add(model.getSumoffice() );
-		list.add(divide);
+		list.add(divide);try {
 		list.add(ArithmeticUtil.divide(model.getSumoffice(), ArithmeticUtil.multiply(model.getOffice(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumoffice(), ArithmeticUtil.multiply(model.getOffice(), divide)), divide));
-		
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		list.add("");
 		list.add("");
 		list.add("");
@@ -326,10 +428,13 @@ public class AchievementServiceImpl<E> implements AchievementService {
 		
 		list.add(model.getOther() );
 		list.add(model.getSumother() );
-		list.add(divide);
+		list.add(divide);try {
 		list.add(ArithmeticUtil.divide(model.getSumother(), ArithmeticUtil.multiply(model.getOther(), divide)));
 		list.add(ArithmeticUtil.subtract(ArithmeticUtil.divide(model.getSumother(), ArithmeticUtil.multiply(model.getOther(), divide)), divide));
-		
+		} catch (Exception e) {
+			list.add("0");
+			list.add("0");
+		}
 		list.add("");
 		list.add("");
 		list.add("");

@@ -265,7 +265,7 @@
 											</tr>
 
 											<tr>
-												<td colspan="4" style="text-align: left;">合计：<span
+												<td colspan="4" style="text-align: left;">小计：<span
 													id="sumincome" style="color: red">0.00</span></td>
 											</tr>
 										</table>
@@ -304,7 +304,7 @@
 												<td><input id="gasps" type="text" class="inputc ps"></td>
 											</tr>
 											<tr>
-												<td colspan="5" style="text-align: left;">合计:<span
+												<td colspan="5" style="text-align: left;">小计:<span
 													id="sum0" style="color: red;">0.00</span>
 												</td>
 											</tr>
@@ -431,7 +431,7 @@
 											</tr>
 
 											<tr>
-												<td colspan="5" style="text-align: left;">合计:<span
+												<td colspan="5" style="text-align: left;">小计:<span
 													id="sum1" style="color: red;">0.00 </span>
 												</td>
 											</tr>
@@ -509,7 +509,7 @@
 													class="inputc ps"></td>
 											</tr>
 											<tr>
-												<td colspan="3" style="text-align: left;">合计:<span
+												<td colspan="3" style="text-align: left;">小计:<span
 													id="sum2" style="color: red;">0.00</span>
 												</td>
 											</tr>
@@ -521,7 +521,7 @@
 						<div class="col-xs-12 col-sm-12">
 							<div class="col-xs-12 col-sm-6">
 								<div style="color: red; font-size: 24px">
-									总计：<span id="sum5">0.00</span>
+									毛利润：<span id="sum5">0.00</span>
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-6" style="text-align: right;">
@@ -562,7 +562,7 @@
 						<div class="col-xs-12 col-sm-12">
 							<table class="table table-striped table-bordered table-hover">
 								<tr>
-									<td>合计：<span style="color: green;" id="sum_info">2969600.00
+									<td>毛利润：<span style="color: green;" id="sum_info">2969600.00
 									</span></td>
 								</tr>
 							</table>
@@ -643,7 +643,7 @@
 												<td id="waterinps_info" class="cass"></td>
 											</tr>
 											<tr>
-												<td colspan="4">合计：<span style="color: red" id="sum0_info"></span></td>
+												<td colspan="4">小计：<span style="color: red" id="sum0_info"></span></td>
 
 											</tr>
 										</table>
@@ -682,7 +682,7 @@
 												<td id="gasps_info" class="cass"></td>
 											</tr>
 											<tr>
-												<td colspan="5">合计:<span style="color: red;" id="sum1_info"></span>
+												<td colspan="5">小计:<span style="color: red;" id="sum1_info"></span>
 												</td>
 											</tr>
 										</table>
@@ -787,7 +787,7 @@
 											</tr>
 
 											<tr>
-												<td colspan="5">合计:<span style="color: red;" id="sum2_info">
+												<td colspan="5">小计:<span style="color: red;" id="sum2_info">
 												</span>
 												</td>
 											</tr>
@@ -815,7 +815,7 @@
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5">合计:<span style="color:red;">0.00</span> </td>
+                                            <td colspan="5">小计:<span style="color:red;">0.00</span> </td>
                                         </tr>
                                     </table>
                                     <table class="table table-striped table-bordered table-hover">
@@ -878,7 +878,7 @@
 												<td id="otherps_info" class="cass"></td>
 											</tr>
 											<tr>
-												<td colspan="3">合计:<span style="color: red;" id="sum3_info"></span>
+												<td colspan="3">小计:<span style="color: red;" id="sum3_info"></span>
 												</td>
 											</tr>
 										</table>
