@@ -78,11 +78,11 @@
 											<input id="contactname" class="form-control" type="text"> 
 											<label for="form-field-8">联系人电话号码</label>
 											<input id="contactnumber" class="form-control" type="text"> 
-											<label for="form-field-8">税号</label>
-											<input id="taxnumber" class="form-control" type="text"> 
 										</div>
 										<hr />
 										<div>
+											<label for="form-field-8">税号</label>
+											<input id="taxnumber" class="form-control" type="text"> 
 											<label for="form-field-8">银行账号</label>
 											<input id="account" class="form-control" type="text"> 
 											<label for="form-field-8">户名</label>

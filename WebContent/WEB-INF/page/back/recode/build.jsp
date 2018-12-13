@@ -111,8 +111,8 @@
 										</div>
 										<hr />
 										<div>
-											<label for="form-field-8">物业费（<span style="color:red;">0.00 ~ 999.99</span>）</label>
-											<input id="propertyfee" class="form-control" type="text">
+											<label style="display: none" for="form-field-8">物业费（<span style="color:red;">0.00 ~ 999.99</span>）</label>
+											<input id="propertyfee" class="form-control" type="hidden" value="0.00">
 											<script type="text/javascript">
 												//费用定义离事件
 												$("#propertyfee").blur(function(){
@@ -286,6 +286,7 @@
 						}, {
 							name : "propertyfee",
 							width : 100,
+							hidden:true,
 							search:false,
 						}
         			],

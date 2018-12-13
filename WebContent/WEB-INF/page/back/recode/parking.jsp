@@ -88,15 +88,15 @@
 											<div class="radio" style="border: 1px solid #d5d5d5;padding: 5px 4px 6px;">
 												<label>
 													<input name="type" type="radio" class="ace" value="0" />
-													<span class="lbl">地面</span>
+													<span class="lbl">固定</span>
 												</label>
 												<label>
 													<input name="type" type="radio" class="ace" value="1"  />
-													<span class="lbl">地下</span>
+													<span class="lbl">临时</span>
 												</label>
 											</div>
-											<label for="form-field-8">面积</label>
-											<input id="area" class="form-control" type="text">
+											<label for="form-field-8" style="display: none">面积</label>
+											<input id="area" class="form-control" type="hidden" value="0">
 										</div>
 										<hr />
 										<div>
@@ -228,15 +228,16 @@
 							searchoptions : {sopt : ["cn","eq"]},
 							formatter:function(val){
 								if(val == '1'){
-									return '地下';
+									return '临时';
 								}else{
-									return '地面';
+									return '固定';
 								}
 							}
 						},{
 							name : "area",
 							width : 100,
 							search:false,
+							hidden:true,
 						}, {
 							name : "price",
 							width : 150,
@@ -381,7 +382,7 @@
 							used_ = '0';
 						}
         				var type_ = '0';
-        				if(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).type == '地下'){
+        				if(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).type == '临时'){
         					type_ =  '1';
 						}else{
 							type_ = '0';
