@@ -15,4 +15,5 @@ public interface PropertyDao  extends Dao<PropertyEntity>{
 
 	String getPropertyJsonByCondition(BigContractModel model);
 
+	PropertyEntity getPropertyEntity(String buildid,String name);
 }

@@ -109,6 +109,10 @@ public class Contract extends ExtJSBaseParameter {
     private Date deletetime;
     @Column(name = "deleteflg")
     private boolean deleteflg;
+    @Column(name = "othercontype")
+    private String othercontype;
+    @Column(name = "otherpaytype")
+    private String otherpaytype;
 
     public String getId() {
         return id;
@@ -419,6 +423,22 @@ public class Contract extends ExtJSBaseParameter {
         this.partbbankname = partbbankname;
     }
 
+    public String getOthercontype() {
+        return othercontype;
+    }
+
+    public void setOthercontype(String othercontype) {
+        this.othercontype = othercontype;
+    }
+
+    public String getOtherpaytype() {
+        return otherpaytype;
+    }
+
+    public void setOtherpaytype(String otherpaytype) {
+        this.otherpaytype = otherpaytype;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -461,11 +481,13 @@ public class Contract extends ExtJSBaseParameter {
                 Objects.equals(updateuser, contract.updateuser) &&
                 Objects.equals(updatetime, contract.updatetime) &&
                 Objects.equals(deleteuser, contract.deleteuser) &&
-                Objects.equals(deletetime, contract.deletetime);
+                Objects.equals(deletetime, contract.deletetime) &&
+                Objects.equals(othercontype, contract.othercontype) &&
+                Objects.equals(otherpaytype, contract.otherpaytype);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, sysnumber, startdate, enddate, contype, totalamount, partacode, partaname, partaaddress, partalegalperson, partancontact, partaaccount, partaaccountname, bankname, partataxnumber, partbcode, partbtype, partbname, partbaddress, partblegalperson, partbcontact, partbtaxnumber, partbaccount, partbaccountname, partbbankname, subsidiary, auditstate, dealusers, buildcode, propertycodes, propertytext, createuser, createtime, updateuser, updatetime, deleteuser, deletetime, deleteflg);
+        return Objects.hash(id, sysnumber, startdate, enddate, contype, totalamount, partacode, partaname, partaaddress, partalegalperson, partancontact, partaaccount, partaaccountname, bankname, partataxnumber, partbcode, partbtype, partbname, partbaddress, partblegalperson, partbcontact, partbtaxnumber, partbaccount, partbaccountname, partbbankname, subsidiary, auditstate, dealusers, buildcode, propertycodes, propertytext, createuser, createtime, updateuser, updatetime, deleteuser, deletetime, deleteflg, othercontype, otherpaytype);
     }
 }

@@ -142,7 +142,20 @@
                                     </div>
                                 </div>
                                 <div class="form-group" >
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price">合同金额（元）：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="othercontype">小分类：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" placeholder="" class="width-100" id="othercontype" />
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="otherpaytype">付款方式：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="otherpaytype" style="width: 100%">
+                                            <option value="月付" selected>月付</option>
+                                            <option value="季付">季付</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price">合同金额（元/年）：</label>
                                     <div class="col-sm-4">
                                         <input type="text" placeholder="" class="width-100" id="price" />
                                     </div>
@@ -492,7 +505,20 @@
                                     </div>
                                 </div>
                                 <div class="form-group" >
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price_edit">合同金额（元）：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="othercontype_edit">小分类：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" placeholder="" class="width-100" id="othercontype_edit" />
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="otherpaytype_edit">付款方式：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="otherpaytype_edit" style="width: 100%">
+                                            <option value="月付">月付</option>
+                                            <option value="季付">季付</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price_edit">合同金额（元/年）：</label>
                                     <div class="col-sm-4">
                                         <input type="text" placeholder="" class="width-100" id="price_edit" />
                                     </div>
@@ -1157,6 +1183,14 @@
                         return;
                     }
                 }
+                if($.trim($('#othercontype').val()) == ""){
+                    $("#modal-tip").html("请输入合同小分类");
+                    return;
+                }
+                if($('#otherpaytype').val() == ""){
+                    $("#modal-tip").html("请选择付款方式");
+                    return;
+                }
                 if($("#contype").val() == '3'){
                     if($.trim($('#price').val())==''||!re.test($.trim($('#price').val()))) {
                         $("#modal-tip").html("请填写合同金额，只能为数字");
@@ -1349,6 +1383,15 @@
                         $("#modal-tip-edit").html("请填写合同金额，只能为数字");
                         return;
                     }
+                }
+
+                if($.trim($('#othercontype_edit').val()) == ""){
+                    $("#modal-tip").html("请输入合同小分类");
+                    return;
+                }
+                if($('#otherpaytype_edit').val() == ""){
+                    $("#modal-tip").html("请选择付款方式");
+                    return;
                 }
 
                 //甲方信息校验
@@ -2229,6 +2272,8 @@
         data.htsj = $('#htsj').val();
         data.totalamount = $.trim($('#price').val());
         data.buildid = $('#buildid').val();
+        data.othercontype = $.trim($('#othercontype').val())
+        data.otherpaytype = $('#otherpaytype').val();
         data.partacode = $('#partacode').val();
         data.partaname = $("#partacode option:checked").text();
         data.partaaddress = $.trim($('#partaaddress').val());
@@ -2321,7 +2366,9 @@
         $('#partbaccount_edit').val(data.partbaccount);
         $('#partbaccountname_edit').val(data.partbaccountname);
         $('#partbbankname_edit').val(data.partbbankname);
+        $('#othercontype_edit').val(data.othercontype);
         $("#partbtype_edit").val(data.partbtype).trigger("change");
+        $("#potherpaytype_edit").val(data.otherpaytype).trigger("change");
         if (data.contype=='1') {
             $('#buildarera_edit').val(data.buildarea);
             $('#tenantarea_edit').val(data.tenantarea);

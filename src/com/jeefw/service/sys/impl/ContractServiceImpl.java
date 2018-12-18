@@ -299,6 +299,22 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 				contract.setPartbaccountname(customerEntity.getAccountname());
 				contract.setPartbbankname(customerEntity.getBankname());
 			}
+			//楼宇物业信息
+			if(model.getContype().equals("1")){
+				//通过楼宇id和单元文字查找楼宇物业表
+				PropertyEntity propertyEntity = propertyDao.getPropertyEntity(model.getBuildid(),model.getPropertyText());
+				if(propertyEntity==null){
+					propertyEntity = new PropertyEntity();
+					propertyEntity.setBuild(model.getBuildid());
+					propertyEntity.setArea(model.getBuildarea());
+					propertyEntity.setName(model.getPropertyText());
+					propertyEntity.setRent(model.getPropertyfee());
+					propertyEntity.setCreatetime(DateUnit.getTime14());
+					propertyEntity.setDeleteflg("0");
+					propertyEntity.setCreateuser(model.getLoginuser().getUserName());
+					propertyDao.persist(propertyEntity);
+				}
+			}
 			contract.setCreatetime(new Date());
 			contract.setCreateuser(model.getLoginuser().getId()+"");
 			contract.setUpdatetime(new Date());
@@ -469,6 +485,22 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 			customerEntity.setDeleteflg("0");
 			customerDao.persist(customerEntity);
 			model.setPartbcode(customerEntity.getId());
+		}
+		//楼宇物业信息
+		if(model.getContype().equals("1")){
+			//通过楼宇id和单元文字查找楼宇物业表
+			PropertyEntity propertyEntity = propertyDao.getPropertyEntity(model.getBuildid(),model.getPropertyText());
+			if(propertyEntity==null){
+				propertyEntity = new PropertyEntity();
+				propertyEntity.setBuild(model.getBuildid());
+				propertyEntity.setArea(model.getBuildarea());
+				propertyEntity.setName(model.getPropertyText());
+				propertyEntity.setRent(model.getPropertyfee());
+				propertyEntity.setCreatetime(DateUnit.getTime14());
+				propertyEntity.setDeleteflg("0");
+				propertyEntity.setCreateuser(model.getLoginuser().getUserName());
+				propertyDao.persist(propertyEntity);
+			}
 		}
 		Contract contract = contractDao.get(model.getId());
 		BeanUtils.copyPropertiesIgnoreNull(model,contract);

@@ -139,7 +139,7 @@
                                     </div>
                                     <div class="col-sm-4"  id="div1">
                                         <%--<select class="select2" id="propertyid" style="width: 100%" multiple="multiple" ></select>--%>
-                                        <input type="text" placeholder="室" class="width-100"  id="PropertyIds"   />
+                                        <input type="text" placeholder="室" class="width-100"  id="PropertyIds"  onblur="checkProperty('add')"  />
                                     </div>
                                 </div>
                                 <div class="form-group" >
@@ -310,7 +310,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="propertyfee">物业管理费(元)：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="propertyfee">物业管理费(元/月)：</label>
                                     <div class="col-sm-4">
                                         <input type="text" id="propertyfee" class="width-100"/>
                                     </div>
@@ -489,7 +489,7 @@
                                     </div>
                                     <div class="col-sm-4" style="display: none" id="div1_edit">
                                         <%--<select class="select2" id="propertyid_edit" style="width:100%" multiple></select>--%>
-                                        <input type="text"  class="width-100"  id="PropertyIds_edit"   />
+                                        <input type="text"  class="width-100"  id="PropertyIds_edit"  onblur="checkProperty('edit')" />
                                     </div>
                                 </div>
                                 <div class="form-group" >
@@ -661,7 +661,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="propertyfee_edit">物业管理费(元)：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="propertyfee_edit">物业管理费(元/月)：</label>
                                     <div class="col-sm-4">
                                         <input type="text" id="propertyfee_edit" class="width-100"/>
                                     </div>
@@ -2485,6 +2485,43 @@
         $("#" + form + " .select2").each(function () {
             $(this).val("").trigger("change");
         });
+    }
+
+    function checkProperty(req) {
+        var hz = "";
+        if(req=="add"){
+            hz = "";
+        }else{
+            hz = "_edit";
+        }
+        if($.trim($('#PropertyIds'+hz).val())!=""){
+            var rule = new Object();
+            var rules = new Array();
+            rule.field = 'build';
+            rule.op = 'eq';
+            rule.data =  $('#buildid'+hz).val();
+            rules = new Array();
+            rule.field = 'name';
+            rule.op = 'eq';
+            rule.data =  $.trim($('#PropertyIds'+hz).val());
+            rules.push(rule);
+            $.ajax({
+                type:"get",
+                url: "${contextPath}/recode/property/getPropertyByCondition",
+                contentType: 'application/json',
+                dataType:"JSON",
+                delay: 550,
+                data:generateParams(new Object(),rules),
+                success : function(data) {
+                    if(data.rows.length>0){
+                        var row = data.rows[0];
+                        $('#buildarera'+hz).val(row.area);
+                        $('#propertyfee'+hz).val(row.rent);
+                    }
+                }
+            });
+        }
+
     }
 
 </script>
