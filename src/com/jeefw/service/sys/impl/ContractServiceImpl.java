@@ -14,19 +14,21 @@ import com.jeefw.service.sys.ContractService;
 import core.service.BaseService;
 import core.support.JqGridPageView;
 import core.util.*;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 
 /**
@@ -254,8 +256,76 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 		return contractDao.getContractByAudit(model);
 	}
 
+	@Override
+	public void uploadFile(HttpServletRequest request, String dstFileName, BigContractModel model) {
+		String filePath = WordUtils.class.getClassLoader().getResource("../../").getPath();
+		filePath =  filePath.substring(1,filePath.length());
+		filePath =  filePath+"static/upload/"+model.getId();
+		//判断保存文件的路径是否存在
+		File fileUploadPath = new File(filePath);
+		if (!fileUploadPath.exists()) {
+			fileUploadPath.mkdir();
+		}
 
-	private String createUUID() {
+		if (ServletFileUpload.isMultipartContent(request)) {
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			List<MultipartFile> fileList = multipartRequest.getFiles(dstFileName);
+			for (MultipartFile item : fileList) {
+				String fileName = "";        //当前上传文件全名称
+				String fileType = "";        //当前上传文件类型
+				String saveFileName = "";    //保存到服务器目录的文件名称
+				String reportAddr = "";      //保存到服务器目录的文件全路径
+				try {
+					fileName = item.getOriginalFilename();
+					fileType = item.getContentType();
+					saveFileName = DateUnit.getTime14() + "_" + fileName;
+					reportAddr = fileUploadPath + "/" + saveFileName;
+					reportAddr = reportAddr.replace("/", File.separator).replace("\\", File.separator);
+					File savedFile = new File(fileUploadPath, saveFileName);
+					item.transferTo(savedFile);
+					//上传文件成功，保存文件信息到表reportDetail
+					ContractFile  contractFile = new ContractFile();
+					contractFile.setContractcode(model.getId());
+					contractFile.setFiletype(3);
+					contractFile.setFileurl(reportAddr);
+					contractFile.setDeleteflg(false);
+					contractFile.setCreateuser(model.getLoginuser().getId()+"");
+					contractFile.setCreatetime(new Date());
+					contractFileDao.persist(contractFile);
+				} catch (Exception e) {
+					logger.error(e.getMessage());
+				}
+			}
+		}
+	}
+
+    @Override
+    public HashMap<String, String> downloadFile(String id) {
+        HashMap<String, String> map = new HashMap<>();
+        List<ContractFile> list  = contractFileDao.getContractFileByContractId(id);
+        if(list==null||list.size()==0){
+            map.put("success","failure");
+            map.put("message","该合同不存在附件！");
+            return map;
+        }
+        String filePath = WordUtils.class.getClassLoader().getResource("../../").getPath();
+        filePath =  filePath.substring(1,filePath.length());
+        filePath =  filePath+"static/upload/"+id;
+        String zipFilePath = filePath.split("upload") [0]+"upload/";
+        boolean flag= FileToZip.fileToZip(filePath,zipFilePath,id);
+        if(flag){
+            map.put("success","success");
+            map.put("message",zipFilePath+id+".zip");
+            return map;
+        }  else{
+            map.put("success","failure");
+            map.put("message","下载失败，稍后再试！");
+            return map;
+        }
+    }
+
+
+    private String createUUID() {
 		String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
 		return uuid;
 	}
@@ -298,6 +368,22 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 				contract.setPartbaccount(customerEntity.getAccount());
 				contract.setPartbaccountname(customerEntity.getAccountname());
 				contract.setPartbbankname(customerEntity.getBankname());
+			}
+			//楼宇物业信息
+			if(model.getContype().equals("1")){
+				//通过楼宇id和单元文字查找楼宇物业表
+				PropertyEntity propertyEntity = propertyDao.getPropertyEntity(model.getBuildid(),model.getPropertyText());
+				if(propertyEntity==null){
+					propertyEntity = new PropertyEntity();
+					propertyEntity.setBuild(model.getBuildid());
+					propertyEntity.setArea(model.getBuildarea());
+					propertyEntity.setName(model.getPropertyText());
+					propertyEntity.setRent(model.getPropertyfee());
+					propertyEntity.setCreatetime(DateUnit.getTime14());
+					propertyEntity.setDeleteflg("0");
+					propertyEntity.setCreateuser(model.getLoginuser().getUserName());
+					propertyDao.persist(propertyEntity);
+				}
 			}
 			contract.setCreatetime(new Date());
 			contract.setCreateuser(model.getLoginuser().getId()+"");
@@ -469,6 +555,22 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 			customerEntity.setDeleteflg("0");
 			customerDao.persist(customerEntity);
 			model.setPartbcode(customerEntity.getId());
+		}
+		//楼宇物业信息
+		if(model.getContype().equals("1")){
+			//通过楼宇id和单元文字查找楼宇物业表
+			PropertyEntity propertyEntity = propertyDao.getPropertyEntity(model.getBuildid(),model.getPropertyText());
+			if(propertyEntity==null){
+				propertyEntity = new PropertyEntity();
+				propertyEntity.setBuild(model.getBuildid());
+				propertyEntity.setArea(model.getBuildarea());
+				propertyEntity.setName(model.getPropertyText());
+				propertyEntity.setRent(model.getPropertyfee());
+				propertyEntity.setCreatetime(DateUnit.getTime14());
+				propertyEntity.setDeleteflg("0");
+				propertyEntity.setCreateuser(model.getLoginuser().getUserName());
+				propertyDao.persist(propertyEntity);
+			}
 		}
 		Contract contract = contractDao.get(model.getId());
 		BeanUtils.copyPropertiesIgnoreNull(model,contract);

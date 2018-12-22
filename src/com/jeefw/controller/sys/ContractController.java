@@ -10,19 +10,26 @@ import com.jeefw.service.sys.ContractService;
 import com.jeefw.service.sys.SysUserService;
 import core.support.JqGridPageView;
 import core.util.CommonUtil;
+import core.util.DateUnit;
 import core.util.ParamUtils;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 合同管理的控制层
@@ -180,4 +187,39 @@ public class ContractController extends JavaEEFrameworkBaseController<Contract> 
             writeJSON(response, map);
         }
     }
+
+    @RequestMapping(value = "/uploadContractFile", method = {RequestMethod.POST})
+    public void uploadContractFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HashMap<String, String> map = new HashMap<String, String>();
+        try {
+            BigContractModel model = new BigContractModel();
+            SysUser sysuser = sysUserService.get(((SysUser) request.getSession().getAttribute(SESSION_SYS_USER)).getId());
+            model.setLoginuser(sysuser);
+            model.setId(request.getParameter("id"));
+            contractService.uploadFile(request,"uploadFile",model);
+            map.put("message", "上传成功");
+            writeJSON(response, map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("message", "系统出错，请稍后重试");
+            writeJSON(response, map);
+        }
+    }
+
+    @RequestMapping(value = "/downloadFile", method = {RequestMethod.POST})
+    public void downloadFile(HttpServletRequest request, HttpServletResponse response,@RequestBody BigContractModel model) throws IOException {
+        HashMap<String, String> map = new HashMap<String, String>();
+        try {
+            map  = contractService.downloadFile(model.getId());
+            writeJSON(response, map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("message", "系统出错，请稍后重试");
+            map.put("success", "failure");
+            writeJSON(response, map);
+        }
+    }
+
+
+
 }

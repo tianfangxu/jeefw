@@ -11,6 +11,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,5 +60,15 @@ public class ContractFileDaoImpl extends BaseDao<ContractFile> implements Contra
 		result.setTotalNumber((int)count);
 		result.setCurrentPage(Integer.parseInt(model.getPage()));
 		return result;
+	}
+
+	@Override
+	public List<ContractFile> getContractFileByContractId(String id) {
+		List<ContractFile> result = new ArrayList<ContractFile>();
+		Session session = this.getSession();
+		StringBuffer sb = new StringBuffer(" from ContractFile  where 1 = 1  and contractcode = '"+id+"' and filetype='3'");
+		Query query = session.createQuery(sb.toString());
+		List<ContractFile> list = query.list();
+		return list;
 	}
 }

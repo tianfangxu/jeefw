@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/bootstrap-datetimepicker.css"/>
 <link rel="stylesheet" href="${contextPath}/static/assets/css/select2.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/load.css" />
+<link rel="stylesheet" href="${contextPath}/static/assets/css/fileinput.min.css" />
 
 <body>
 
@@ -72,18 +73,34 @@
 
     <!--合同预览-->
     <div id="modal-table1" class="modal fade" data-backdrop="static">
-    <div class="modal-dialog" style="width: 90%;height: 90%">
-        <div class="modal-content">
-            <div class="table-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    <span class="white">&times;</span>
-                </button>
-                合同预览
+        <div class="modal-dialog" style="width: 90%;height: 90%">
+            <div class="modal-content">
+                <div class="table-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span class="white">&times;</span>
+                    </button>
+                    合同预览
+                </div>
+                <div id="handout_wrap_inner"></div>
             </div>
-            <div id="handout_wrap_inner"></div>
         </div>
     </div>
-</div>
+    <!--附件上传-->
+    <div id="modal-table3" class="modal fade" data-backdrop="static">
+        <div class="modal-dialog" style="width: 60%;">
+            <div class="modal-content">
+                <div class="table-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span class="white">&times;</span>
+                    </button>
+                    附件上传
+                </div>
+                <div style="height: 350px;">
+                    <input name="uploadFile"  type="file" id="uploadFile" multiple class="file-loading" />
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--合同新增-->
     <div id="modal-table" class="modal fade" data-backdrop="static">
@@ -112,13 +129,6 @@
                         <div class="widget-body">
                             <div class="widget-main">
                                 <div class="form-group">
-                                    <div><input type="hidden" id="id" /></div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="contype">合同类型：</label>
-                                    <div class="col-sm-4">
-                                        <select class="select2" id="contype" style="width: 100%">
-                                            <option value="3" selected>其他合同</option>
-                                        </select>
-                                    </div>
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="htsj">合同时间：</label>
                                     <div class="col-sm-4">
                                         <div class="input-group">
@@ -127,6 +137,13 @@
 											</span>
                                             <input class="form-control" type="text" name="date-range-picker" id="htsj"/>
                                         </div>
+                                    </div>
+                                    <div><input type="hidden" id="id" /></div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left;display: none" for="contype" >合同类型：</label>
+                                    <div class="col-sm-4" style=";display: none">
+                                        <select class="select2" id="contype" style="width: 100%">
+                                            <option value="3" selected>其他合同</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group" >
@@ -142,7 +159,20 @@
                                     </div>
                                 </div>
                                 <div class="form-group" >
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price">合同金额（元）：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="othercontype">小分类：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" placeholder="" class="width-100" id="othercontype" />
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="otherpaytype">付款方式：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="otherpaytype" style="width: 100%">
+                                            <option value="月付" selected>月付</option>
+                                            <option value="季付">季付</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price">合同金额（元/年）：</label>
                                     <div class="col-sm-4">
                                         <input type="text" placeholder="" class="width-100" id="price" />
                                     </div>
@@ -453,15 +483,7 @@
                             <div class="widget-main">
                                 <div class="form-group">
                                     <div><input type="hidden" id="id_edit" /></div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="contype_edit">合同类型：</label>
-                                    <div class="col-sm-4">
-                                        <select class="select2" id="contype_edit" style="width: 100%" >
-                                            <option value="">--请选择--</option>
-                                            <option value="1">物业管理服务合同</option>
-                                            <option value="2">协议停车合同</option>
-                                            <option value="3">其他合同</option>
-                                        </select>
-                                    </div>
+
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="htsj_edit">合同时间：</label>
                                     <div class="col-sm-4">
                                         <div class="input-group">
@@ -470,6 +492,15 @@
 											</span>
                                             <input class="form-control" type="text" name="date-range-picker" id="htsj_edit"/>
                                         </div>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left;display: none;" for="contype_edit">合同类型：</label>
+                                    <div class="col-sm-4" style="display: none;">
+                                        <select class="select2" id="contype_edit" style="width: 100%" >
+                                            <option value="">--请选择--</option>
+                                            <option value="1">物业管理服务合同</option>
+                                            <option value="2">协议停车合同</option>
+                                            <option value="3">其他合同</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group" >
@@ -492,7 +523,20 @@
                                     </div>
                                 </div>
                                 <div class="form-group" >
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price_edit">合同金额（元）：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="othercontype_edit">小分类：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" placeholder="" class="width-100" id="othercontype_edit" />
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="otherpaytype_edit">付款方式：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="otherpaytype_edit" style="width: 100%">
+                                            <option value="月付">月付</option>
+                                            <option value="季付">季付</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price_edit">合同金额（元/年）：</label>
                                     <div class="col-sm-4">
                                         <input type="text" placeholder="" class="width-100" id="price_edit" />
                                     </div>
@@ -783,7 +827,8 @@
         "${contextPath}/static/assets/js/jquery.hotkeys.js", "${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js",
         "${contextPath}/static/assets/js/jquery.gritter.js","${contextPath}/static/assets/js/date-time/moment.js", "${contextPath}/static/assets/js/date-time/bootstrap-datepicker.js",
         "${contextPath}/static/assets/js/date-time/bootstrap-timepicker.js", "${contextPath}/static/assets/js/date-time/daterangepicker.js", "${contextPath}/static/assets/js/date-time/bootstrap-datetimepicker.js",
-        "${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.media.js","${contextPath}/static/assets/js/load-min.js" ,null]
+        "${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.media.js","${contextPath}/static/assets/js/load-min.js" ,"${contextPath}/static/assets/js/fileinput.min.js" ,
+        "${contextPath}/static/assets/js/zh.js",null]
     $(".page-content-area").ace_ajax("loadScripts", scripts, function () {
         jQuery(function ($) {
             $('.select2').select2({allowClear:true})
@@ -844,7 +889,7 @@
                 url: "${contextPath}/sys/contract/getContractByCondition",
                 datatype: "json",
                 height: 450,
-                colNames: ["ID", "合同编号", "管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态"],
+                colNames: ["ID", "合同编号", "管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态","操作"],
                 colModel: [{
                     name: "id",
                     width: 60,
@@ -897,6 +942,13 @@
                         }else if(celval=='3'){
                             return "已完成";
                         }
+                    }
+                }, {
+                    name: "operation",
+                    width: 100,
+                    search: false,
+                    formatter:function(celval, options, rowdata){
+                        return  '<a role="button" class="btn btn-sm" onclick="openUploadModel(\''+rowdata.id+'\')">上传附件</a>&nbsp;&nbsp;&nbsp;<a role="button" class="btn btn-sm" onclick="loadFile(\''+rowdata.id+'\')">下载附件</a>';
                     }
                 }],
                 sortname: "id",
@@ -1157,6 +1209,14 @@
                         return;
                     }
                 }
+                if($.trim($('#othercontype').val()) == ""){
+                    $("#modal-tip").html("请输入合同小分类");
+                    return;
+                }
+                if($('#otherpaytype').val() == ""){
+                    $("#modal-tip").html("请选择付款方式");
+                    return;
+                }
                 if($("#contype").val() == '3'){
                     if($.trim($('#price').val())==''||!re.test($.trim($('#price').val()))) {
                         $("#modal-tip").html("请填写合同金额，只能为数字");
@@ -1349,6 +1409,15 @@
                         $("#modal-tip-edit").html("请填写合同金额，只能为数字");
                         return;
                     }
+                }
+
+                if($.trim($('#othercontype_edit').val()) == ""){
+                    $("#modal-tip").html("请输入合同小分类");
+                    return;
+                }
+                if($('#otherpaytype_edit').val() == ""){
+                    $("#modal-tip").html("请选择付款方式");
+                    return;
                 }
 
                 //甲方信息校验
@@ -2229,6 +2298,8 @@
         data.htsj = $('#htsj').val();
         data.totalamount = $.trim($('#price').val());
         data.buildid = $('#buildid').val();
+        data.othercontype = $.trim($('#othercontype').val())
+        data.otherpaytype = $('#otherpaytype').val();
         data.partacode = $('#partacode').val();
         data.partaname = $("#partacode option:checked").text();
         data.partaaddress = $.trim($('#partaaddress').val());
@@ -2321,7 +2392,9 @@
         $('#partbaccount_edit').val(data.partbaccount);
         $('#partbaccountname_edit').val(data.partbaccountname);
         $('#partbbankname_edit').val(data.partbbankname);
+        $('#othercontype_edit').val(data.othercontype);
         $("#partbtype_edit").val(data.partbtype).trigger("change");
+        $("#potherpaytype_edit").val(data.otherpaytype).trigger("change");
         if (data.contype=='1') {
             $('#buildarera_edit').val(data.buildarea);
             $('#tenantarea_edit').val(data.tenantarea);
@@ -2476,5 +2549,97 @@
             $(this).val("").trigger("change");
         });
     }
+
+    function openUploadModel(contract_id){
+        var fileInput = new FileInput();
+        fileInput.Init("uploadFile", "${contextPath}/sys/contract/uploadContractFile",contract_id);
+        $("#modal-table3").modal("toggle");
+    }
+
+    var FileInput = function() {
+        var oFile = new Object();
+        //初始化fileinput控件（第一次初始化）
+        oFile.Init = function(ctrlName, uploadUrl,param) {
+            var control = $('#' + ctrlName);
+            //初始化上传控件的样式
+            control.fileinput({
+                language: 'zh', //设置语言
+                uploadUrl: uploadUrl,
+                uploadAsync: true, //默认异步上传
+                showUpload: false, //是否显示上传按钮
+                showRemove: true, //显示移除按钮
+                showCaption: true, //是否显示标题
+                dropZoneEnabled: true, //是否显示拖拽区域
+                //minImageWidth: 50, //图片的最小宽度
+                //minImageHeight: 50,//图片的最小高度
+                //maxImageWidth: 1000,//图片的最大宽度
+                //maxImageHeight: 1000,//图片的最大高度
+                //maxFileSize:0,//单位为kb，如果为0表示不限制文件大小
+                //minFileCount: 0,
+                maxFileCount: 10, //表示允许同时上传的最大文件个数
+                enctype: 'multipart/form-data',
+                browseClass: "btn btn-primary", //按钮样式: btn-default、btn-primary、btn-danger、btn-info、btn-warning
+                previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                uploadExtraData:function (previewId, index) {           //传参
+                    var data = {
+                        "id": param,      //此处自定义传参
+                    };
+                    return data;
+                }
+            });
+
+            //文件上传完成之后发生的事件
+            $("#uploadFile").on("fileuploaded", function(event, data, previewId, index) {
+
+            });
+        }
+        return oFile;   //这里必须返回oFile对象，否则FileInput组件初始化不成功
+    };
+
+
+    function loadFile(id){
+        var params = new Object();
+        params.id =  id;
+        $.ajax({
+            dataType : "json",
+            url : "${contextPath}/sys/contract/downloadFile",
+            type : "post",
+            contentType: 'application/json',
+            data :JSON.stringify(params),
+            beforeSend: function () {
+                $.mask_fullscreen();
+            },
+            complete: function (xmlRequest) {
+                $.mask_close_all();
+                console.log(xmlRequest) ;
+                if(xmlRequest.statusText=='success'){
+                    if(xmlRequest.responseJSON.success=='success'){
+                        var url = xmlRequest.responseJSON.message;
+                        window.open("${contextPath}"+url.split("${contextPath}")[1]);
+                    } else{
+                        toastMessage('系统信息', xmlRequest.responseJSON.message);
+
+                    }
+                }else{
+                    toastMessage('系统信息', xmlRequest.responseJSON.message);
+                }
+            },
+            error: function () {
+                $.mask_close_all();
+            }
+        });
+    }
+
+    function toastMessage(title, text) {
+        $.gritter.add({
+            title: title,
+            text: text,
+            position: 'top-right',
+            time:2000,
+            class_name: 'gritter-info'
+        });
+        return;
+    }
+
 
 </script>

@@ -127,4 +127,12 @@ public class PropertyDaoImpl extends BaseDao<PropertyEntity> implements Property
 		return JSON.toJSONString(dropDownModels);
 	}
 
+	@Override
+	public PropertyEntity getPropertyEntity(String buildid,String name) {
+		Session session = this.getSession();
+		StringBuffer sb = new StringBuffer(" from PropertyEntity  where deleteflg = '0' and build = '" + buildid + "' and name = '"+name+"' ");
+		PropertyEntity propertyEntity = (PropertyEntity)session.createQuery(sb.toString()).uniqueResult();
+		return propertyEntity;
+	}
+
 }

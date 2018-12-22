@@ -7,7 +7,10 @@ import com.jeefw.model.sys.param.model.SmallContractModel;
 import core.service.Service;
 import core.support.JqGridPageView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 合同主体信息的业务逻辑层的接口
@@ -31,5 +34,9 @@ public interface ContractService extends Service<Contract> {
     JqGridPageView<BigContractModel> getContractWithInfoById(BigContractModel model);
 
     JqGridPageView<SmallContractModel> getContractByAudit(BigContractModel model);
+
+    void uploadFile(HttpServletRequest request, String dstFileName, BigContractModel model);
+
+    HashMap<String, String> downloadFile(String id);
 
 }

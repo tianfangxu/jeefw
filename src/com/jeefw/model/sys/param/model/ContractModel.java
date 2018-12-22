@@ -2,7 +2,6 @@ package com.jeefw.model.sys.param.model;
 
 import com.jeefw.model.recode.param.BaseModel;
 
-import javax.persistence.Column;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -49,6 +48,8 @@ public class ContractModel<T, G> extends BaseModel<T, G> implements Serializable
     private String deleteuser;
     private Date deletetime;
     private boolean deleteflg;
+    private String othercontype;
+    private String otherpaytype;
 
     public String getId() {
         return id;
@@ -320,5 +321,21 @@ public class ContractModel<T, G> extends BaseModel<T, G> implements Serializable
 
     public void setPartbbankname(String partbbankname) {
         this.partbbankname = partbbankname;
+    }
+
+    public String getOthercontype() {
+        return othercontype;
+    }
+
+    public void setOthercontype(String othercontype) {
+        this.othercontype = othercontype;
+    }
+
+    public String getOtherpaytype() {
+        return otherpaytype;
+    }
+
+    public void setOtherpaytype(String otherpaytype) {
+        this.otherpaytype = otherpaytype;
     }
 }
