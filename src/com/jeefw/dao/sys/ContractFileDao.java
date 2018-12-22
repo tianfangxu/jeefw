@@ -5,6 +5,8 @@ import com.jeefw.model.sys.param.model.BigContractModel;
 import core.dao.Dao;
 import core.support.JqGridPageView;
 
+import java.util.List;
+
 /**
  * 合同附近信息的数据持久层的接口
  * @JC
@@ -12,4 +14,6 @@ import core.support.JqGridPageView;
 public interface ContractFileDao extends Dao<ContractFile> {
 
     JqGridPageView<ContractFile> getContractFileByCondition(BigContractModel model);
+
+    List<ContractFile> getContractFileByContractId(String id);
 }
