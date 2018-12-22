@@ -49,4 +49,21 @@ public class ExportController extends JavaEEFrameworkBaseController implements C
 			writeJSON(response, map);
 		}
 	} 
+	
+	/**
+	 * 停车费报表
+	 */
+	@RequestMapping(value = "/getExportCarInfo", method = { RequestMethod.POST, RequestMethod.GET })
+	public void getExportCarInfo(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		try {
+			ExportPropertyRespModel model = new ParamUtils<ExportPropertyRespModel>().getparams(request, ExportPropertyRespModel.class);
+			JqGridPageView<EnterPropertyModel> result = exportService.getExportCarInfo(model);
+			writeJSON(response, result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			HashMap<String,String> map = new HashMap<String, String>();
+			map.put("message", "系统出错，请稍后重试");
+			writeJSON(response, map);
+		}
+	} 
 }

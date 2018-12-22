@@ -19,6 +19,7 @@ public class EnterPropertyModel implements Serializable{
 	private String roomnum;
 	private String area;
 	private String name;
+	private String carnum;
 	private String deadline;
 	private String type; 
 	private String receipt1;
@@ -245,6 +246,12 @@ public class EnterPropertyModel implements Serializable{
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public String getCarnum() {
+		return carnum;
+	}
+	public void setCarnum(String carnum) {
+		this.carnum = carnum;
 	}
 	
 }

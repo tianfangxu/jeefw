@@ -29,4 +29,7 @@ public interface ContractDao extends Dao<Contract> {
     JqGridPageView<SmallContractModel> getContractByAudit(BigContractModel model);
 
 	List<ExportPropertyDaoModel> getExportInfo(ExportPropertyRespModel model);
+
+	List<com.jeefw.model.recode.param.ExportParkingDaoModel> getExportCarInfo(
+			ExportPropertyRespModel model);
 }

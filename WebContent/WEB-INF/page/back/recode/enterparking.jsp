@@ -128,15 +128,21 @@ var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js",
         		
         		jQuery(grid_selector).jqGrid({
         			subGrid : false,
-        			url : "${contextPath}/recode/export/getExportInfo",
+        			url : "${contextPath}/recode/export/getExportCarInfo",
         			datatype : "json",
-        			colNames : ["编号","室号", "合同面积m²", "公司名称","合同到期日", "付费方式","应收","实收","应收","实收","应收","实收","应收","实收","应收","实收"
+        			colNames : ["编号","室号", "公司名称","车牌号","合同到期日", "付费方式","应收","实收","应收","实收","应收","实收","应收","实收","应收","实收"
                         ,"应收","实收","应收","实收","应收","实收","应收","实收","应收","实收","应收","实收","应收","实收","应收","实收","备注"],
         			colModel : [ 
 						{name : 'id', width : 150,align:'center', hidden:true,label : "编号",},
-						{name : "roomnum",width : 150,align:'center',search:false,},
-						{name : "area",width : 150,align:'center', search:false,},
-						{name : "name", width : 150,align:'center', search:false,},
+						{name : "roomnum",width : 150,align:'center',search:false,cellattr: function(rowId, tv, rawObject, cm, rdata) {
+							//合并单元格
+							return 'id=\'roomnum' + rowId + "\'";
+						}},
+						{name : "name", width : 150,align:'center', search:false,cellattr: function(rowId, tv, rawObject, cm, rdata) {
+							//合并单元格
+							return 'id=\'name' + rowId + "\'";
+						}},
+						{name : "carnum", width : 150,align:'center', search:false,},
 						{name : "deadline",width : 150,align:'center',search:false,},
 						{name : "type", width : 150,align:'center',search:false,},
 						{name : "receipt1",width : 150,align:'center',search:false},
@@ -190,7 +196,13 @@ var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js",
         					enableTooltips(table);
         				}, 0);
         			},
-        			editurl : null
+        			editurl : null,
+        			gridComplete: function() {
+						//在gridComplete调用合并方法
+						var gridName = "enterproperty-table";
+						MergerRowspan(gridName, 'roomnum');
+						MergerRowspan(gridName, 'name');
+					 }
         		});
 
                 $(grid_selector).jqGrid('setGroupHeaders', {
@@ -219,6 +231,32 @@ var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js",
         			setTimeout(function() {
         				$(cell).find("input[type=checkbox]").addClass("ace ace-switch ace-switch-5").after("<span class='lbl'></span>");
         			}, 0);
+        		}
+        		
+        		//公共调用方法合并单元格（无需修改）
+        		function MergerRowspan(gridName, CellName) {
+        			//得到显示到界面的id集合
+        			var mya = $("#" + gridName + "").getDataIDs();
+        			//当前显示多少条
+        			var length = mya.length;
+        			for (var i = 0; i < length; i++) {
+        				//从上到下获取一条信息
+        				var before = $("#" + gridName + "").jqGrid('getRowData', mya[i]);
+        				//定义合并行数
+        				var rowSpanTaxCount = 1;
+        				for (j = i + 1; j <= length; j++) {
+        					//和上边的信息对比 如果值一样就合并行数+1 然后设置rowspan 让当前单元格隐藏
+        					var end = $("#" + gridName + "").jqGrid('getRowData', mya[j]);
+        					if (before[CellName] == end[CellName]) {
+        						rowSpanTaxCount++;
+        						$("#" + gridName + "").setCell(mya[j], CellName, '', { display: 'none' });
+        					} else {
+        						rowSpanTaxCount = 1;
+        						break;
+        					}
+        					$("#" + CellName + "" + mya[i] + "").attr("rowspan", rowSpanTaxCount);
+        				}
+        			}
         		}
         		
         		$("#editor").ace_wysiwyg({
@@ -578,7 +616,7 @@ var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js",
     	   	   keys[ii++] = k; // capture col names
     	   	   rows = rows + k + "\t"; // output each Column as tab delimited
     	   }
-	    	   rows = "编号\t室号\t合同面积m²\t公司名称\t合同到期日\t付费方式\t应收（1月）\t实收（1月）\t应收（2月）\t实收（2月）\t应收（3月）\t实收（3月）\t应收（4月）\t实收（4月）\t应收（5月）\t实收（5月）\t应收（6月）\t实收（6月）\t应收（7月）\t实收（7月）\t应收（8月）\t实收（8月）\t应收（9月）\t实收（9月）\t应收（10月）\t实收（10月）\t应收（11月）\t实收（11月）\t应收（12月）\t实收（12月）\t应收（全年）\t实收（全年）\t备注";   
+	    	rows = "编号\t室号\t公司名称\t车牌号\t合同到期日\t付费方式\t应收（1月）\t实收（1月）\t应收（2月）\t实收（2月）\t应收（3月）\t实收（3月）\t应收（4月）\t实收（4月）\t应收（5月）\t实收（5月）\t应收（6月）\t实收（6月）\t应收（7月）\t实收（7月）\t应收（8月）\t实收（8月）\t应收（9月）\t实收（9月）\t应收（10月）\t实收（10月）\t应收（11月）\t实收（11月）\t应收（12月）\t实收（12月）\t应收（全年）\t实收（全年）\t备注";
     	   rows = rows + "\n"; // Output header with end of line
     	   for (i = 0; i < ids.length; i++) {
     	   	   row = $("#enterproperty-table").getRowData(ids[i]); // get each row
@@ -586,6 +624,7 @@ var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js",
     	   		   rows = rows + row[keys[j]] + "\t"; // output each Row as tab delimited
     	   	   rows = rows + "\n"; // output each row with end of line
     	   }
+    	  
     	   rows = rows + "\n"; // end of line at the end
     	   var form = "<form name='csvexportform' action='${contextPath}/sys/information/operateInformation?oper=excel' method='post'>";
     	   form = form + "<input type='hidden' name='csvBuffer' value='" + encodeURIComponent(rows) + "'>";

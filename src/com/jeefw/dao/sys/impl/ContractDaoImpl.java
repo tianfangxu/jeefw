@@ -1,6 +1,7 @@
 package com.jeefw.dao.sys.impl;
 
 import com.jeefw.dao.sys.ContractDao;
+import com.jeefw.model.recode.param.ExportParkingDaoModel;
 import com.jeefw.model.recode.param.ExportPropertyDaoModel;
 import com.jeefw.model.recode.param.ExportPropertyRespModel;
 import com.jeefw.model.sys.Contract;
@@ -282,4 +283,47 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 		List<ExportPropertyDaoModel> list = query.list();
 		return list;
 	}
+
+
+	@Override
+	public List<ExportParkingDaoModel> getExportCarInfo(
+			ExportPropertyRespModel model) {
+		Session session = this.getSession();
+		StringBuffer sb = new StringBuffer(" c.deleteflg = '0' ");
+		if(!StringUnit.isNullOrEmpty(model.getBuildcode())){
+			sb.append(" and c.buildcode = '"+model.getBuildcode()+"' ");
+		}else{
+			return null;
+		}
+		if(!StringUnit.isNullOrEmpty(model.getYear())){
+			sb.append(" and (left(c.startdate,4)+0) <= "+model.getYear()+" and (left(c.enddate,4)+0) >= "+model.getYear());
+		}
+		String sql = 	"select cp.undergroundunit,cp.undergroundnumber,cp.surfaceunit,cp.surfacenumber,cp.rent,cp.prepay,cp.cardfee,cp.reissuecardfee,"+
+						"c.sysnumber,c.startdate,c.enddate,c.partaname,c.partbname,c.subsidiary,c.buildcode,c.propertytext "+
+						"from t_contract_parking cp LEFT JOIN t_contract c  on c.id = cp.contractcode "+
+						"where c.auditstate ='3' and c.contype = '2' and "+ sb.toString();
+		Query query = session.createSQLQuery(sql)
+				.addScalar("undergroundunit",StandardBasicTypes.STRING)
+				.addScalar("undergroundnumber",StandardBasicTypes.STRING)
+				.addScalar("surfaceunit",StandardBasicTypes.STRING)
+				.addScalar("surfacenumber",StandardBasicTypes.STRING)
+				.addScalar("rent",StandardBasicTypes.STRING)
+				.addScalar("prepay",StandardBasicTypes.STRING)
+				.addScalar("cardfee",StandardBasicTypes.STRING)
+				.addScalar("reissuecardfee",StandardBasicTypes.STRING)
+				
+				.addScalar("sysnumber",StandardBasicTypes.STRING)
+				.addScalar("startdate",StandardBasicTypes.STRING)
+				.addScalar("enddate",StandardBasicTypes.STRING)
+				.addScalar("partaname",StandardBasicTypes.STRING)
+				.addScalar("partbname",StandardBasicTypes.STRING)
+				.addScalar("subsidiary",StandardBasicTypes.STRING)
+				.addScalar("buildcode",StandardBasicTypes.STRING)
+				.addScalar("propertytext",StandardBasicTypes.STRING)
+				.setResultTransformer(Transformers.aliasToBean(ExportParkingDaoModel.class));
+		List<ExportParkingDaoModel> list = query.list();
+		return list;
+	}
+	
+	
 }
