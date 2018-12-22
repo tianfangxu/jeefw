@@ -10,22 +10,22 @@
 <div class="row">
 	<div class="col-xs-12">
 		<div class="well well-sm">
-			<shiro:hasPermission name="${ROLE_KEY}:information:add">
+			<shiro:hasPermission name="${ROLE_KEY}:build:add">
 				<a id="addInformationButton" role="button" class="btn btn-info btn-sm" data-toggle="modal">
 					添加记录
 				</a>
 			</shiro:hasPermission>
-			<shiro:lacksPermission name="${ROLE_KEY}:information:add">
+			<shiro:lacksPermission name="${ROLE_KEY}:build:add">
 				<a id="addInformationButton" disabled="disabled" role="button" class="btn btn-info btn-sm" data-toggle="modal">
 					添加记录
 				</a>
 	        </shiro:lacksPermission>
-	        <shiro:hasPermission name="${ROLE_KEY}:information:edit">
+	        <shiro:hasPermission name="${ROLE_KEY}:build:edit">
 				<a id="editInformationButton" role="button" class="btn btn-purple btn-sm" data-toggle="modal">
 					编辑记录
 				</a>
 			</shiro:hasPermission>
-			<shiro:lacksPermission name="${ROLE_KEY}:information:edit">
+			<shiro:lacksPermission name="${ROLE_KEY}:build:edit">
 				<a id="editInformationButton" role="button" disabled="disabled" class="btn btn-purple btn-sm" data-toggle="modal">
 					编辑记录
 				</a>			
@@ -95,10 +95,10 @@
 										   					console.log(xmlRequest);
 										   					if(xmlRequest.status == 200){
 										   						var data = JSON.parse(xmlRequest.responseText).rows;
-										   	   					var html = '<option value="">请选择楼宇名称</option>';
+										   	   					var html = '<option value="">请选择楼宇经理名称</option>';
 										   	   					if(data.length >0){
 										   	   						for(var i = 0;i < data.length ;i++){
-										   	   							html+='<option value="'+data[i].userName+'">'+data[i].userName+'</option>';
+										   	   							html+='<option value="'+data[i].id+'">'+data[i].userName+'</option>';
 										   	   						}
 										   	   					}
 										   	   					$('#manager').html(html);
@@ -256,7 +256,7 @@
         			datatype : "json",
         			height : 450,
         			width : 770,
-        			colNames : ["编号","楼宇名称", "楼宇地址", "联系电话","楼宇经理", "物业概况","物业费（平米每天）"],
+        			colNames : ["编号","楼宇名称", "楼宇地址", "联系电话","楼宇经理", "楼宇经理id","物业概况","物业费（平米每天）"],
         			colModel : [ 
 						{
 							 name:'id',
@@ -279,7 +279,11 @@
 							name : "manager",
 							width : 150,
 							searchoptions : {sopt : ["cn","eq"]},
-						}, {
+						},{
+                            name : "managerid",
+                            width : 150,
+                            search:false,
+                        }, {
 							name : "comment",
 							width : 200,
 							search:false,
@@ -406,7 +410,7 @@
         				$("#name").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).name);
         				$("#address").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).address);
         				$("#contact").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).contact);
-        				$("#manager").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).manager);
+        				$("#manager").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).managerid);
         				$("#comment").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).comment);
         				$("#propertyfee").val(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).propertyfee);
         			}
@@ -417,7 +421,8 @@
         			data.name=$("#name").val();
         			data.address=$("#address").val();
         			data.contact=$("#contact").val();
-        			data.manager=$("#manager").val();
+        			data.managerid=$("#manager").val();
+                    data.manager=$("#manager option:checked").html();
         			data.comment=$("#comment").val();
         			data.propertyfee=$("#propertyfee").val();
         			if($("#id").val() == '' || $("#id").val() == null || $("#id").val() == undefined){
@@ -444,13 +449,13 @@
         			editicon : "ace-icon fa fa-pencil blue",
         			add : false,
         			addicon : "ace-icon fa fa-plus-circle purple",
-        			del : <shiro:hasPermission name="${ROLE_KEY}:information:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:delete">false</shiro:lacksPermission>,
+        			del : <shiro:hasPermission name="${ROLE_KEY}:build:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:build:delete">false</shiro:lacksPermission>,
         			delicon : "ace-icon fa fa-trash-o red",
-        			search : <shiro:hasPermission name="${ROLE_KEY}:information:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:search">false</shiro:lacksPermission>,
+        			search : <shiro:hasPermission name="${ROLE_KEY}:build:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:build:search">false</shiro:lacksPermission>,
         			searchicon : "ace-icon fa fa-search orange",
         			refresh : true,
         			refreshicon : "ace-icon fa fa-refresh blue",
-        			view : <shiro:hasPermission name="${ROLE_KEY}:information:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:view">false</shiro:lacksPermission>,
+        			view : <shiro:hasPermission name="${ROLE_KEY}:build:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:build:view">false</shiro:lacksPermission>,
         			viewicon : "ace-icon fa fa-search-plus grey"
         		}, {
         			// edit record form
@@ -520,7 +525,7 @@
         		})
         		
         		// add custom button to export the data to excel
-        		if(<shiro:hasPermission name="${ROLE_KEY}:information:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:export">false</shiro:lacksPermission>){
+        		if(<shiro:hasPermission name="${ROLE_KEY}:build:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:build:export">false</shiro:lacksPermission>){
     				jQuery(grid_selector).jqGrid("navButtonAdd", pager_selector,{
    					   caption : "",
    				       title : "导出Excel",

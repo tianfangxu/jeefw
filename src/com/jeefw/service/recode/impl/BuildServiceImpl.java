@@ -1,5 +1,8 @@
 package com.jeefw.service.recode.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
@@ -8,8 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jeefw.dao.recode.BuildDao;
+import com.jeefw.dao.sys.DepartmentDao;
 import com.jeefw.model.recode.BuildEntity;
 import com.jeefw.model.recode.param.BuildModel;
+import com.jeefw.model.sys.Department;
+import com.jeefw.model.sys.SysUser;
 import com.jeefw.service.recode.BuildService;
 
 import core.support.JqGridPageView;
@@ -21,11 +27,18 @@ public class BuildServiceImpl implements BuildService {
 	
 	@Resource
 	BuildDao buildDao;
+	
+	@Resource
+	DepartmentDao departmentDao;
 
 	@Override
 	public JqGridPageView<BuildEntity> getBuildByCondition(BuildModel model) {
 		// TODO Auto-generated method stub
-		return buildDao.getBuildByCondition(model);
+		SysUser user = model.getLoginuser();
+		String key = user.getDepartmentKey();
+		List<Department> list = new ArrayList<Department>();
+		//getchildAll(list , key);
+		return buildDao.getBuildByCondition(model,list);
 	}
 
 	@Override
@@ -71,6 +84,18 @@ public class BuildServiceImpl implements BuildService {
 			buildDao.deleteEntity(model.getId(),model.getLoginuser().getId().toString());
 		}
 		return "删除成功";
+	}
+	
+	//递归查询所有的下属部门
+	public List<Department> getchildAll(List<Department> list,String key){
+		List<Department> listtemp = departmentDao.getChildrenDepartment(key);
+		list.addAll(listtemp);
+		if(list != null && list.size() != 0){
+			for (Department department : listtemp) {
+				getchildAll(list, department.getDepartmentKey());
+			}
+		}
+		return list;
 	}
 
 }

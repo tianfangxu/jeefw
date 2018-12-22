@@ -176,7 +176,7 @@ public class AchievementDaoImpl extends BaseDao<AchievementEntity> implements Ac
 	public JqGridPageView<AchievementSumResponseModel> sumToTable(AchievementModel model){
 		JqGridPageView<AchievementSumResponseModel> result = new JqGridPageView<AchievementSumResponseModel>();
 		Session session = this.getSession();
-		StringBuffer where = new StringBuffer(" 1=1 ");
+		StringBuffer where = new StringBuffer(" 1=1 and tb.deleteflg = '0' and ta.deleteflg = '0' ");
 		if(!StringUnit.isNullOrEmpty(model.getBuild())){
 			where.append(" and tb.build = '"+model.getBuild()+"' ");
 		}

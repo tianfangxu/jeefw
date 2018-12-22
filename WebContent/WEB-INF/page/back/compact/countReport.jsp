@@ -6,8 +6,7 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery-ui.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/ui.jqgrid.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery.gritter.css" />
-<link rel="stylesheet"
-	href="${contextPath}/static/assets/css/select2.css" />
+<link rel="stylesheet" href="${contextPath}/static/assets/css/select2.css" />
 
 <div class="row">
 	<div class="col-xs-12">
@@ -52,7 +51,8 @@
 <script type="text/javascript">
 		var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
 		        		"${contextPath}/static/assets/js/jquery.ui.touch-punch.js", "${contextPath}/static/assets/js/markdown/markdown.js", "${contextPath}/static/assets/js/markdown/bootstrap-markdown.js",
-		        		,"${contextPath}/static/assets/js/echarts.js","${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.hotkeys.js", "${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js", "${contextPath}/static/assets/js/jquery.gritter.js", null ]
+		        		,"${contextPath}/static/assets/js/echarts.js","${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.hotkeys.js", 
+		        		"${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js", "${contextPath}/static/assets/js/jquery.gritter.js", null ]
       
 		$(".page-content-area").ace_ajax("loadScripts", scripts, function() {
         	// inline scripts related to this page
@@ -334,13 +334,13 @@
         			editicon : "ace-icon fa fa-pencil blue",
         			add : false,
         			addicon : "ace-icon fa fa-plus-circle purple",
-        			del : <shiro:hasPermission name="${ROLE_KEY}:information:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:delete">false</shiro:lacksPermission>,
+        			del : <shiro:hasPermission name="${ROLE_KEY}:countReport:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:countReport:delete">false</shiro:lacksPermission>,
         			delicon : "ace-icon fa fa-trash-o red",
-        			search : <shiro:hasPermission name="${ROLE_KEY}:information:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:search">false</shiro:lacksPermission>,
+        			search : <shiro:hasPermission name="${ROLE_KEY}:countReport:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:countReport:search">false</shiro:lacksPermission>,
         			searchicon : "ace-icon fa fa-search orange",
         			refresh : true,
         			refreshicon : "ace-icon fa fa-refresh blue",
-        			view : <shiro:hasPermission name="${ROLE_KEY}:information:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:view">false</shiro:lacksPermission>,
+        			view : <shiro:hasPermission name="${ROLE_KEY}:countReport:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:countReport:view">false</shiro:lacksPermission>,
         			viewicon : "ace-icon fa fa-search-plus grey"
         		}, {
         			// edit record form
@@ -410,7 +410,7 @@
         		})
         		
         		// add custom button to export the data to excel
-        		if(<shiro:hasPermission name="${ROLE_KEY}:information:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:export">false</shiro:lacksPermission>){
+        		if(<shiro:hasPermission name="${ROLE_KEY}:countReport:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:countReport:export">false</shiro:lacksPermission>){
     				jQuery(grid_selector).jqGrid("navButtonAdd", pager_selector,{
    					   caption : "",
    				       title : "导出Excel",

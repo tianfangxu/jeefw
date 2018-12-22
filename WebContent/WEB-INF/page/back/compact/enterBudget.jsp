@@ -43,19 +43,19 @@
 
 				</select>
 
-				<shiro:hasPermission name="${ROLE_KEY}:information:add">
+				<shiro:hasPermission name="${ROLE_KEY}:enterBudget:add">
 					<a id="addInformationButton" role="button"
 						class="btn btn-info btn-sm" data-toggle="modal"> 录入 </a>
 				</shiro:hasPermission>
-				<shiro:lacksPermission name="${ROLE_KEY}:information:add">
+				<shiro:lacksPermission name="${ROLE_KEY}:enterBudget:add">
 					<a id="addInformationButton" disabled="disabled" role="button"
 						class="btn btn-info btn-sm" data-toggle="modal"> 录入 </a>
 				</shiro:lacksPermission>
-				<shiro:hasPermission name="${ROLE_KEY}:information:edit">
+				<shiro:hasPermission name="${ROLE_KEY}:enterBudget:edit">
 					<a id="editInformationButton" role="button"
 						class="btn btn-purple btn-sm" data-toggle="modal"> 编辑 </a>
 				</shiro:hasPermission>
-				<shiro:lacksPermission name="${ROLE_KEY}:information:edit">
+				<shiro:lacksPermission name="${ROLE_KEY}:enterBudget:edit">
 					<a id="editInformationButton" role="button" disabled="disabled"
 						class="btn btn-purple btn-sm" data-toggle="modal"> 编辑 </a>
 				</shiro:lacksPermission>
@@ -1120,7 +1120,8 @@
             }
 
             $("#addInformationButton").bind("click", function() {
-                if($('#lyxx').val() == ''){
+            	
+                if($('#lyxx').val() == '' || $('#lyxx').val() == null){
                     $.gritter.add({
                         title: '错误',
                         text: '请先选择楼宇',
@@ -1186,13 +1187,13 @@
                 editicon : "ace-icon fa fa-pencil blue",
                 add : false,
                 addicon : "ace-icon fa fa-plus-circle purple",
-                del : <shiro:hasPermission name="${ROLE_KEY}:information:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:delete">false</shiro:lacksPermission>,
+                del : <shiro:hasPermission name="${ROLE_KEY}:enterBudget:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:enterBudget:delete">false</shiro:lacksPermission>,
                 delicon : "ace-icon fa fa-trash-o red",
-                search : <shiro:hasPermission name="${ROLE_KEY}:information:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:search">false</shiro:lacksPermission>,
+                search : <shiro:hasPermission name="${ROLE_KEY}:enterBudget:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:enterBudget:search">false</shiro:lacksPermission>,
                 searchicon : "ace-icon fa fa-search orange",
                 refresh : true,
                 refreshicon : "ace-icon fa fa-refresh blue",
-                view : <shiro:hasPermission name="${ROLE_KEY}:information:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:view">false</shiro:lacksPermission>,
+                view : <shiro:hasPermission name="${ROLE_KEY}:enterBudget:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:enterBudget:view">false</shiro:lacksPermission>,
                 viewicon : "ace-icon fa fa-search-plus grey"
             }, {
                 // edit record form
@@ -1262,7 +1263,7 @@
             })
 
             // add custom button to export the data to excel
-            if(<shiro:hasPermission name="${ROLE_KEY}:information:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:export">false</shiro:lacksPermission>){
+            if(<shiro:hasPermission name="${ROLE_KEY}:enterBudget:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:enterBudget:export">false</shiro:lacksPermission>){
                 jQuery(grid_selector).jqGrid("navButtonAdd", pager_selector,{
                     caption : "",
                     title : "导出Excel",
@@ -1463,6 +1464,7 @@
     //修改
     function editbudgetInfoToview(list){
         var data =  list[0];
+        sessionStorage['build'] = data.build;
         $('#year').val(data.year);
         $('#sumincome').html(data.sumincome);
         $('#sum0').html(data.sumenergy);
@@ -1637,7 +1639,7 @@
 	//提交预算
 	function submitBudget(){
 
-        if($('#lyxx').val() == '' && $('#id').val() == ''){
+        if($('#lyxx').val() == null && $('#id').val() == '' ){
             $.gritter.add({
                 title: '错误',
                 text: '请先选择楼宇',
@@ -1645,7 +1647,14 @@
             });
             return;
         }
-        var params = '{"build":"'+$('#lyxx').val()+'",';
+        var build;
+        if($('#lyxx').val() != null && $('#lyxx').val() !=  ''){
+        	build = $('#lyxx').val();
+        }else if(sessionStorage['build'] != '' && sessionStorage['build'] != null){
+        	build = sessionStorage['build'];
+        	sessionStorage['build'] = '';
+        }
+        var params = '{"build":"'+build+'",';
         $('.num').each(function(i){
             if($(this).val() == ''){
                 $(this).val('0.00');
@@ -1680,7 +1689,7 @@
 
     //打开新增modal
     function budgetInto(){
-        if($('#lyxx').val() == ''){
+        if($('#lyxx').val() == '' || $('#lyxx').val() == null){
             $.gritter.add({
                 title: '错误',
                 text: '请先选择楼宇',

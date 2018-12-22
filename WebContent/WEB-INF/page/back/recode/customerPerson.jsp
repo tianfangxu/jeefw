@@ -10,22 +10,22 @@
 <div class="row">
 	<div class="col-xs-12">
 		<div class="well well-sm">
-			<shiro:hasPermission name="${ROLE_KEY}:information:add">
+			<shiro:hasPermission name="${ROLE_KEY}:customerPerson:add">
 				<a id="addInformationButton" role="button" class="btn btn-info btn-sm" data-toggle="modal">
 					添加记录
 				</a>
 			</shiro:hasPermission>
-			<shiro:lacksPermission name="${ROLE_KEY}:information:add">
+			<shiro:lacksPermission name="${ROLE_KEY}:customerPerson:add">
 				<a id="addInformationButton" disabled="disabled" role="button" class="btn btn-info btn-sm" data-toggle="modal">
 					添加记录
 				</a>
 	        </shiro:lacksPermission>
-	        <shiro:hasPermission name="${ROLE_KEY}:information:edit">
+	        <shiro:hasPermission name="${ROLE_KEY}:customerPerson:edit">
 				<a id="editInformationButton" role="button" class="btn btn-purple btn-sm" data-toggle="modal">
 					编辑记录
 				</a>
 			</shiro:hasPermission>
-			<shiro:lacksPermission name="${ROLE_KEY}:information:edit">
+			<shiro:lacksPermission name="${ROLE_KEY}:customerPerson:edit">
 				<a id="editInformationButton" role="button" disabled="disabled" class="btn btn-purple btn-sm" data-toggle="modal">
 					编辑记录
 				</a>			
@@ -129,10 +129,9 @@
 		</form>
 	</div><!-- /.modal-dialog -->
 </div>
-
 <div id="modal-htxx" class="modal fade" tabindex="-1" data-backdrop="static">
-	<div class="modal-dialog" style="min-width: 820px;">
-		<form id="informationForm">
+	<div class="modal-dialog" style="min-width: 66%;">
+		<form id="getlistContract">
 			<div class="modal-content">
 				<div class="modal-header no-padding">
 					<div class="table-header">
@@ -149,91 +148,14 @@
 									历史合同信息
 								</div>
 				
-								<!-- <div class="table-responsive"> -->
-				
-								<!-- <div class="dataTables_borderWrap"> -->
-								<div>
-									<table id="sample-table-2" class="table table-striped table-bordered table-hover">
-										<thead>
-											<tr>
-												<th class="center">
-													<label class="position-relative">
-														<input type="checkbox" class="ace" />
-														<span class="lbl"></span>
-													</label>
-												</th>
-												<th>合同编号</th>
-												<th>甲方姓名</th>
-												<th>乙方姓名</th>
-				
-												<th  class="hidden-480">
-													合同开始时间
-												</th>
-												<th class="hidden-480">合同结束时间</th>
-				
-												<th></th>
-											</tr>
-										</thead>
-				
-										<tbody>
-											<tr>
-												<td class="center">
-													<label class="position-relative">
-														<input type="checkbox" class="ace" />
-														<span class="lbl"></span>
-													</label>
-												</td>
-				
-												<td>
-													<a href="#">1000255555</a>
-												</td>
-												<td>甲方测试企业公司1</td>
-												<td class="hidden-480">张丹</td>
-												<td>2015-04-01</td>
-				
-												<td class="hidden-480">
-													<span>2019-12-12</span>
-												</td>
-				
-												<td>
-													<a class="btn btn-info btn-sm" onclick="changval()">详情</a>
-												</td>
-											</tr>
-											<tr>
-												<td class="center">
-													<label class="position-relative">
-														<input type="checkbox" class="ace" />
-														<span class="lbl"></span>
-													</label>
-												</td>
-				
-												<td>
-													<a href="#">1000255555</a>
-												</td>
-												<td>甲方测试企业公司2</td>
-												<td class="hidden-480">王芳</td>
-												<td>2009-12-01</td>
-				
-												<td class="hidden-480">
-													<span >2010-12-12</span>
-												</td>
-				
-												<td>
-													<a class="btn btn-info btn-sm" onclick="changval()">详情</a>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
+								<table id="contract_table"></table>
+
+                                <div id="grid-pager_contract"></div>
 							</div>
 						</div>
 				</div>
 				<div class="modal-footer no-margin-top">
 					<div class="text-center">
-						<!-- <button id="submitButton" type="submit" class="btn btn-app btn-success btn-xs">
-							<i class="ace-icon fa fa-floppy-o bigger-160"></i>
-							保存
-						</button> -->
 						<button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
 							<i class="ace-icon fa fa-share bigger-160"></i>
 							取消
@@ -245,103 +167,355 @@
 	</div><!-- /.modal-dialog -->
 </div>
 
+<div id="modal-table-edit" class="modal fade" data-backdrop="static">
+    <div class="modal-dialog" style="min-width: 820px;">
+        <form id="compactForm_Edit" class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        编辑合同信息
+                    </div>
+                </div>
+                <div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
+                    <div id="modal-tip-edit" class="red clearfix"></div>
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">基本条款</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <div><input type="hidden" id="id_edit" /></div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="contype_edit">合同类型：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="contype_edit" style="width: 100%" >
+                                            <option value="">--请选择--</option>
+                                            <option value="1">物业管理服务合同</option>
+                                            <option value="2">协议停车合同</option>
+                                            <option value="3">其他合同</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="htsj_edit">合同时间：</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+											<span class="input-group-addon">
+												<i class="fa fa-calendar bigger-110"></i>
+											</span>
+                                            <input class="form-control" type="text" name="date-range-picker" id="htsj_edit"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="buildid_edit">租赁地址：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="buildid_edit" style="width: 100%"></select>
+                                    </div>
+                                    <div class="col-sm-4" style="display: none" id="div1_edit">
+                                        <%--<select class="select2" id="propertyid_edit" style="width:100%" multiple></select>--%>
+                                        <input type="text"  class="width-100"  id="PropertyIds_edit"   />
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="showAddressId_edit"></label>
+                                    <div class="col-sm-4">
+                                        <input type="text" placeholder="区路号" class="width-100" id="showAddressId_edit" readonly/>
+                                    </div>
+                                    <div class="col-sm-4" style="display: none" id="div2_edit">
+                                        <input type="text" placeholder="室" class="width-100"  id="showPropertyIds_edit" readonly/>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price_edit">合同金额（元）：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" placeholder="" class="width-100" id="price_edit" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-<div id="modal-htxx_else" class="modal fade" tabindex="-1" data-backdrop="static">
-	<div class="modal-dialog" style="min-width: 820px;">
-		<form id="informationForm">
-			<div class="modal-content">
-				<div class="modal-header no-padding">
-					<div class="table-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-							<span class="white">&times;</span>
-						</button>
-						合同信息
-					</div>
-				</div>
-				<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
-						<div class="ui-jqdialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix" id="edithdgrid-table" style="cursor: move;">
-							<div class="widget-header"><span class="ui-jqdialog-title" style="float: left;">基本信息</span>
-								<a class="ui-jqdialog-titlebar-close ui-corner-all" style="right: 0.3em;"><span class="ui-icon ui-icon-closethick"></span></a>
-							</div>
-						</div>
-						<div class="ui-jqdialog-content ui-widget-content" id="editcntgrid-table">
-							<div>
-								<form name="FormPost" id="FrmGrid_grid-table" class="FormGrid" onsubmit="return false;" style="width:auto;overflow:auto;position:relative;height:auto;">
-									<table id="TblGrid_grid-table" class="EditTable" cellspacing="0" cellpadding="0" border="0">
-										<tbody>
-											<tr rowpos="2" class="FormData" id="tr_dictValue">
-												<td class="CaptionTD">合同类型</td>
-												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="40" id="dictValue" name="dictValue" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
-												<td class="CaptionTD">合同编号</td>
-												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="40" id="dictValue" name="dictValue" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
-											</tr>
-											<tr rowpos="2" class="FormData" id="tr_dictValue">
-												<td class="CaptionTD">合同类型</td>
-												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="40" id="dictValue" name="dictValue" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
-												<td class="CaptionTD">合同编号</td>
-												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="40" id="dictValue" name="dictValue" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
-											</tr>
-											<tr rowpos="3" class="FormData" id="tr_sequence">
-												<td class="CaptionTD">甲方姓名</td>
-												<td class="DataTD">&nbsp;<input type="text" id="sequence" name="sequence" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
-												<td class="CaptionTD">乙方姓名</td>
-												<td class="DataTD">&nbsp;<input type="text" id="sequence" name="sequence" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
-											</tr>
-											<tr rowpos="4" class="FormData" id="tr_parentDictkey">
-												<td class="CaptionTD">合同签订时间</td>
-												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="20"  id="parentDictkey" name="parentDictkey" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
-												<td class="CaptionTD">合同终止时间</td>
-												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="20"  id="parentDictkey" name="parentDictkey" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
-											</tr>
-											<tr rowpos="5" class="FormData" id="tr_parentDictkey">
-												<td class="CaptionTD">签约类型</td>
-												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="20" id="parentDictkey" name="parentDictkey" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
-												<td class="CaptionTD">签约地</td>
-												<td class="DataTD">&nbsp;<input type="text" size="20" maxlength="20" id="parentDictkey" name="parentDictkey" rowid="_empty" role="textbox" class="FormElement ui-widget-content ui-corner-all"></td>
-											</tr>
-										</tbody>
-									</table>
-								</form>
-								<table border="0" cellspacing="0" cellpadding="0" class="EditTable" id="TblGrid_grid-table_2">
-									<tbody>
-										<tr>
-											<td colspan="2">
-												<hr class="ui-widget-content" style="margin:1px">
-											</td>
-										</tr>
-										<tr id="Act_Buttons">
-											<td class="navButton">
-												<a id="pData" class="fm-button ui-state-default ui-corner-left" style="display: none;"><span class="ui-icon ui-icon-triangle-1-w" style="display: none;"></span><i class="ace-icon fa fa-chevron-left"></i></a>
-												<a id="nData" class="fm-button ui-state-default ui-corner-right" style="display: none;"><span class="ui-icon ui-icon-triangle-1-e" style="display: none;"></span><i class="ace-icon fa fa-chevron-right"></i></a>
-											</td>
-											
-										</tr>
-										<tr style="display:none" class="binfo">
-											<td class="bottominfo" colspan="2"></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="jqResize ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
-				</div>
-				<div class="modal-footer no-margin-top">
-					<div class="text-center">
-						<!-- <button id="submitButton" type="submit" class="btn btn-app btn-success btn-xs">
-							<i class="ace-icon fa fa-floppy-o bigger-160"></i>
-							保存
-						</button> -->
-						<button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
-							<i class="ace-icon fa fa-share bigger-160"></i>
-							取消
-						</button>
-					</div>
-				</div>
-			</div><!-- /.modal-content -->
-		</form>
-	</div><!-- /.modal-dialog -->
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">甲方信息</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partacode_edit">管理方：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2 width-100" id="partacode_edit" style="width: 100%"></select>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partaaddress_edit">地址：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partaaddress_edit" class="width-100" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partalegalperson_edit">法定代表人：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partalegalperson_edit"_edit class="width-100"  />
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partancontact_edit">联系电话：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partancontact_edit" class="width-100" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partaaccount_edit">帐户名称：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partaaccount_edit" class="width-100" />
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="bankname_edit">开户银行：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="bankname_edit" class="width-100" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partaaccountname_edit">帐 号：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partaaccountname_edit" class="width-100" />
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partataxnumber_edit">税 号：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partataxnumber_edit" class="width-100" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">乙方信息</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbcode_edit">承租方：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="partbcode_edit" style="width: 100%">
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtype_edit">类型：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="partbtype_edit" style="width: 100%">
+                                            <option value="0">企业</option>
+                                            <option value="1">个人</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="space-4"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbaddress_edit">地址：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbaddress_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson_edit">法定代表人：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partblegalperson_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbncontact_edit">联系电话：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbncontact_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">税 号：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbtaxnumber_edit" class="width-100" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbncontact_edit">开户行：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbbankname_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">银行账号：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbaccount_edit" class="width-100" />
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">户名：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="partbaccountname_edit" class="width-100" />
+                                    </div>
+                                    <div id="div3_edit" style="display: none;">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbname_edit">承租方名称：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partbname_edit" class="width-100"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-box wyxx" style="display: none">
+                        <div class="widget-header">
+                            <h4 class="widget-title">基本条款</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="buildarera_edit">房屋建筑面积(平方米)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="buildarera_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="tenantarea_edit">承租建筑面积(平方米)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="tenantarea_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="propertyfee_edit">物业管理费(元)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="propertyfee_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="paytype_edit">付款方式：</label>
+                                    <div class="col-sm-4">
+                                        <select class="select2" id="paytype_edit" style="width: 100%">
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="deposit_edit">物业费押金(元)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="deposit_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="electric_edit">电费单价(元/千瓦小时)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="electric_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-box cwxx" style="display: none">
+                        <div class="widget-header">
+                            <h4 class="widget-title">基本条款</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="manager_edit">停车场地资产产权单位：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="manager_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="undergroundunit_edit">地下车位价格(元/月/车)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="undergroundunit_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="surfaceunit_edit">地面车位价格(元/月/车)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="surfaceunit_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="undergroundnumber_edit">地下车位数量(个)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="undergroundnumber_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="surfacenumber_edit">地面车位数量(个)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="surfacenumber_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="rent_edit">车位租赁费(元/月)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="rent_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="prepay_edit">支付方式(月预付)：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="prepay_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="cardfee_edit">停车证制作费：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="cardfee_edit" class="width-100"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="reissuecardfee_edit">停车证补办费：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="reissuecardfee_edit" class="width-100"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">补充条款</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="supplementaryterms_edit">其他条款：</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="width-100" id="supplementaryterms_edit" placeholder="补充合同条款使用" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer no-margin-top">
+                    <div class="text-center">
+                        <button id="submitButton_edit" type="button" class="btn btn-app btn-success btn-xs">
+                            <i class="ace-icon fa fa-floppy-o bigger-160"></i>
+                            保存
+                        </button>
+                        <button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
+                            <i class="ace-icon fa fa-share bigger-160"></i>
+                            取消
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
-
 
 <!-- page specific plugin scripts -->
 <script type="text/javascript">
@@ -398,13 +572,99 @@
 					}
 				});
         		
+        		jQuery("#contract_table").jqGrid({
+                    subGrid: false,
+                   // postData:{"filters":"{\"groupOp\":\"AND\",\"rules\":[{\"field\":\"partbcode\",\"op\":\"cn\",\"data\":\""+id+"\"}]}"},
+                    url: "${contextPath}/sys/contract/getContractByCondition",
+                    datatype: "json",
+                    height: 450,
+                    colNames: ["ID", "合同编号", "管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态",""],
+                    colModel: [{
+                        name: "id",
+                        width: 60,
+                        hidden:true
+                    }, {
+                        name: "sysnumber",
+                        width: 120,
+                        searchoptions: {sopt: ["cn","eq"]}
+                    }, {
+                        name: "partaname",
+                        width: 150,
+                        search: false
+                    }, {
+                        name: "partbname",
+                        width: 110,
+                        searchoptions: {sopt: ["cn","eq"]}
+                    }, {
+                        name: "contype",
+                        width: 110,
+                        formatter:function(celval, options, rowdata){
+                            if(celval=='1'){
+                                return "物业合同";
+                            }else if(celval=='2'){
+                                return "停车合同";
+                            }else if(celval=='3'){
+                                return "其他合同";
+                            }
+                        }
+                    }, {
+                        name: "partbcontact",
+                        width: 150,
+                        search: false
+                    }, {
+                        name: "startdate",
+                        width: 150,
+                        search: false
+                    },{
+                        name: "enddate",
+                        width: 150,
+                        search: false
+                    }, {
+                        name: "auditstate",
+                        width: 100,
+                        search: false,
+                        formatter:function(celval, options, rowdata){
+                            if(celval=='1'){
+                                return "待提交";
+                            }else if(celval=='2'){
+                                return "审核中";
+                            }else if(celval=='3'){
+                                return "已完成";
+                            }
+                        }
+                    } ,
+                    {
+                        label : "",
+                        width : 200,
+                        editable : true,
+                        search : false,
+                        align:'center',
+                        formatter:function(id,op,row){
+                            return '<a class="btn btn-info btn-sm" onclick="getmsgcontractInfo(\''+row.id+'\')">详情</a>';
+                        }
+
+                    }],
+                    sortname: "id",
+                    sortorder: "asc",
+                    viewrecords: true,
+                    rowNum: 10,
+                    rowList: [10, 20, 30],
+                    pager: "#grid-pager_contract",
+                    altRows: true,
+                    multiselect: true,
+                    multiboxonly: true,
+
+                    editurl: "${contextPath}/sys/compact/operateCompact",
+
+                });
+        		
         		jQuery(grid_selector).jqGrid({
         			subGrid : false,
         			url : "${contextPath}/recode/customer/geCustomerByCondition?type=1",
         			datatype : "json",
         			height : 450,
         			align:'center',
-        			colNames : ["编号",'证件种类','证件号码','证件有效期','名称','地址','联系人','联系电话','税号','银行账号','户名','开户行'],
+        			colNames : ["编号",'证件种类','证件号码','证件有效期','名称','地址','联系人','联系电话','税号','银行账号','户名','开户行',''],
         			colModel : [ 
 			       {
 						 name:'id',
@@ -455,18 +715,18 @@
 						name : "bankname",
 						width : 100,
 						search:false,
-					}/* ,
-        			{
+					},
+					{
         				label : "",
         				width : 200,
         				editable : true,
         				search : false,
         				align:'center',
-        				formatter:function(){
-        					return '<a class="btn btn-info btn-sm" onclick="getmsg()">合同信息</a>';
+        				formatter:function(id,op,row){
+        					return '<a class="btn btn-info btn-sm" onclick="getmsg(\''+row.id+'\')">合同信息</a>';
         				}
         				
-        			} */
+        			}
 					],
         			//scroll : 1, // set the scroll property to 1 to enable paging with scrollbar - virtual loading of records
         			sortname : "id",
@@ -632,13 +892,13 @@
         			editicon : "ace-icon fa fa-pencil blue",
         			add : false,
         			addicon : "ace-icon fa fa-plus-circle purple",
-        			del : <shiro:hasPermission name="${ROLE_KEY}:information:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:delete">false</shiro:lacksPermission>,
+        			del : <shiro:hasPermission name="${ROLE_KEY}:customerPerson:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:customerPerson:delete">false</shiro:lacksPermission>,
         			delicon : "ace-icon fa fa-trash-o red",
-        			search : <shiro:hasPermission name="${ROLE_KEY}:information:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:search">false</shiro:lacksPermission>,
+        			search : <shiro:hasPermission name="${ROLE_KEY}:customerPerson:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:customerPerson:search">false</shiro:lacksPermission>,
         			searchicon : "ace-icon fa fa-search orange",
         			refresh : true,
         			refreshicon : "ace-icon fa fa-refresh blue",
-        			view : <shiro:hasPermission name="${ROLE_KEY}:information:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:view">false</shiro:lacksPermission>,
+        			view : <shiro:hasPermission name="${ROLE_KEY}:customerPerson:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:customerPerson:view">false</shiro:lacksPermission>,
         			viewicon : "ace-icon fa fa-search-plus grey"
         		}, {
         			// edit record form
@@ -708,7 +968,7 @@
         		})
         		
         		// add custom button to export the data to excel
-        		if(<shiro:hasPermission name="${ROLE_KEY}:information:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:export">false</shiro:lacksPermission>){
+        		if(<shiro:hasPermission name="${ROLE_KEY}:customerPerson:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:customerPerson:export">false</shiro:lacksPermission>){
     				jQuery(grid_selector).jqGrid("navButtonAdd", pager_selector,{
    					   caption : "",
    				       title : "导出Excel",
@@ -851,10 +1111,478 @@
         		
         	});
         });
-		function getmsg(){
+		function getmsg(id){
 			$("#modal-htxx").modal('toggle');
+			getcontractlist(id);
 		}
-		function changval(){
-			$("#modal-htxx_else").modal('toggle');
-		}
+
+		function getcontractlist(id){
+			jQuery("#contract_table").jqGrid('setGridParam',{
+                datatype:'json',
+                postData:{"filters":"{\"groupOp\":\"AND\",\"rules\":[{\"field\":\"partbcode\",\"op\":\"eq\",\"data\":\""+id+"\"}]}"}, //发送数据
+                page:1
+            }).trigger("reloadGrid"); //重新载入
+        }
+		
+        function getmsgcontractInfo(id){
+            var params = new Object();
+            params.id =  id;
+            $.ajax({
+                dataType : "json",
+                url : "${contextPath}/sys/contract/getContractWithInfoById",
+                type : "post",
+                contentType: 'application/json',
+                data :JSON.stringify(params),
+            
+                complete: function (xmlRequest) {
+                    $.mask_close_all();
+                    if(xmlRequest.status=='200'){
+                        contractInfo(JSON.parse(xmlRequest.responseText).rows[0]);
+                    }else{
+                        toastMessage('系统信息', xmlRequest.responseJSON.message);
+                    }
+                },
+                error: function () {
+                    
+                }
+            });
+        }
+
+        function contractInfo(data){
+                $('#id_edit').val(data.id);
+                $('#contype_edit').val(data.contype).trigger("change");
+                $('#contype_edit').prop("disabled", true);
+                var begin = formatDate(data.startdate);
+                var end = formatDate(data.enddate);
+                $("#htsj_edit").val(begin+" - "+end);
+                $('#htsj_edit').data('daterangepicker').setStartDate(begin);
+                $('#htsj_edit').data('daterangepicker').setEndDate(end);
+                initBuildSelect2('buildid_edit');
+                getBuildInfoByid(data.buildid);
+                $('#buildid_edit').append(new Option(buildInfo.name,data.buildid,true,true)).trigger("change");
+                $('#showAddressId_edit').val(buildInfo.address);
+
+                if (data.contype=='1') {
+                    $(".wyxx").css("display", "");
+                    $(".cwxx").css("display", "none");
+                    $("#div1_edit").css("display", "");
+                    $("#div2_edit").css("display", "");
+                    $('#PropertyIds_edit').val(data.propertyids);
+                    $('#showPropertyIds_edit').val(data.propertyids);
+                    //initPropertySelect2_html(data.buildid,'propertyid_edit',data.propertyids);
+                } else if (data.contype=='2') {
+                    $(".wyxx").css("display", "none");
+                    $(".cwxx").css("display", "");
+                    $("#div1_edit").css("display", "none");
+                    $("#div2_edit").css("display", "none");
+                }
+                $('#price_edit').val(data.totalamount);
+                initPartaSelect2('partacode_edit');
+                $('#partacode_edit').append(new Option(data.partaname,data.partacode,true,true)).trigger("change");
+                $('#partaaddress_edit').val(data.partaaddress);
+                $('#partalegalperson_edit').val(data.partalegalperson);
+                $('#partancontact_edit').val(data.partancontact);
+                $('#partaaccount_edit').val(data.partaaccount);
+                $('#partaaccountname_edit').val(data.partaaccountname);
+                $('#bankname_edit').val(data.bankname);
+                $('#partataxnumber_edit').val(data.partataxnumber);
+                initPartbSelect2('partbcode_edit');
+                $('#partbcode_edit').append(new Option(data.partbname,data.partbcode,true,true)).trigger("change");
+                $('#partbaddress_edit').val(data.partbaddress);
+                $('#partblegalperson_edit').val(data.partblegalperson);
+                $('#partbncontact_edit').val(data.partbcontact);
+                $('#partbtaxnumber_edit').val(data.partbtaxnumber);
+                $('#partbaccount_edit').val(data.partbaccount);
+                $('#partbaccountname_edit').val(data.partbaccountname);
+                $('#partbbankname_edit').val(data.partbbankname);
+                $("#partbtype_edit").val(data.partbtype).trigger("change");
+                if (data.contype=='1') {
+                    $('#buildarera_edit').val(data.buildarea);
+                    $('#tenantarea_edit').val(data.tenantarea);
+                    $('#propertyfee_edit').val(data.propertyfee);
+                    initPaytypeSelect2('paytype_edit','WYYJ');
+                    $('#paytype_edit').append(new Option(data.paytype,data.paytypecode,true,true)).trigger("change");
+                    $('#deposit_edit').val(data.deposit);
+                    $('#electric_edit').val(data.electric);
+                }  else if (data.contype=='2') {
+                    $('#manager_edit').val(data.manager);
+                    $('#undergroundunit_edit').val(data.undergroundunit);
+                    $('#surfaceunit_edit').val(data.surfaceunit);
+                    $('#undergroundnumber_edit').val(data.undergroundnumber);
+                    $('#surfacenumber_edit').val(data.surfacenumber);
+                    $('#rent_edit').val(data.rent);
+                    $('#prepay_edit').val(data.prepay);
+                    $('#cardfee_edit').val(data.cardfee);
+                    $('#reissuecardfee_edit').val(data.reissuecardfee);
+                }
+                $('#supplementaryterms_edit').val(data.subsidiary);
+                $("#modal-table-edit").modal("toggle");
+        }
+        
+        function toastMessage(title, text) {
+            $.gritter.add({
+                title: title,
+                text: text,
+                position: 'top-right',
+                time:2000,
+                class_name: 'gritter-info'
+            });
+            return;
+        }
+        
+        function formatDate(date){
+            return date.split("-")[1]+"/"+date.split("-")[2]+"/"+date.split("-")[0];
+        }
+        
+        var buildInfo;
+        /**
+         * 楼宇下拉框
+         * @param id
+         */
+        function initBuildSelect2(id){
+            $('#'+id).select2({
+                ajax: {
+                    type:"get",
+                    url: "${contextPath}/recode/build/getBuildByCondition",
+                    contentType: 'application/json',
+                    dataType:"JSON",
+                    delay: 550,
+                    data: function (params) {
+                        var rule = new Object();
+                        rule.field = 'name';
+                        rule.op = 'cn';
+                        rule.data =  checkIsNull(params.term) ? "" : params.term;
+                        var rules = new Array();
+                        rules.push(rule);
+                        return generateParams(params,rules);
+                    },
+                    processResults: function (data, params) {
+                        params.page = checkIsNull(params.page) ? 1 : params.page;
+                        var itemList = [];
+                        var row = data.rows;
+                        for(var i=0;i<row.length;i++){
+                            itemList.push({id: row[i].id, text: row[i].name});
+                        }
+                        return {
+                            results: itemList,
+                            pagination: {
+                                more: (params.page * 10) < data.totalNumber
+                            }
+                        };
+                    },
+                    cache: true
+                },
+                multiBoolean:false,
+                language: "zh-CN",
+                placeholder:'--请选择--',//默认文字提示
+                allowClear: true,//允许清空
+                escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
+                templateResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
+                templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
+            }).on("select2:select",function(e){
+                var rule = new Object();
+                rule.field = 'id';
+                rule.op = 'eq';
+                rule.data =  e.params.data.id;
+                var rules = new Array();
+                rules.push(rule);
+                $.ajax({
+                    dataType : "json",
+                    url : "${contextPath}/recode/build/getBuildByCondition",
+                    type : "get",
+                    contentType: 'application/json',
+                    data :generateParams(new Object(),rules),
+                    complete : function(data) {
+                        if(data.statusText=='success'){
+                            if(id=='buildid') {
+                                $('#showAddressId').val(JSON.parse(data.responseText).rows[0].address);
+                                /*if($('#contype').val() == '1'){
+                                    $('#propertyid').select2("val", " ");
+                                    $('#showPropertyIds').val("");
+                                    initPropertySelect2(e.params.data.id,'propertyid');
+                                }*/
+                            }else if(id=="buildid_edit"){
+                                $('#showAddressId_edit').val(JSON.parse(data.responseText).rows[0].address);
+                                /*if($('#contype_edit').val() == '1'){
+                                    $('#propertyid_edit').select2("val", " ");
+                                    $('#showPropertyIds_edit').val("");
+                                    initPropertySelect2(e.params.data.id,'propertyid_edit');
+                                }*/
+                            }
+                        }
+                    }
+                });
+            });
+        }
+        
+        function getBuildInfoByid(id){
+            var rule = new Object();
+            rule.field = 'id';
+            rule.op = 'eq';
+            rule.data =  id;
+            var rules = new Array();
+            rules.push(rule);
+            $.ajax({
+                dataType : "json",
+                url : "${contextPath}/recode/build/getBuildByCondition",
+                type : "get",
+                contentType: 'application/json',
+                async:false,
+                data :generateParams(new Object(),rules),
+                complete : function(data) {
+                    if(data.status=='200'){
+                        buildInfo =  JSON.parse(data.responseText).rows[0];
+                    } else{
+                        toastMessage("系统提示",xmlRequest.responseJSON.message);
+                    }
+                }
+            });
+        }
+        
+        /**
+         * 组织请求条件
+         * @param params
+         * @param rule
+         * @returns {Object}
+         */
+        function generateParams(params,rule) {
+            var query = new Object();
+            query._search=true;
+            query.rows = '10';
+            query.page = ''+(checkIsNull(params.page) ? 1 : params.page);
+            query.sidx = 'id';
+            query.sord = 'asc';
+            var filter = new Object();
+            filter.groupOp = 'AND';
+            var ruleSz = new Array();
+            for(var i=0;i<rule.length;i++){
+                ruleSz.push(rule[i]);
+            }
+            filter.rules = ruleSz;
+            query.filters = JSON.stringify(filter) ;
+            return query;
+        }
+         
+         function checkIsNull(value){
+             if(typeof(value)=="undefined" || value=='' || value==null){
+                 return true;
+             }
+             return false;
+         }
+         
+         function initPartaSelect2(id){
+             $('#'+id).select2({
+                 ajax: {
+                     type:"get",
+                     url: "${contextPath}/recode/firstpartyContract/getfirstpartyContractByCondition",
+                     contentType: 'application/json',
+                     dataType:"JSON",
+                     delay: 550,
+                     data: function (params) {
+                         var rule = new Object();
+                         var rules = new Array();
+                         rule.field = 'name';
+                         rule.op = 'cn';
+                         rule.data =  checkIsNull(params.term) ? "" : params.term;
+                         rules.push(rule);
+                         return generateParams(params,rules);
+                     },
+                     processResults: function (data, params) {
+                         params.page = checkIsNull(params.page) ? 1 : params.page;
+                         var itemList = [];
+                         var row = data.rows;
+                         for(var i=0;i<row.length;i++){
+                             itemList.push({id: row[i].id, text: row[i].name});
+                         }
+                         return {
+                             results: itemList,
+                             pagination: {
+                                 more: (params.page * 10) < data.totalNumber
+                             }
+                         };
+                     },
+                     cache: true
+                 },
+                 multiBoolean:false,
+                 language: "zh-CN",
+                 placeholder:'--请选择--',//默认文字提示
+                 allowClear: true,//允许清空
+                 escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
+                 templateResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
+                 templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
+             }).on("select2:select",function(e){
+                 var rule = new Object();
+                 rule.field = 'id';
+                 rule.op = 'eq';
+                 rule.data =  e.params.data.id;
+                 var rules = new Array();
+                 rules.push(rule);
+                 $.ajax({
+                     dataType : "json",
+                     url : "${contextPath}/recode/firstpartyContract/getfirstpartyContractByCondition",
+                     type : "get",
+                     contentType: 'application/json',
+                     data :generateParams(new Object(),rules),
+                     complete : function(data) {
+                    	 if(data.status=='200'){
+                             if(id=='partacode'){
+                                 $('#partaaddress').val(JSON.parse(data.responseText).rows[0].address);
+                                 $('#partalegalperson').val(JSON.parse(data.responseText).rows[0].contactname);
+                                 $('#partancontact').val(JSON.parse(data.responseText).rows[0].contactnumber);
+                                 $('#partaaccount').val(JSON.parse(data.responseText).rows[0].account);
+                                 $('#partaaccountname').val(JSON.parse(data.responseText).rows[0].accountname);
+                                 $('#bankname').val(JSON.parse(data.responseText).rows[0].bankname);
+                                 $('#partataxnumber').val(JSON.parse(data.responseText).rows[0].taxnumber);
+                             }else if(id=='partacode_edit'){
+                                 $('#partaaddress_edit').val(JSON.parse(data.responseText).rows[0].address);
+                                 $('#partalegalperson_edit').val(JSON.parse(data.responseText).rows[0].contactname);
+                                 $('#partancontact_edit').val(JSON.parse(data.responseText).rows[0].contactnumber);
+                                 $('#partaaccount_edit').val(JSON.parse(data.responseText).rows[0].account);
+                                 $('#partaaccountname_edit').val(JSON.parse(data.responseText).rows[0].accountname);
+                                 $('#bankname_edit').val(JSON.parse(data.responseText).rows[0].bankname);
+                                 $('#partataxnumber_edit').val(JSON.parse(data.responseText).rows[0].taxnumber);
+                             }
+                         }else{
+                             toastMessage("系统提示",xmlRequest.responseJSON.message);
+                         }
+                     }
+                 });
+             })
+         }
+         function initPartbSelect2(id) {
+             $('#'+id).select2({
+                 ajax: {
+                     type:"get",
+                     url: "${contextPath}/recode/customer/geCustomerByCondition",
+                     contentType: 'application/json',
+                     dataType:"JSON",
+                     delay: 550,
+                     data: function (params) {
+                         var rule = new Object();
+                         var rules = new Array();
+                         rule.field = 'contactname';
+                         rule.op = 'cn';
+                         rule.data =  checkIsNull(params.term) ? "" : params.term;
+                         rules.push(rule);
+                         return generateParams(params,rules);
+                     },
+                     processResults: function (data, params) {
+                         params.page = checkIsNull(params.page) ? 1 : params.page;
+                         var itemList = [];
+                         var row = data.rows;
+                         itemList.push({id: 99999, text: '暂无信息,选此项可添加'});
+                         for(var i=0;i<row.length;i++){
+                             itemList.push({id: row[i].id, text: row[i].name});
+                         }
+                         return {
+                             results: itemList,
+                             pagination: {
+                                 more: (params.page * 10) < data.totalNumber
+                             }
+                         };
+                     },
+                     cache: true
+                 },
+                 multiBoolean:false,
+                 language: "zh-CN",
+                 placeholder:'--请选择--',//默认文字提示
+                 allowClear: true,//允许清空
+                 escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
+                 templateResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
+                 templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
+             }).on("select2:select",function(e){
+                 var rule = new Object();
+                 rule.field = 'id';
+                 rule.op = 'eq';
+                 rule.data =  e.params.data.id;
+                 var rules = new Array();
+                 rules.push(rule);
+                 $.ajax({
+                     dataType : "json",
+                     url : "${contextPath}/recode/customer/geCustomerByCondition",
+                     type : "get",
+                     contentType: 'application/json',
+                     data :generateParams(new Object(),rules),
+                     complete : function(data) {
+                         if(data.status=='200'){
+                             if(id=='partbcode'){
+                                 $('#partbaddress').val(JSON.parse(data.responseText).rows[0].address);
+                                 $('#partblegalperson').val(JSON.parse(data.responseText).rows[0].name);
+                                 $('#partbncontact').val(JSON.parse(data.responseText).rows[0].contactnumber);
+                                 $('#partbtaxnumber').val(JSON.parse(data.responseText).rows[0].taxnumber);
+                                 $('#partbaccount').val(JSON.parse(data.responseText).rows[0].account);
+                                 $('#partbaccountname').val(JSON.parse(data.responseText).rows[0].accountname);
+                                 $('#partbbankname').val(JSON.parse(data.responseText).rows[0].bankname);
+                                 $("#partbtype").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
+                             }else if(id=='partbcode_edit'){
+                                 $('#partbaddress_edit').val(JSON.parse(data.responseText).rows[0].address);
+                                 $('#partblegalperson_edit').val(JSON.parse(data.responseText).rows[0].name);
+                                 $('#partbncontact_edit').val(JSON.parse(data.responseText).rows[0].contactnumber);
+                                 $('#partbtaxnumber_edit').val(JSON.parse(data.responseText).rows[0].taxnumber);
+                                 $('#partbaccount_edit').val(JSON.parse(data.responseText).rows[0].account);
+                                 $('#partbaccountname_edit').val(JSON.parse(data.responseText).rows[0].accountname);
+                                 $('#partbbankname_edit').val(JSON.parse(data.responseText).rows[0].bankname);
+                                 $("#partbtype_edit").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
+                             }
+                         }else{
+                             toastMessage("系统提示",xmlRequest.responseJSON.message);
+                         }
+                     }
+                 });
+                 if(e.params.data.id=='99999'){
+                     $('#div3').css("display","");
+                     $('#div3_edit').css("display","");
+                 }else{
+                     $('#div3').css("display","none");
+                     $('#div3_edit').css("display","none");
+                 }
+             });
+         }
+         function initPaytypeSelect2(id,type){
+             $('#'+id).select2({
+                 ajax: {
+                     type:"get",
+                     url: "${contextPath}/sys/dict/getDictByCondition",
+                     contentType: 'application/json',
+                     dataType:"JSON",
+                     delay: 550,
+                     data: function (params) {
+                         var rule = new Object();
+                         var rules = new Array();
+                         rule.field = 'parentDictkey';
+                         rule.op = 'eq';
+                         rule.data = type;
+                         rules.push(rule);
+                         rule = new Object();
+                         rule.field = 'dicValue';
+                         rule.op = 'cn';
+                         rule.data = checkIsNull(params.term) ? "" : params.term;
+                         rules.push(rule);
+                         return generateParams(params,rules);
+                     },
+                     processResults: function (data, params) {
+                         params.page = checkIsNull(params.page) ? 1 : params.page;
+                         var itemList = [];
+                         var row = data.rows;
+                         for(var i=0;i<row.length;i++){
+                             itemList.push({id: row[i].id, text: row[i].dictValue});
+                         }
+                         return {
+                             results: itemList,
+                             pagination: {
+                                 more: (params.page * 10) < data.totalNumber
+                             }
+                         };
+                     },
+                     cache: true
+                 },
+                 multiBoolean:false,
+                 language: "zh-CN",
+                 placeholder:'--请选择--',//默认文字提示
+                 allowClear: true,//允许清空
+                 escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
+                 templateResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
+                 templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
+             })
+         }
 </script>
