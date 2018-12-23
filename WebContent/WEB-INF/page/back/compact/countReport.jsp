@@ -47,6 +47,283 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<div id="modal-htxx_test" class="modal fade" tabindex="-1"
+		data-backdrop="static">
+		<div class="modal-dialog" style="min-width: 1200px;">
+			<form id="informationForm">
+				<div class="modal-content">
+					<div class="modal-header no-padding">
+						<div class="table-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">
+								<span class="white">&times;</span>
+							</button>
+							预算表详情
+						</div>
+					</div>
+					<div class="modal-body"
+						style="max-height: 700px; overflow-y: scroll;">
+						<div class="col-xs-12 col-sm-12">
+							<table class="table table-striped table-bordered table-hover">
+								<tr>
+									<td>毛利润：<span style="color: green;" id="sum_info">
+									</span></td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-xs-12 col-sm-6">
+							<div class="widget-box">
+								<div class="widget-header">
+									<h4 class="widget-title">收入</h4>
+								</div>
+
+								<div class="widget-body">
+									<div class="widget-main">
+										<table class="table table-striped table-bordered table-hover">
+											<tr>
+												<td colspan="2" style="text-align: center;">项目</td>
+												<td style="text-align: center;">预算</td>
+												<td style="text-align: center;">备注</td>
+											</tr>
+											<tr>
+												<td colspan="2">租金</td>
+												<td id="rent_info" class="cass"></td>
+												<td id="rentps_info" class="cass"></td>
+											</tr>
+											<tr>
+												<td colspan="2">物业管理费</td>
+												<td id="property_info" class="cass"></td>
+												<td id="propertyps_info" class="cass"></td>
+											</tr>
+											<tr>
+												<td rowspan="2" style="vertical-align: middle;">停车费</td>
+												<td>固定停车费</td>
+												<td id="fixedparking_info" class="cass"></td>
+												<td id="fixedparkingps_info" class="cass"></td>
+											</tr>
+											<tr>
+												<td>临时停车费</td>
+												<td id="tempparking_info" class="cass"></td>
+												<td id="tempparkingps_info" class="cass"></td>
+											</tr>
+											<%--<tr>
+                                            <td colspan="2">服务费</td>
+                                            <td id="service_info">84315.00</td>
+                                            <td>含基站租赁</td>
+                                        </tr>--%>
+											<tr>
+												<td colspan="2">广告费</td>
+												<td id="advertising_info" class="cass"></td>
+												<td id="advertisingps_info" class="cass"></td>
+											</tr>
+											<tr>
+												<td colspan="2">其他经营收入</td>
+												<td id="rest_info" class="cass"></td>
+												<td id="restps_info" class="cass"></td>
+											</tr>
+											<tr>
+												<td colspan="2">维修材料</td>
+												<td id="servicing_info" class="cass"></td>
+												<td id="servicingps_info" class="cass"></td>
+											</tr>
+											<%--<tr>
+                                            <td colspan="2">仓储费/经营开发</td>
+                                            <td id="warehouse_info">35000.00</td>
+                                            <td>有服务合同</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">租线费</td>
+                                            <td id="rental_info">70000.00</td>
+                                            <td>备注</td>
+                                        </tr>--%>
+											<tr>
+												<td colspan="2">电费</td>
+												<td id="electricin_info" class="cass"></td>
+												<td id="electricinps_info" class="cass"></td>
+											</tr>
+											<tr>
+												<td colspan="2">水费</td>
+												<td id="waterin_info" class="cass"></td>
+												<td id="waterinps_info" class="cass"></td>
+											</tr>
+											<tr>
+												<td colspan="4">小计：<span style="color: red" id="sum0_info"></span></td>
+
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6">
+							<div class="widget-box">
+								<div class="widget-header">
+									<h4 class="widget-title">成本</h4>
+								</div>
+
+								<div class="widget-body">
+									<div class="widget-main">
+										<table class="table table-striped table-bordered table-hover">
+											<tr>
+												<td colspan="3" style="text-align: center;">项目</td>
+												<td style="text-align: center;">预算</td>
+												<td style="text-align: center;">备注</td>
+											</tr>
+											<tr>
+												<td rowspan="3" style="vertical-align: middle;">能源费</td>
+												<td colspan="2">水费</td>
+												<td id="water_info" class="cass"></td>
+												<td id="waterps_info" class="cass"></td>
+											</tr>
+											<tr>
+												<td colspan="2">电费</td>
+												<td id="electricout_info" class="cass"></td>
+												<td id="electricoutps_info" class="cass"></td>
+											</tr>
+											<tr>
+												<td colspan="2">燃气费</td>
+												<td id="gas_info" class="cass"></td>
+												<td id="gasps_info" class="cass"></td>
+											</tr>
+											<tr>
+												<td colspan="5">小计:<span style="color: red;" id="sum1_info"></span>
+												</td>
+											</tr>
+										</table>
+										<table class="table table-striped table-bordered table-hover">
+											<tr>
+												<td colspan="3" style="text-align: center;">项目</td>
+												<td style="text-align: center;">预算</td>
+												<td style="text-align: center;">备注</td>
+											</tr>
+											<tr>
+												<td rowspan="16" style="vertical-align: middle;">办公总务</td>
+												<td colspan="2">办公用品</td>
+												<td id="stationery_info" class="cass"></td>
+												<td id="stationeryps_info" class="cass"></td>
+											</tr>
+											<tr>
+												<td colspan="2">电话、通信费等</td>
+												<td id="communication_info" class="cass"></td>
+												<td id="communicationps_info" class="cass"></td>
+											</tr>
+											<tr>
+												<td colspan="2">饮用水等</td>
+												<td id="drinkwater_info" class="cass"></td>
+												<td id="drinkwaterps_info" class="cass"></td>
+											</tr>
+											<tr>
+												<td colspan="2">门牌制作等</td>
+												<td id="doorplate_info" class="cass"></td>
+												<td id="doorplateps_info" class="cass"></td>
+											</tr>
+
+											<tr>
+												<td colspan="2">节假日布置</td>
+												<td id="decorate_info" class="cass"></td>
+												<td id="decorateps_info" class="cass"></td>
+											</tr>
+
+											<tr>
+												<td colspan="2">保洁用品</td>
+												<td id="cleanser_info" class="cass"></td>
+												<td id="cleanserps_info" class="cass"></td>
+											</tr>
+
+											<tr>
+												<td colspan="2">绿化费</td>
+												<td id="afforestation_info" class="cass"></td>
+												<td id="afforestationps_info" class="cass"></td>
+											</tr>
+
+											<tr>
+												<td colspan="2">劳防用品</td>
+												<td id="ppe_info" class="cass"></td>
+												<td id="ppeps_info" class="cass"></td>
+											</tr>
+
+											<tr>
+												<td colspan="2">垃圾清运费</td>
+												<td id="trashcleaning_info" class="cass"></td>
+												<td id="trashcleaningps_info" class="cass"></td>
+											</tr>
+
+											<tr>
+												<td colspan="2">应急物资</td>
+												<td id="emergencymaterial_info" class="cass"></td>
+												<td id="emergencymaterialps_info" class="cass"></td>
+											</tr>
+
+											<tr>
+												<td colspan="2">外墙、水箱清洗</td>
+												<td id="wallwashing_info" class="cass"></td>
+												<td id="wallwashingps_info" class="cass"></td>
+											</tr>
+
+											<tr>
+												<td colspan="2">报警服务费</td>
+												<td id="alarmservice_info" class="cass"></td>
+												<td id="alarmserviceps_info" class="cass"></td>
+											</tr>
+
+											<tr>
+												<td colspan="2">灭虫害服务费</td>
+												<td id="pestcontrol_info" class="cass"></td>
+												<td id="pestcontrolps_info" class="cass"></td>
+											</tr>
+
+											<tr>
+												<td colspan="2">污水处理（疏通）费</td>
+												<td id="sewerage_info" class="cass"></td>
+												<td id="sewerageps_info" class="cass"></td>
+											</tr>
+
+											<tr>
+												<td colspan="2">地坪保养费</td>
+												<td id="maintenance_info" class="cass"></td>
+												<td id="maintenanceps_info" class="cass"></td>
+											</tr>
+
+											<tr>
+												<td colspan="2">其他</td>
+												<td id="office_info" class="cass"></td>
+												<td id="officeps_info" class="cass"></td>
+											</tr>
+
+											<tr>
+												<td colspan="5">小计:<span style="color: red;" id="sum2_info">
+												</span>
+												</td>
+											</tr>
+										</table>
+										<table class="table table-striped table-bordered table-hover">
+											<tr>
+												<td>其他</td>
+												<td id="other_info" class="cass"></td>
+												<td id="otherps_info" class="cass"></td>
+											</tr>
+											<tr>
+												<td colspan="3">小计:<span style="color: red;" id="sum3_info"></span>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer no-margin-top">
+						<div class="text-center">
+							<button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
+								<i class="ace-icon fa fa-share bigger-160"></i> 取消
+							</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
 <!-- page specific plugin scripts -->
 <script type="text/javascript">
 		var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
@@ -130,54 +407,93 @@
 							name : "dugetsum",
 							width : 100,
 							search:false,
+							formatter:function(value,options,rows){
+	        					return '<a class="" style="cursor:pointer;" onclick="budgetsumInfo(\''+rows.build+'\',\''+rows.year+'\')">'+rows.dugetsum+'</a>';
+	        				}
 						},{
 							name : "jan",
 							width : 100,
 							search:false,
+							formatter:function(value,options,rows){
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'1\')">'+rows.jan+'</a>';
+	        				}
 						},{
 							name : "feb",
 							width : 100,
 							search:false,
+							formatter:function(value,options,rows){
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'2\')">'+rows.feb+'</a>';
+	        				}
 						},{
 							name : "mar",
 							width : 100,
 							search:false,
+							formatter:function(value,options,rows){
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'3\')">'+rows.mar+'</a>';
+	        				}
 						},{
 							name : "apr",
 							width : 100,
 							search:false,
+							formatter:function(value,options,rows){
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'4\')">'+rows.apr+'</a>';
+	        				}
 						},{
 							name : "may",
 							width : 100,
 							search:false,
+							formatter:function(value,options,rows){
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'5\')">'+rows.may+'</a>';
+	        				}
 						},{
 							name : "jun",
 							width : 100,
 							search:false,
+							formatter:function(value,options,rows){
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'6\')">'+rows.jun+'</a>';
+	        				}
 						},{
 							name : "jul",
 							width : 100,
 							search:false,
+							formatter:function(value,options,rows){
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'7\')">'+rows.jul+'</a>';
+	        				}
 						},{
 							name : "aug",
 							width : 100,
 							search:false,
+							formatter:function(value,options,rows){
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'8\')">'+rows.aug+'</a>';
+	        				}
 						},{
 							name : "sept",
 							width : 100,
 							search:false,
+							formatter:function(value,options,rows){
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'9\')">'+rows.sept+'</a>';
+	        				}
 						},{
 							name : "oct",
 							width : 100,
 							search:false,
+							formatter:function(value,options,rows){
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'10\')">'+rows.oct+'</a>';
+	        				}
 						},{
 							name : "nov",
 							width : 100,
 							search:false,
+							formatter:function(value,options,rows){
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'11\')">'+rows.nov+'</a>';
+	        				}
 						},{
 							name : "dece",
 							width : 100,
 							search:false,
+							formatter:function(value,options,rows){
+	        					return '<a class="" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'12\')">'+rows.dece+'</a>';
+	        				}
 						},{
 							name : "",
 							width : 100,
@@ -210,6 +526,7 @@
         			},
         			editurl : null,
 	       			onSelectRow: function (id){
+	       				return;
 	       				getreporttable(id);
 	                }
         			
@@ -660,4 +977,92 @@
 
 	            
 		 }
+		 
+		 //年度预算
+		 function budgetsumInfo(id,year){
+			 clearInfo();
+			 $.ajax({
+		            dataType : "json",
+		            url : "${contextPath}//recode/budget/getBudgetByCondition?page=1&rows=1&build="+id+"&year="+year,
+		            type : "post",
+		            contentType: 'application/json',
+		            data :null,
+		            complete : function(xmlRequest) {
+		                console.log(xmlRequest);
+		                if(xmlRequest.status == 200){
+		                    var data = JSON.parse(xmlRequest.responseText).rows;
+		                    infobudgetInfoToview(data);
+		                }
+
+		            }
+		        });
+			 $("#modal-htxx_test").modal("show");
+		 }
+		//详情
+	    function infobudgetInfoToview(list){
+	        var data =  list[0];
+	        $('#sum0_info').html(data.sumincome);
+	        $('#sum1_info').html(data.sumenergy);
+	        $('#sum2_info').html(data.sumoffice);
+	        $('#sum3_info').html(data.sumelsed);
+	        $('#sum_info').html(parseFloat(data.sumincome) - parseFloat(data.sumcost));
+	        for(var param in data){
+	            $('.cass').each(function(i){
+	                console.log($(this).attr('id').split('_info')[0]);
+	                if($(this).attr('id').split('_info')[0] == param){
+	                    $(this).html(data[param]);
+	                    return false; //跳出循环
+	                }
+	            });
+	        }
+	    }
+		
+		//月度详情
+		function monthsumInfo(id,year,month){
+			clearInfo();
+			$.ajax({
+	            dataType : "json",
+	            url : "${contextPath}//recode/achievement/getAchievementByCondition?page=1&rows=1&build="+id+"&year="+year+"&month="+month,
+	            type : "post",
+	            contentType: 'application/json',
+	            data :null,
+	            complete : function(xmlRequest) {
+	                console.log(xmlRequest);
+	                if(xmlRequest.status == 200){
+	                    var list = JSON.parse(xmlRequest.responseText).rows;
+	                    var data =  list[0];
+	                    $('#sum0_info').html(data.sumincome);
+	                    $('#sum1_info').html(data.sumenergy);
+	                    $('#sum2_info').html(data.sumoffice);
+	                    $('#sum3_info').html(data.sumelsed);
+	                    $('#sum_info').html(parseFloat(data.sumincome) - parseFloat(data.sumcost));
+	                    for(var param in data){
+	                        $('.cass').each(function(i){
+	                            console.log($(this).attr('id').split('_info')[0]);
+	                            if($(this).attr('id').split('_info')[0] == param){
+	                                $(this).html(data[param]);
+	                                return false; //跳出循环
+	                            }
+	                        });
+	                    }
+	                }
+
+	            }
+	        });
+	        $("#modal-htxx_test").modal("show");
+		}
+		
+		function clearInfo(){
+			$("#modal-htxx_test td").each(function (){
+				var id = $(this).attr('id');
+				if(id != null && id != undefined && id.indexOf("_info") != -1){
+					$(this).html('');
+				}
+			});
+			 $('#sum0_info').html('');
+             $('#sum1_info').html('');
+             $('#sum2_info').html('');
+             $('#sum3_info').html('');
+             $('#sum_info').html('');
+		}
 </script>

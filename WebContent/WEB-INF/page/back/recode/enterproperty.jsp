@@ -87,6 +87,8 @@
 		<table id="enterproperty-table"></table>
 			
 		<div id="grid-pager"></div>
+		
+		<table id="exportexceltable" style="display: none"></table>
 
 		<script type="text/javascript">
 			var $path_base = "${contextPath}/static";//in Ace demo this will be used for editurl parameter
@@ -100,7 +102,8 @@
 var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
         		"${contextPath}/static/assets/js/jquery.ui.touch-punch.js", "${contextPath}/static/assets/js/markdown/markdown.js", "${contextPath}/static/assets/js/markdown/bootstrap-markdown.js",
         		,"${contextPath}/static/assets/js/echarts.js","${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.hotkeys.js", 
-        		"${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js", "${contextPath}/static/assets/js/jquery.gritter.js", null ]
+        		"${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js", 
+        		"${contextPath}/static/assets/js/ExportExcel.js","${contextPath}/static/assets/js/jquery.gritter.js", null ]
 
 		$(".page-content-area").ace_ajax("loadScripts", scripts, function() {
         	// inline scripts related to this page
@@ -178,7 +181,7 @@ var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js",
         			pager : pager_selector,
         			altRows : true,
         			//toppager : true,
-        			multiselect : true,
+        			multiselect : false,
         			//multikey : "ctrlKey",
         	        multiboxonly : true,
         			loadComplete : function() {
@@ -569,7 +572,7 @@ var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js",
 			return val;
 		}
 		
-		function exportexcel() { 
+		function exportexcel5555() {
     	   var keys = [], ii = 0, rows = "";
     	   var ids = $("#enterproperty-table").getDataIDs(); // Get All IDs
     	   var row = $("#enterproperty-table").getRowData(ids[0]); // Get First row to get the labels
@@ -594,4 +597,28 @@ var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js",
     	   OpenWindow.document.write(form);
     	   OpenWindow.document.close();
        }
+		
+		function exportexcel666666(){
+			$("#exportexceltable").html('<tr><td colspan="34">'+$("#year").val()+$("#lyxx option:selected").html()+'物业费收入明细</td></tr>');
+			$("#exportexceltable").append('<tr>'+$('.jqg-second-row-header').html()+"</tr>");
+			$("#exportexceltable").append('<tr>'+$('.jqg-third-row-header').html()+"</tr>");
+			$("#exportexceltable").append($('#enterproperty-table').html());
+			var tb = new TableToExcel('exportexceltable');  
+	        tb.setFontStyle("Courier New");  
+	        tb.setFontSize(10);  
+	        tb.setTableBorder(2);  
+	        tb.setColumnWidth(7);  
+	        tb.isLineWrap(true);  
+	        tb.getExcelFile();
+			return ;
+		}
+		
+		function exportexcel(){
+			$("#exportexceltable").html('<tr><td colspan="34" style="text-align: center;font-size:28px">'+$("#year").val()+$("#lyxx option:selected").html()+'物业费收入明细</td></tr>');
+			$("#exportexceltable").append('<tr>'+$('.jqg-second-row-header').html()+"</tr>");
+			$("#exportexceltable").append('<tr>'+$('.jqg-third-row-header').html()+"</tr>");
+			$('#enterproperty-table').find(".jqgfirstrow").remove();
+			$("#exportexceltable").append($('#enterproperty-table').find("tbody").html());
+			methodToExport('exportexceltable');
+		}
 </script>

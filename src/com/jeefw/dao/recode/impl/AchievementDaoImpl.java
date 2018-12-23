@@ -43,6 +43,10 @@ public class AchievementDaoImpl extends BaseDao<AchievementEntity> implements Ac
 			sb.append(" and t.year = '"+model.getYear()+"' ");
 		}
 		
+		if(!StringUnit.isNullOrEmpty(model.getMonth())){
+			sb.append(" and t.month = '"+model.getMonth()+"' ");
+		}
+		
 		if(!StringUnit.isNullOrEmpty(model.getId())){
 			sb.append(" and t.id = '"+model.getId()+"' ");
 		}
