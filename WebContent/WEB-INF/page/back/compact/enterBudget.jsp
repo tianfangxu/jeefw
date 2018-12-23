@@ -1056,6 +1056,7 @@
                 },
                 editurl : "${contextPath}/recode/budget/delBudget",
                 onSelectRow: function (id){
+                	return;
                     rentPhotot(id);
                 }
             });

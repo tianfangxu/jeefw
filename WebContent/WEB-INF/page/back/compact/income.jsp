@@ -995,6 +995,7 @@
                 },
                 editurl : "${contextPath}/recode/achievement/delAchievement",
                 onSelectRow: function (id){
+                	return;
                     rentPhotot(id);
                 }
             });
