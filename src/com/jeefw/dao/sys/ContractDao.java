@@ -1,9 +1,14 @@
 package com.jeefw.dao.sys;
 
+import java.util.List;
+
+import com.jeefw.model.recode.param.ExportPropertyDaoModel;
+import com.jeefw.model.recode.param.ExportPropertyRespModel;
 import com.jeefw.model.sys.Contract;
 import com.jeefw.model.sys.SysUser;
 import com.jeefw.model.sys.param.model.BigContractModel;
 import com.jeefw.model.sys.param.model.SmallContractModel;
+
 import core.dao.Dao;
 import core.support.JqGridPageView;
 
@@ -22,4 +27,9 @@ public interface ContractDao extends Dao<Contract> {
     JqGridPageView<BigContractModel> getContractWithInfoById(BigContractModel model);
 
     JqGridPageView<SmallContractModel> getContractByAudit(BigContractModel model);
+
+	List<ExportPropertyDaoModel> getExportInfo(ExportPropertyRespModel model);
+
+	List<com.jeefw.model.recode.param.ExportParkingDaoModel> getExportCarInfo(
+			ExportPropertyRespModel model);
 }

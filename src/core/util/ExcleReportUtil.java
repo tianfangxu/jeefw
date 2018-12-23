@@ -31,7 +31,17 @@ public class ExcleReportUtil {
             
             for(int i = 3; i <= 12 ;i++){
             	for(int j = 4;j<= 8;j++){
-            		sheet.getRow(i).getCell(j).setCellValue(list.get(count));
+            		if(j>=6 && j<=8){
+            			try {
+            				sheet.getRow(i).getCell(j).setCellValue( ArithmeticUtil.multiply(list.get(count),"100")+"%");
+						} catch (Exception e) {
+							
+						}
+            			
+            		}else{
+            			sheet.getRow(i).getCell(j).setCellValue(list.get(count));
+            		}
+            		
             		count++;
             	}
             }
@@ -40,7 +50,15 @@ public class ExcleReportUtil {
             count++;
             for(int i = 14; i <= 36 ;i++){
             	for(int j = 4;j<= 8;j++){
-            		sheet.getRow(i).getCell(j).setCellValue(list.get(count));
+            		if(j>=6 && j<=8){
+            			try {
+            				sheet.getRow(i).getCell(j).setCellValue( ArithmeticUtil.multiply(list.get(count),"100")+"%");
+						} catch (Exception e) {
+							
+						}
+            		}else{
+            			sheet.getRow(i).getCell(j).setCellValue(list.get(count));
+            		}
             		count++;
             	}
             }

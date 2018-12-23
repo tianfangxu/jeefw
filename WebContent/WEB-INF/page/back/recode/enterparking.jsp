@@ -6,34 +6,85 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery-ui.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/ui.jqgrid.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery.gritter.css" />
+<link rel="stylesheet" href="${contextPath}/static/assets/css/select2.css" />
+<link rel="stylesheet" href="${contextPath}/static/assets/css/chosen.css" />
+<link rel="stylesheet" href="${contextPath}/static/assets/css/datepicker.css" />
+<link rel="stylesheet" href="${contextPath}/static/assets/css/bootstrap-timepicker.css" />
+<link rel="stylesheet" href="${contextPath}/static/assets/css/daterangepicker.css" />
+<link rel="stylesheet" href="${contextPath}/static/assets/css/bootstrap-datetimepicker.css" />
+<link rel="stylesheet" href="${contextPath}/static/assets/css/colorpicker.css" />
+<style>
+	.ui-jqgrid-sortable {
+		padding-left: 4px;
+		font-size: 13px;
+		color: #777;
+		font-weight: bold;
+		text-align: center;
+	}
+	.ui-jqgrid .ui-jqgrid-labels th {
+		border-right: 1px solid #E1E1E1 !important;
+		text-align: center !important;
+	}
+	.selectyear{
+		float: none;
+	    box-sizing: border-box;
+	    background-color: #fff;
+	    border: 1px solid #aaa;
+	    border-radius: 4px;
+	    padding-top: 1px;
+	    height: 28px;
+	}
+</style>
 
 <div class="row">
 	<div class="col-xs-12">
-		<div class="well well-sm">
-			<shiro:hasPermission name="${ROLE_KEY}:build:add">
-				<a id="addInformationButton" role="button" class="btn btn-info btn-sm" data-toggle="modal">
-					添加记录
-				</a>
-			</shiro:hasPermission>
-			<shiro:lacksPermission name="${ROLE_KEY}:build:add">
-				<a id="addInformationButton" disabled="disabled" role="button" class="btn btn-info btn-sm" data-toggle="modal">
-					添加记录
-				</a>
-	        </shiro:lacksPermission>
-	        <shiro:hasPermission name="${ROLE_KEY}:build:edit">
-				<a id="editInformationButton" role="button" class="btn btn-purple btn-sm" data-toggle="modal">
-					编辑记录
-				</a>
-			</shiro:hasPermission>
-			<shiro:lacksPermission name="${ROLE_KEY}:build:edit">
-				<a id="editInformationButton" role="button" disabled="disabled" class="btn btn-purple btn-sm" data-toggle="modal">
-					编辑记录
-				</a>			
-			</shiro:lacksPermission>
-            
+		<div class="well well-sm" >
+			<select class="select2 col-xs-2 " id="lyxx">
+			</select>
+			
+			<select class="col-xs-2 selectyear" id="year" data-placeholder="选择年份">
+				<option>2018</option>
+				<option>2019</option>
+				<option>2020</option>
+				<option>2021</option>
+				<option>2022</option>
+				<option>2023</option>
+				<option>2024</option>
+				<option>2025</option>
+			</select>
+			
+			<div role="button" class="btn btn-info btn-sm" onclick="getdatamsh()">
+				查询
+			</div>
+			<div role="button" class="btn btn-info btn-sm" onclick="exportexcel()">
+				导出
+			</div>
+			
+			<div style="display: none">
+				<shiro:hasPermission name="${ROLE_KEY}:enterproperty:add">
+					<a id="addInformationButton" role="button" class="btn btn-info btn-sm" data-toggle="modal">
+						添加记录
+					</a>
+				</shiro:hasPermission>
+				<shiro:lacksPermission name="${ROLE_KEY}:enterproperty:add">
+					<a id="addInformationButton" disabled="disabled" role="button" class="btn btn-info btn-sm" data-toggle="modal">
+						添加记录
+					</a>
+				</shiro:lacksPermission>
+				<shiro:hasPermission name="${ROLE_KEY}:enterproperty:edit">
+					<a id="editInformationButton" role="button" class="btn btn-purple btn-sm" data-toggle="modal">
+						编辑记录
+					</a>
+				</shiro:hasPermission>
+				<shiro:lacksPermission name="${ROLE_KEY}:enterproperty:edit">
+					<a id="editInformationButton" role="button" disabled="disabled" class="btn btn-purple btn-sm" data-toggle="modal">
+						编辑记录
+					</a>
+				</shiro:lacksPermission>
+			</div>
 		</div>
 		
-		<table id="lyxx-table"></table>
+		<table id="enterproperty-table"></table>
 			
 		<div id="grid-pager"></div>
 
@@ -44,168 +95,18 @@
 		<!-- PAGE CONTENT ENDS -->
 	</div><!-- /.col -->
 </div><!-- /.row -->
-
-<div id="modal-table" class="modal fade" tabindex="-1" data-backdrop="static">
-	<div class="modal-dialog" style="min-width: 820px;">
-		<form id="informationForm">
-			<div class="modal-content">
-				<div class="modal-header no-padding">
-					<div class="table-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-							<span class="white">&times;</span>
-						</button>
-						信息新增
-					</div>
-				</div>
-				<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
-					<div class="row">
-						<div class="col-xs-12 col-sm-12">
-							<div class="widget-box">
-								<div class="widget-header">
-									<h4 class="widget-title">楼宇信息新增</h4>
-								</div>
-								<div class="widget-body">
-									<div class="widget-main">
-										<div>
-											<input type="hidden" id="id">
-											<label for="form-field-8">楼宇名称</label>
-											<input id="name" class="form-control" type="text"> 
-											<label for="form-field-8">楼宇地址</label>
-											<input id="address" class="form-control" type="text"> 
-										</div>
-										<hr />
-										<div>
-											<label for="form-field-8">联系电话</label>
-											<input id="contact" class="form-control" type="text"> 
-											<label for="form-field-8">楼宇经理</label>
-											<!-- <input id="manager" class="form-control" type="text"> --> 
-											<select id="manager" class="form-control">
-												
-											</select>
-											<script type="text/javascript">
-												getbuildSelect();
-												function getbuildSelect(){
-													$.ajax({
-										   				dataType : "json",
-										   				url : "${contextPath}/sys/sysuser/getSysUser?page=1&rows=10000",
-										   				type : "post",
-										   				contentType: 'application/json',
-										      			data :null,
-										   				complete : function(xmlRequest) {
-										   					console.log(xmlRequest);
-										   					if(xmlRequest.status == 200){
-										   						var data = JSON.parse(xmlRequest.responseText).rows;
-										   	   					var html = '<option value="">请选择楼宇经理名称</option>';
-										   	   					if(data.length >0){
-										   	   						for(var i = 0;i < data.length ;i++){
-										   	   							html+='<option value="'+data[i].id+'">'+data[i].userName+'</option>';
-										   	   						}
-										   	   					}
-										   	   					$('#manager').html(html);
-										   					}
-										   					
-										   				}
-										   			});
-												}
-											</script>
-										</div>
-										<hr />
-										<div>
-											<label style="display: none" for="form-field-8">物业费（<span style="color:red;">0.00 ~ 999.99</span>）</label>
-											<input id="propertyfee" class="form-control" type="hidden" value="0.00">
-											<script type="text/javascript">
-												//费用定义离事件
-												$("#propertyfee").blur(function(){
-													var num = $("#propertyfee").val();
-													if(num == ''){
-														$("#propertyfee").val("0.00");
-														return true;
-													}
-													if(num.indexOf(".") == -1){
-														if(checknumber(num) && num.length < 4){
-															$("#propertyfee").val(num+".00");
-															return true;
-														}else{
-															errormsg();
-															$("#propertyfee").focus();
-														}
-													}else{
-														var arrs = num.split(".");
-														console.log(arrs);
-														console.log(arrs[0]);
-														console.log(arrs[1]);
-														if(arrs.length != 2){
-															errormsg();
-															$("#propertyfee").focus();
-														}else{
-															if(checknumber(arrs[0]) && arrs[0].length < 4){
-																
-															}else{
-																errormsg();
-																$("#propertyfee").focus();
-															}
-															if(checknumber(arrs[1]) && arrs[1].length < 3){
-																
-															}else{
-																errormsg();
-																$("#propertyfee").focus();
-															}
-														}
-													}
-												});
-												function checknumber(num){
-													var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/ 
-													if (!re.test(num)) {
-														return false;
-													}
-													return true;
-												}
-												function errormsg(){
-													$.gritter.add({
-														title: '输入错误',
-														text: '请输入0.00 - 999.99 之间的有效数字',
-														class_name:"gritter-error  gritter-light"
-													});
-												}
-											</script>
-											<label for="form-field-8">物业概况</label>
-											<textarea id="comment" class="autosize-transition form-control"></textarea>
-										</div>
-										<hr />
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer no-margin-top">
-					<div class="text-center">
-						<button id="submitButton" type="submit" class="btn btn-app btn-success btn-xs">
-							<i class="ace-icon fa fa-floppy-o bigger-160"></i>
-							保存
-						</button>
-						<button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
-							<i class="ace-icon fa fa-share bigger-160"></i>
-							取消
-						</button>
-					</div>
-				</div>
-			</div><!-- /.modal-content -->
-		</form>
-	</div><!-- /.modal-dialog -->
-</div>
-
 <!-- page specific plugin scripts -->
 <script type="text/javascript">
-		var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
-		        		"${contextPath}/static/assets/js/jquery.ui.touch-punch.js", "${contextPath}/static/assets/js/markdown/markdown.js", "${contextPath}/static/assets/js/markdown/bootstrap-markdown.js",
-		        		"${contextPath}/static/assets/js/jquery.hotkeys.js", "${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js", "${contextPath}/static/assets/js/jquery.gritter.js", null ]
-      
+var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
+        		"${contextPath}/static/assets/js/jquery.ui.touch-punch.js", "${contextPath}/static/assets/js/markdown/markdown.js", "${contextPath}/static/assets/js/markdown/bootstrap-markdown.js",
+        		,"${contextPath}/static/assets/js/echarts.js","${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.hotkeys.js", 
+        		"${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js", "${contextPath}/static/assets/js/jquery.gritter.js", null ]
+
 		$(".page-content-area").ace_ajax("loadScripts", scripts, function() {
         	// inline scripts related to this page
         	jQuery(function($) {
         		
-        		var grid_selector = "#lyxx-table";
+        		var grid_selector = "#enterproperty-table";
         		var pager_selector = "#grid-pager";
 
         		// resize to fit page size
@@ -223,78 +124,58 @@
         			}
         		})
         		
-        		$(document).keydown(function(event) {
-					var key = window.event ? event.keyCode : event.which;
-					if (key == 13) {
-						if ($("#search-input").val() == "") {
-	        				$.gritter.add({
-	    		                title: "系统信息",
-	    		                text: "请输入检索词",
-	    		                class_name: "gritter-info gritter-center"
-	    		            });  
-	    			        return;
-	    			    } else {
-	    			    	$.ajax({
-	            				dataType : "json",
-	            				url : "${contextPath}/sys/information/getInformationHibernateSearch",
-	            				type : "post",
-	            				data : {
-	            					luceneName : $("#search-input").val()
-	            				},
-	            				complete : function(response) {
-	            					var result = eval("("+response.responseText+")");
-	            					jQuery(grid_selector)[0].addJSONData(result);
-	            				}
-	            			});
-	    			    }
-					}
-				});
+        		getbuildMsg();
         		
         		jQuery(grid_selector).jqGrid({
         			subGrid : false,
-        			url : "${contextPath}/recode/build/getBuildByCondition",
+        			url : "${contextPath}/recode/export/getExportCarInfo",
         			datatype : "json",
-        			height : 450,
-        			width : 770,
-        			colNames : ["编号","楼宇名称", "楼宇地址", "联系电话","楼宇经理", "楼宇经理id","物业概况","物业费（平米每天）"],
+        			colNames : ["编号","室号", "公司名称","车牌号","合同到期日", "付费方式","应收","实收","应收","实收","应收","实收","应收","实收","应收","实收"
+                        ,"应收","实收","应收","实收","应收","实收","应收","实收","应收","实收","应收","实收","应收","实收","应收","实收","备注"],
         			colModel : [ 
-						{
-							 name:'id',
-							 width : 150,
-							 hidden:true,
-						},
-						{
-							name : "name",
-							width : 150,
-							searchoptions : {sopt : ["cn","eq"]},
-						},{
-							name : "address",
-							width : 200,
-							searchoptions : {sopt : ["cn","eq"]},
-						},{
-							name : "contact",
-							width : 100,
-							search:false,
-						}, {
-							name : "manager",
-							width : 150,
-							searchoptions : {sopt : ["cn","eq"]},
-						},{
-                            name : "managerid",
-                            width : 150,
-                            search:false,
-                        }, {
-							name : "comment",
-							width : 200,
-							search:false,
-						}, {
-							name : "propertyfee",
-							width : 100,
-							hidden:true,
-							search:false,
-						}
-        			],
-        			//scroll : 1, // set the scroll property to 1 to enable paging with scrollbar - virtual loading of records
+						{name : 'id', width : 150,align:'center', hidden:true,label : "编号",},
+						{name : "roomnum",width : 150,align:'center',search:false,cellattr: function(rowId, tv, rawObject, cm, rdata) {
+							//合并单元格
+							return 'id=\'roomnum' + rowId + "\'";
+						}},
+						{name : "name", width : 150,align:'center', search:false,cellattr: function(rowId, tv, rawObject, cm, rdata) {
+							//合并单元格
+							return 'id=\'name' + rowId + "\'";
+						}},
+						{name : "carnum", width : 150,align:'center', search:false,},
+						{name : "deadline",width : 150,align:'center',search:false,},
+						{name : "type", width : 150,align:'center',search:false,},
+						{name : "receipt1",width : 150,align:'center',search:false},
+						{name : "receivable1",width : 150,align:'center',search:false},
+                        {name : "receipt2",width : 150,align:'center',search:false},
+                        {name : "receivable2",width : 150,align:'center',search:false},
+                        {name : "receipt3",width : 150,align:'center',search:false},
+                        {name : "receivable3",width : 150,align:'center',search:false},
+                        {name : "receipt4",width : 150,align:'center',search:false},
+                        {name : "receivable4",width : 150,align:'center',search:false},
+                        {name : "receipt5",width : 150,align:'center',search:false},
+                        {name : "receivable5",width : 150,align:'center',search:false},
+                        {name : "receipt6",width : 150,align:'center',search:false},
+                        {name : "receivable6",width : 150,align:'center',search:false},
+                        {name : "receipt7",width : 150,align:'center',search:false},
+                        {name : "receivable7",width : 150,align:'center',search:false},
+                        {name : "receipt8",width : 150,align:'center',search:false},
+                        {name : "receivable8",width : 150,align:'center',search:false},
+                        {name : "receipt9",width : 150,align:'center',search:false},
+                        {name : "receivable9",width : 150,align:'center',search:false},
+                        {name : "receipt10",width : 150,align:'center',search:false},
+                        {name : "receivable10",width : 150,align:'center',search:false},
+                        {name : "receipt11",width : 150,align:'center',search:false},
+                        {name : "receivable11",width : 150,align:'center',search:false},
+                        {name : "receipt12",width : 150,align:'center',search:false},
+                        {name : "receivable12",width : 150,align:'center',search:false},
+                        {name : "receipt0",width : 150,align:'center',search:false},
+                        {name : "receivable0",width : 150,align:'center',search:false},
+                        { name : "remarks", width : 150,align:'center',search:false, }
+                    ],
+                    autowidth:true,
+                    shrinkToFit:false,
+                    autoScroll: false,
         			sortname : "id",
         			sortorder : "asc",
         			viewrecords : true,
@@ -315,30 +196,67 @@
         					enableTooltips(table);
         				}, 0);
         			},
-        			editurl : "${contextPath}/recode/build/delBuild"
-        			//caption : "用户管理列表",
-        			//autowidth : true,
-        			/**
-        			grouping : true, 
-        			groupingView : { 
-        				 groupField : ["name"],
-        				 groupDataSorted : true,
-        				 plusicon : "fa fa-chevron-down bigger-110",
-        				 minusicon : "fa fa-chevron-up bigger-110"
-        			},
-        			*/
+        			editurl : null,
+        			gridComplete: function() {
+						//在gridComplete调用合并方法
+						var gridName = "enterproperty-table";
+						MergerRowspan(gridName, 'roomnum');
+						MergerRowspan(gridName, 'name');
+					 }
         		});
-        		
+
+                $(grid_selector).jqGrid('setGroupHeaders', {
+                    useColSpanStyle: true,
+                    groupHeaders:[
+                        {startColumnName:'receipt1', numberOfColumns:2, titleText: '1月'},
+                        {startColumnName:'receipt2', numberOfColumns:2, titleText: '2月'},
+                        {startColumnName:'receipt3', numberOfColumns:2, titleText: '3月'},
+                        {startColumnName:'receipt4', numberOfColumns:2, titleText: '4月'},
+                        {startColumnName:'receipt5', numberOfColumns:2, titleText: '5月'},
+                        {startColumnName:'receipt6', numberOfColumns:2, titleText: '6月'},
+                        {startColumnName:'receipt7', numberOfColumns:2, titleText: '7月'},
+                        {startColumnName:'receipt8', numberOfColumns:2, titleText: '8月'},
+                        {startColumnName:'receipt9', numberOfColumns:2, titleText: '9月'},
+                        {startColumnName:'receipt10', numberOfColumns:2, titleText: '10月'},
+                        {startColumnName:'receipt11', numberOfColumns:2, titleText: '11月'},
+                        {startColumnName:'receipt12', numberOfColumns:2, titleText: '12月'},
+                        {startColumnName:'receipt0', numberOfColumns:2, titleText: '总计'},
+
+                    ]
+                });
+
         		$(window).triggerHandler("resize.jqGrid");// trigger window resize to make the grid get the correct size
-        		
-        		// enable search/filter toolbar
-        		// jQuery(grid_selector).jqGrid("filterToolbar",{defaultSearch:true,stringResult:true})
-        		// jQuery(grid_selector).filterToolbar({});
-        		// switch element when editing inline
+
         		function aceSwitch(cellvalue, options, cell) {
         			setTimeout(function() {
         				$(cell).find("input[type=checkbox]").addClass("ace ace-switch ace-switch-5").after("<span class='lbl'></span>");
         			}, 0);
+        		}
+        		
+        		//公共调用方法合并单元格（无需修改）
+        		function MergerRowspan(gridName, CellName) {
+        			//得到显示到界面的id集合
+        			var mya = $("#" + gridName + "").getDataIDs();
+        			//当前显示多少条
+        			var length = mya.length;
+        			for (var i = 0; i < length; i++) {
+        				//从上到下获取一条信息
+        				var before = $("#" + gridName + "").jqGrid('getRowData', mya[i]);
+        				//定义合并行数
+        				var rowSpanTaxCount = 1;
+        				for (j = i + 1; j <= length; j++) {
+        					//和上边的信息对比 如果值一样就合并行数+1 然后设置rowspan 让当前单元格隐藏
+        					var end = $("#" + gridName + "").jqGrid('getRowData', mya[j]);
+        					if (before[CellName] == end[CellName]) {
+        						rowSpanTaxCount++;
+        						$("#" + gridName + "").setCell(mya[j], CellName, '', { display: 'none' });
+        					} else {
+        						rowSpanTaxCount = 1;
+        						break;
+        					}
+        					$("#" + CellName + "" + mya[i] + "").attr("rowspan", rowSpanTaxCount);
+        				}
+        			}
         		}
         		
         		$("#editor").ace_wysiwyg({
@@ -431,7 +349,7 @@
         			}
    			    	$.ajax({
            				dataType : "json",
-           				url : "${contextPath}/recode/build/saveOrupdatBuild",
+           				url : "${contextPath}/recode/enterproperty/saveOrupdatenterproperty",
            				type : "post",
            				contentType: 'application/json',
               			data :JSON.stringify(data),
@@ -449,13 +367,13 @@
         			editicon : "ace-icon fa fa-pencil blue",
         			add : false,
         			addicon : "ace-icon fa fa-plus-circle purple",
-        			del : <shiro:hasPermission name="${ROLE_KEY}:build:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:build:delete">false</shiro:lacksPermission>,
+        			del : <shiro:hasPermission name="${ROLE_KEY}:enterproperty:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:enterproperty:delete">false</shiro:lacksPermission>,
         			delicon : "ace-icon fa fa-trash-o red",
-        			search : <shiro:hasPermission name="${ROLE_KEY}:build:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:build:search">false</shiro:lacksPermission>,
+        			search : <shiro:hasPermission name="${ROLE_KEY}:enterproperty:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:enterproperty:search">false</shiro:lacksPermission>,
         			searchicon : "ace-icon fa fa-search orange",
         			refresh : true,
         			refreshicon : "ace-icon fa fa-refresh blue",
-        			view : <shiro:hasPermission name="${ROLE_KEY}:build:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:build:view">false</shiro:lacksPermission>,
+        			view : <shiro:hasPermission name="${ROLE_KEY}:enterproperty:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:enterproperty:view">false</shiro:lacksPermission>,
         			viewicon : "ace-icon fa fa-search-plus grey"
         		}, {
         			// edit record form
@@ -525,37 +443,16 @@
         		})
         		
         		// add custom button to export the data to excel
-        		if(<shiro:hasPermission name="${ROLE_KEY}:build:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:build:export">false</shiro:lacksPermission>){
+        		if(<shiro:hasPermission name="${ROLE_KEY}:enterproperty:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:enterproperty:export">false</shiro:lacksPermission>){
     				jQuery(grid_selector).jqGrid("navButtonAdd", pager_selector,{
    					   caption : "",
    				       title : "导出Excel",
    				       buttonicon : "ace-icon fa fa-file-excel-o green", 
-   				       onClickButton : function () { 
-   				    	   var keys = [], ii = 0, rows = "";
-   				    	   var ids = $(grid_selector).getDataIDs(); // Get All IDs
-   				    	   var row = $(grid_selector).getRowData(ids[0]); // Get First row to get the labels
-   				    	   //var label = $(grid_selector).jqGrid("getGridParam","colNames");
-   	   			    	   for (var k in row) {
-   				    	   	   keys[ii++] = k; // capture col names
-   				    	   	   rows = rows + k + "\t"; // output each Column as tab delimited
-   				    	   }
-   				    	   rows = rows + "\n"; // Output header with end of line
-   				    	   for (i = 0; i < ids.length; i++) {
-   				    	   	   row = $(grid_selector).getRowData(ids[i]); // get each row
-   				    	   	   for (j = 0; j < keys.length; j++)
-   				    	   		   rows = rows + row[keys[j]] + "\t"; // output each Row as tab delimited
-   				    	   	   rows = rows + "\n"; // output each row with end of line
-   				    	   }
-   				    	   rows = rows + "\n"; // end of line at the end
-   				    	   var form = "<form name='csvexportform' action='${contextPath}/sys/information/operateInformation?oper=excel' method='post'>";
-   				    	   form = form + "<input type='hidden' name='csvBuffer' value='" + encodeURIComponent(rows) + "'>";
-   				    	   form = form + "</form><script>document.csvexportform.submit();</sc" + "ript>";
-   				    	   OpenWindow = window.open("", "");
-   				    	   OpenWindow.document.write(form);
-   				    	   OpenWindow.document.close();
-   				       } 
+   				       onClickButton : exportexcel(),
    					});        			
         		}
+        		
+        		
         		
         		function style_edit_form(form) {
         			// form.find("input[name=statusCn]").addClass("ace ace-switch ace-switch-5").after("<span class="lbl"></span>");
@@ -615,20 +512,9 @@
         		// it may be possible to have some custom formatter to do this as the grid is being created to prevent this
         		// or go back to default browser checkbox styles for the grid
         		function styleCheckbox(table) {
-        			/**
-        			 * $(table).find("input:checkbox").addClass("ace") .wrap("<label />") .after("<span class="lbl align-top" />") $(".ui-jqgrid-labels th[id*="_cb"]:first-child")
-        			 * .find("input.cbox[type=checkbox]").addClass("ace") .wrap("<label />").after("<span class="lbl align-top" />");
-        			 */
         		}
 
-        		// unlike navButtons icons, action icons in rows seem to be hard-coded
-        		// you can change them like this in here if you want
         		function updateActionIcons(table) {
-        			/**
-        			 * var replacement = { "ui-ace-icon fa fa-pencil" : "ace-icon fa fa-pencil blue", "ui-ace-icon fa fa-trash-o" : "ace-icon fa fa-trash-o red", "ui-icon-disk" : "ace-icon fa fa-check green", "ui-icon-cancel" :
-        			 * "ace-icon fa fa-times red" }; $(table).find(".ui-pg-div span.ui-icon").each(function(){ var icon = $(this); var $class = $.trim(icon.attr("class").replace("ui-icon", "")); if($class in replacement)
-        			 * icon.attr("class", "ui-icon "+replacement[$class]); })
-        			 */
         		}
 
         		// replace icons with FontAwesome icons like above
@@ -666,4 +552,85 @@
         		
         	});
         });
+		
+		function getdatamsh(){
+	        jQuery("#enterproperty-table").jqGrid('setGridParam',{
+	            datatype:'json',
+	            postData:{'buildcode':$("#lyxx").val(),'year':$("#year").val()}, //发送数据
+	            page:1
+	        }).trigger("reloadGrid"); //重新载入
+	    }
+		
+		function getbuildMsg(){
+	    	$('#lyxx').select2({
+	            ajax: {
+	                type:"get",
+	                url : "${contextPath}/recode/build/getBuildByCondition",
+	                contentType: 'application/json',
+	                dataType:"JSON",
+	                delay: 550,
+	                data: function (params) {
+	                	params.page = 1;
+	                	params.rows = 10;
+	                	params.filters = '{"groupOp":"AND","rules":[{"field":"name","op":"cn","data":"'+checknull(params.term)+'"}]}';
+	                    return params;
+	                },
+	                processResults: function (data, params) {
+	                    params.page = params.page ? 1 : params.page;
+	                    var itemList = [];
+	                    var row = data.rows;
+	                    for(var i=0;i<row.length;i++){
+	                        itemList.push({id: row[i].id, text: row[i].name});
+	                    }
+	                    return {
+	                        results: itemList,
+	                        pagination: {
+	                            more: (params.page * 10) < data.totalNumber
+	                        }
+	                    };
+	                },
+	                cache: true
+	            },
+	            multiBoolean:false,
+	            language: "zh-CN",
+	            placeholder:'--请选择--',//默认文字提示
+	            allowClear: true,//允许清空
+	            escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
+	            templateResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
+	            templateSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
+	        });
+	    }
+		function checknull(val){
+			if(val == null || val == undefined || val == "undefined" || val == 'null' ){
+				return '';
+			}
+			return val;
+		}
+		
+		function exportexcel() { 
+    	   var keys = [], ii = 0, rows = "";
+    	   var ids = $("#enterproperty-table").getDataIDs(); // Get All IDs
+    	   var row = $("#enterproperty-table").getRowData(ids[0]); // Get First row to get the labels
+    	   //var label = $(grid_selector).jqGrid("getGridParam","colNames");
+	    	   for (var k in row) {
+    	   	   keys[ii++] = k; // capture col names
+    	   	   rows = rows + k + "\t"; // output each Column as tab delimited
+    	   }
+	    	rows = "编号\t室号\t公司名称\t车牌号\t合同到期日\t付费方式\t应收（1月）\t实收（1月）\t应收（2月）\t实收（2月）\t应收（3月）\t实收（3月）\t应收（4月）\t实收（4月）\t应收（5月）\t实收（5月）\t应收（6月）\t实收（6月）\t应收（7月）\t实收（7月）\t应收（8月）\t实收（8月）\t应收（9月）\t实收（9月）\t应收（10月）\t实收（10月）\t应收（11月）\t实收（11月）\t应收（12月）\t实收（12月）\t应收（全年）\t实收（全年）\t备注";
+    	   rows = rows + "\n"; // Output header with end of line
+    	   for (i = 0; i < ids.length; i++) {
+    	   	   row = $("#enterproperty-table").getRowData(ids[i]); // get each row
+    	   	   for (j = 0; j < keys.length; j++)
+    	   		   rows = rows + row[keys[j]] + "\t"; // output each Row as tab delimited
+    	   	   rows = rows + "\n"; // output each row with end of line
+    	   }
+    	  
+    	   rows = rows + "\n"; // end of line at the end
+    	   var form = "<form name='csvexportform' action='${contextPath}/sys/information/operateInformation?oper=excel' method='post'>";
+    	   form = form + "<input type='hidden' name='csvBuffer' value='" + encodeURIComponent(rows) + "'>";
+    	   form = form + "</form><script>document.csvexportform.submit();</sc" + "ript>";
+    	   OpenWindow = window.open("", "");
+    	   OpenWindow.document.write(form);
+    	   OpenWindow.document.close();
+       }
 </script>

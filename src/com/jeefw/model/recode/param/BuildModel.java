@@ -16,6 +16,7 @@ public class BuildModel<T, G> extends BaseModel<T, G> implements Serializable {
 	private String address;// 楼宇地址
 	private String contact;// 联系电话
 	private String manager;// 楼宇经理
+	private String managerid;//楼宇经理
 	private String comment;// 物业概况
 	private String propertyfee;// 物业费(平米每天)
 	private String createuser;// 创建人
@@ -136,6 +137,14 @@ public class BuildModel<T, G> extends BaseModel<T, G> implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getManagerid() {
+		return managerid;
+	}
+
+	public void setManagerid(String managerid) {
+		this.managerid = managerid;
 	}
 
 }

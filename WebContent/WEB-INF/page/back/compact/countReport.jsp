@@ -6,8 +6,7 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery-ui.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/ui.jqgrid.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery.gritter.css" />
-<link rel="stylesheet"
-	href="${contextPath}/static/assets/css/select2.css" />
+<link rel="stylesheet" href="${contextPath}/static/assets/css/select2.css" />
 
 <div class="row">
 	<div class="col-xs-12">
@@ -28,43 +27,32 @@
 	</div><!-- /.col -->
 </div><!-- /.row -->
 
-<div id="modal-table" class="modal fade" tabindex="-1" data-backdrop="static">
-	<div class="modal-dialog" style="min-width: 820px;">
-		<form id="informationForm">
-			<div class="modal-content">
-				<div class="modal-header no-padding">
-					<div class="table-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-							<span class="white">&times;</span>
-						</button>
-						
-					</div>
-				</div>
-				<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
-					
-				</div>
-				<div class="modal-footer no-margin-top">
-					<div class="text-center">
-						<button id="submitButton" type="submit" class="btn btn-app btn-success btn-xs">
-							<i class="ace-icon fa fa-floppy-o bigger-160"></i>
-							保存
-						</button>
-						<button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
-							<i class="ace-icon fa fa-share bigger-160"></i>
-							取消
-						</button>
-					</div>
-				</div>
-			</div><!-- /.modal-content -->
-		</form>
-	</div><!-- /.modal-dialog -->
+<div id="modal-table" class="modal fade" data-backdrop="static">
+    <div class="modal-dialog" style="min-width: 1000px;">
+        <form id="bulidingForm" class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        月租金曲线图
+                    </div>
+                </div>
+                <div class="modal-body" style="height: 600px;">
+                    <div id="main" style="width: 1000px;height: 600px"></div>
+                </div>
+            </div><!-- /.modal-content -->
+        </form>
+    </div><!-- /.modal-dialog -->
 </div>
 
 <!-- page specific plugin scripts -->
 <script type="text/javascript">
 		var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
 		        		"${contextPath}/static/assets/js/jquery.ui.touch-punch.js", "${contextPath}/static/assets/js/markdown/markdown.js", "${contextPath}/static/assets/js/markdown/bootstrap-markdown.js",
-		        		 "${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.hotkeys.js", "${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js", "${contextPath}/static/assets/js/jquery.gritter.js", null ]
+		        		,"${contextPath}/static/assets/js/echarts.js","${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.hotkeys.js", 
+		        		"${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js", "${contextPath}/static/assets/js/jquery.gritter.js", null ]
       
 		$(".page-content-area").ace_ajax("loadScripts", scripts, function() {
         	// inline scripts related to this page
@@ -221,6 +209,9 @@
         				}, 0);
         			},
         			editurl : null,
+	       			onSelectRow: function (id){
+	       				getreporttable(id);
+	                }
         			
         		});
         		
@@ -343,13 +334,13 @@
         			editicon : "ace-icon fa fa-pencil blue",
         			add : false,
         			addicon : "ace-icon fa fa-plus-circle purple",
-        			del : <shiro:hasPermission name="${ROLE_KEY}:information:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:delete">false</shiro:lacksPermission>,
+        			del : <shiro:hasPermission name="${ROLE_KEY}:countReport:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:countReport:delete">false</shiro:lacksPermission>,
         			delicon : "ace-icon fa fa-trash-o red",
-        			search : <shiro:hasPermission name="${ROLE_KEY}:information:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:search">false</shiro:lacksPermission>,
+        			search : <shiro:hasPermission name="${ROLE_KEY}:countReport:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:countReport:search">false</shiro:lacksPermission>,
         			searchicon : "ace-icon fa fa-search orange",
         			refresh : true,
         			refreshicon : "ace-icon fa fa-refresh blue",
-        			view : <shiro:hasPermission name="${ROLE_KEY}:information:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:view">false</shiro:lacksPermission>,
+        			view : <shiro:hasPermission name="${ROLE_KEY}:countReport:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:countReport:view">false</shiro:lacksPermission>,
         			viewicon : "ace-icon fa fa-search-plus grey"
         		}, {
         			// edit record form
@@ -419,7 +410,7 @@
         		})
         		
         		// add custom button to export the data to excel
-        		if(<shiro:hasPermission name="${ROLE_KEY}:information:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:export">false</shiro:lacksPermission>){
+        		if(<shiro:hasPermission name="${ROLE_KEY}:countReport:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:countReport:export">false</shiro:lacksPermission>){
     				jQuery(grid_selector).jqGrid("navButtonAdd", pager_selector,{
    					   caption : "",
    				       title : "导出Excel",
@@ -636,5 +627,37 @@
     	                }
     				}
     			});
+		 }
+		 
+		 function getreporttable(id){
+				var rowdate = $("#repoert-table").jqGrid('getRowData',id);
+			 	
+                $("#modal-table").modal("toggle");
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('main'));
+
+                // 指定图表的配置项和数据
+                var option = {
+                    title: {
+                        text: '月实绩曲线图'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月','八月','八月','九月','十月','十一月','十二月']
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: [rowdate.jan, rowdate.feb, rowdate.mar, rowdate.apr, rowdate.may, rowdate.jun, rowdate.jul,rowdate.aug,rowdate.sept,rowdate.oct,rowdate.nov,rowdate.dece],
+                        type: 'line',
+                        smooth:true,
+                        itemStyle : { normal: {label : {show: true}}}
+                    }]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+
+	            
 		 }
 </script>

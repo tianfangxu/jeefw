@@ -1,6 +1,7 @@
 package com.jeefw.dao.recode.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -10,6 +11,9 @@ import com.jeefw.dao.recode.BuildDao;
 import com.jeefw.model.recode.BuildEntity;
 import com.jeefw.model.recode.param.BuildModel;
 import com.jeefw.model.recode.param.MasterModel;
+import com.jeefw.model.sys.Department;
+import com.jeefw.model.sys.Role;
+import com.jeefw.model.sys.SysUser;
 
 import core.dao.BaseDao;
 import core.support.JqGridPageView;
@@ -25,43 +29,60 @@ public class BuildDaoImpl extends BaseDao<BuildEntity> implements BuildDao{
 	}
 
 	@Override
-	public JqGridPageView<BuildEntity> getBuildByCondition(BuildModel model) {
+	public JqGridPageView<BuildEntity> getBuildByCondition(BuildModel model,List<Department> listmodel) {
 		JqGridPageView<BuildEntity> result = new JqGridPageView<BuildEntity>();
 		Session session = this.getSession();
-		StringBuffer sb = new StringBuffer(" where deleteflg = '0' ");
-
+		StringBuffer sb = new StringBuffer(" where b.deleteflg = '0' ");
+		
+		
+		//部门
+		SysUser user = model.getLoginuser();
+		String key = user.getDepartmentKey();
+		Set<Role> roles = user.getRoles();
+		String rolestring = "";
+		for (Role role : roles) {
+			rolestring += role.getRoleValue();
+		}
+		if(key!= null && (key.equals("ZJB") || key.equals("WYB") ||key.equals("CWB"))){
+			if(!StringUnit.isNullOrEmpty(user.getDepartmentKey()) && rolestring.indexOf("超级管理员") == -1){
+				sb.append(" and d.department_key = '"+model.getLoginuser().getDepartmentKey()+"' ");
+			}
+		}
+		
 		//等于查询
 		if(model.getEqparam() != null){
 			BuildModel eqmodel = (BuildModel) model.getEqparam();
 			if(!StringUnit.isNullOrEmpty(eqmodel.getName())){
-				sb.append(" and name = '"+eqmodel.getName()+"' ");
+				sb.append(" and b.name = '"+eqmodel.getName()+"' ");
 			}
 			if(!StringUnit.isNullOrEmpty(eqmodel.getAddress())){
-				sb.append(" and address = '"+eqmodel.getAddress()+"' ");
+				sb.append(" and b.address = '"+eqmodel.getAddress()+"' ");
 			}
 			if(!StringUnit.isNullOrEmpty(eqmodel.getManager())){
-				sb.append(" and manager = '"+eqmodel.getManager()+"' ");
+				sb.append(" and b.manager = '"+eqmodel.getManager()+"' ");
 			}
 			if(!StringUnit.isNullOrEmpty(eqmodel.getId())){
-				sb.append(" and id = '"+eqmodel.getId()+"' ");
+				sb.append(" and b.id = '"+eqmodel.getId()+"' ");
 			}
 		}
 		//like查询
 		if(model.getLikeparam() != null){
 			BuildModel likemodel = (BuildModel) model.getLikeparam();
 			if(!StringUnit.isNullOrEmpty(likemodel.getName())){
-				sb.append(" and name like '%"+likemodel.getName()+"%' ");
+				sb.append(" and b.name like '%"+likemodel.getName()+"%' ");
 			}
 			if(!StringUnit.isNullOrEmpty(likemodel.getAddress())){
-				sb.append(" and address like '%"+likemodel.getAddress()+"%' ");
+				sb.append(" and b.address like '%"+likemodel.getAddress()+"%' ");
 			}
 			if(!StringUnit.isNullOrEmpty(likemodel.getManager())){
-				sb.append(" and manager like '%"+likemodel.getManager()+"%' ");
+				sb.append(" and b.manager like '%"+likemodel.getManager()+"%' ");
 			}
 		}
 
-		Query query = session.createQuery("from BuildEntity "
-				+ sb.toString());
+		Query query = session.createSQLQuery("select b.* from  m_build b LEFT JOIN sys_user u on b.managerid = u.id  LEFT JOIN department d ON u.department_key = d.parent_departmentkey "
+				+sb.toString() +" GROUP BY  b.id ").addEntity(BuildEntity.class);
+		 /*session.createQuery("from BuildEntity "
+				+ sb.toString());*/
 		query.setFirstResult((Integer.parseInt(model.getPage()) - 1)
 				* Integer.parseInt(model.getRows()));
 		query.setMaxResults(Integer.parseInt(model.getRows()));
@@ -69,7 +90,8 @@ public class BuildDaoImpl extends BaseDao<BuildEntity> implements BuildDao{
 		List<BuildEntity> list = query.list();
 
 		Object cout = session.createSQLQuery(
-				"select count(1) from m_build " + sb.toString())
+				"select count(a.id) from ( select b.id  from  m_build b LEFT JOIN sys_user u on b.managerid = u.id  LEFT JOIN department d "
+				+ "ON u.department_key = d.parent_departmentkey " + sb.toString()+" GROUP BY b.id ) as a ")
 				.uniqueResult();
 		long count = Long.parseLong(cout.toString());
 

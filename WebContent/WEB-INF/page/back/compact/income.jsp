@@ -43,19 +43,19 @@
 				</select>
                 <input type="text" id="yearcondition"  placeholder="年份" value="" style="margin-left: 10px;margin-right: 10px"/>
 
-                <shiro:hasPermission name="${ROLE_KEY}:information:add">
+                <shiro:hasPermission name="${ROLE_KEY}:income:add">
                     <a id="addInformationButton" role="button"
                        class="btn btn-info btn-sm" data-toggle="modal"> 录入 </a>
                 </shiro:hasPermission>
-                <shiro:lacksPermission name="${ROLE_KEY}:information:add">
+                <shiro:lacksPermission name="${ROLE_KEY}:income:add">
                     <a id="addInformationButton" disabled="disabled" role="button"
                        class="btn btn-info btn-sm" data-toggle="modal"> 录入 </a>
                 </shiro:lacksPermission>
-                <shiro:hasPermission name="${ROLE_KEY}:information:edit">
+                <shiro:hasPermission name="${ROLE_KEY}:income:edit">
                     <a id="editInformationButton" role="button"
                        class="btn btn-purple btn-sm" data-toggle="modal"> 编辑 </a>
                 </shiro:hasPermission>
-                <shiro:lacksPermission name="${ROLE_KEY}:information:edit">
+                <shiro:lacksPermission name="${ROLE_KEY}:income:edit">
                     <a id="editInformationButton" role="button" disabled="disabled"
                        class="btn btn-purple btn-sm" data-toggle="modal"> 编辑 </a>
                 </shiro:lacksPermission>
@@ -233,7 +233,7 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td colspan="5" style="text-align: left;">合计：<span
+                                                    <td colspan="5" style="text-align: left;">小计：<span
                                                             id="sumincome" style="color: red">0.00</span></td>
                                                 </tr>
                                             </table>
@@ -275,7 +275,7 @@
                                                     <td><input id="gasps" type="text" class="inputc ps"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="6" style="text-align: left;">合计:<span
+                                                    <td colspan="6" style="text-align: left;">小计:<span
                                                             id="sum0" style="color: red;">0.00</span>
                                                     </td>
                                                 </tr>
@@ -418,7 +418,7 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td colspan="6" style="text-align: left;">合计:<span
+                                                    <td colspan="6" style="text-align: left;">小计:<span
                                                             id="sum1" style="color: red;">0.00 </span>
                                                     </td>
                                                 </tr>
@@ -435,7 +435,7 @@
                                                                                   class="inputc ps"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="4" style="text-align: left;">合计:<span
+                                                    <td colspan="4" style="text-align: left;">小计:<span
                                                             id="sum2" style="color: red;">0.00</span>
                                                     </td>
                                                 </tr>
@@ -447,7 +447,7 @@
                             <div class="col-xs-12 col-sm-12">
                                 <div class="col-xs-12 col-sm-6">
                                     <div style="color: red; font-size: 24px">
-                                        总计：<span id="sum5">0.00</span>
+                                        毛利润：<span id="sum5">0.00</span>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-6" style="text-align: right;">
@@ -489,7 +489,7 @@
                         <div class="col-xs-12 col-sm-12">
                             <table class="table table-striped table-bordered table-hover">
                                 <tr>
-                                    <td>合计：<span style="color: green;" id="sum_info">2969600.00
+                                    <td>毛利润：<span style="color: green;" id="sum_info">2969600.00
 									</span></td>
                                 </tr>
                             </table>
@@ -570,7 +570,7 @@
                                                 <td id="waterinps_info" class="cass"></td>
                                             </tr>
                                             <tr>
-                                                <td colspan="4">合计：<span style="color: red" id="sum0_info"></span></td>
+                                                <td colspan="4">小计：<span style="color: red" id="sum0_info"></span></td>
 
                                             </tr>
                                         </table>
@@ -609,7 +609,7 @@
                                                 <td id="gasps_info" class="cass"></td>
                                             </tr>
                                             <tr>
-                                                <td colspan="5">合计:<span style="color: red;" id="sum1_info"></span>
+                                                <td colspan="5">小计:<span style="color: red;" id="sum1_info"></span>
                                                 </td>
                                             </tr>
                                         </table>
@@ -714,7 +714,7 @@
                                             </tr>
 
                                             <tr>
-                                                <td colspan="5">合计:<span style="color: red;" id="sum2_info">
+                                                <td colspan="5">小计:<span style="color: red;" id="sum2_info">
 												</span>
                                                 </td>
                                             </tr>
@@ -742,7 +742,7 @@
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5">合计:<span style="color:red;">0.00</span> </td>
+                                            <td colspan="5">小计:<span style="color:red;">0.00</span> </td>
                                         </tr>
                                     </table>
                                     <table class="table table-striped table-bordered table-hover">
@@ -805,7 +805,7 @@
                                                 <td id="otherps_info" class="cass"></td>
                                             </tr>
                                             <tr>
-                                                <td colspan="3">合计:<span style="color: red;" id="sum3_info"></span>
+                                                <td colspan="3">小计:<span style="color: red;" id="sum3_info"></span>
                                                 </td>
                                             </tr>
                                         </table>
@@ -901,10 +901,15 @@
                 url: "${contextPath}//recode/achievement/getAchievementByCondition",
                 datatype: "json",
                 height: 450,
-                colNames: ["ID","楼宇", "年份","月份", "收入合计", "成本合计", "能源费合计", "办公总务合计", "业务外包合计", "修理费合计", "其他合计", "操作"],
+                colNames: ["ID","楼宇代码","楼宇", "年份","月份", "收入合计", "成本合计", "能源费合计", "办公总务合计", "业务外包合计", "修理费合计", "其他合计", "操作"],
                 colModel: [{
                     name: "id",
                     width: 50,
+                    hidden:true,
+                },
+                {
+                    name: "build",
+                    width: 100,
                     hidden:true,
                 },
                     {
@@ -1054,7 +1059,7 @@
             }
 
             $("#addInformationButton").bind("click", function() {
-                if($('#lyxx').val() == '' || $('#yearcondition').val() == ''){
+                if($('#lyxx').val() == '' || $('#lyxx').val() == null || $('#yearcondition').val() == '' || $('#yearcondition').val() == null){
                     $.gritter.add({
                         title: '错误',
                         text: '请先选择楼宇和年份',
@@ -1075,6 +1080,8 @@
                     });
                 }else{
                     $("#table_in").modal("toggle");
+                    var build = jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).build
+                   
                     achievementInfoToview(jQuery(grid_selector).jqGrid("getRowData",jQuery(grid_selector).jqGrid("getGridParam", "selrow")).id,'edit');
                 }
             });
@@ -1110,13 +1117,13 @@
                 editicon : "ace-icon fa fa-pencil blue",
                 add : false,
                 addicon : "ace-icon fa fa-plus-circle purple",
-                del : <shiro:hasPermission name="${ROLE_KEY}:information:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:delete">false</shiro:lacksPermission>,
+                del : <shiro:hasPermission name="${ROLE_KEY}:income:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:income:delete">false</shiro:lacksPermission>,
                 delicon : "ace-icon fa fa-trash-o red",
-                search : <shiro:hasPermission name="${ROLE_KEY}:information:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:search">false</shiro:lacksPermission>,
+                search : <shiro:hasPermission name="${ROLE_KEY}:income:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:income:search">false</shiro:lacksPermission>,
                 searchicon : "ace-icon fa fa-search orange",
                 refresh : true,
                 refreshicon : "ace-icon fa fa-refresh blue",
-                view : <shiro:hasPermission name="${ROLE_KEY}:information:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:view">false</shiro:lacksPermission>,
+                view : <shiro:hasPermission name="${ROLE_KEY}:income:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:income:view">false</shiro:lacksPermission>,
                 viewicon : "ace-icon fa fa-search-plus grey"
             }, {
                 // edit record form
@@ -1186,7 +1193,7 @@
             })
 
             // add custom button to export the data to excel
-            if(<shiro:hasPermission name="${ROLE_KEY}:information:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:information:export">false</shiro:lacksPermission>){
+            if(<shiro:hasPermission name="${ROLE_KEY}:income:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:income:export">false</shiro:lacksPermission>){
                 jQuery(grid_selector).jqGrid("navButtonAdd", pager_selector,{
                     caption : "",
                     title : "导出Excel",
@@ -1534,7 +1541,15 @@
 
     //提交实绩数据
     function submitAchievement(){
-        var params = '{"build":"'+$('#lyxx').val()+'","month":"'+$('#month').val()+'",';
+    	var build = '';
+    	if($('#lyxx').val() != '' && $('#lyxx').val() != null){
+    		build = $('#lyxx').val()
+    	}else if(sessionStorage['build'] != null && sessionStorage['build'] != ''){
+    		build = sessionStorage['build'];
+    		sessionStorage['build'] = ""
+    	}
+    	
+        var params = '{"build":"'+build+'","month":"'+$('#month').val()+'",';
         $('.num').each(function(i){
             if($(this).val() == ''){
                 $(this).val('0.00');
@@ -1578,7 +1593,7 @@
         });
     }
     function budgetinfotoedit(data,mark){
-
+    	sessionStorage['build'] = data.build;
         $.ajax({
             dataType : "json",
             url : "${contextPath}//recode/budget/getBudgetByCondition?page=1&rows=1&build="+data.build+"&year="+data.year,
