@@ -12,6 +12,7 @@ import com.jeefw.model.sys.param.model.SmallContractModel;
 
 import core.dao.BaseDao;
 import core.support.JqGridPageView;
+import core.util.CommonUtil;
 import core.util.ConfigUtil;
 import core.util.DateUnit;
 import core.util.StringUnit;
@@ -23,6 +24,7 @@ import org.hibernate.type.StandardBasicTypes;
 import org.springframework.stereotype.Repository;
 
 import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -54,6 +56,13 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 		JqGridPageView<Contract> result = new JqGridPageView<Contract>();
 		Session session = this.getSession();
 		StringBuffer sb = new StringBuffer(" where deleteflg = '0' ");
+		if(CommonUtil.isNotNull(model.getHtqx())){
+			if(model.getHtqx().equals("2")){
+				sb.append(" and enddate <= '"+DateUnit.getTime8() +"' ");
+			}else if(model.getHtqx().equals("1")){
+				sb.append(" and enddate > '"+DateUnit.getTime8() +"' and  enddate <= "+DateUnit.subMonth(DateUnit.getTime8(),4));
+			}
+		}
 		//等于查询
 		if(model.getEqparam() != null){
 			BigContractModel eqmodel = (BigContractModel) model.getEqparam();
@@ -311,7 +320,7 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 				.addScalar("prepay",StandardBasicTypes.STRING)
 				.addScalar("cardfee",StandardBasicTypes.STRING)
 				.addScalar("reissuecardfee",StandardBasicTypes.STRING)
-				
+
 				.addScalar("sysnumber",StandardBasicTypes.STRING)
 				.addScalar("startdate",StandardBasicTypes.STRING)
 				.addScalar("enddate",StandardBasicTypes.STRING)
@@ -324,6 +333,6 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 		List<ExportParkingDaoModel> list = query.list();
 		return list;
 	}
-	
-	
+
+
 }
