@@ -41,6 +41,10 @@ public class PropertyDaoImpl extends BaseDao<PropertyEntity> implements Property
 		if(!StringUnit.isNullOrEmpty(model.getBuild())){
 			sb.append(" and t.build = '"+model.getBuild()+"' ");
 		}
+		
+		if(!StringUnit.isNullOrEmpty(model.getBuilds())){
+			sb.append(" and t.build in ("+model.getBuilds()+")");
+		}
 
 		//等于查询
 		if(model.getEqparam() != null){

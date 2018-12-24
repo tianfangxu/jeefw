@@ -1,15 +1,22 @@
 package com.jeefw.service.recode.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import com.jeefw.model.sys.Department;
 import com.jeefw.model.sys.param.model.BigContractModel;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jeefw.dao.recode.BuildDao;
 import com.jeefw.dao.recode.PropertyDao;
+import com.jeefw.model.recode.BuildEntity;
 import com.jeefw.model.recode.PropertyEntity;
+import com.jeefw.model.recode.param.BuildModel;
 import com.jeefw.model.recode.param.PropertyModel;
 import com.jeefw.service.recode.PropertyService;
 
@@ -23,11 +30,26 @@ public class PropertyServiceImpl implements PropertyService {
 
 	@Resource
 	PropertyDao PropertyDao;
+	
+	@Resource
+	BuildDao buildDao;
 
 	@Override
 	public JqGridPageView<PropertyModel> getPropertyByCondition(
 			PropertyModel model) {
-		// TODO Auto-generated method stub
+		BuildModel cmodel = new BuildModel();
+		cmodel.setLoginuser(model.getLoginuser());
+		cmodel.setPage("1");
+		cmodel.setRows("1000");
+		List<BuildEntity> rows = buildDao.getBuildByCondition(cmodel, null).getRows();
+		String ids = "";
+		if(rows != null && rows.size() != 0){
+			for (BuildEntity buildEntity : rows) {
+				ids += "'"+buildEntity.getId()+"',";
+			}
+		}
+		ids = ids.substring(0, ids.length()-1);
+		model.setBuilds(ids);
 		return PropertyDao.getPropertyByCondition(model);
 	}
 
@@ -84,5 +106,4 @@ public class PropertyServiceImpl implements PropertyService {
 		}
 		return PropertyDao.getPropertyJsonByCondition(model);
 	}
-
 }

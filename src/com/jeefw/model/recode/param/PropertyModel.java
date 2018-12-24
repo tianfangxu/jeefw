@@ -24,6 +24,8 @@ public class PropertyModel<T, G> extends BaseModel<T, G> implements Serializable
 	private String deletetime;//删除时间
 	private String deleteflg;//删除标记
 	
+	private String builds;
+	
 	public String getId() {
 		return id;
 	}
@@ -107,6 +109,12 @@ public class PropertyModel<T, G> extends BaseModel<T, G> implements Serializable
 	}
 	public void setBuildname(String buildname) {
 		this.buildname = buildname;
+	}
+	public String getBuilds() {
+		return builds;
+	}
+	public void setBuilds(String builds) {
+		this.builds = builds;
 	}
 
 }
