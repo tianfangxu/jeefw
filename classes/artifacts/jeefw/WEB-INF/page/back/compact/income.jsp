@@ -1,786 +1,807 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
 
-<link rel="stylesheet" href="${contextPath}/static/assets/css/jquery-ui.css"/>
-<link rel="stylesheet" href="${contextPath}/static/assets/css/ui.jqgrid.css"/>
-<link rel="stylesheet" href="${contextPath}/static/assets/css/jquery.gritter.css"/>
-<link rel="stylesheet" href="${contextPath}/static/assets/css/datepicker.css"/>
-<link rel="stylesheet" href="${contextPath}/static/assets/css/bootstrap-timepicker.css"/>
-<link rel="stylesheet" href="${contextPath}/static/assets/css/daterangepicker.css"/>
-<link rel="stylesheet" href="${contextPath}/static/assets/css/bootstrap-datetimepicker.css"/>
-<link rel="stylesheet" href="${contextPath}/static/assets/css/select2.css" />
-<link rel="stylesheet" href="${contextPath}/static/assets/css/chartsreports/sb-admin.css" />
-<link rel="stylesheet" href="${contextPath}/static/assets/css/chartsreports/morris.css" />
+<link rel="stylesheet"
+	href="${contextPath}/static/assets/css/jquery-ui.css" />
+<link rel="stylesheet"
+	href="${contextPath}/static/assets/css/ui.jqgrid.css" />
+<link rel="stylesheet"
+	href="${contextPath}/static/assets/css/jquery.gritter.css" />
+<link rel="stylesheet"
+	href="${contextPath}/static/assets/css/datepicker.css" />
+<link rel="stylesheet"
+	href="${contextPath}/static/assets/css/bootstrap-timepicker.css" />
+<link rel="stylesheet"
+	href="${contextPath}/static/assets/css/daterangepicker.css" />
+<link rel="stylesheet"
+	href="${contextPath}/static/assets/css/bootstrap-datetimepicker.css" />
+<link rel="stylesheet"
+	href="${contextPath}/static/assets/css/select2.css" />
+<link rel="stylesheet"
+	href="${contextPath}/static/assets/css/chartsreports/sb-admin.css" />
+<link rel="stylesheet"
+	href="${contextPath}/static/assets/css/chartsreports/morris.css" />
 
 <script type="text/javascript">
 	
 </script>
 <style>
-	.inputc{
-		width: 80%;
-		text-align: center;
-	}
+.inputc {
+	width: 80%;
+	text-align: center;
+}
 </style>
 <body>
-		<div class="row">
-			
-			<div class="col-xs-12">
-				<div class="well well-sm">
-					 <select class="select2 col-xs-2 " id="lyxx">
-		                <option value="">--请选择楼宇--</option>
-		                <option value="wy">巴士大厦</option>
-		                <option value="cw">金宏大厦</option>
-		                <option value="cw">天源大厦</option>
-		                <option value="cw">天山</option>
-		                <option value="cw">芦恒路</option>
-		                <option value="cw">逸仙路</option>
-		            </select>
-					<div class="btn btn-info" onclick="$('#table_in').css('display','block')" style="    height: 30px;padding-top: 0px;">录入</div>
-				</div>
-				<table id="sample-table-1" class="table table-striped table-bordered table-hover">
-					<thead>
-						<tr>
-							<th class="center">
-								<label class="position-relative">
-									<input type="checkbox" class="ace" />
-									<span class="lbl"></span>
-								</label>
-							</th>
-							<th>月份/（月）</th>
-							<th>收入合计</th>
-							<th >成本合计</th>
+	<div class="row">
 
-							<th>
-								能源费合计
-							</th>
-							<th>办公总务合计</th>
+		<div class="col-xs-12">
+			<div class="well well-sm">
+				<select class="select2 col-xs-2 " id="lyxx">
+					<option value="">--请选择楼宇--</option>
+					<option value="wy">巴士大厦</option>
+					<option value="cw">金宏大厦</option>
+					<option value="cw">天源大厦</option>
+					<option value="cw">天山</option>
+					<option value="cw">芦恒路</option>
+					<option value="cw">逸仙路</option>
+				</select>
+				<div class="btn btn-info"
+					onclick="$('#table_in').css('display','block')"
+					style="height: 30px; padding-top: 0px;">录入</div>
+			</div>
+			<table id="sample-table-1"
+				class="table table-striped table-bordered table-hover">
+				<thead>
+					<tr>
+						<th class="center"><label class="position-relative">
+								<input type="checkbox" class="ace" /> <span class="lbl"></span>
+						</label></th>
+						<th>月份/（月）</th>
+						<th>收入合计</th>
+						<th>成本合计</th>
 
-							<th>业务外包合计</th>
-							<th>修理费合计</th>
-							<th>其他合计</th>
-							<th></th>
-						</tr>
-					</thead>
+						<th>能源费合计</th>
+						<th>办公总务合计</th>
 
-					<tbody>
-						<tr>
-							<td class="center">
-								<label class="position-relative">
-									<input type="checkbox" class="ace" />
-									<span class="lbl"></span>
-								</label>
-							</td>
+						<th>业务外包合计</th>
+						<th>修理费合计</th>
+						<th>其他合计</th>
+						<th></th>
+					</tr>
+				</thead>
 
-							<td>
-								1
-							</td>
-							<td>330999</td>
-							<td >263315</td>
-							<td>26485</td>
+				<tbody>
+					<tr>
+						<td class="center"><label class="position-relative">
+								<input type="checkbox" class="ace" /> <span class="lbl"></span>
+						</label></td>
 
-							<td>
-								2648
-							</td>
+						<td>1</td>
+						<td>330999</td>
+						<td>263315</td>
+						<td>26485</td>
 
-							<td>
-								19006
-							</td>
-							<td>
-								4000
-							</td>
-							<td>
-								484
-							</td>
-							<td>
-								<div class="btn btn-minier btn-purple" onclick="getmsg()">详情</div>
-							</td>
-						</tr>
-						<tr>
-							<td class="center">
-								<label class="position-relative">
-									<input type="checkbox" class="ace" />
-									<span class="lbl"></span>
-								</label>
-							</td>
+						<td>2648</td>
 
-							<td>
-								2
-							</td>
-							<td>330999</td>
-							<td >263315</td>
-							<td>26485</td>
+						<td>19006</td>
+						<td>4000</td>
+						<td>484</td>
+						<td>
+							<div class="btn btn-minier btn-purple" onclick="getmsg()">详情</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="center"><label class="position-relative">
+								<input type="checkbox" class="ace" /> <span class="lbl"></span>
+						</label></td>
 
-							<td>
-								2648
-							</td>
+						<td>2</td>
+						<td>330999</td>
+						<td>263315</td>
+						<td>26485</td>
 
-							<td>
-								19006
-							</td>
-							<td>
-								4000
-							</td>
-							<td>
-								484
-							</td>
-							<td>
-								<div class="btn btn-minier btn-purple" onclick="getmsg()">详情</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div><!-- /.span -->
+						<td>2648</td>
+
+						<td>19006</td>
+						<td>4000</td>
+						<td>484</td>
+						<td>
+							<div class="btn btn-minier btn-purple" onclick="getmsg()">详情</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!-- /.span -->
 	</div>
-<div class="well well-sm"></div>
-			
-<div style="display: none" id="table_in">
-       <div class="col-xs-12 col-sm-12" >
-           <div class="widget-box">
-               <div class="widget-header">
-                   <h4 class="widget-title">收入</h4>
-               </div>
+	<div class="well well-sm"></div>
 
-               <div class="widget-body">
-                   <div class="widget-main">
-                       <table class="table table-striped table-bordered table-hover" style="text-align: center;" id="income">
-                           <tr>
-                               <td colspan="2" style="text-align: center;">项目</td>
-                               <td style="text-align: center;width: 22%">全年预算</td>
-                               <td style="text-align: center;width: 22%">当月实绩</td>                           
-                               <td style="text-align: center;width: 22%">备注</td>
-                           </tr>
-                           <tr>
-                               <td colspan="2">物业管理费</td>
-                                <td>4343000.00 </td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td rowspan="2" style="vertical-align: middle;">停车费</td>
-                               <td>固定停车费	</td>
-                               <td>370000.00 </td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td>临时停车费</td>
-                                <td>0.00 </td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td colspan="2">服务费</td>
-                                <td>84315.00</td>
-                                <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr><tr>
-                           <td colspan="2">广告费</td>
-                           <td>423000.00 </td>
-                            <td><input type="text" class="inputc"></td>
-                            <td><input type="text" class="inputc"></td>
-                       </tr><tr>
-                           <td colspan="2">仓储费/经营开发</td>
-                           <td>35000.00</td>
-                            <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                       </tr><tr>
-                           <td colspan="2">租线费</td>
-                           <td>70000.00</td>
-                           <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                       </tr><tr>
-                           <td colspan="2">电费</td>
-                           <td>1200000.00 </td>
-                           <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                       </tr>
-                       
-                       <tr>
-                           <td colspan="5" style="text-align: left;">合计：<span style="color:red">0.00</span></td>
-                       </tr>
-                       </table>
-                   </div>
-               </div>
-           </div>
-       </div>
-       <div class="col-xs-12 col-sm-12">
-           <div class="widget-box">
-               <div class="widget-header">
-                   <h4 class="widget-title">成本</h4>
-               </div>
+	<div style="display: none" id="table_in">
+		<div class="col-xs-12 col-sm-12">
+			<div class="widget-box">
+				<div class="widget-header">
+					<h4 class="widget-title">收入</h4>
+				</div>
 
-               <div class="widget-body">
-                   <div class="widget-main">
-                       <table class="table table-striped table-bordered table-hover" style="text-align: center;">
-                           <tr>
-                               <td rowspan="3" style="vertical-align: middle;">能源费</td>
-                               <td colspan="2">水费</td>
-                               <td style="width: 22%">80000.00 </td>
-                                <td style="width: 22%"><input type="text" class="inputc"></td>
-                               <td style="width: 22%"><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td colspan="2">电费</td>
-                               <td>2320000.00 </td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td colspan="2">燃气费</td>
-                               <td>300000.00 </td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td colspan="6" style="text-align: left;">合计:<span style="color:red;">0.00</span> </td>
-                           </tr>
-                       </table>
-                       <table class="table table-striped table-bordered table-hover" style="text-align: center;">
-                           <tr>
-                               <td rowspan="16" style="vertical-align: middle;">办公总务</td>
-                               <td colspan="2">办公用品</td>
-                                <td style="width: 22%">30000.00</td>
-                               <td style="width: 22%"><input type="text" class="inputc"></td>
-                               <td style="width: 22%"><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td colspan="2">电话、通信费等</td>
-                               <td>6000</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td colspan="2">饮用水等	</td>
-                               <td>15000</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td colspan="2">门牌制作等	</td>
-                               <td>1200</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
+				<div class="widget-body">
+					<div class="widget-main">
+						<table class="table table-striped table-bordered table-hover"
+							style="text-align: center;" id="income">
+							<tr>
+								<td colspan="2" style="text-align: center;">项目</td>
+								<td style="text-align: center; width: 22%">全年预算</td>
+								<td style="text-align: center; width: 22%">当月实绩</td>
+								<td style="text-align: center; width: 22%">备注</td>
+							</tr>
+							<tr>
+								<td colspan="2">物业管理费</td>
+								<td>4343000.00</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td rowspan="2" style="vertical-align: middle;">停车费</td>
+								<td>固定停车费</td>
+								<td>370000.00</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td>临时停车费</td>
+								<td>0.00</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="2">服务费</td>
+								<td>84315.00</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="2">广告费</td>
+								<td>423000.00</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="2">仓储费/经营开发</td>
+								<td>35000.00</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="2">租线费</td>
+								<td>70000.00</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="2">电费</td>
+								<td>1200000.00</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
 
-                           <tr>
-                               <td colspan="2">节假日布置		</td>
-                               <td>3000</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
+							<tr>
+								<td colspan="5" style="text-align: left;">合计：<span
+									style="color: red">0.00</span></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12">
+			<div class="widget-box">
+				<div class="widget-header">
+					<h4 class="widget-title">成本</h4>
+				</div>
 
-                           <tr>
-                               <td colspan="2">保洁用品	</td>
-                               <td>9000</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
+				<div class="widget-body">
+					<div class="widget-main">
+						<table class="table table-striped table-bordered table-hover"
+							style="text-align: center;">
+							<tr>
+								<td rowspan="3" style="vertical-align: middle;">能源费</td>
+								<td colspan="2">水费</td>
+								<td style="width: 22%">80000.00</td>
+								<td style="width: 22%"><input type="text" class="inputc"></td>
+								<td style="width: 22%"><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="2">电费</td>
+								<td>2320000.00</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="2">燃气费</td>
+								<td>300000.00</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="6" style="text-align: left;">合计:<span
+									style="color: red;">0.00</span>
+								</td>
+							</tr>
+						</table>
+						<table class="table table-striped table-bordered table-hover"
+							style="text-align: center;">
+							<tr>
+								<td rowspan="16" style="vertical-align: middle;">办公总务</td>
+								<td colspan="2">办公用品</td>
+								<td style="width: 22%">30000.00</td>
+								<td style="width: 22%"><input type="text" class="inputc"></td>
+								<td style="width: 22%"><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="2">电话、通信费等</td>
+								<td>6000</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="2">饮用水等</td>
+								<td>15000</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="2">门牌制作等</td>
+								<td>1200</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
 
-                           <tr>
-                               <td colspan="2">绿化费	</td>
-                               <td>14000</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
+							<tr>
+								<td colspan="2">节假日布置</td>
+								<td>3000</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
 
-                           <tr>
-                               <td colspan="2">劳防用品	</td>
-                               <td>400</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
+							<tr>
+								<td colspan="2">保洁用品</td>
+								<td>9000</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
 
-                           <tr>
-                               <td colspan="2">垃圾清运费	</td>
-                               <td>8000</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
+							<tr>
+								<td colspan="2">绿化费</td>
+								<td>14000</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
 
-                           <tr>
-                               <td colspan="2">应急物资	</td>
-                               <td>1000</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
+							<tr>
+								<td colspan="2">劳防用品</td>
+								<td>400</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
 
-                           <tr>
-                               <td colspan="2">外墙、水箱清洗	</td>
-                               <td>5000</td>
-                              <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
+							<tr>
+								<td colspan="2">垃圾清运费</td>
+								<td>8000</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
 
-                           <tr>
-                               <td colspan="2">报警服务费	</td>
-                               <td>4400</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
+							<tr>
+								<td colspan="2">应急物资</td>
+								<td>1000</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
 
-                           <tr>
-                               <td colspan="2">灭虫害服务费	</td>
-                               <td>1300</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
+							<tr>
+								<td colspan="2">外墙、水箱清洗</td>
+								<td>5000</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
 
-                           <tr>
-                               <td colspan="2">污水处理（疏通）费	</td>
-                               <td>15000</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
+							<tr>
+								<td colspan="2">报警服务费</td>
+								<td>4400</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
 
-                           <tr>
-                               <td colspan="2">地坪保养费	</td>
-                               <td>3000</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
+							<tr>
+								<td colspan="2">灭虫害服务费</td>
+								<td>1300</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
 
-                           <tr>
-                               <td colspan="2">其他	</td>
-                               <td>0</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
+							<tr>
+								<td colspan="2">污水处理（疏通）费</td>
+								<td>15000</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
 
-                           <tr>
-                               <td colspan="6" style="text-align: left;">合计:<span style="color:red;">0.00 </span> </td>
-                           </tr>
-                       </table>
-                       <table class="table table-striped table-bordered table-hover" style="text-align: center;">
-                           <tr>
-                               <td rowspan="3" style="vertical-align: middle;">业务外包</td>
-                               <td colspan="2">保安服务费</td>
-                               <td style="width: 22%">100</td>
-                               <td style="width: 22%"><input type="text" class="inputc"></td>
-                               <td style="width: 22%"><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td colspan="2">保洁服务费</td>
-                                <td>390</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td colspan="2">工程外包</td>
-                                <td>3000</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td colspan="6" style="text-align: left;">合计:<span style="color:red;">0.00</span> </td>
-                           </tr>
-                       </table>
-                       <table class="table table-striped table-bordered table-hover" style="text-align: center;">
-                           <tr>
-                               <td rowspan="8" style="vertical-align: middle;">修理费</td>
-                               <td colspan="2">保安服务费</td>
-                                <td style="width: 22%">100</td>
-                                <td style="width: 22%"><input type="text" class="inputc"></td>
-                               <td style="width: 22%"><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td colspan="2">大修理费用</td>
-                                <td>340</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td rowspan="3" style="vertical-align: middle;">设备设施维护</td>
-                               <td>消防设备设施维护费</td>
-                                <td>301</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td>工程设备设施维护费</td>
-                                <td>1000</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td>设备设施检测费</td>
-                                <td>200</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td rowspan="3" style="vertical-align: middle;">日常修理费用</td>
-                               <td>材料费</td>
-                                <td>100</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td>灭火机</td>
-                                <td>3000</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td>日常维修费</td>
-                               <td>790</td>
-                               <td><input type="text" class="inputc"></td>
-                               <td><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td colspan="6" style="text-align: left;">合计:<span style="color:red;">0.00</span> </td>
-                           </tr>
-                       </table>
-                       <table class="table table-striped table-bordered table-hover" style="text-align: center;">
-                           <tr>
-                               <td>其他</td>
-                               <td style="width: 22%">4000</td>
-                               <td style="width: 22%"><input type="text" class="inputc"></td>
-                               <td style="width: 22%"><input type="text" class="inputc"></td>
-                           </tr>
-                           <tr>
-                               <td colspan="4" style="text-align: left;">合计:<span style="color:red;">0.00</span> </td>
-                           </tr>
-                       </table>
-                   </div>
-               </div>
-           </div>
-       </div>
-       <div class="col-xs-12 col-sm-12">
-       		<div class="col-xs-12 col-sm-6">
-	       		<div style="color: red;font-size: 24px">
-	       			总计：<span>0.00</span>
-	       		</div>
-       		</div>
-       		<div class="col-xs-12 col-sm-6" style="text-align: right;">
-       			<div class="btn btn-success btn-lg" onclick="$('#table_in').css('display','none')">确定</div>
-       		</div>
-       </div>
-  </div>
-  
-  <div id="modal-htxx_test" class="modal fade" tabindex="-1" data-backdrop="static">
-    <div class="modal-dialog" style="min-width: 1200px;">
-        <form id="informationForm">
-            <div class="modal-content">
-                <div class="modal-header no-padding">
-                    <div class="table-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            <span class="white">&times;</span>
-                        </button>
-                        实绩表
-                    </div>
-                </div>
-                <div class="modal-body" style="max-height: 700px;overflow-y: scroll;">
-                    <div class="col-xs-12 col-sm-12">
-                        <table class="table table-striped table-bordered table-hover">
-                            <tr><td>合计：<span style="color:green;">2969600.00 </span></td></tr>
-                        </table>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="widget-box">
-                            <div class="widget-header">
-                                <h4 class="widget-title">收入</h4>
-                            </div>
+							<tr>
+								<td colspan="2">地坪保养费</td>
+								<td>3000</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
 
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <tr>
-                                            <td colspan="2" style="text-align: center;">项目</td>
-                                            <td style="text-align: center;">当月实绩</td>
-                                            <td style="text-align: center;">备注</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">物业管理费</td>
-                                            <td>4343000.00 </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="2" style="vertical-align: middle;">停车费</td>
-                                            <td>固定停车费	</td>
-                                            <td>370000.00 </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>临时停车费</td>
-                                            <td>0.00 </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">服务费</td>
-                                            <td>84315.00</td>
-                                            <td>含基站租赁</td>
-                                        </tr><tr>
-                                        <td colspan="2">广告费</td>
-                                        <td>423000.00 </td>
-                                        <td></td>
-                                    </tr><tr>
-                                        <td colspan="2">仓储费/经营开发</td>
-                                        <td>35000.00</td>
-                                        <td>有服务合同</td>
-                                    </tr><tr>
-                                        <td colspan="2">租线费</td>
-                                        <td>70000.00</td>
-                                        <td>备注</td>
-                                    </tr><tr>
-                                        <td colspan="2">电费</td>
-                                        <td>1200000.00 </td>
-                                        <td></td>
-                                    </tr><tr>
-                                        <td colspan="4">合计：<span style="color:red">6525315.00</span></td>
+							<tr>
+								<td colspan="2">其他</td>
+								<td>0</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
 
-                                    </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="widget-box">
-                            <div class="widget-header">
-                                <h4 class="widget-title">成本</h4>
-                            </div>
+							<tr>
+								<td colspan="6" style="text-align: left;">合计:<span
+									style="color: red;">0.00 </span>
+								</td>
+							</tr>
+						</table>
+						<table class="table table-striped table-bordered table-hover"
+							style="text-align: center;">
+							<tr>
+								<td rowspan="3" style="vertical-align: middle;">业务外包</td>
+								<td colspan="2">保安服务费</td>
+								<td style="width: 22%">100</td>
+								<td style="width: 22%"><input type="text" class="inputc"></td>
+								<td style="width: 22%"><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="2">保洁服务费</td>
+								<td>390</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="2">工程外包</td>
+								<td>3000</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="6" style="text-align: left;">合计:<span
+									style="color: red;">0.00</span>
+								</td>
+							</tr>
+						</table>
+						<table class="table table-striped table-bordered table-hover"
+							style="text-align: center;">
+							<tr>
+								<td rowspan="8" style="vertical-align: middle;">修理费</td>
+								<td colspan="2">保安服务费</td>
+								<td style="width: 22%">100</td>
+								<td style="width: 22%"><input type="text" class="inputc"></td>
+								<td style="width: 22%"><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="2">大修理费用</td>
+								<td>340</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td rowspan="3" style="vertical-align: middle;">设备设施维护</td>
+								<td>消防设备设施维护费</td>
+								<td>301</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td>工程设备设施维护费</td>
+								<td>1000</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td>设备设施检测费</td>
+								<td>200</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td rowspan="3" style="vertical-align: middle;">日常修理费用</td>
+								<td>材料费</td>
+								<td>100</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td>灭火机</td>
+								<td>3000</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td>日常维修费</td>
+								<td>790</td>
+								<td><input type="text" class="inputc"></td>
+								<td><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="6" style="text-align: left;">合计:<span
+									style="color: red;">0.00</span>
+								</td>
+							</tr>
+						</table>
+						<table class="table table-striped table-bordered table-hover"
+							style="text-align: center;">
+							<tr>
+								<td>其他</td>
+								<td style="width: 22%">4000</td>
+								<td style="width: 22%"><input type="text" class="inputc"></td>
+								<td style="width: 22%"><input type="text" class="inputc"></td>
+							</tr>
+							<tr>
+								<td colspan="4" style="text-align: left;">合计:<span
+									style="color: red;">0.00</span>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12">
+			<div class="col-xs-12 col-sm-6">
+				<div style="color: red; font-size: 24px">
+					总计：<span>0.00</span>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6" style="text-align: right;">
+				<div class="btn btn-success btn-lg"
+					onclick="$('#table_in').css('display','none')">确定</div>
+			</div>
+		</div>
+	</div>
 
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <tr>
-                                            <td colspan="3" style="text-align: center;">项目</td>
-                                            <td style="text-align: center;">当月实绩</td>
-                                            <td style="text-align: center;">备注</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="3" style="vertical-align: middle;">能源费</td>
-                                            <td colspan="2">水费</td>
-                                            <td>80000.00 </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">电费</td>
-                                            <td>2320000.00 </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">燃气费</td>
-                                            <td>300000.00 </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="5">合计:<span style="color:red;">2700000.00</span> </td>
-                                        </tr>
-                                    </table>
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <tr>
-                                            <td colspan="3" style="text-align: center;">项目</td>
-                                            <td style="text-align: center;">当月实绩</td>
-                                            <td style="text-align: center;">备注</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="16" style="vertical-align: middle;">办公总务</td>
-                                            <td colspan="2">办公用品</td>
-                                            <td>30000.00</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">电话、通信费等</td>
-                                            <td>6000</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">饮用水等	</td>
-                                            <td>15000</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">门牌制作等	</td>
-                                            <td>5000</td>
-                                            <td></td>
-                                        </tr>
+	<div id="modal-htxx_test" class="modal fade" tabindex="-1"
+		data-backdrop="static">
+		<div class="modal-dialog" style="min-width: 1200px;">
+			<form id="informationForm">
+				<div class="modal-content">
+					<div class="modal-header no-padding">
+						<div class="table-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">
+								<span class="white">&times;</span>
+							</button>
+							实绩表
+						</div>
+					</div>
+					<div class="modal-body"
+						style="max-height: 700px; overflow-y: scroll;">
+						<div class="col-xs-12 col-sm-12">
+							<table class="table table-striped table-bordered table-hover">
+								<tr>
+									<td>合计：<span style="color: green;">2969600.00 </span></td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-xs-12 col-sm-6">
+							<div class="widget-box">
+								<div class="widget-header">
+									<h4 class="widget-title">收入</h4>
+								</div>
 
-                                        <tr>
-                                            <td colspan="2">节假日布置		</td>
-                                            <td>4000</td>
-                                            <td></td>
-                                        </tr>
+								<div class="widget-body">
+									<div class="widget-main">
+										<table class="table table-striped table-bordered table-hover">
+											<tr>
+												<td colspan="2" style="text-align: center;">项目</td>
+												<td style="text-align: center;">当月实绩</td>
+												<td style="text-align: center;">备注</td>
+											</tr>
+											<tr>
+												<td colspan="2">物业管理费</td>
+												<td>4343000.00</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td rowspan="2" style="vertical-align: middle;">停车费</td>
+												<td>固定停车费</td>
+												<td>370000.00</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td>临时停车费</td>
+												<td>0.00</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="2">服务费</td>
+												<td>84315.00</td>
+												<td>含基站租赁</td>
+											</tr>
+											<tr>
+												<td colspan="2">广告费</td>
+												<td>423000.00</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="2">仓储费/经营开发</td>
+												<td>35000.00</td>
+												<td>有服务合同</td>
+											</tr>
+											<tr>
+												<td colspan="2">租线费</td>
+												<td>70000.00</td>
+												<td>备注</td>
+											</tr>
+											<tr>
+												<td colspan="2">电费</td>
+												<td>1200000.00</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="4">合计：<span style="color: red">6525315.00</span></td>
 
-                                        <tr>
-                                            <td colspan="2">保洁用品	</td>
-                                            <td>10000</td>
-                                            <td></td>
-                                        </tr>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6">
+							<div class="widget-box">
+								<div class="widget-header">
+									<h4 class="widget-title">成本</h4>
+								</div>
 
-                                        <tr>
-                                            <td colspan="2">绿化费	</td>
-                                            <td>36000</td>
-                                            <td>有服务合同</td>
-                                        </tr>
+								<div class="widget-body">
+									<div class="widget-main">
+										<table class="table table-striped table-bordered table-hover">
+											<tr>
+												<td colspan="3" style="text-align: center;">项目</td>
+												<td style="text-align: center;">当月实绩</td>
+												<td style="text-align: center;">备注</td>
+											</tr>
+											<tr>
+												<td rowspan="3" style="vertical-align: middle;">能源费</td>
+												<td colspan="2">水费</td>
+												<td>80000.00</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="2">电费</td>
+												<td>2320000.00</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="2">燃气费</td>
+												<td>300000.00</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="5">合计:<span style="color: red;">2700000.00</span>
+												</td>
+											</tr>
+										</table>
+										<table class="table table-striped table-bordered table-hover">
+											<tr>
+												<td colspan="3" style="text-align: center;">项目</td>
+												<td style="text-align: center;">当月实绩</td>
+												<td style="text-align: center;">备注</td>
+											</tr>
+											<tr>
+												<td rowspan="16" style="vertical-align: middle;">办公总务</td>
+												<td colspan="2">办公用品</td>
+												<td>30000.00</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="2">电话、通信费等</td>
+												<td>6000</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="2">饮用水等</td>
+												<td>15000</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="2">门牌制作等</td>
+												<td>5000</td>
+												<td></td>
+											</tr>
 
-                                        <tr>
-                                            <td colspan="2">劳防用品	</td>
-                                            <td>1400</td>
-                                            <td>350*4</td>
-                                        </tr>
+											<tr>
+												<td colspan="2">节假日布置</td>
+												<td>4000</td>
+												<td></td>
+											</tr>
 
-                                        <tr>
-                                            <td colspan="2">垃圾清运费	</td>
-                                            <td>62000</td>
-                                            <td>有服务合同</td>
-                                        </tr>
+											<tr>
+												<td colspan="2">保洁用品</td>
+												<td>10000</td>
+												<td></td>
+											</tr>
 
-                                        <tr>
-                                            <td colspan="2">应急物资	</td>
-                                            <td>10000</td>
-                                            <td></td>
-                                        </tr>
+											<tr>
+												<td colspan="2">绿化费</td>
+												<td>36000</td>
+												<td>有服务合同</td>
+											</tr>
 
-                                        <tr>
-                                            <td colspan="2">外墙、水箱清洗	</td>
-                                            <td>23000</td>
-                                            <td>有服务合同</td>
-                                        </tr>
+											<tr>
+												<td colspan="2">劳防用品</td>
+												<td>1400</td>
+												<td>350*4</td>
+											</tr>
 
-                                        <tr>
-                                            <td colspan="2">报警服务费	</td>
-                                            <td>3000</td>
-                                            <td></td>
-                                        </tr>
+											<tr>
+												<td colspan="2">垃圾清运费</td>
+												<td>62000</td>
+												<td>有服务合同</td>
+											</tr>
 
-                                        <tr>
-                                            <td colspan="2">灭虫害服务费	</td>
-                                            <td>4200</td>
-                                            <td>有服务合同</td>
-                                        </tr>
+											<tr>
+												<td colspan="2">应急物资</td>
+												<td>10000</td>
+												<td></td>
+											</tr>
 
-                                        <tr>
-                                            <td colspan="2">污水处理（疏通）费	</td>
-                                            <td>4200</td>
-                                            <td>有服务合同</td>
-                                        </tr>
+											<tr>
+												<td colspan="2">外墙、水箱清洗</td>
+												<td>23000</td>
+												<td>有服务合同</td>
+											</tr>
 
-                                        <tr>
-                                            <td colspan="2">地坪保养费	</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
+											<tr>
+												<td colspan="2">报警服务费</td>
+												<td>3000</td>
+												<td></td>
+											</tr>
 
-                                        <tr>
-                                            <td colspan="2">其他	</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
+											<tr>
+												<td colspan="2">灭虫害服务费</td>
+												<td>4200</td>
+												<td>有服务合同</td>
+											</tr>
 
-                                        <tr>
-                                            <td colspan="5">合计:<span style="color:red;">209600.00 </span> </td>
-                                        </tr>
-                                    </table>
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <tr>
-                                            <td colspan="3" style="text-align: center;">项目</td>
-                                            <td style="text-align: center;">当月实绩</td>
-                                            <td style="text-align: center;">备注</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="3" style="vertical-align: middle;">业务外包</td>
-                                            <td colspan="2">保安服务费</td>
-                                            <td></td>
-                                            <td>有服务合同</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">保洁服务费</td>
-                                            <td></td>
-                                            <td>有服务合同</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">工程外包</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="5">合计:<span style="color:red;">0.00</span> </td>
-                                        </tr>
-                                    </table>
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <tr>
-                                            <td colspan="3" style="text-align: center;">项目</td>
-                                            <td style="text-align: center;">当月实绩</td>
-                                            <td style="text-align: center;">备注</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="8" style="vertical-align: middle;">修理费</td>
-                                            <td colspan="2">保安服务费</td>
-                                            <td></td>
-                                            <td>有服务合同</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">大修理费用</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="3" style="vertical-align: middle;">设备设施维护</td>
-                                            <td>消防设备设施维护费</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>工程设备设施维护费</td>
-                                            <td></td>
-                                            <td>含高压维保费等</td>
-                                        </tr>
-                                        <tr>
-                                            <td>设备设施检测费</td>
-                                            <td></td>
-                                            <td>含避雷检测费、消防检测费等</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="3" style="vertical-align: middle;">日常修理费用</td>
-                                            <td>材料费</td>
-                                            <td>20000</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>灭火机</td>
-                                            <td>20000</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>日常维修费</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="5">合计:<span style="color:red;">40000.00</span> </td>
-                                        </tr>
-                                    </table>
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <tr>
-                                            <td>其他</td>
-                                            <td>20000</td>
-                                            <td>有服务合同（电话维护）</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3">合计:<span style="color:red;">20000.00</span> </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer no-margin-top">
-                    <div class="text-center">
-                        <button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
-                            <i class="ace-icon fa fa-share bigger-160"></i>
-                            取消
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-  
+											<tr>
+												<td colspan="2">污水处理（疏通）费</td>
+												<td>4200</td>
+												<td>有服务合同</td>
+											</tr>
+
+											<tr>
+												<td colspan="2">地坪保养费</td>
+												<td></td>
+												<td></td>
+											</tr>
+
+											<tr>
+												<td colspan="2">其他</td>
+												<td></td>
+												<td></td>
+											</tr>
+
+											<tr>
+												<td colspan="5">合计:<span style="color: red;">209600.00
+												</span>
+												</td>
+											</tr>
+										</table>
+										<table class="table table-striped table-bordered table-hover">
+											<tr>
+												<td colspan="3" style="text-align: center;">项目</td>
+												<td style="text-align: center;">当月实绩</td>
+												<td style="text-align: center;">备注</td>
+											</tr>
+											<tr>
+												<td rowspan="3" style="vertical-align: middle;">业务外包</td>
+												<td colspan="2">保安服务费</td>
+												<td></td>
+												<td>有服务合同</td>
+											</tr>
+											<tr>
+												<td colspan="2">保洁服务费</td>
+												<td></td>
+												<td>有服务合同</td>
+											</tr>
+											<tr>
+												<td colspan="2">工程外包</td>
+												<td></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="5">合计:<span style="color: red;">0.00</span>
+												</td>
+											</tr>
+										</table>
+										<table class="table table-striped table-bordered table-hover">
+											<tr>
+												<td colspan="3" style="text-align: center;">项目</td>
+												<td style="text-align: center;">当月实绩</td>
+												<td style="text-align: center;">备注</td>
+											</tr>
+											<tr>
+												<td rowspan="8" style="vertical-align: middle;">修理费</td>
+												<td colspan="2">保安服务费</td>
+												<td></td>
+												<td>有服务合同</td>
+											</tr>
+											<tr>
+												<td colspan="2">大修理费用</td>
+												<td></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td rowspan="3" style="vertical-align: middle;">设备设施维护</td>
+												<td>消防设备设施维护费</td>
+												<td></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td>工程设备设施维护费</td>
+												<td></td>
+												<td>含高压维保费等</td>
+											</tr>
+											<tr>
+												<td>设备设施检测费</td>
+												<td></td>
+												<td>含避雷检测费、消防检测费等</td>
+											</tr>
+											<tr>
+												<td rowspan="3" style="vertical-align: middle;">日常修理费用</td>
+												<td>材料费</td>
+												<td>20000</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td>灭火机</td>
+												<td>20000</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td>日常维修费</td>
+												<td></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="5">合计:<span style="color: red;">40000.00</span>
+												</td>
+											</tr>
+										</table>
+										<table class="table table-striped table-bordered table-hover">
+											<tr>
+												<td>其他</td>
+												<td>20000</td>
+												<td>有服务合同（电话维护）</td>
+											</tr>
+											<tr>
+												<td colspan="3">合计:<span style="color: red;">20000.00</span>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer no-margin-top">
+						<div class="text-center">
+							<button class="btn btn-app btn-pink btn-xs" data-dismiss="modal">
+								<i class="ace-icon fa fa-share bigger-160"></i> 取消
+							</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
 </body>
 <script type="text/javascript">
         var $path_base = "${contextPath}/static";

@@ -43,7 +43,7 @@ public class BuildDaoImpl extends BaseDao<BuildEntity> implements BuildDao{
 		for (Role role : roles) {
 			rolestring += role.getRoleValue();
 		}
-		if(key!= null && (key.equals("ZJB") || key.equals("WYB") ||key.equals("CWB"))){
+		if(key!= null && !(key.equals("ZJB") || key.equals("WYB") ||key.equals("CWB"))){
 			if(!StringUnit.isNullOrEmpty(user.getDepartmentKey()) && rolestring.indexOf("超级管理员") == -1){
 				sb.append(" and d.department_key = '"+model.getLoginuser().getDepartmentKey()+"' ");
 			}
@@ -79,7 +79,7 @@ public class BuildDaoImpl extends BaseDao<BuildEntity> implements BuildDao{
 			}
 		}
 
-		Query query = session.createSQLQuery("select b.* from  m_build b LEFT JOIN sys_user u on b.managerid = u.id  LEFT JOIN department d ON u.department_key = d.parent_departmentkey "
+		Query query = session.createSQLQuery("select b.* from  m_build b LEFT JOIN sys_user u on b.managerid = u.id  LEFT JOIN department d ON u.department_key = d.parent_departmentkey or u.department_key = d.department_key "
 				+sb.toString() +" GROUP BY  b.id ").addEntity(BuildEntity.class);
 		 /*session.createQuery("from BuildEntity "
 				+ sb.toString());*/
@@ -91,7 +91,7 @@ public class BuildDaoImpl extends BaseDao<BuildEntity> implements BuildDao{
 
 		Object cout = session.createSQLQuery(
 				"select count(a.id) from ( select b.id  from  m_build b LEFT JOIN sys_user u on b.managerid = u.id  LEFT JOIN department d "
-				+ "ON u.department_key = d.parent_departmentkey " + sb.toString()+" GROUP BY b.id ) as a ")
+				+ "ON u.department_key = d.parent_departmentkey or u.department_key = d.department_key " + sb.toString()+" GROUP BY b.id ) as a ")
 				.uniqueResult();
 		long count = Long.parseLong(cout.toString());
 
