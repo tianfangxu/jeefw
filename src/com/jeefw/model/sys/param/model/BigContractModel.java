@@ -74,6 +74,8 @@ public class BigContractModel <T, G> extends BaseModel<T, G> implements Serializ
     private String othercontype;
     private String otherpaytype;
 
+    private String htqx;//合同期限 1：将到期 2：已过期
+
     public String getId() {
         return id;
     }
@@ -544,5 +546,13 @@ public class BigContractModel <T, G> extends BaseModel<T, G> implements Serializ
 
     public void setOtherpaytype(String otherpaytype) {
         this.otherpaytype = otherpaytype;
+    }
+
+    public String getHtqx() {
+        return htqx;
+    }
+
+    public void setHtqx(String htqx) {
+        this.htqx = htqx;
     }
 }

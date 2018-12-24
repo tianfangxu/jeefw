@@ -14,6 +14,14 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/fileinput.min.css" />
 
 <body>
+    <div style="margin-bottom: 10px">
+        合同期限 :
+        <select class="col-xs-2 select2" id="htqx" style="float: none;height: 35px;" onchange="getdatareflush()">
+                <option value="">所有</option>
+                <option value="1">将到期</option>
+                <option value="2">已过期</option>
+        </select>
+    </div>
 
     <!--操作按钮-->
     <div class="row">
@@ -966,6 +974,12 @@
                         var today_time = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
                         if (httime <= today_time) {
                             $('#' + ids[i]).find("td").css("background-color", "#FFB6C1");
+                        }
+                        date.setMonth(date.getMonth() + 4);
+                        var today_time4 = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+                        if (httime > today_time&&httime <=  today_time4) {
+                            alert(11);
+                            $('#' + ids[i]).find("td").css("background-color", "#FFE4CA");
                         }
                     }
                 }
@@ -2641,6 +2655,12 @@
         return;
     }
 
-
+    function getdatareflush(){
+        jQuery("#grid-table").jqGrid('setGridParam',{
+            datatype:'json',
+            postData:{'htqx':$("#htqx").val()}, //发送数据
+            page:1
+        }).trigger("reloadGrid"); //重新载入
+    }
 
 </script>
