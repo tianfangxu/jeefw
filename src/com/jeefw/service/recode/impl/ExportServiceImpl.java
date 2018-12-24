@@ -139,6 +139,25 @@ public class ExportServiceImpl implements ExportService {
 			sum = ArithmeticUtil.add(sum,multiply2);
 			model.setReceipt0(sum);
 		}
+		if(year > sy && year == ey){
+			String sum = "0";
+			Class clazz = model.getClass();
+			for (int i = 1; i < em; i++) {
+				Method method = clazz.getDeclaredMethod("setReceipt"+i+"", String.class);
+				method.invoke(model, res.getPropertyfee());
+				sum = ArithmeticUtil.add(sum,res.getPropertyfee());
+			}
+			
+			//结束当月
+			Calendar c = Calendar.getInstance();
+			c.set(ey, em, 0); //输入类型为int类型
+			int dayend = c.get(Calendar.DAY_OF_MONTH);//当前应算多少天的费用
+			String multiply2 = ArithmeticUtil.multiply(ArithmeticUtil.divide(ed+"",dayend+""),res.getPropertyfee());
+			Method method2 = clazz.getDeclaredMethod("setReceipt"+em+"", String.class);
+			method2.invoke(model, multiply2);
+			sum = ArithmeticUtil.add(sum,multiply2);
+			model.setReceipt0(sum);
+		}
 		
 		return model;
 	}
@@ -301,6 +320,45 @@ public class ExportServiceImpl implements ExportService {
 			method2.invoke(model2, multiply2);
 			sum2 = ArithmeticUtil.add(sum2,multiply2);
 			
+			//结束当月
+			c.set(ey, em, 0); //输入类型为int类型
+			int dayend = c.get(Calendar.DAY_OF_MONTH);//当前应算多少天的费用
+			//地面
+			String multiply3 = ArithmeticUtil.multiply(ArithmeticUtil.divide(ed+"",dayend+""),ArithmeticUtil.multiply(res.getSurfaceunit(), res.getSurfacenumber()));
+			Method method3 = clazz1.getDeclaredMethod("setReceipt"+em+"", String.class);
+			method3.invoke(model1, multiply3);
+			sum1 = ArithmeticUtil.add(sum1,multiply3);
+			//地下
+			String multiply4 = ArithmeticUtil.multiply(ArithmeticUtil.divide(ed+"",dayend+""),ArithmeticUtil.multiply(res.getUndergroundunit(), res.getUndergroundnumber()));
+			Method method4 = clazz2.getDeclaredMethod("setReceipt"+em+"", String.class);
+			method4.invoke(model2, multiply4);
+			sum2 = ArithmeticUtil.add(sum2,multiply4);
+			
+			model1.setReceipt0(sum1);
+			model2.setReceipt0(sum2);
+		}
+		
+		if(year > sy && year == ey){
+			String sum1 = "0";
+			String sum2 = "0";
+			
+			//地面
+			Class clazz1 = model1.getClass();
+			for(int i = 1 ; i < em; i++){
+				Method method = clazz1.getDeclaredMethod("setReceipt"+i+"", String.class);
+				method.invoke(model1,ArithmeticUtil.multiply(res.getSurfaceunit(), res.getSurfacenumber()));
+				sum1 = ArithmeticUtil.add(sum1,ArithmeticUtil.multiply(res.getSurfaceunit(), res.getSurfacenumber()));
+			}
+			//地下
+			Class clazz2 = model2.getClass();
+			for(int i = 1 ; i < em; i++){
+				Method method = clazz2.getDeclaredMethod("setReceipt"+i+"", String.class);
+				method.invoke(model2, ArithmeticUtil.multiply(res.getUndergroundunit(), res.getUndergroundnumber()));
+				sum2 = ArithmeticUtil.add(sum2,ArithmeticUtil.multiply(res.getUndergroundunit(), res.getUndergroundnumber()));
+			}
+			
+			
+			Calendar c = Calendar.getInstance();
 			//结束当月
 			c.set(ey, em, 0); //输入类型为int类型
 			int dayend = c.get(Calendar.DAY_OF_MONTH);//当前应算多少天的费用

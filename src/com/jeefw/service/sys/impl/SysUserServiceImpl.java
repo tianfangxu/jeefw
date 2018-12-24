@@ -59,9 +59,11 @@ public class SysUserServiceImpl extends BaseService<SysUser> implements SysUserS
 		}
 		List<SysUser> sysUserList = new ArrayList<SysUser>();
 		for (SysUser entity : resultList) {
-			if(rolestring.indexOf("超级管理员") == -1){
-				if(key != null && !key.equals(entity.getDepartmentKey())){
-					continue;
+			if(rolestring.indexOf("超级管理员") == -1 ){
+				if(key != null && !key.equals("ZJB")){
+					if(key != null && !key.equals(entity.getDepartmentKey()) ){
+						continue;
+					}
 				}
 			}
 			SysUser sysUser = new SysUser();
