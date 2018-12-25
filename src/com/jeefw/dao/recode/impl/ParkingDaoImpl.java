@@ -34,6 +34,10 @@ public class ParkingDaoImpl extends BaseDao<ParkingEntity> implements ParkingDao
 		if(!StringUnit.isNullOrEmpty(model.getBuild())){
 			sb.append(" and t.build = '"+model.getBuild()+"' ");
 		}
+		
+		if(!StringUnit.isNullOrEmpty(model.getBuilds())){
+			sb.append(" and t.build in ("+model.getBuilds()+")");
+		}
 
 		//等于查询
 		if(model.getEqparam() != null){
