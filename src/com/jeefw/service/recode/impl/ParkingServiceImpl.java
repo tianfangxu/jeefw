@@ -55,7 +55,7 @@ public class ParkingServiceImpl implements ParkingService {
 		BeanUtils.copyProperties(model, entity);
 		entity.setDeleteflg("0");
 		entity.setCreatetime(DateUnit.getTime14());
-		entity.setCreateuser(model.getLoginuser().getUserName().toString());
+		entity.setCreateuser(model.getLoginuser().getId().toString());
 		parkingDao.persist(entity);
 		
 	}
