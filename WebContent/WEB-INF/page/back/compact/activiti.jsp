@@ -600,6 +600,7 @@
                                 enableTooltips(table);
                             }, 0);
                         },
+                        beforeSelectRow: beforeSelectRow,
                         gridComplete:function(){
                             var ids = $(grid_selector).getDataIDs();
                             for (var i = 0; i < ids.length; i++) {
@@ -828,6 +829,11 @@
         			buttons.find(".EditButton a[id*='_query']").addClass("btn btn-sm btn-inverse").find(".ui-icon").attr("class", "ace-icon fa fa-comment-o");
         			buttons.find(".EditButton a[id*='_search']").addClass("btn btn-sm btn-purple").find(".ui-icon").attr("class", "ace-icon fa fa-search");
         		}
+
+                function beforeSelectRow() {
+                    $(grid_selector).jqGrid('resetSelection');
+                    return true;
+                }
 
         		function beforeDeleteCallback(e) {
         			var form = $(e[0]);

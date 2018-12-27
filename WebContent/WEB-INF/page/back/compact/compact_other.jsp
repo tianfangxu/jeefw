@@ -978,6 +978,7 @@
                         enableTooltips(table);
                     }, 0);
                 },
+                beforeSelectRow: beforeSelectRow,
                 editurl: "${contextPath}/sys/compact/operateCompact",
                 gridComplete:function(){
                     var ids = $(grid_selector).getDataIDs();
@@ -987,13 +988,12 @@
                         var today = new Date();
                         var date = new Date(today);
                         var today_time = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-                        if (httime <= today_time) {
+                        if (compareDate(httime,today_time)) {
                             $('#' + ids[i]).find("td").css("background-color", "#FFB6C1");
                         }
                         date.setMonth(date.getMonth() + 4);
                         var today_time4 = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-                        if (httime > today_time&&httime <=  today_time4) {
-                            alert(11);
+                        if (compareDate(today_time,httime)&&compareDate(httime,today_time4)) {
                             $('#' + ids[i]).find("td").css("background-color", "#FFE4CA");
                         }
                     }
@@ -1011,6 +1011,11 @@
             });
 
             $(window).triggerHandler("resize.jqGrid");
+
+            function beforeSelectRow() {
+                $(grid_selector).jqGrid('resetSelection');
+                return true;
+            }
 
             function aceSwitch(cellvalue, options, cell) {
                 setTimeout(function () {
@@ -1061,6 +1066,10 @@
                 $("#compactForm")[0].reset();
                 $("#editor").html("");
                 $("#modal-tip").html("");
+                initBuildSelect2('buildid');
+                initPartaSelect2('partacode');
+                initPaytypeSelect2('paytype','WYYJ');
+                initPartbSelect2('partbcode');
             });
 
             $("#editCompactButton").bind("click", function () {
@@ -2660,6 +2669,19 @@
             postData:{'htqx':$("#htqx").val()}, //发送数据
             page:1
         }).trigger("reloadGrid"); //重新载入
+    }
+
+    function compareDate(startDate, endDate) {
+        var arrStart = startDate.split("-");
+        var startTime = new Date(arrStart[0], arrStart[1], arrStart[2]);
+        var startTimes = startTime.getTime();
+        var arrEnd = endDate.split("-");
+        var endTime = new Date(arrEnd[0], arrEnd[1], arrEnd[2]);
+        var endTimes = endTime.getTime();
+        if (endTimes<startTimes) {
+            return false;
+        }
+        return true;
     }
 
 </script>
