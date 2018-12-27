@@ -1,5 +1,7 @@
 package com.jeefw.service.recode.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
@@ -7,8 +9,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jeefw.dao.recode.BuildDao;
 import com.jeefw.dao.recode.ParkingDao;
+import com.jeefw.model.recode.BuildEntity;
 import com.jeefw.model.recode.ParkingEntity;
+import com.jeefw.model.recode.param.BuildModel;
 import com.jeefw.model.recode.param.ParkingModel;
 import com.jeefw.service.recode.ParkingService;
 
@@ -22,10 +27,25 @@ public class ParkingServiceImpl implements ParkingService {
 	
 	@Resource
 	ParkingDao parkingDao;
+	
+	@Resource
+	BuildDao buildDao;
 
 	@Override
 	public JqGridPageView<ParkingModel> getParkingByCondition(ParkingModel model) {
-		// TODO Auto-generated method stub
+		BuildModel cmodel = new BuildModel();
+		cmodel.setLoginuser(model.getLoginuser());
+		cmodel.setPage("1");
+		cmodel.setRows("1000");
+		List<BuildEntity> rows = buildDao.getBuildByCondition(cmodel, null).getRows();
+		String ids = "";
+		if(rows != null && rows.size() != 0){
+			for (BuildEntity buildEntity : rows) {
+				ids += "'"+buildEntity.getId()+"',";
+			}
+		}
+		ids = ids.substring(0, ids.length()-1);
+		model.setBuilds(ids);
 		return parkingDao.getParkingByCondition(model);
 	}
 	
@@ -35,7 +55,7 @@ public class ParkingServiceImpl implements ParkingService {
 		BeanUtils.copyProperties(model, entity);
 		entity.setDeleteflg("0");
 		entity.setCreatetime(DateUnit.getTime14());
-		entity.setCreateuser(model.getLoginuser().getUserName().toString());
+		entity.setCreateuser(model.getLoginuser().getId().toString());
 		parkingDao.persist(entity);
 		
 	}

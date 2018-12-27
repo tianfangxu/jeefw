@@ -36,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
 		BeanUtils.copyProperties(model, entity);
 		entity.setDeleteflg("0");
 		entity.setCreatetime(DateUnit.getTime14());
-		entity.setCreateuser(model.getLoginuser().getUserName().toString());
+		entity.setCreateuser(model.getLoginuser().getId().toString());
 		customerDao.persist(entity);
 		
 	}

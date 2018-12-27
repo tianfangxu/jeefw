@@ -33,6 +33,8 @@ public class BudgetDaoImpl extends BaseDao<BudgetEntity> implements BudgetDao{
 		
 		if(!StringUnit.isNullOrEmpty(model.getBuild())){
 			sb.append(" and t.build = '"+model.getBuild()+"' ");
+		}else{
+			return null;
 		}
 		
 		if(!StringUnit.isNullOrEmpty(model.getYear())){

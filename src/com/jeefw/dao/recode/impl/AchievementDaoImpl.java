@@ -37,6 +37,8 @@ public class AchievementDaoImpl extends BaseDao<AchievementEntity> implements Ac
 		
 		if(!StringUnit.isNullOrEmpty(model.getBuild())){
 			sb.append(" and t.build = '"+model.getBuild()+"' ");
+		}else{
+			return null;
 		}
 		
 		if(!StringUnit.isNullOrEmpty(model.getYear())){
