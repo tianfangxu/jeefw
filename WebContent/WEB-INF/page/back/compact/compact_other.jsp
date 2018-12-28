@@ -1264,7 +1264,7 @@
                     return;
                 }
                 if($.trim($('#partaaccount').val())==''){
-                    $("#modal-tip").html("请填写甲方联系电话");
+                    $("#modal-tip").html("请填写甲方账号");
                     return;
                 }
                 if($.trim($('#bankname').val())==''){
@@ -1287,10 +1287,6 @@
                 }
                 if($.trim($('#partblegalperson').val())==''){
                     $("#modal-tip").html("请填写乙方法定代表人");
-                    return;
-                }
-                if($.trim($('#partbncontact').val())==''){
-                    $("#modal-tip").html("请填写乙方联系电话");
                     return;
                 }
                 if($.trim($('#partbtaxnumber').val())==''){
@@ -1460,7 +1456,7 @@
                     return;
                 }
                 if($.trim($('#partaaccount_edit').val())==''){
-                    $("#modal-tip-edit").html("请填写甲方联系电话");
+                    $("#modal-tip-edit").html("请填写甲方账号");
                     return;
                 }
                 if($.trim($('#bankname_edit').val())==''){
@@ -1483,10 +1479,6 @@
                 }
                 if($.trim($('#partblegalperson_edit').val())==''){
                     $("#modal-tip-edit").html("请填写乙方法定代表人");
-                    return;
-                }
-                if($.trim($('#partbncontact_edit').val())==''){
-                    $("#modal-tip-edit").html("请填写乙方联系电话");
                     return;
                 }
                 if($.trim($('#partbtaxnumber_edit').val())==''){
