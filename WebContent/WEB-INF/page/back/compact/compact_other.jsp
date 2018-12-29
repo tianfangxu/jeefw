@@ -2195,7 +2195,9 @@
                     params.page = checkIsNull(params.page) ? 1 : params.page;
                     var itemList = [];
                     var row = data.rows;
-                    itemList.push({id: 99999, text: '暂无信息,选此项可添加'});
+                    if(params.page==1){
+                        itemList.push({id: 99999, text: '暂无信息,选此项可添加'});
+                    }
                     for(var i=0;i<row.length;i++){
                         itemList.push({id: row[i].id, text: row[i].name});
                     }

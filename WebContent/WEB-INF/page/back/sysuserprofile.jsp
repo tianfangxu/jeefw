@@ -13,7 +13,7 @@
 	<h1>
 		个人资料页面
 		<small>
-			<i class="ace-icon fa fa-angle-double-right"></i>
+			<i class="ace-icon fa fa-angle-double-right" style="display: none"></i>
 			2种在线编辑风格
 		</small>
 	</h1>
@@ -74,7 +74,7 @@
 				</div>
 
 				<div class="col-xs-12 col-sm-9">
-					<div class="center">
+					<div class="center" style="display: none">
 						<span class="btn btn-app btn-sm btn-light no-hover">
 							<span class="line-height-1 bigger-170 blue"> 1,411 </span>
 
@@ -141,7 +141,7 @@
 								</span>
 							</div>
 						</div>
-						
+
 						<div class="profile-info-row">
 							<div class="profile-info-name"> 邮箱  </div>
 							<div class="profile-info-value">
@@ -155,7 +155,7 @@
 								<span class="editable" id="phone">${sysuser.phone}</span>
 							</div>
 						</div>
-						
+
 						<div class="profile-info-row">
 							<div class="profile-info-name"> 生日  </div>
 							<div class="profile-info-value">
@@ -218,12 +218,12 @@
 													<input class="col-xs-12 col-sm-10" type="text" id="form-field-userName" placeholder="姓名" value="${sysuser.userName}" />
 												</div>
 											</div>
-											
+
 											<div class="space-4"></div>
-											
+
 											<div class="form-group">
 												<label class="col-sm-4 control-label no-padding-right">性别</label>
-		
+
 												<div class="col-sm-8">
 													<label class="inline">
 														<input name="sex" type="radio" class="ace" value="1" <c:choose><c:when test="${sysuser.sex == 1}">checked</c:when></c:choose> />
@@ -236,16 +236,16 @@
 													</label>
 												</div>
 											</div>
-											
+
 											<div class="space-4"></div>
-											
+
 											<div class="form-group">
 												<label class="col-sm-4 control-label no-padding-right" for="form-field-birthday">生日</label>
 
 												<div class="col-sm-8">
 													<input class="col-xs-12 col-sm-10" type="text" id="form-field-birthday" placeholder="生日" value="${sysuser.birthday}" readonly />
 												</div>
-											</div>											
+											</div>
 										</div>
 									</div>
 
@@ -407,7 +407,7 @@
 	    	});
 
 	        // *** editable avatar *** //
-	        try { 
+	        try {
 	        	//ie8 throws some harmless exceptions, so let's catch'em
 	            //first let's add a fake appendChild method for Image element for browsers that have a problem with this
 	            //because editable plugin calls appendChild, and it causes errors on IE at unpredicted points
@@ -451,7 +451,7 @@
 	                    }
 	                },
 	                url: function(params) {
-	                    //for a working upload example you can replace the contents of this function with 
+	                    //for a working upload example you can replace the contents of this function with
 	                    //examples/profile-avatar-update.js
 
 	                    //this is similar to the file-upload.html example
@@ -460,7 +460,7 @@
 						var submit_url = "${contextPath}" + "/sys/sysuser/uploadAttachement";//please modify submit_url accordingly
 						var deferred = null;
 						var avatar = '#avatar';
-						
+
 						//if value is empty (""), it means no valid files were selected
 						//but it may still be submitted by x-editable plugin
 						//because "" (empty string) is different from previous non-empty value whatever it was
@@ -471,21 +471,21 @@
 							deferred.resolve();
 							return deferred.promise();
 						}
-						
+
 						var $form = $(avatar).next().find('.editableform:eq(0)')
 						var file_input = $form.find('input[type=file]:eq(0)');
 						var pk = $(avatar).attr('data-pk');//primary key to be sent to server
-						
+
 						var ie_timeout = null
-						
-						
+
+
 						if( "FormData" in window ) {
 							var formData_object = new FormData();//create empty FormData object
-							
+
 							//serialize our form (which excludes file inputs)
 							$.each($form.serializeArray(), function(i, item) {
-								//add them one by one to our FormData 
-								formData_object.append(item.name, item.value);							
+								//add them one by one to our FormData
+								formData_object.append(item.name, item.value);
 							});
 							//and then add files
 							$form.find('input[type=file]').each(function(){
@@ -495,10 +495,10 @@
 									formData_object.append(field_name, files[0]);
 								}
 							});
-						
+
 							//append primary key to our formData
 							formData_object.append('pk', pk);
-						
+
 							deferred = $.ajax({
 										url: submit_url,
 									   type: 'POST',
@@ -510,32 +510,32 @@
 						}
 						else {
 							deferred = new $.Deferred
-						
+
 							var temporary_iframe_id = 'temporary-iframe-'+(new Date()).getTime()+'-'+(parseInt(Math.random()*1000));
-							var temp_iframe = 
+							var temp_iframe =
 									$('<iframe id="'+temporary_iframe_id+'" name="'+temporary_iframe_id+'" \
 									frameborder="0" width="0" height="0" src="about:blank"\
 									style="position:absolute; z-index:-1; visibility: hidden;"></iframe>')
 									.insertAfter($form);
-									
+
 							$form.append('<input type="hidden" name="temporary-iframe-id" value="'+temporary_iframe_id+'" />');
-							
+
 							//append primary key (pk) to our form
 							$('<input type="hidden" name="pk" />').val(pk).appendTo($form);
-							
+
 							temp_iframe.data('deferrer' , deferred);
 							//we save the deferred object to the iframe and in our server side response
 							//we use "temporary-iframe-id" to access iframe and its deferred object
-						
+
 							$form.attr({
 									  action: submit_url,
 									  method: 'POST',
 									 enctype: 'multipart/form-data',
 									  target: temporary_iframe_id //important
 							});
-						
+
 							$form.get(0).submit();
-						
+
 							//if we don't receive any response after 30 seconds, declare it as failed!
 							ie_timeout = setTimeout(function(){
 								ie_timeout = null;
@@ -543,8 +543,8 @@
 								deferred.reject({'status':'fail', 'message':'Timeout!'});
 							} , 30000);
 						}
-						
-						
+
+
 						//deferred callbacks, triggered by both ajax and iframe solution
 						deferred.done(function(result) {//success
 							var res = result;//the `result` is formatted by your server side response and is arbitrary
@@ -554,18 +554,18 @@
 							alert("There was an error");
 						}).always(function() {//called on both success and failure
 							if(ie_timeout) clearTimeout(ie_timeout)
-							ie_timeout = null;	
+							ie_timeout = null;
 						});
-						
+
 						return deferred.promise();
 	                    // ***END OF UPDATE AVATAR HERE*** //
 	                },
 	                success: function(response, newValue) {
-	                	
+
 	                }
 	            })
 	        } catch (e) {
-	        	
+
 	        }
 
 	        /**
@@ -618,7 +618,7 @@
 	            type: 'image',
 	            name: $('#avatar').attr('src')
 	        }]);
-	        
+
 			////////////////////
 			$("a[href='#edit-password']").on('shown.bs.tab', function (e) {
 			});
@@ -670,7 +670,7 @@
 				                class_name: 'gritter-success gritter-center'
 				            });
 						}
-					});					
+					});
 				}
 			});
 
