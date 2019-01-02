@@ -220,7 +220,18 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 			String wordPath = createWordFile(contract,map);
 			//生成pdf
 			String pdfPath = createpdfFile(wordPath);
+			//更新pdf以及word的file表
+			List<ContractFile> list = contractFileDao.getContractFileByContractIdAndType(model.getId(),"1");
+			if(list==null||list.size()==0){
+				this.saveContractFile(1,wordPath,contract.getId(),model.getLoginuser());
+
+			}
+			list = contractFileDao.getContractFileByContractIdAndType(model.getId(),"2");
+			if(list==null||list.size()==0){
+				this.saveContractFile(2,pdfPath,contract.getId(),model.getLoginuser());
+			}
 		}
+
 
 	}
 
@@ -410,7 +421,7 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 		map.put("c_name",contract.getPartbname());
 		map.put("c_address",contract.getPartbaddress());
 		map.put("c_linkname",contract.getPartblegalperson());
-		map.put("c_phone",contract.getPartbcontact());
+		map.put("c_phone",CommonUtil.isNotNull(contract.getPartbcontact())?contract.getPartbcontact():"");
 
 		//通过buildid获取房屋信息
 		map.put("address", contractProperty.getAddress());
@@ -458,7 +469,7 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 		map.put("c_name",contract.getPartbname());
 		map.put("c_address",contract.getPartbaddress());
 		map.put("c_linkname",contract.getPartblegalperson());
-		map.put("c_phone",contract.getPartbcontact());
+		map.put("c_phone", CommonUtil.isNotNull(contract.getPartbcontact())?contract.getPartbcontact():"");
 
 		//通过buildid获取房屋信息
 		map.put("address", contractParking.getAddress());

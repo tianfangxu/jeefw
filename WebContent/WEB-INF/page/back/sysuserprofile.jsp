@@ -12,8 +12,8 @@
 <div class="page-header">
 	<h1>
 		个人资料页面
-		<small>
-			<i class="ace-icon fa fa-angle-double-right" style="display: none"></i>
+		<small style="display: none">
+			<i class="ace-icon fa fa-angle-double-right" ></i>
 			2种在线编辑风格
 		</small>
 	</h1>
@@ -32,7 +32,7 @@
 				点击下面的图片或字段编辑 ... &nbsp;&nbsp;
 			</div>
 
-			<div class="pull-right">
+			<div class="pull-right" style="display: none">
 				<span class="green middle bolder">切换编辑: &nbsp;</span>
 
 				<div class="btn-toolbar inline middle no-margin">
@@ -162,8 +162,35 @@
 								<span class="editable" id="birthday">${sysuser.birthday}</span>
 							</div>
 						</div>
+
+						<div class="profile-info-row">
+							<div class="profile-info-name"> 新密码  </div>
+							<div class="profile-info-value">
+								<input type="password" id="form-field-pass1" />
+							</div>
+						</div>
+
+						<div class="profile-info-row">
+							<div class="profile-info-name"> 确认密码  </div>
+							<div class="profile-info-value">
+								<input type="password" id="form-field-pass2" />
+							</div>
+						</div>
 					</div>
 
+					<div class="clearfix form-actions">
+						<div class="col-md-offset-3 col-md-9">
+							<button id="submitButton" class="btn btn-info" type="button">
+								<i class="ace-icon fa fa-check bigger-110"></i>
+								保存
+							</button>
+							&nbsp; &nbsp;
+							<button class="btn" type="reset">
+								<i class="ace-icon fa fa-undo bigger-110"></i>
+								重置
+							</button>
+						</div>
+					</div>
 					<!-- /section:pages/profile.info -->
 					<div class="space-20"></div>
 
@@ -287,7 +314,7 @@
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-pass1">新密码</label>
 
 										<div class="col-sm-9">
-											<input type="password" id="form-field-pass1" />
+											<input type="password" id="form-field-pass13" />
 										</div>
 									</div>
 
@@ -297,7 +324,7 @@
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-pass2">确认密码</label>
 
 										<div class="col-sm-9">
-											<input type="password" id="form-field-pass2" />
+											<input type="password" id="form-field-pass23" />
 										</div>
 									</div>
 								</div>
@@ -306,7 +333,7 @@
 
 						<div class="clearfix form-actions">
 							<div class="col-md-offset-3 col-md-9">
-								<button id="submitButton" class="btn btn-info" type="button">
+								<button id="submitButton3" class="btn btn-info" type="button">
 									<i class="ace-icon fa fa-check bigger-110"></i>
 									保存
 								</button>

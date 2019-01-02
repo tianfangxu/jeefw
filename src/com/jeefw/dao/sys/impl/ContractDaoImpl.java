@@ -1,6 +1,9 @@
 package com.jeefw.dao.sys.impl;
 
+import com.jeefw.dao.recode.BuildDao;
 import com.jeefw.dao.sys.ContractDao;
+import com.jeefw.model.recode.BuildEntity;
+import com.jeefw.model.recode.param.BuildModel;
 import com.jeefw.model.recode.param.ExportParkingDaoModel;
 import com.jeefw.model.recode.param.ExportPropertyDaoModel;
 import com.jeefw.model.recode.param.ExportPropertyRespModel;
@@ -21,6 +24,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.FileNotFoundException;
@@ -35,6 +39,9 @@ import java.util.Set;
  */
 @Repository
 public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
+
+	@Autowired
+	BuildDao buildDao;
 
 	public ContractDaoImpl() {
 		super(Contract.class);
@@ -56,6 +63,22 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 		JqGridPageView<Contract> result = new JqGridPageView<Contract>();
 		Session session = this.getSession();
 		StringBuffer sb = new StringBuffer(" where deleteflg = '0' ");
+
+		BuildModel cmodel = new BuildModel();
+		cmodel.setLoginuser(model.getLoginuser());
+		cmodel.setPage("1");
+		cmodel.setRows("1000");
+		List<BuildEntity> rows = buildDao.getBuildByCondition(cmodel, null).getRows();
+		String ids = "";
+		if(rows != null && rows.size() != 0){
+			for (BuildEntity buildEntity : rows) {
+				ids += "'"+buildEntity.getId()+"',";
+			}
+		}
+		ids = ids.substring(0, ids.length()-1);
+		sb.append(" and buildcode in ( "+ids+") ");
+
+
 		if(CommonUtil.isNotNull(model.getHtqx())){
 			if(model.getHtqx().equals("2")){
 				sb.append(" and enddate <= '"+DateUnit.getTime8() +"' ");

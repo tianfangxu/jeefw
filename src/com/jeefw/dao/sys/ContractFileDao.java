@@ -16,4 +16,7 @@ public interface ContractFileDao extends Dao<ContractFile> {
     JqGridPageView<ContractFile> getContractFileByCondition(BigContractModel model);
 
     List<ContractFile> getContractFileByContractId(String id);
+
+    List<ContractFile> getContractFileByContractIdAndType(String id,String type);
+
 }
