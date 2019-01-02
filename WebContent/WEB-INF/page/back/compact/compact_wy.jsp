@@ -963,6 +963,7 @@
                         enableTooltips(table);
                     }, 0);
                 },
+                beforeSelectRow: beforeSelectRow,
                 editurl: "${contextPath}/sys/compact/operateCompact",
                 gridComplete:function(){
                     var ids = $(grid_selector).getDataIDs();
@@ -972,13 +973,12 @@
                         var today = new Date();
                         var date = new Date(today);
                         var today_time = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-                        if (httime <= today_time) {
+                        if (compareDate(httime,today_time)) {
                             $('#' + ids[i]).find("td").css("background-color", "#FFB6C1");
                         }
                         date.setMonth(date.getMonth() + 4);
                         var today_time4 = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-                        if (httime > today_time&&httime <=  today_time4) {
-                            alert(11);
+                        if (compareDate(today_time,httime)&&compareDate(httime,today_time4)) {
                             $('#' + ids[i]).find("td").css("background-color", "#FFE4CA");
                         }
                     }
@@ -996,6 +996,12 @@
             });
 
             $(window).triggerHandler("resize.jqGrid");
+
+            function beforeSelectRow() {
+                $(grid_selector).jqGrid('resetSelection');
+                return true;
+            }
+
 
             function aceSwitch(cellvalue, options, cell) {
                 setTimeout(function () {
@@ -1046,6 +1052,10 @@
                 $("#compactForm")[0].reset();
                 $("#editor").html("");
                 $("#modal-tip").html("");
+                initBuildSelect2('buildid');
+                initPartaSelect2('partacode');
+                initPaytypeSelect2('paytype','WYYJ');
+                initPartbSelect2('partbcode');
             });
 
             $("#editCompactButton").bind("click", function () {
@@ -1232,7 +1242,7 @@
                     return;
                 }
                 if($.trim($('#partaaccount').val())==''){
-                    $("#modal-tip").html("请填写甲方联系电话");
+                    $("#modal-tip").html("请填写甲方账号");
                     return;
                 }
                 if($.trim($('#bankname').val())==''){
@@ -1255,10 +1265,6 @@
                 }
                 if($.trim($('#partblegalperson').val())==''){
                     $("#modal-tip").html("请填写乙方法定代表人");
-                    return;
-                }
-                if($.trim($('#partbncontact').val())==''){
-                    $("#modal-tip").html("请填写乙方联系电话");
                     return;
                 }
                 if($.trim($('#partbtaxnumber').val())==''){
@@ -1365,9 +1371,11 @@
                         $.mask_close_all();
                         toastMessage("系统提示",xmlRequest.responseJSON.message);
                         clearForm("compactForm");
+                        //location.reload();
                     },
                     error: function () {
                         $.mask_close_all();
+                        //location.reload();
                     }
                 });
             });
@@ -1419,7 +1427,7 @@
                     return;
                 }
                 if($.trim($('#partaaccount_edit').val())==''){
-                    $("#modal-tip-edit").html("请填写甲方联系电话");
+                    $("#modal-tip-edit").html("请填写甲方账号");
                     return;
                 }
                 if($.trim($('#bankname_edit').val())==''){
@@ -1442,10 +1450,6 @@
                 }
                 if($.trim($('#partblegalperson_edit').val())==''){
                     $("#modal-tip-edit").html("请填写乙方法定代表人");
-                    return;
-                }
-                if($.trim($('#partbncontact_edit').val())==''){
-                    $("#modal-tip-edit").html("请填写乙方联系电话");
                     return;
                 }
                 if($.trim($('#partbtaxnumber_edit').val())==''){
@@ -2162,7 +2166,9 @@
                     params.page = checkIsNull(params.page) ? 1 : params.page;
                     var itemList = [];
                     var row = data.rows;
-                    itemList.push({id: 99999, text: '暂无信息,选此项可添加'});
+                    if(params.page==1){
+                        itemList.push({id: 99999, text: '暂无信息,选此项可添加'});
+                    }
                     for(var i=0;i<row.length;i++){
                         itemList.push({id: row[i].id, text: row[i].name});
                     }
@@ -2662,5 +2668,19 @@
             page:1
         }).trigger("reloadGrid"); //重新载入
     }
+
+    function compareDate(startDate, endDate) {
+        var arrStart = startDate.split("-");
+        var startTime = new Date(arrStart[0], arrStart[1], arrStart[2]);
+        var startTimes = startTime.getTime();
+        var arrEnd = endDate.split("-");
+        var endTime = new Date(arrEnd[0], arrEnd[1], arrEnd[2]);
+        var endTimes = endTime.getTime();
+        if (endTimes<startTimes) {
+            return false;
+        }
+        return true;
+    }
+
 
 </script>

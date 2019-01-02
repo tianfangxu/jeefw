@@ -71,4 +71,14 @@ public class ContractFileDaoImpl extends BaseDao<ContractFile> implements Contra
 		List<ContractFile> list = query.list();
 		return list;
 	}
+
+	@Override
+	public List<ContractFile> getContractFileByContractIdAndType(String id, String type) {
+		List<ContractFile> result = new ArrayList<ContractFile>();
+		Session session = this.getSession();
+		StringBuffer sb = new StringBuffer(" from ContractFile  where 1 = 1  and contractcode = '"+id+"' and filetype='"+type+"'");
+		Query query = session.createQuery(sb.toString());
+		List<ContractFile> list = query.list();
+		return list;
+	}
 }
