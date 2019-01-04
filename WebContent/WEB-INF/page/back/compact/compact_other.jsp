@@ -2185,7 +2185,7 @@
                 data: function (params) {
                     var rule = new Object();
                     var rules = new Array();
-                    rule.field = 'contactname';
+                    rule.field = 'name';
                     rule.op = 'cn';
                     rule.data =  checkIsNull(params.term) ? "" : params.term;
                     rules.push(rule);
