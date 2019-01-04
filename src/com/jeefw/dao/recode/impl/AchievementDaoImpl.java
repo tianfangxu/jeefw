@@ -185,6 +185,8 @@ public class AchievementDaoImpl extends BaseDao<AchievementEntity> implements Ac
 		StringBuffer where = new StringBuffer(" 1=1 and tb.deleteflg = '0' and ta.deleteflg = '0' ");
 		if(!StringUnit.isNullOrEmpty(model.getBuild())){
 			where.append(" and tb.build = '"+model.getBuild()+"' ");
+		}else{
+			return null;
 		}
 		
 		if(!StringUnit.isNullOrEmpty(model.getYear())){
