@@ -1064,8 +1064,9 @@
                     toastMessage('系统信息', '请选择记录！');
                 } else {
                     if(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).auditstate == '已完成'){
-                        toastMessage('系统信息', '该合同已经审核完毕无法更改！');
-                        return;
+                        $('#submitButton_edit').css('display','none');
+                    }else{
+                        $('#submitButton_edit').css('display','');
                     }
                     var params = new Object();
                     params.id =  selectedId;
