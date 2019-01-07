@@ -31,6 +31,9 @@ public class BudgetServiceImpl implements BudgetService{
 	public JqGridPageView<BudgetModel> getBudgetByCondition(BudgetModel model) {
 		
 		JqGridPageView<BudgetModel> view = budgetDao.getBudgetByCondition(model);
+		if(view == null){
+			return null;
+		}
 		List<BudgetModel> list = view.getRows();
 		
 		//计算合计预算
