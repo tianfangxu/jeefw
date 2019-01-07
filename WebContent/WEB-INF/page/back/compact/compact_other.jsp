@@ -844,7 +844,9 @@
             var pager_selector = "#grid-pager";
 
             $(window).on("resize.jqGrid", function () {
+                $(window).unbind("onresize");
                 $(grid_selector).jqGrid("setGridWidth", $(".page-content").width());
+                $(window).bind("onresize", this);
             })
 
             var parent_column = $(grid_selector).closest("[class*='col-']");
@@ -896,7 +898,8 @@
                 url: "${contextPath}/sys/contract/getContractByCondition",
                 datatype: "json",
                 height: 450,
-                colNames: ["ID", "合同编号", "管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态","操作"],
+                width:window.screen.availWidth-20,
+                colNames: ["ID", "合同编号", "楼宇","管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态","操作"],
                 colModel: [{
                     name: "id",
                     width: 60,
@@ -905,6 +908,10 @@
                     name: "sysnumber",
                     width: 120,
                     searchoptions: {sopt: ["cn","eq"]}
+                }, {
+                    name: "buildname",
+                    width: 120,
+                    search:false
                 }, {
                     name: "partaname",
                     width: 150,
@@ -916,6 +923,7 @@
                 }, {
                     name: "contype",
                     width: 110,
+                    search: false,
                     formatter:function(celval, options, rowdata){
                         if(celval=='1'){
                             return "物业合同";

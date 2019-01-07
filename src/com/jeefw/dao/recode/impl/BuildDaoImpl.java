@@ -33,8 +33,8 @@ public class BuildDaoImpl extends BaseDao<BuildEntity> implements BuildDao{
 		JqGridPageView<BuildEntity> result = new JqGridPageView<BuildEntity>();
 		Session session = this.getSession();
 		StringBuffer sb = new StringBuffer(" where b.deleteflg = '0' ");
-		
-		
+
+
 		//部门
 		SysUser user = model.getLoginuser();
 		String key = user.getDepartmentKey();
@@ -48,7 +48,7 @@ public class BuildDaoImpl extends BaseDao<BuildEntity> implements BuildDao{
 				sb.append(" and d.department_key = '"+model.getLoginuser().getDepartmentKey()+"' ");
 			}
 		}
-		
+
 		//等于查询
 		if(model.getEqparam() != null){
 			BuildModel eqmodel = (BuildModel) model.getEqparam();
@@ -108,6 +108,15 @@ public class BuildDaoImpl extends BaseDao<BuildEntity> implements BuildDao{
 				"update m_build set deleteflg = '1' ,deleteuser = '"+userid+"',deletetime = '"+DateUnit.getTime14()+"' where id = ?");
 		query.setParameter(0, id);
 		query.executeUpdate();
+	}
+
+	@Override
+	public List<BuildEntity> getBuildsByManagerid(String managerId) {
+		Query query = this.getSession().createQuery(
+				" from BuildEntity where deleteflg = ? and managerid = ?");
+		query.setParameter(0, "0");
+		query.setParameter(1, managerId);
+		return query.list();
 	}
 
 

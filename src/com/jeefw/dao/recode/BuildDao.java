@@ -12,7 +12,9 @@ import core.support.JqGridPageView;
 public interface BuildDao extends Dao<BuildEntity>{
 
 	JqGridPageView<BuildEntity> getBuildByCondition(BuildModel model,List<Department> list);
-	
+
 	void deleteEntity(String id,String userid);
+
+	List<BuildEntity> getBuildsByManagerid(String managerId);
 
 }
