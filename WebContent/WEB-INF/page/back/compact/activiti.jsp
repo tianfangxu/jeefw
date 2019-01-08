@@ -32,10 +32,11 @@
 				<a data-toggle="tab" href="#dsh">待审核</a>
 			</li>
 
-			<li>
-				<a data-toggle="tab" href="#shz">审核中</a>
-			</li>
-
+			<c:if test="${sessionScope.ROLE_KEY.indexOf('wybjl')==-1}" >
+				<li>
+					<a data-toggle="tab" href="#shz">审核中</a>
+				</li>
+			</c:if>
 			<li>
 				<a data-toggle="tab" href="#ysh">已完成</a>
 			</li>

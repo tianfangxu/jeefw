@@ -819,6 +819,12 @@
             var grid_selector = "#grid-table";
             var pager_selector = "#grid-pager";
 
+            var  roles = '<%=session.getAttribute("ROLE_KEY")%>' ;
+            var  showBuild = true;
+            if(roles.indexOf("ROLE_ADMIN")>-1){
+                showBuild = false;
+            }
+
             $(window).on("resize.jqGrid", function () {
                 $(window).unbind("onresize");
                 $(grid_selector).jqGrid("setGridWidth", $(".page-content").width());
@@ -887,7 +893,8 @@
                 },  {
                     name: "buildname",
                     width: 120,
-                    search:false
+                    search:false,
+                    hidden:showBuild
                 },{
                     name: "partaname",
                     width: 150,
