@@ -35,6 +35,9 @@ public class AchievementServiceImpl<E> implements AchievementService {
 	public JqGridPageView<AchievementModel> getAchievementByCondition(
 			AchievementModel model) {
 		JqGridPageView<AchievementModel> view = achievementDao.getBudgetByCondition(model);
+		if(view == null){
+			return null;
+		}
 		List<AchievementModel> list = view.getRows();
 		
 		//计算合计预算
