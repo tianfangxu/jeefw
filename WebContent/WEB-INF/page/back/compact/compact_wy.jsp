@@ -139,7 +139,7 @@
                             <div class="widget-main">
                                 <div class="form-group">
                                     <div><input type="hidden" id="id" /></div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="htsj">合同时间：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="htsj">合同期限：</label>
                                     <div class="col-sm-4">
                                         <div class="input-group">
 											<span class="input-group-addon">
@@ -489,7 +489,7 @@
                             <div class="widget-main">
                                 <div class="form-group">
                                     <div><input type="hidden" id="id_edit" /></div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="htsj_edit">合同时间：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="htsj_edit">合同期限：</label>
                                     <div class="col-sm-4">
                                         <div class="input-group">
 											<span class="input-group-addon">
@@ -823,13 +823,21 @@
         "${contextPath}/static/assets/js/zh.js",null]
     $(".page-content-area").ace_ajax("loadScripts", scripts, function () {
         jQuery(function ($) {
-            $('.select2').select2({allowClear:true})
-
+            $('.select2').select2({allowClear:true});
+            getInitBuildValue();
             var grid_selector = "#grid-table";
             var pager_selector = "#grid-pager";
 
+            var  roles = '<%=session.getAttribute("ROLE_KEY")%>' ;
+            var  showBuild = true;
+            if(roles.indexOf("ROLE_ADMIN")>-1){
+                showBuild = false;
+            }
+
             $(window).on("resize.jqGrid", function () {
+                $(window).unbind("onresize");
                 $(grid_selector).jqGrid("setGridWidth", $(".page-content").width());
+                $(window).bind("onresize", this);
             })
 
             var parent_column = $(grid_selector).closest("[class*='col-']");
@@ -881,7 +889,8 @@
                 url: "${contextPath}/sys/contract/getContractByCondition",
                 datatype: "json",
                 height: 450,
-                colNames: ["ID", "合同编号", "管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态","操作"],
+                width:window.screen.availWidth-20,
+                colNames: ["ID", "合同编号", "楼宇","管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态","操作"],
                 colModel: [{
                     name: "id",
                     width: 60,
@@ -890,6 +899,11 @@
                     name: "sysnumber",
                     width: 120,
                     searchoptions: {sopt: ["cn","eq"]}
+                }, {
+                    name: "buildname",
+                    width: 120,
+                    search:false,
+                    hidden: showBuild
                 }, {
                     name: "partaname",
                     width: 150,
@@ -901,6 +915,7 @@
                 }, {
                     name: "contype",
                     width: 110,
+                    search: false,
                     formatter:function(celval, options, rowdata){
                         if(celval=='1'){
                             return "物业合同";
@@ -1053,6 +1068,9 @@
                 $("#editor").html("");
                 $("#modal-tip").html("");
                 initBuildSelect2('buildid');
+                if(initBuildValue.length>0){
+                    $('#buildid').append(new Option(initBuildValue[1],initBuildValue[0],true,true)).trigger("change");
+                }
                 initPartaSelect2('partacode');
                 initPaytypeSelect2('paytype','WYYJ');
                 initPartbSelect2('partbcode');
@@ -1064,8 +1082,9 @@
                     toastMessage('系统信息', '请选择记录！');
                 } else {
                     if(jQuery(grid_selector).jqGrid("getRowData", jQuery(grid_selector).jqGrid("getGridParam", "selrow")).auditstate == '已完成'){
-                        toastMessage('系统信息', '该合同已经审核完毕无法更改！');
-                        return;
+                        $('#submitButton_edit').css('display','none');
+                    }else{
+                        $('#submitButton_edit').css('display','');
                     }
                     var params = new Object();
                     params.id =  selectedId;
@@ -1200,25 +1219,30 @@
 
                 //基础信息校验
                 if ($.trim($("#contype").val()) == "") {
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请选择合同类型");
                     return;
                 }
                 if($.trim($('#htsj').val())== ""){
-                    $("#modal-tip").html("请选择合同时间");
+                    location.href = "#modal-tip";
+                    $("#modal-tip").html("请选择合同期限");
                     return;
                 }
                 if($('#buildid').val() == null){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请选择楼宇");
                     return;
                 }
                 if($("#contype").val() == '1'){
                     if($.trim($('#PropertyIds').val()) == ""){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请输入楼宇具体的管理单元");
                         return;
                     }
                 }
                 if($("#contype").val() == '3'){
                     if($.trim($('#price').val())==''||!re.test($.trim($('#price').val()))) {
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写合同金额，只能为数字");
                         return;
                     }
@@ -1226,65 +1250,80 @@
 
                 //甲方信息校验
                 if($('#partacode').val()==null){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请选择甲方基本资料");
                     return;
                 }
                 if($.trim($('#partaaddress').val())==''){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请填写甲方地址");
                     return;
                 }
                 if($.trim($('#partalegalperson').val())==''){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请填写甲方法定代表人");
                     return;
                 }
                 if($.trim($('#partancontact').val())==''){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请填写甲方联系电话");
                     return;
                 }
                 if($.trim($('#partaaccount').val())==''){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请填写甲方账号");
                     return;
                 }
                 if($.trim($('#bankname').val())==''){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请填写甲方开户银行");
                     return;
                 }
                 if($.trim($('#partaaccountname').val())==''){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请填写甲方帐号");
                     return;
                 }
                 if($.trim($('#partataxnumber').val())==''){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请填写甲方税号");
                     return;
                 }
 
                 //乙方信息校验
                 if($.trim($('#partbaddress').val())==''){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请填写乙方地址");
                     return;
                 }
                 if($.trim($('#partblegalperson').val())==''){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请填写乙方法定代表人");
                     return;
                 }
                 if($.trim($('#partbtaxnumber').val())==''){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请填写乙方税号");
                     return;
                 }
                 if($.trim($('#partbbankname').val())==''){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请填写乙方开户行");
                     return;
                 }
                 if($.trim($('#partbaccount').val())==''){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请填写银行账号");
                     return;
                 }
                 if($.trim($('#partbaccountname').val())==''){
+                    location.href = "#modal-tip";
                     $("#modal-tip").html("请填写乙方户名");
                     return;
                 }
                 if($('#partbcode').val()=='99999'){
                     if($.trim($('#partbname').val())==''){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写承租方名称");
                         return;
                     }
@@ -1292,64 +1331,79 @@
                 if($("#contype").val() == '1'){
                     //校验房屋
                     if($.trim($('#buildarera').val())==''){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写房屋建筑面积");
                         return;
                     }
                     if($.trim($('#tenantarea').val())==''){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写承租建筑面积");
                         return;
                     }
                     if($.trim($('#propertyfee').val())==''){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写物业管理费");
                         return;
                     }
                     if($('#paytype').val()==null){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请选择付款方式");
                         return;
                     }
                     if($.trim($('#deposit').val())==''){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写物业费押金");
                         return;
                     }
                     if($.trim($('#electric').val())==''){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写电费单价");
                         return;
                     }
                 }else if($("#contype").val() == '2'){
                     //校验停车
                     if($.trim($('#manager').val())==''){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写停车场地资产产权单位");
                         return;
                     }
                     if($.trim($('#undergroundunit').val())==''||!re.test($.trim($('#undergroundunit').val()))){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写地下车位价格,只能为数字");
                         return;
                     }
                     if($.trim($('#surfaceunit').val())==''||!re.test($.trim($('#surfaceunit').val()))){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写地面车位价格,只能为数字");
                         return;
                     }
                     if($.trim($('#undergroundnumber').val())==''||!re.test($.trim($('#undergroundnumber').val()))){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写地下车位数量,只能为数字");
                         return;
                     }
                     if($.trim($('#surfacenumber').val())==''||!re.test($.trim($('#surfacenumber').val()))){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写地面车位数量,只能为数字");
                         return;
                     }
                     if($.trim($('#rent').val())==''||!re.test($.trim($('#rent').val()))){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写车位租赁费,只能为数字");
                         return;
                     }
                     if($.trim($('#prepay').val())==''||!re.test($.trim($('#prepay').val()))){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写支付方式(月预付),只能为数字");
                         return;
                     }
                     if($.trim($('#cardfee').val())==''||!re.test($.trim($('#cardfee').val()))){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写停车证制作费,只能为数字");
                         return;
                     }
                     if($.trim($('#reissuecardfee').val())==''||!re.test($.trim($('#reissuecardfee').val()))){
+                        location.href = "#modal-tip";
                         $("#modal-tip").html("请填写停车证补办费,只能为数字");
                         return;
                     }
@@ -1385,25 +1439,30 @@
 
                 //基础信息校验
                 if ($.trim($("#contype_edit").val()) == "") {
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请选择合同类型");
                     return;
                 }
                 if($.trim($('#htsj_edit').val())== ""){
-                    $("#modal-tip-edit").html("请选择合同时间");
+                    location.href = "#modal-tip-edit";
+                    $("#modal-tip-edit").html("请选择合同期限");
                     return;
                 }
                 if($('#buildid_edit').val() == null){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请选择楼宇");
                     return;
                 }
                 if($("#contype_edit").val() == '1'){
                     if($('#PropertyIds_edit').val() == ""){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请选择楼宇具体的管理单元");
                         return;
                     }
                 }
                 if($("#contype_edit").val() == '3'){
                     if($.trim($('#price_edit').val())==''||!re.test($.trim($('#price_edit').val()))) {
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写合同金额，只能为数字");
                         return;
                     }
@@ -1411,67 +1470,82 @@
 
                 //甲方信息校验
                 if($('#partacode_edit').val()==null){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请选择甲方基本资料");
                     return;
                 }
                 if($.trim($('#partaaddress_edit').val())==''){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请填写甲方地址");
                     return;
                 }
                 if($.trim($('#partalegalperson_edit').val())==''){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请填写甲方法定代表人");
                     return;
                 }
                 if($.trim($('#partancontact_edit').val())==''){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请填写甲方联系电话");
                     return;
                 }
                 if($.trim($('#partaaccount_edit').val())==''){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请填写甲方账号");
                     return;
                 }
                 if($.trim($('#bankname_edit').val())==''){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请填写甲方开户银行");
                     return;
                 }
                 if($.trim($('#partaaccountname_edit').val())==''){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请填写甲方帐号");
                     return;
                 }
                 if($.trim($('#partataxnumber_edit').val())==''){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请填写甲方税号");
                     return;
                 }
 
                 //乙方信息校验
                 if($.trim($('#partbaddress_edit').val())==''){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请填写乙方地址");
                     return;
                 }
                 if($.trim($('#partblegalperson_edit').val())==''){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请填写乙方法定代表人");
                     return;
                 }
                 if($.trim($('#partbtaxnumber_edit').val())==''){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请填写乙方税号");
                     return;
                 }
 
                 if($.trim($('#partbbankname_edit').val())==''){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip").html("请填写乙方开户行");
                     return;
                 }
                 if($.trim($('#partbaccount_edit').val())==''){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip").html("请填写银行账号");
                     return;
                 }
                 if($.trim($('#partbaccountname_edit').val())==''){
+                    location.href = "#modal-tip-edit";
                     $("#modal-tip").html("请填写乙方户名");
                     return;
                 }
 
                 if($('#partbcode_edit').val()=='99999'){
                     if($.trim($('#partbname_edit').val())==''){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写承租方名称");
                         return;
                     }
@@ -1479,64 +1553,79 @@
                 if($("#contype_edit").val() == '1'){
                     //校验房屋
                     if($.trim($('#buildarera_edit').val())==''){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写房屋建筑面积");
                         return;
                     }
                     if($.trim($('#tenantarea_edit').val())==''){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写承租建筑面积");
                         return;
                     }
                     if($.trim($('#propertyfee_edit').val())==''){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写物业管理费");
                         return;
                     }
                     if($('#paytype_edit').val()==null){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请选择付款方式");
                         return;
                     }
                     if($.trim($('#deposit_edit').val())==''){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写物业费押金");
                         return;
                     }
                     if($.trim($('#electric_edit').val())==''){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写电费单价");
                         return;
                     }
                 }else if($("#contype_edit").val() == '2'){
                     //校验停车
                     if($.trim($('#manager_edit').val())==''){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写停车场地资产产权单位");
                         return;
                     }
                     if($.trim($('#undergroundunit_edit').val())==''||!re.test($.trim($('#undergroundunit_edit').val()))){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写地下车位价格,只能为数字");
                         return;
                     }
                     if($.trim($('#surfaceunit_edit').val())==''||!re.test($.trim($('#surfaceunit_edit').val()))){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写地面车位价格,只能为数字");
                         return;
                     }
                     if($.trim($('#undergroundnumber_edit').val())==''||!re.test($.trim($('#undergroundnumber_edit').val()))){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写地下车位数量,只能为数字");
                         return;
                     }
                     if($.trim($('#surfacenumber_edit').val())==''||!re.test($.trim($('#surfacenumber_edit').val()))){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写地面车位数量,只能为数字");
                         return;
                     }
                     if($.trim($('#rent_edit').val())==''||!re.test($.trim($('#rent_edit').val()))){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写车位租赁费,只能为数字");
                         return;
                     }
                     if($.trim($('#prepay_edit').val())==''||!re.test($.trim($('#prepay_edit').val()))){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写支付方式(月预付),只能为数字");
                         return;
                     }
                     if($.trim($('#cardfee_edit').val())==''||!re.test($.trim($('#cardfee_edit').val()))){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写停车证制作费,只能为数字");
                         return;
                     }
                     if($.trim($('#reissuecardfee_edit').val())==''||!re.test($.trim($('#reissuecardfee_edit').val()))){
+                        location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写停车证补办费,只能为数字");
                         return;
                     }
@@ -1850,9 +1939,55 @@
                     });
                 }
             });
+
+            $('#partbcode').change(function () {
+                if($('#partbcode').val()!='99999'){
+                    $('#partbtype').attr('disabled',true);
+                    $('#partbaddress').attr('readonly',true);
+                    $('#partblegalperson').attr('readonly',true);
+                    $('#partbncontact').attr('readonly',true);
+                    $('#partbtaxnumber').attr('readonly',true);
+                    $('#partbbankname').attr('readonly',true);
+                    $('#partbaccount').attr('readonly',true);
+                    $('#partbaccountname').attr('readonly',true);
+                }else{
+                    $('#partbtype').attr('disabled',false);
+                    $('#partbaddress').attr('readonly',false);
+                    $('#partblegalperson').attr('readonly',false);
+                    $('#partbncontact').attr('readonly',false);
+                    $('#partbtaxnumber').attr('readonly',false);
+                    $('#partbbankname').attr('readonly',false);
+                    $('#partbaccount').attr('readonly',false);
+                    $('#partbaccountname').attr('readonly',false);
+                }
+            });
+
+            $('#partbcode_edit').change(function () {
+                if($('#partbcode_edit').val()!='99999'){
+                    $('#partbtype_edit').attr('disabled',true);
+                    $('#partbaddress_edit').attr('readonly',true);
+                    $('#partblegalperson_edit').attr('readonly',true);
+                    $('#partbncontact_edit').attr('readonly',true);
+                    $('#partbtaxnumber_edit').attr('readonly',true);
+                    $('#partbbankname_edit').attr('readonly',true);
+                    $('#partbaccount_edit').attr('readonly',true);
+                    $('#partbaccountname_edit').attr('readonly',true);
+                }else{
+                    $('#partbtype_edit').attr('disabled',false);
+                    $('#partbaddress_edit').attr('readonly',false);
+                    $('#partblegalperson_edit').attr('readonly',false);
+                    $('#partbncontact_edit').attr('readonly',false);
+                    $('#partbtaxnumber_edit').attr('readonly',false);
+                    $('#partbbankname_edit').attr('readonly',false);
+                    $('#partbaccount_edit').attr('readonly',false);
+                    $('#partbaccountname_edit').attr('readonly',false);
+                }
+            });
+
         });
     });
 
+    var initBuildValue = [];
     var buildInfo;
     /**
      * 楼宇下拉框
@@ -2156,7 +2291,7 @@
                 data: function (params) {
                     var rule = new Object();
                     var rules = new Array();
-                    rule.field = 'contactname';
+                    rule.field = 'name';
                     rule.op = 'cn';
                     rule.data =  checkIsNull(params.term) ? "" : params.term;
                     rules.push(rule);
@@ -2682,5 +2817,28 @@
         return true;
     }
 
-
+    function getInitBuildValue(){
+        var rule = new Object();
+        rule.field = 'name';
+        rule.op = 'cn';
+        rule.data =  "";
+        var rules = new Array();
+        rules.push(rule);
+        $.ajax({
+            dataType : "json",
+            url : "${contextPath}/recode/build/getBuildByCondition",
+            type : "get",
+            contentType: 'application/json',
+            async:false,
+            data :generateParams(new Object(),rules),
+            complete : function(data) {
+                if(data.status=='200'){
+                    initBuildValue.push(JSON.parse(data.responseText).rows[0].id);
+                    initBuildValue.push(JSON.parse(data.responseText).rows[0].name);
+                } else{
+                    toastMessage("系统提示",xmlRequest.responseJSON.message);
+                }
+            }
+        });
+    }
 </script>

@@ -32,10 +32,11 @@
 				<a data-toggle="tab" href="#dsh">待审核</a>
 			</li>
 
-			<li>
-				<a data-toggle="tab" href="#shz">审核中</a>
-			</li>
-
+			<c:if test="${sessionScope.ROLE_KEY.indexOf('wybjl')==-1}" >
+				<li>
+					<a data-toggle="tab" href="#shz">审核中</a>
+				</li>
+			</c:if>
 			<li>
 				<a data-toggle="tab" href="#ysh">已完成</a>
 			</li>
@@ -505,7 +506,9 @@
                 });
 
         		$(window).on("resize.jqGrid", function() {
-        			$(grid_selector).jqGrid("setGridWidth", $(".page-content").width());
+                    $(window).unbind("onresize");
+                    $(grid_selector).jqGrid("setGridWidth", $(".page-content").width());
+                    $(window).bind("onresize", this);
         		});
 
         		var parent_column = $(grid_selector).closest("[class*='col-']");
@@ -525,8 +528,9 @@
                         url: "${contextPath}/sys/flow/getContractByAudit",
                         datatype: "json",
                         height: 450,
+                        width:window.screen.availWidth-20,
 						postData:{"selectState":auditState,"subsidiary":"323213"},
-                        colNames: ["ID", "合同编号", "管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态"],
+                        colNames: ["ID", "合同编号", "楼宇","管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态"],
                         colModel: [{
                             name: "id",
                             width: 60,
@@ -536,6 +540,10 @@
                             width: 120,
                             searchoptions: {sopt: ["cn","eq"]}
                         }, {
+                            name: "buildname",
+                            width: 120,
+                            search: false
+                        },{
                             name: "partaname",
                             width: 150,
                             search: false

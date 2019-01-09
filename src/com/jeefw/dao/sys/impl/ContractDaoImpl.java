@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * 合同主体信息的数据持久层的实现类
@@ -141,6 +142,13 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 		query.setMaxResults(Integer.parseInt(model.getRows()));
 
 		List<Contract> list = query.list();
+		BuildEntity buildEntity;
+		for(Contract contract:list){
+			buildEntity = buildDao.get(contract.getBuildcode());
+			if(CommonUtil.isNotNull(buildEntity))   {
+				contract.setBuildname(buildEntity.getName());
+			}
+		}
 
 		Object cout = session.createSQLQuery(
 				"select count(1) from t_contract " + sb.toString())
@@ -210,6 +218,29 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 		JqGridPageView<SmallContractModel> result = new JqGridPageView<SmallContractModel>();
 		Session session = this.getSession();
 		StringBuffer sb = new StringBuffer(" where a.deleteflg = '0' ");
+		//审核时楼宇经理权限控制
+		SysUser user = model.getLoginuser();
+		Set<Role> roles = user.getRoles();
+		String rolestring = "";
+		for (Role role : roles) {
+			rolestring += role.getRoleKey();
+		}
+		try {
+			if(rolestring.indexOf(ConfigUtil.getConfig("lyjl"))>-1){
+				List<BuildEntity> builds =  buildDao.getBuildsByManagerid(model.getLoginuser().getId()+"");
+				if(builds!=null&&builds.size()>0){
+					String buildCode = "(";
+					for(BuildEntity buildEntity:builds){
+						buildCode += "'"+buildEntity.getId()+"',";
+					}
+					buildCode =buildCode.substring(0,buildCode.length()-1)+")";
+					sb.append(" and a.buildcode in "+buildCode);
+				}
+			}
+		}catch(FileNotFoundException e){
+
+		}
+
 		//等于查询
 		if(model.getEqparam() != null){
 			BigContractModel eqmodel = (BigContractModel) model.getEqparam();
@@ -250,16 +281,24 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 			//查看等待客服或者安全人员处理的单子
 			sb.append(" and  (b.nexthandler in "+roleKeyStr+" or b.nexthandler = '"+model.getLoginuser().getId()+"' )");
 		}else if(model.getSelectState().equals("2")){
-			sb.append(" and a.auditstate = 2 and  (a.dealusers like '%,"+model.getLoginuser().getId()+"%' or a.dealusers like '%"+model.getLoginuser().getId()+",%' )");
+			sb.append(" and a.auditstate = 2 and  (a.dealusers like '%["+model.getLoginuser().getId()+"]%')");
 		}else if(model.getSelectState().equals("3")){
-			sb.append(" and a.auditstate = 3 and (a.dealusers like '%,"+model.getLoginuser().getId()+"%' or a.dealusers like '%"+model.getLoginuser().getId()+",%' )");
+			try{
+				if(rolestring.indexOf(ConfigUtil.getConfig("cwbjl"))>-1){
+					sb.append(" and a.auditstate = 3 ");
+				}else{
+					sb.append(" and a.auditstate = 3 and (a.dealusers like '%["+model.getLoginuser().getId()+"]%')");
+				}
+			}catch(FileNotFoundException e){
+
+			}
 		}
-		Query query = session.createSQLQuery(" select a.id,a.sysnumber,a.partaname,a.partbname,a.contype ,a.partbcontact,a.startdate,a.enddate,a.auditstate from t_contract a ,t_contract_flow b " + sb.toString()+" and a.id = b.contractcode order by a.createtime desc ")
+		Query query = session.createSQLQuery(" select a.id,a.sysnumber,a.partaname,a.partbname,a.contype ,a.partbcontact,a.startdate,a.enddate,a.auditstate,c.name buildname from t_contract a ,t_contract_flow b ,m_build c" + sb.toString()+" and a.id = b.contractcode and a.buildcode = c.id order by a.createtime desc ")
 				.addScalar("id",StandardBasicTypes.STRING).addScalar("sysnumber",StandardBasicTypes.STRING)
 				.addScalar("partaname",StandardBasicTypes.STRING).addScalar("partbname",StandardBasicTypes.STRING)
 				.addScalar("contype",StandardBasicTypes.INTEGER).addScalar("partbcontact",StandardBasicTypes.STRING)
 				.addScalar("startdate",StandardBasicTypes.DATE).addScalar("enddate",StandardBasicTypes.DATE)
-				.addScalar("auditstate",StandardBasicTypes.STRING)
+				.addScalar("auditstate",StandardBasicTypes.STRING).addScalar("buildname",StandardBasicTypes.STRING)
 				.setResultTransformer(Transformers.aliasToBean(SmallContractModel .class));
 		query.setFirstResult((Integer.parseInt(model.getPage()) - 1)
 				* Integer.parseInt(model.getRows()));

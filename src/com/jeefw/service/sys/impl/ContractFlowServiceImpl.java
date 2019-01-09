@@ -48,7 +48,7 @@ public class ContractFlowServiceImpl extends BaseService<ContractFlow> implement
         //合同主表状态更新
         Contract contract = contractDao.get(model.getId());
         contract.setAuditstate(2);
-        contract.setDealusers(model.getLoginuser().getId() + ",");
+        contract.setDealusers("["+model.getLoginuser().getId() + "]");
         contract.setUpdateuser(model.getLoginuser().getId() + "");
         contract.setUpdatetime(new Date());
         contractDao.update(contract);
@@ -57,7 +57,7 @@ public class ContractFlowServiceImpl extends BaseService<ContractFlow> implement
         contractFlow.setContractcode(model.getId());
         contractFlow.setOpinion(model.getOpinion());
         contractFlow.setDecision(3);
-        contractFlow.setDealuser(model.getLoginuser().getId() + "");
+        contractFlow.setDealuser(model.getLoginuser().getId()+"");
         contractFlow.setDealname(model.getLoginuser().getUserName());
         contractFlow.setHandlertime(new Date());
         try {
@@ -79,7 +79,7 @@ public class ContractFlowServiceImpl extends BaseService<ContractFlow> implement
         try {
             String recentDealuser = "";
             Contract contract = contractDao.get(model.getContractcode());
-            contract.setDealusers(contract.getDealusers() + model.getLoginuser().getId() + ",");
+            contract.setDealusers(contract.getDealusers() + "["+model.getLoginuser().getId() + "]");
             contract.setUpdateuser(model.getLoginuser().getId() + "");
             contract.setUpdatetime(new Date());
             ContractFlow contractFlow = contractFlowDao.getContractFlowByContractCode(model.getContractcode());

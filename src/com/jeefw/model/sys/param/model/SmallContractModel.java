@@ -17,6 +17,7 @@ public class SmallContractModel implements Serializable {
     private Integer contype;
     private Date startdate;
     private Date enddate;
+    private String buildname;
 
     public String getId() {
         return id;
@@ -88,5 +89,13 @@ public class SmallContractModel implements Serializable {
 
     public void setEnddate(Date enddate) {
         this.enddate = enddate;
+    }
+
+    public String getBuildname() {
+        return buildname;
+    }
+
+    public void setBuildname(String buildname) {
+        this.buildname = buildname;
     }
 }
