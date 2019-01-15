@@ -630,7 +630,7 @@
                                     </div>
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtype_edit">类型：</label>
                                     <div class="col-sm-4">
-                                        <select class="select2" id="partbtype_edit" style="width: 100%">
+                                        <select class="select2" id="partbtype_edit" style="width: 100%" ONCHANGE="changePartbShow_edit()">
                                             <option value="0">企业</option>
                                             <option value="1">个人</option>
                                         </select>
@@ -1335,7 +1335,7 @@
                     $("#modal-tip").html("请填写乙方地址");
                     return;
                 }
-                if($('#partbtype').val==0){
+                if($('#partbtype').val()==0){
                     if($.trim($('#partblegalperson').val())==''){
                         location.href = "#modal-tip";
                         $("#modal-tip").html("请填写乙方法定代表人");
@@ -1346,7 +1346,7 @@
                         $("#modal-tip").html("请填写乙方税号");
                         return;
                     }
-                }else if($('#partbtype').val==1){
+                }else if($('#partbtype').val()==1){
                     if($.trim($('#partbzjhm').val())==''){
                         location.href = "#modal-tip";
                         $("#modal-tip").html("请填写乙方证件号码");
@@ -1565,7 +1565,7 @@
                     return;
                 }
 
-                if($('#partbtype_edit').val==0){
+                if($('#partbtype_edit').val()==0){
                     if($.trim($('#partblegalperson_edit').val())==''){
                         location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写乙方法定代表人");
@@ -1577,7 +1577,7 @@
                         return;
                     }
 
-                }else if($('#partbtype_edit').val==1){
+                }else if($('#partbtype_edit').val()==1){
                     if($.trim($('#partbzjhm_edit').val())==''){
                         location.href = "#modal-tip";
                         $("#modal-tip-edit").html("请填写乙方证件号码");
@@ -2412,6 +2412,10 @@
                             $('#partbaccountname').val(JSON.parse(data.responseText).rows[0].accountname);
                             $('#partbbankname').val(JSON.parse(data.responseText).rows[0].bankname);
                             $("#partbtype").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
+                            if($('#partbtype').val()==1){
+                                $('#partbzjhm').val(JSON.parse(data.responseText).rows[0].idnumber);
+                                $("#partbzjzl").val(JSON.parse(data.responseText).rows[0].idtype).trigger("change");
+                            }
                         }else if(id=='partbcode_edit'){
                             $('#partbaddress_edit').val(JSON.parse(data.responseText).rows[0].address);
                             $('#partblegalperson_edit').val(JSON.parse(data.responseText).rows[0].name);
@@ -2421,6 +2425,10 @@
                             $('#partbaccountname_edit').val(JSON.parse(data.responseText).rows[0].accountname);
                             $('#partbbankname_edit').val(JSON.parse(data.responseText).rows[0].bankname);
                             $("#partbtype_edit").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
+                            if($('#partbtype_edit').val()==1){
+                                $('#partbzjhm_edit').val(JSON.parse(data.responseText).rows[0].idnumber);
+                                $("#partbzjzl_edit").val(JSON.parse(data.responseText).rows[0].idtype).trigger("change");
+                            }
                         }
                     }else{
                         toastMessage("系统提示",xmlRequest.responseJSON.message);
@@ -2915,7 +2923,7 @@
                     initBuildValue.push(JSON.parse(data.responseText).rows[0].id);
                     initBuildValue.push(JSON.parse(data.responseText).rows[0].name);
                 } else{
-                    toastMessage("系统提示",xmlRequest.responseJSON.message);
+                    toastMessage("系统提示",data.responseJSON.message);
                 }
             }
         });

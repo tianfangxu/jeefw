@@ -149,7 +149,7 @@
                                             <input class="form-control" type="text" name="date-range-picker" id="htsj"/>
                                         </div>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left;display-outside: none" for="contype">合同类型：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left;display:none" for="contype">合同类型：</label>
                                     <div class="col-sm-4" style="display: none;">
                                         <select class="select2" id="contype" style="width: 100%">
                                             <option value="2" selected>协议停车合同</option>
@@ -252,7 +252,7 @@
                                     </div>
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtype">类型：</label>
                                     <div class="col-sm-4">
-                                        <select class="select2" id="partbtype" style="width: 100%">
+                                        <select class="select2" id="partbtype" style="width: 100%" onchange="changePartbShow()">
                                             <option value="0">企业</option>
                                             <option value="1">个人</option>
                                         </select>
@@ -264,9 +264,20 @@
                                     <div class="col-sm-4">
                                         <input type="text" id="partbaddress" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson">法定代表人：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="partblegalperson" class="width-100"/>
+                                    <div id="div4">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson">法定代表人：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partblegalperson" class="width-100"/>
+                                        </div>
+                                    </div>
+                                    <div id="div5" style="display: none">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbzjzl">证件种类：</label>
+                                        <div class="col-sm-4">
+                                            <select id="partbzjzl" class="form-control">
+                                                <option value="身份证">身份证</option>
+                                                <option value="护照">护照</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -274,9 +285,17 @@
                                     <div class="col-sm-4">
                                         <input type="text" id="partbncontact" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber">税 号：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="partbtaxnumber" class="width-100" />
+                                    <div id="div6">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber">税 号：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partbtaxnumber" class="width-100" />
+                                        </div>
+                                    </div>
+                                    <div id="div7" style="display: none">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbzjhm">证件号码：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partbzjhm" class="width-100" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -602,7 +621,7 @@
                                     </div>
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtype_edit">类型：</label>
                                     <div class="col-sm-4">
-                                        <select class="select2" id="partbtype_edit" style="width: 100%">
+                                        <select class="select2" id="partbtype_edit" style="width: 100%" onchange="changePartbShow_edit()">
                                             <option value="0">企业</option>
                                             <option value="1">个人</option>
                                         </select>
@@ -614,9 +633,20 @@
                                     <div class="col-sm-4">
                                         <input type="text" id="partbaddress_edit" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson_edit">法定代表人：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="partblegalperson_edit" class="width-100"/>
+                                    <div id="div4_edit" style="display:none">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson_edit">法定代表人：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partblegalperson_edit" class="width-100"/>
+                                        </div>
+                                    </div>
+                                    <div id="div5_edit" style="display:none">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbzjzl_edit">证件种类：</label>
+                                        <div class="col-sm-4">
+                                            <select id="partbzjzl_edit" class="form-control">
+                                                <option value="身份证">身份证</option>
+                                                <option value="护照">护照</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -624,9 +654,17 @@
                                     <div class="col-sm-4">
                                         <input type="text" id="partbncontact_edit" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">税 号：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="partbtaxnumber_edit" class="width-100" />
+                                    <div id="div6_edit" style="display:none;">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">税 号：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partbtaxnumber_edit" class="width-100" />
+                                        </div>
+                                    </div>
+                                    <div id="div7_edit" style="display:none;">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbzjhm_edit">证件号码：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partbzjhm_edit" class="width-100" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -1286,10 +1324,23 @@
                     $("#modal-tip").html("请填写乙方地址");
                     return;
                 }
-                if($.trim($('#partblegalperson').val())==''){
-                    location.href = "#modal-tip";
-                    $("#modal-tip").html("请填写乙方法定代表人");
-                    return;
+                if($('#partbtype').val==0){
+                    if($.trim($('#partblegalperson').val())==''){
+                        location.href = "#modal-tip";
+                        $("#modal-tip").html("请填写乙方法定代表人");
+                        return;
+                    }
+                    if($.trim($('#partbtaxnumber').val())==''){
+                        location.href = "#modal-tip";
+                        $("#modal-tip").html("请填写乙方税号");
+                        return;
+                    }
+                }else if($('#partbtype').val==1){
+                    if($.trim($('#partbzjhm').val())==''){
+                        location.href = "#modal-tip";
+                        $("#modal-tip").html("请填写乙方证件号码");
+                        return;
+                    }
                 }
                 if($.trim($('#partbtaxnumber').val())==''){
                     location.href = "#modal-tip";
@@ -1504,15 +1555,24 @@
                     $("#modal-tip-edit").html("请填写乙方地址");
                     return;
                 }
-                if($.trim($('#partblegalperson_edit').val())==''){
-                    location.href = "#modal-tip-edit";
-                    $("#modal-tip-edit").html("请填写乙方法定代表人");
-                    return;
-                }
-                if($.trim($('#partbtaxnumber_edit').val())==''){
-                    location.href = "#modal-tip-edit";
-                    $("#modal-tip-edit").html("请填写乙方税号");
-                    return;
+                if($('#partbtype_edit').val()==0){
+                    if($.trim($('#partblegalperson_edit').val())==''){
+                        location.href = "#modal-tip-edit";
+                        $("#modal-tip-edit").html("请填写乙方法定代表人");
+                        return;
+                    }
+                    if($.trim($('#partbtaxnumber_edit').val())==''){
+                        location.href = "#modal-tip-edit";
+                        $("#modal-tip-edit").html("请填写乙方税号");
+                        return;
+                    }
+
+                }else if($('#partbtype_edit').val()==1){
+                    if($.trim($('#partbzjhm_edit').val())==''){
+                        location.href = "#modal-tip";
+                        $("#modal-tip-edit").html("请填写乙方证件号码");
+                        return;
+                    }
                 }
 
                 if($.trim($('#partbbankname_edit').val())==''){
@@ -1938,6 +1998,8 @@
                     $('#partbbankname').attr('readonly',true);
                     $('#partbaccount').attr('readonly',true);
                     $('#partbaccountname').attr('readonly',true);
+                    $('#partbzjzl').attr('disabled',true);
+                    $('#partbzjhm').attr('readonly',true);
                 }else{
                     $('#partbtype').attr('disabled',false);
                     $('#partbaddress').attr('readonly',false);
@@ -1947,6 +2009,8 @@
                     $('#partbbankname').attr('readonly',false);
                     $('#partbaccount').attr('readonly',false);
                     $('#partbaccountname').attr('readonly',false);
+                    $('#partbzjzl').attr('disabled',false);
+                    $('#partbzjhm').attr('readonly',false);
                 }
             });
 
@@ -1960,6 +2024,8 @@
                     $('#partbbankname_edit').attr('readonly',true);
                     $('#partbaccount_edit').attr('readonly',true);
                     $('#partbaccountname_edit').attr('readonly',true);
+                    $('#partbzjzl_edit').attr('disabled',true);
+                    $('#partbzjhm_edit').attr('readonly',true);
                 }else{
                     $('#partbtype_edit').attr('disabled',false);
                     $('#partbaddress_edit').attr('readonly',false);
@@ -1969,6 +2035,8 @@
                     $('#partbbankname_edit').attr('readonly',false);
                     $('#partbaccount_edit').attr('readonly',false);
                     $('#partbaccountname_edit').attr('readonly',false);
+                    $('#partbzjzl_edit').attr('disabled',false);
+                    $('#partbzjhm_edit').attr('readonly',false);
                 }
             });
 
@@ -2335,6 +2403,10 @@
                             $('#partbaccountname').val(JSON.parse(data.responseText).rows[0].accountname);
                             $('#partbbankname').val(JSON.parse(data.responseText).rows[0].bankname);
                             $("#partbtype").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
+                            if($('#partbtype').val()==1){
+                                $('#partbzjhm').val(JSON.parse(data.responseText).rows[0].idnumber);
+                                $("#partbzjzl").val(JSON.parse(data.responseText).rows[0].idtype).trigger("change");
+                            }
                         }else if(id=='partbcode_edit'){
                             $('#partbaddress_edit').val(JSON.parse(data.responseText).rows[0].address);
                             $('#partblegalperson_edit').val(JSON.parse(data.responseText).rows[0].name);
@@ -2344,6 +2416,10 @@
                             $('#partbaccountname_edit').val(JSON.parse(data.responseText).rows[0].accountname);
                             $('#partbbankname_edit').val(JSON.parse(data.responseText).rows[0].bankname);
                             $("#partbtype_edit").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
+                            if($('#partbtype_edit').val()==1){
+                                $('#partbzjhm_edit').val(JSON.parse(data.responseText).rows[0].idnumber);
+                                $("#partbzjzl_edit").val(JSON.parse(data.responseText).rows[0].idtype).trigger("change");
+                            }
                         }
                     }else{
                         toastMessage("系统提示",xmlRequest.responseJSON.message);
@@ -2450,6 +2526,9 @@
         data.cardfee = $.trim($('#cardfee').val());
         data.reissuecardfee = $.trim($('#reissuecardfee').val());
         data.auditstate = 1;
+        //证件种类和证件号码
+        data.partbzjzl = $('#partbzjzl').val();
+        data.partbzjhm = $.trim($('#partbzjhm').val());
         return data;
     }
 
@@ -2467,6 +2546,13 @@
         $('#buildid_edit').append(new Option(buildInfo.name,data.buildid,true,true)).trigger("change");
         $('#showAddressId_edit').val(buildInfo.address);
 
+        if(data.partbtype==0){
+            $('#div4_edit').css("display","");
+            $('#div6_edit').css("display","");
+        }else if(data.partbtype==1){
+            $('#div5_edit').css("display","");
+            $('#div7_edit').css("display","");
+        }
         if (data.contype=='1') {
             $(".wyxx").css("display", "");
             $(".cwxx").css("display", "none");
@@ -2501,6 +2587,8 @@
         $('#partbaccountname_edit').val(data.partbaccountname);
         $('#partbbankname_edit').val(data.partbbankname);
         $("#partbtype_edit").val(data.partbtype).trigger("change");
+        $("#partbzjzl_edit_edit").val(data.partbzjzl).trigger("change");
+        $("#partbzjhm_edit").val(data.partbzjhm);
         if (data.contype=='1') {
             $('#buildarera_edit').val(data.buildarea);
             $('#tenantarea_edit').val(data.tenantarea);
@@ -2641,6 +2729,8 @@
         data.cardfee = $.trim($('#cardfee_edit').val());
         data.reissuecardfee = $.trim($('#reissuecardfee_edit').val());
         data.auditstate = 1;
+        data.partbzjzl = $('#partbzjzl_edit').val();
+        data.partbzjhm = $.trim($('#partbzjhm_edit').val());
         return data;
     }
 
@@ -2787,10 +2877,38 @@
                     initBuildValue.push(JSON.parse(data.responseText).rows[0].id);
                     initBuildValue.push(JSON.parse(data.responseText).rows[0].name);
                 } else{
-                    toastMessage("系统提示",xmlRequest.responseJSON.message);
+                    toastMessage("系统提示",data.responseJSON.message);
                 }
             }
         });
+    }
+
+    function changePartbShow(){
+        if($('#partbtype').val()==0){
+            $('#div4').css("display","");
+            $('#div6').css("display","");
+            $('#div5').css("display","none");
+            $('#div7').css("display","none");
+        }else if($('#partbtype').val()==1){
+            $('#div4').css("display","none");
+            $('#div6').css("display","none");
+            $('#div5').css("display","");
+            $('#div7').css("display","");
+        }
+    }
+
+    function changePartbShow_edit(){
+        if($('#partbtype_edit').val()==0){
+            $('#div4_edit').css("display","");
+            $('#div6_edit').css("display","");
+            $('#div5_edit').css("display","none");
+            $('#div7_edit').css("display","none");
+        }else if($('#partbtype_edit').val()==1){
+            $('#div4_edit').css("display","none");
+            $('#div6_edit').css("display","none");
+            $('#div5_edit').css("display","");
+            $('#div7_edit').css("display","");
+        }
     }
 
 </script>

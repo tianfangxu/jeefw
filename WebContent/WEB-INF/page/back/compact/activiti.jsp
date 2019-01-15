@@ -133,7 +133,7 @@
 									<div class="col-sm-4" style="display: none" id="div1_edit">
 										<%--<select class="select2" id="propertyid_edit" style="width:100%" multiple disabled>
 										</select>--%>
-										<input type="text"  class="width-100"  id="PropertyIds_edit"   />
+										<input type="text"  class="width-100"  id="PropertyIds_edit"  readonly />
 									</div>
 								</div>
 								<div class="form-group" >
@@ -241,9 +241,20 @@
 									<div class="col-sm-4">
 										<input type="text" id="partbaddress_edit" class="width-100" readonly/>
 									</div>
-									<label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson_edit">法定代表人：</label>
-									<div class="col-sm-4">
-										<input type="text" id="partblegalperson_edit" class="width-100" readonly/>
+									<div id="div4_edit" style="display:none">
+										<label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson_edit">法定代表人：</label>
+										<div class="col-sm-4">
+											<input type="text" id="partblegalperson_edit" class="width-100"/>
+										</div>
+									</div>
+									<div id="div5_edit" style="display:none">
+										<label class="col-sm-2 control-label blue" style="text-align: left" for="partbzjzl_edit">证件种类：</label>
+										<div class="col-sm-4">
+											<select id="partbzjzl_edit" class="form-control" disabled>
+												<option value="身份证">身份证</option>
+												<option value="护照">护照</option>
+											</select>
+										</div>
 									</div>
 								</div>
 								<div class="form-group">
@@ -251,30 +262,38 @@
 									<div class="col-sm-4">
 										<input type="text" id="partbncontact_edit" class="width-100" readonly/>
 									</div>
-									<label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">税 号：</label>
-									<div class="col-sm-4">
-										<input type="text" id="partbtaxnumber_edit" class="width-100" readonly/>
+									<div id="div6_edit" style="display:none;">
+										<label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">税 号：</label>
+										<div class="col-sm-4">
+											<input type="text" id="partbtaxnumber_edit" class="width-100" readonly/>
+										</div>
+									</div>
+									<div id="div7_edit" style="display:none;">
+										<label class="col-sm-2 control-label blue" style="text-align: left" for="partbzjhm_edit">证件号码：</label>
+										<div class="col-sm-4">
+											<input type="text" id="partbzjhm_edit" class="width-100" readonly/>
+										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-2 control-label blue" style="text-align: left" for="partbncontact_edit">开户行：</label>
 									<div class="col-sm-4">
-										<input type="text" id="partbbankname_edit" class="width-100"/>
+										<input type="text" id="partbbankname_edit" class="width-100" readonly/>
 									</div>
 									<label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">银行账号：</label>
 									<div class="col-sm-4">
-										<input type="text" id="partbaccount_edit" class="width-100" />
+										<input type="text" id="partbaccount_edit" class="width-100" readonly/>
 									</div>
 								</div>
 								<div class="form-group" >
 									<label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">户名：</label>
 									<div class="col-sm-4">
-										<input type="text" id="partbaccountname_edit" class="width-100" />
+										<input type="text" id="partbaccountname_edit" class="width-100" readonly />
 									</div>
 									<div id="div3_edit" style="display: none;">
 										<label class="col-sm-2 control-label blue" style="text-align: left" for="partbname_edit">承租方名称：</label>
 										<div class="col-sm-4">
-											<input type="text" id="partbname_edit" class="width-100"/>
+											<input type="text" id="partbname_edit" class="width-100" readonly/>
 										</div>
 									</div>
 								</div>
@@ -1124,6 +1143,13 @@
             $('#buildid_edit').append(new Option(buildInfo.name,data.buildid,true,true)).trigger("change");
             $('#showAddressId_edit').val(buildInfo.address);
 
+            if(data.partbtype==0){
+                $('#div4_edit').css("display","");
+                $('#div6_edit').css("display","");
+            }else if(data.partbtype==1){
+                $('#div5_edit').css("display","");
+                $('#div7_edit').css("display","");
+            }
             if (data.contype=='1') {
                 $(".wyxx").css("display", "");
                 $(".cwxx").css("display", "none");
@@ -1158,6 +1184,8 @@
             $('#partbaccountname_edit').val(data.partbaccountname);
             $('#partbbankname_edit').val(data.partbbankname);
             $("#partbtype_edit").val(data.partbtype).trigger("change");
+            $("#partbzjzl_edit_edit").val(data.partbzjzl).trigger("change");
+            $("#partbzjhm_edit").val(data.partbzjhm);
             if (data.contype=='1') {
                 $('#buildarera_edit').val(data.buildarea);
                 $('#tenantarea_edit').val(data.tenantarea);
