@@ -368,6 +368,8 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 				customerEntity.setCreateuser(model.getLoginuser().getUserName());
 				customerEntity.setCreatetime(DateUnit.getTime14());
 				customerEntity.setDeleteflg("0");
+				customerEntity.setIdtype(model.getPartbzjzl());
+				customerEntity.setIdnumber(model.getPartbzjhm());
 				customerDao.persist(customerEntity);
 				contract.setPartbcode(customerEntity.getId());
 				contract.setPartbtype(customerEntity.getType());
@@ -379,6 +381,8 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 				contract.setPartbaccount(customerEntity.getAccount());
 				contract.setPartbaccountname(customerEntity.getAccountname());
 				contract.setPartbbankname(customerEntity.getBankname());
+				contract.setPartbzjzl(customerEntity.getIdtype());
+				contract.setPartbzjhm(customerEntity.getIdnumber());
 			}
 			//楼宇物业信息
 			if(model.getContype().equals("1")){
@@ -564,6 +568,8 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 			customerEntity.setCreateuser(model.getLoginuser().getUserName());
 			customerEntity.setCreatetime(DateUnit.getTime14());
 			customerEntity.setDeleteflg("0");
+			customerEntity.setIdtype(model.getPartbzjzl());
+			customerEntity.setIdnumber(model.getPartbzjhm());
 			customerDao.persist(customerEntity);
 			model.setPartbcode(customerEntity.getId());
 		}
