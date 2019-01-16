@@ -192,9 +192,17 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
         updateContract_edit(model);
         Contract contract = contractDao.get(model.getId());
         Map<String, Object> map = null;
+        boolean flag = false;
         if (model.getContype().equals("1")) {
             //更新物业合同
             ContractProperty contractProperty = contractPropertyDao.getContractPropertyByContractId(model.getId());
+
+            if(contractProperty==null){
+                contractProperty = new ContractProperty();
+                contractProperty.setContractcode(model.getId());
+                contractProperty.setId(createUUID());
+                flag = true;
+            }
             BuildEntity buildEntity = buildDao.get(model.getBuildid());
             //String[] propertyIds = model.getPropertyid().split(",");
             String address = buildEntity.getAddress() + model.getPropertyText();
@@ -206,24 +214,45 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 			if(!names.equals("")){
 				address  = address + names.substring(0,names.length()-1);
 			}*/
-            contractProperty.setAddress(address);
-            contractProperty.setBuildarea(new BigDecimal(model.getBuildarea()));
+			if(CommonUtil.isNotNull(address))   {
+                contractProperty.setAddress(address);
+            }
+
+            if(CommonUtil.isNotNull(model.getBuildarea())) {
+                contractProperty.setBuildarea(new BigDecimal(model.getBuildarea()));
+            }
+
             if(CommonUtil.isNotNull(model.getTenantarea())) {
                 contractProperty.setTenantarea(new BigDecimal(model.getTenantarea()));
             }
-            contractProperty.setPropertyfee(new BigDecimal(model.getPropertyfee()));
-            contractProperty.setDeposit(new BigDecimal(model.getDeposit()));
+            if(CommonUtil.isNotNull(model.getPropertyfee())){
+                contractProperty.setPropertyfee(new BigDecimal(model.getPropertyfee()));
+            }
+            if(CommonUtil.isNotNull(model.getDeposit())){
+                contractProperty.setDeposit(new BigDecimal(model.getDeposit()));
+            }
             if(CommonUtil.isNotNull(model.getElectric())){
                 contractProperty.setElectric(new BigDecimal(model.getElectric()));
             }
             contractProperty.setPaytype(dictDao.get(Long.valueOf(model.getPaytype())).getDictValue());
             contractProperty.setPaytypecode(model.getPaytype());
-            contractPropertyDao.update(contractProperty);
+
+            if(flag){
+                contractPropertyDao.persist(contractProperty);
+            }  else{
+                contractPropertyDao.update(contractProperty);
+            }
             //组织物业合同模板数据
             map = generateWyWordMap(contract, contractProperty);
         } else if (model.getContype().equals("2")) {
             //停车合同
             ContractParking contractParking = contractParkingDao.getContractParkingByContractId(model.getId());
+            if(contractParking==null){
+                contractParking = new ContractParking();
+                contractParking.setContractcode(model.getId());
+                contractParking.setId(createUUID());
+                flag=true;
+            }
             BuildEntity buildEntity = buildDao.get(model.getBuildid());
             String address = buildEntity.getAddress() + buildEntity.getName();
             contractParking.setAddress(address);
@@ -252,8 +281,11 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
             if(CommonUtil.isNotNull(model.getReissuecardfee())){
                 contractParking.setReissuecardfee(new BigDecimal(model.getReissuecardfee()));
             }
-
-            contractParkingDao.update(contractParking);
+            if(flag){
+                contractParkingDao.persist(contractParking);
+            }  else{
+                contractParkingDao.update(contractParking);
+            }
             //组织停车合同模板数据
             map = generateTcWordMap(contract, contractParking, buildEntity.getName());
         }
@@ -399,20 +431,20 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
                 //生成乙方信息
                 CustomerEntity customerEntity = new CustomerEntity();
                 customerEntity.setId(createUUID());
-                customerEntity.setType(model.getPartbtype());
-                customerEntity.setAddress(model.getPartbaddress());
-                customerEntity.setName(model.getPartbname());
-                customerEntity.setContactname(model.getPartblegalperson());
-                customerEntity.setContactnumber(model.getPartbcontact());
-                customerEntity.setTaxnumber(model.getPartbtaxnumber());
-                customerEntity.setAccount(model.getPartbaccount());
-                customerEntity.setAccountname(model.getPartbaccountname());
-                customerEntity.setBankname(model.getPartbbankname());
+                customerEntity.setType(CommonUtil.isNotNull(model.getPartbtype())?model.getPartbtype():"" );
+                customerEntity.setAddress(CommonUtil.isNotNull(model.getPartbaddress())?model.getPartbaddress():"" );
+                customerEntity.setName(CommonUtil.isNotNull(model.getPartbname())?model.getPartbname():"" );
+                customerEntity.setContactname(CommonUtil.isNotNull(model.getPartblegalperson())?model.getPartblegalperson():"" );
+                customerEntity.setContactnumber(CommonUtil.isNotNull(model.getPartbcontact())?model.getPartbcontact():"" );
+                customerEntity.setTaxnumber(CommonUtil.isNotNull(model.getPartbtaxnumber())?model.getPartbtaxnumber():"" );
+                customerEntity.setAccount(CommonUtil.isNotNull(model.getPartbaccount())?model.getPartbaccount():"" );
+                customerEntity.setAccountname(CommonUtil.isNotNull( model.getPartbaccountname())? model.getPartbaccountname():"");
+                customerEntity.setBankname(CommonUtil.isNotNull(model.getPartbbankname())?model.getPartbbankname():"" );
                 customerEntity.setCreateuser(model.getLoginuser().getUserName());
                 customerEntity.setCreatetime(DateUnit.getTime14());
                 customerEntity.setDeleteflg("0");
-                customerEntity.setIdtype(model.getPartbzjzl());
-                customerEntity.setIdnumber(model.getPartbzjhm());
+                customerEntity.setIdtype(CommonUtil.isNotNull(model.getPartbzjzl())?model.getPartbzjzl():"" );
+                customerEntity.setIdnumber(CommonUtil.isNotNull(model.getPartbzjhm())?model.getPartbzjhm():"" );
                 customerDao.persist(customerEntity);
                 contract.setPartbcode(customerEntity.getId());
                 contract.setPartbtype(customerEntity.getType());
@@ -459,20 +491,20 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
         //获得数据
         Map<String, Object> map = new HashMap<String, Object>();
         //通过firstpartyid获取甲方信息
-        map.put("firstparty_name", CommonUtil.isNotNull(contract.getPartaname()) ? contract.getPartaname() : "");
-        map.put("firstparty_address", CommonUtil.isNotNull(contract.getPartaaddress()) ? contract.getPartaaddress() : "");
-        map.put("firstparty_linkname", CommonUtil.isNotNull(contract.getPartalegalperson()) ? contract.getPartalegalperson() : "");
-        map.put("firstparty_linkphone", CommonUtil.isNotNull(contract.getPartancontact()) ? contract.getPartancontact() : "");
+        map.put("firstparty_name", CommonUtil.isNotNull(contract.getPartaname()) ? contract.getPartaname() : "  ");
+        map.put("firstparty_address", CommonUtil.isNotNull(contract.getPartaaddress()) ? contract.getPartaaddress() : "  ");
+        map.put("firstparty_linkname", CommonUtil.isNotNull(contract.getPartalegalperson()) ? contract.getPartalegalperson() : "  ");
+        map.put("firstparty_linkphone", CommonUtil.isNotNull(contract.getPartancontact()) ? contract.getPartancontact() : "  ");
 
         //通过Customerid获取客户信息
-        map.put("c_name", CommonUtil.isNotNull(contract.getPartbname()) ? contract.getPartbname() : "");
-        map.put("c_address", CommonUtil.isNotNull(contract.getPartbaddress()) ? contract.getPartbaddress() : "");
-        map.put("c_linkname", CommonUtil.isNotNull(contract.getPartblegalperson()) ? contract.getPartblegalperson() : "");
-        map.put("c_phone", CommonUtil.isNotNull(contract.getPartbcontact()) ? contract.getPartbcontact() : "");
+        map.put("c_name", CommonUtil.isNotNull(contract.getPartbname()) ? contract.getPartbname() : "  ");
+        map.put("c_address", CommonUtil.isNotNull(contract.getPartbaddress()) ? contract.getPartbaddress() : "  ");
+        map.put("c_linkname", CommonUtil.isNotNull(contract.getPartblegalperson()) ? contract.getPartblegalperson() : "  ");
+        map.put("c_phone", CommonUtil.isNotNull(contract.getPartbcontact()) ? contract.getPartbcontact() : "  ");
 
         //通过buildid获取房屋信息
-        map.put("address", CommonUtil.isNotNull(contractProperty.getAddress()) ? contractProperty.getAddress() : "");
-        map.put("buildarera", CommonUtil.isNotNull(contractProperty.getBuildarea()) ? contractProperty.getBuildarea() : "");
+        map.put("address", CommonUtil.isNotNull(contractProperty.getAddress()) ? contractProperty.getAddress() : "  ");
+        map.put("buildarera", CommonUtil.isNotNull(contractProperty.getBuildarea()) ? contractProperty.getBuildarea() : "  ");
         String startTime = new SimpleDateFormat("YYYY-MM-dd").format(contract.getStartdate());
         String endTime = new SimpleDateFormat("YYYY-MM-dd").format(contract.getEnddate());
 
@@ -485,28 +517,28 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
         map.put("endtime_month", endTime.split("-")[1]);
         map.put("endtime_day", endTime.split("-")[2]);
 
-        map.put("tenantarea", CommonUtil.isNotNull(contractProperty.getTenantarea()) ? contractProperty.getTenantarea() : "");
-        map.put("managefee", CommonUtil.isNotNull(contractProperty.getPropertyfee()) ? contractProperty.getPropertyfee() : "");
+        map.put("tenantarea", CommonUtil.isNotNull(contractProperty.getTenantarea()) ? contractProperty.getTenantarea() : "  ");
+        map.put("managefee", CommonUtil.isNotNull(contractProperty.getPropertyfee()) ? contractProperty.getPropertyfee() : "  ");
 
         if (CommonUtil.isNotNull(contractProperty.getPropertyfee())) {
             map.put("managefee_china", NumberToCN.number2CNMontrayUnit(contractProperty.getPropertyfee()));
         } else {
-            map.put("managefee_china", "");
+            map.put("managefee_china", "  ");
         }
 
-        map.put("payway", CommonUtil.isNotNull(contractProperty.getPaytype()) ? contractProperty.getPaytype() : "");
-        map.put("prodeposit", CommonUtil.isNotNull(contractProperty.getDeposit()) ? contractProperty.getDeposit() : "");
+        map.put("payway", CommonUtil.isNotNull(contractProperty.getPaytype()) ? contractProperty.getPaytype() : "  ");
+        map.put("prodeposit", CommonUtil.isNotNull(contractProperty.getDeposit()) ? contractProperty.getDeposit() : "  ");
         if (CommonUtil.isNotNull(contractProperty.getDeposit())) {
             map.put("prodeposit_china", NumberToCN.number2CNMontrayUnit(contractProperty.getDeposit()));
         } else {
-            map.put("prodeposit_china", NumberToCN.number2CNMontrayUnit(contractProperty.getDeposit()));
+            map.put("prodeposit_china","  ");
         }
-        map.put("eleprice", CommonUtil.isNotNull(contractProperty.getElectric()) ? contractProperty.getElectric() : "");
+        map.put("eleprice", CommonUtil.isNotNull(contractProperty.getElectric()) ? contractProperty.getElectric() : "  ");
 
-        map.put("firstparty_bankname", CommonUtil.isNotNull(contract.getBankname()) ? contract.getBankname() : "");
-        map.put("firstparty_bank", CommonUtil.isNotNull(contract.getPartaaccountname()) ? contract.getPartaaccountname() : "");
-        map.put("firstparty_dutyparagraph", CommonUtil.isNotNull(contract.getPartaaccount()) ? contract.getPartaaccount() : "");
-        map.put("supplementaryterms", CommonUtil.isNotNull(contract.getSubsidiary()) ? contract.getSubsidiary() : "");
+        map.put("firstparty_bankname", CommonUtil.isNotNull(contract.getBankname()) ? contract.getBankname() : "  ");
+        map.put("firstparty_bank", CommonUtil.isNotNull(contract.getPartaaccountname()) ? contract.getPartaaccountname() : "  ");
+        map.put("firstparty_dutyparagraph", CommonUtil.isNotNull(contract.getPartaaccount()) ? contract.getPartaaccount() : "  ");
+        map.put("supplementaryterms", CommonUtil.isNotNull(contract.getSubsidiary()) ? contract.getSubsidiary() : "  ");
 
         return map;
     }
@@ -515,22 +547,22 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
         //获得数据
         Map<String, Object> map = new HashMap<String, Object>();
         //通过firstpartyid获取甲方信息
-        map.put("firstparty_name", CommonUtil.isNotNull(contract.getPartaname()) ? contract.getPartaname() : "");
-        map.put("firstparty_address", CommonUtil.isNotNull(contract.getPartaaddress()) ? contract.getPartaaddress() : "");
-        map.put("firstparty_linkname", CommonUtil.isNotNull(contract.getPartalegalperson()) ? contract.getPartalegalperson() : "");
-        map.put("firstparty_linkphone", CommonUtil.isNotNull(contract.getPartancontact()) ? contract.getPartancontact() : "");
+        map.put("firstparty_name", CommonUtil.isNotNull(contract.getPartaname()) ? contract.getPartaname() : "  ");
+        map.put("firstparty_address", CommonUtil.isNotNull(contract.getPartaaddress()) ? contract.getPartaaddress() : "  ");
+        map.put("firstparty_linkname", CommonUtil.isNotNull(contract.getPartalegalperson()) ? contract.getPartalegalperson() : "  ");
+        map.put("firstparty_linkphone", CommonUtil.isNotNull(contract.getPartancontact()) ? contract.getPartancontact() : "  ");
 
         map.put("build", build);
 
         //通过Customerid获取客户信息
-        map.put("c_name", CommonUtil.isNotNull(contract.getPartbname()) ? contract.getPartbname() : "");
-        map.put("c_address", CommonUtil.isNotNull(contract.getPartbaddress()) ? contract.getPartbaddress() : "");
-        map.put("c_linkname", CommonUtil.isNotNull(contract.getPartblegalperson()) ? contract.getPartblegalperson() : "");
-        map.put("c_phone", CommonUtil.isNotNull(contract.getPartbcontact()) ? contract.getPartbcontact() : "");
+        map.put("c_name", CommonUtil.isNotNull(contract.getPartbname()) ? contract.getPartbname() : " ");
+        map.put("c_address", CommonUtil.isNotNull(contract.getPartbaddress()) ? contract.getPartbaddress() : "  ");
+        map.put("c_linkname", CommonUtil.isNotNull(contract.getPartblegalperson()) ? contract.getPartblegalperson() : "  ");
+        map.put("c_phone", CommonUtil.isNotNull(contract.getPartbcontact()) ? contract.getPartbcontact() : "  ");
 
         //通过buildid获取房屋信息
-        map.put("address", CommonUtil.isNotNull(contractParking.getAddress()) ? contractParking.getAddress() : "");
-        map.put("manager", CommonUtil.isNotNull(contractParking.getManager()) ? contractParking.getManager() : "");
+        map.put("address", CommonUtil.isNotNull(contractParking.getAddress()) ? contractParking.getAddress() : "  ");
+        map.put("manager", CommonUtil.isNotNull(contractParking.getManager()) ? contractParking.getManager() : "  ");
         String startTime = new SimpleDateFormat("YYYY-MM-dd").format(contract.getStartdate());
         String endTime = new SimpleDateFormat("YYYY-MM-dd").format(contract.getEnddate());
 
@@ -543,15 +575,15 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
         map.put("endtime_month", endTime.split("-")[1]);
         map.put("endtime_day", endTime.split("-")[2]);
 
-        map.put("undergroundunit", CommonUtil.isNotNull(contractParking.getUndergroundunit()) ? contractParking.getUndergroundunit() : "");
-        map.put("surfaceunit", CommonUtil.isNotNull(contractParking.getSurfaceunit()) ? contractParking.getSurfaceunit() : "");
-        map.put("undergroundnumber", CommonUtil.isNotNull(contractParking.getUndergroundnumber() + "") ? contractParking.getUndergroundnumber() + "" : "");
-        map.put("surfacenumber", CommonUtil.isNotNull(contractParking.getUndergroundunit() + "") ? contractParking.getUndergroundunit() + "" : "");
-        map.put("rent", CommonUtil.isNotNull(contractParking.getRent()) ? contractParking.getRent() : "");
-        map.put("prepay", CommonUtil.isNotNull(contractParking.getPrepay()) ? contractParking.getPrepay() : "");
-        map.put("cardfee", CommonUtil.isNotNull(contractParking.getCardfee()) ? contractParking.getCardfee() : "");
-        map.put("reissuecardfee", CommonUtil.isNotNull(contractParking.getReissuecardfee()) ? contractParking.getReissuecardfee() : "");
-        map.put("supplementaryterms", CommonUtil.isNotNull(contract.getSubsidiary()) ? contract.getSubsidiary() : "");
+        map.put("undergroundunit", CommonUtil.isNotNull(contractParking.getUndergroundunit()) ? contractParking.getUndergroundunit() : "  ");
+        map.put("surfaceunit", CommonUtil.isNotNull(contractParking.getSurfaceunit()) ? contractParking.getSurfaceunit() : " ");
+        map.put("undergroundnumber", CommonUtil.isNotNull(contractParking.getUndergroundnumber()) ? contractParking.getUndergroundnumber() + "" : "  ");
+        map.put("surfacenumber", CommonUtil.isNotNull(contractParking.getSurfacenumber()) ? contractParking.getSurfacenumber() + "" : "");
+        map.put("rent", CommonUtil.isNotNull(contractParking.getRent()) ? contractParking.getRent() : "  ");
+        map.put("prepay", CommonUtil.isNotNull(contractParking.getPrepay()) ? contractParking.getPrepay() : " ");
+        map.put("cardfee", CommonUtil.isNotNull(contractParking.getCardfee()) ? contractParking.getCardfee() : "  ");
+        map.put("reissuecardfee", CommonUtil.isNotNull(contractParking.getReissuecardfee()) ? contractParking.getReissuecardfee() : "  ");
+        map.put("supplementaryterms", CommonUtil.isNotNull(contract.getSubsidiary()) ? contract.getSubsidiary() : "  ");
 
         return map;
     }
@@ -611,20 +643,20 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
             //生成乙方信息
             CustomerEntity customerEntity = new CustomerEntity();
             customerEntity.setId(createUUID());
-            customerEntity.setType(model.getPartbtype());
-            customerEntity.setAddress(model.getPartbaddress());
-            customerEntity.setName(model.getPartbname());
-            customerEntity.setContactname(model.getPartblegalperson());
-            customerEntity.setContactnumber(model.getPartbcontact());
-            customerEntity.setTaxnumber(model.getPartbtaxnumber());
-            customerEntity.setAccount(model.getPartbaccount());
-            customerEntity.setAccountname(model.getPartbaccountname());
-            customerEntity.setBankname(model.getPartbbankname());
+            customerEntity.setType(CommonUtil.isNotNull(model.getPartbtype())?model.getPartbtype():"" );
+            customerEntity.setAddress(CommonUtil.isNotNull(model.getPartbaddress())?model.getPartbaddress():"" );
+            customerEntity.setName(CommonUtil.isNotNull(model.getPartbname())?model.getPartbname():"" );
+            customerEntity.setContactname(CommonUtil.isNotNull(model.getPartblegalperson())?model.getPartblegalperson():"" );
+            customerEntity.setContactnumber(CommonUtil.isNotNull(model.getPartbcontact())?model.getPartbcontact():"" );
+            customerEntity.setTaxnumber(CommonUtil.isNotNull(model.getPartbtaxnumber())?model.getPartbtaxnumber():"" );
+            customerEntity.setAccount(CommonUtil.isNotNull(model.getPartbaccount())?model.getPartbaccount():"" );
+            customerEntity.setAccountname(CommonUtil.isNotNull(model.getPartbaccountname())?model.getPartbaccountname():"" );
+            customerEntity.setBankname(CommonUtil.isNotNull(model.getPartbbankname())?model.getPartbbankname():"" );
             customerEntity.setCreateuser(model.getLoginuser().getUserName());
             customerEntity.setCreatetime(DateUnit.getTime14());
             customerEntity.setDeleteflg("0");
-            customerEntity.setIdtype(model.getPartbzjzl());
-            customerEntity.setIdnumber(model.getPartbzjhm());
+            customerEntity.setIdtype(CommonUtil.isNotNull(model.getPartbzjzl())?model.getPartbzjzl():"" );
+            customerEntity.setIdnumber(CommonUtil.isNotNull(model.getPartbzjhm())?model.getPartbzjhm():"" );
             customerDao.persist(customerEntity);
             model.setPartbcode(customerEntity.getId());
         }
