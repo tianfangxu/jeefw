@@ -178,7 +178,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" >
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price">合同金额（元）：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price">合同金额（元/年）：</label>
                                     <div class="col-sm-4">
                                         <input type="text" placeholder="" class="width-100" id="price" />
                                     </div>
@@ -547,7 +547,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" >
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price_edit">合同金额（元）：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price_edit">合同金额（元/年）：</label>
                                     <div class="col-sm-4">
                                         <input type="text" placeholder="" class="width-100" id="price_edit" />
                                     </div>
@@ -929,7 +929,7 @@
                 datatype: "json",
                 height: 450,
                 width:window.screen.availWidth-20,
-                colNames: ["ID", "合同编号", "楼宇","管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态","操作"],
+                colNames: ["ID", "合同编号", "楼宇","管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态","合同金额","操作"],
                 colModel: [{
                     name: "id",
                     width: 60,
@@ -990,6 +990,10 @@
                         }
                     }
                 }, {
+                    name: "totalamount",
+                    width: 100,
+                    search: false
+                },{
                     name: "operation",
                     width: 100,
                     search: false,
@@ -1110,6 +1114,16 @@
                 if(initBuildValue.length>0){
                     $('#buildid').append(new Option(initBuildValue[1],initBuildValue[0],true,true)).trigger("change");
                 }
+                $("#partacode").append(new Option("上海交投物业管理有限公司","1",true,true)).trigger("change");
+                $('#partaaddress').val("上海市徐汇区建国东路525号");
+                $('#partalegalperson').val("凌军");
+                $('#partancontact').val("021-54355520");
+                $('#partaaccount').val("98410155260000642");
+                $('#partaaccountname').val("上海交投物业管理有限公司");
+                $('#bankname').val("浦发银行大众大厦支行");
+                $('#partataxnumber').val("913101011345400534");
+
+
                 initPartaSelect2('partacode');
                 initPaytypeSelect2('paytype','WYYJ');
                 initPartbSelect2('partbcode');
@@ -1330,7 +1344,7 @@
                 }
 
                 //乙方信息校验
-                if($.trim($('#partbaddress').val())==''){
+/*                if($.trim($('#partbaddress').val())==''){
                     location.href = "#modal-tip";
                     $("#modal-tip").html("请填写乙方地址");
                     return;
@@ -1363,7 +1377,7 @@
                     location.href = "#modal-tip";
                     $("#modal-tip").html("请填写银行账号");
                     return;
-                }
+                }*/
                 if($.trim($('#partbaccountname').val())==''){
                     location.href = "#modal-tip";
                     $("#modal-tip").html("请填写乙方户名");
@@ -1383,11 +1397,11 @@
                         $("#modal-tip").html("请填写房屋建筑面积");
                         return;
                     }
-                    if($.trim($('#tenantarea').val())==''){
+                   /* if($.trim($('#tenantarea').val())==''){
                         location.href = "#modal-tip";
                         $("#modal-tip").html("请填写承租建筑面积");
                         return;
-                    }
+                    }*/
                     if($.trim($('#propertyfee').val())==''){
                         location.href = "#modal-tip";
                         $("#modal-tip").html("请填写物业管理费");
@@ -1403,11 +1417,11 @@
                         $("#modal-tip").html("请填写物业费押金");
                         return;
                     }
-                    if($.trim($('#electric').val())==''){
+                  /*  if($.trim($('#electric').val())==''){
                         location.href = "#modal-tip";
                         $("#modal-tip").html("请填写电费单价");
                         return;
-                    }
+                    }*/
                 }else if($("#contype").val() == '2'){
                     //校验停车
                     if($.trim($('#manager').val())==''){
@@ -1559,7 +1573,7 @@
                 }
 
                 //乙方信息校验
-                if($.trim($('#partbaddress_edit').val())==''){
+                /*if($.trim($('#partbaddress_edit').val())==''){
                     location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请填写乙方地址");
                     return;
@@ -1594,7 +1608,7 @@
                     location.href = "#modal-tip-edit";
                     $("#modal-tip").html("请填写银行账号");
                     return;
-                }
+                }*/
                 if($.trim($('#partbaccountname_edit').val())==''){
                     location.href = "#modal-tip-edit";
                     $("#modal-tip").html("请填写乙方户名");
@@ -1615,11 +1629,11 @@
                         $("#modal-tip-edit").html("请填写房屋建筑面积");
                         return;
                     }
-                    if($.trim($('#tenantarea_edit').val())==''){
+                   /* if($.trim($('#tenantarea_edit').val())==''){
                         location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写承租建筑面积");
                         return;
-                    }
+                    }*/
                     if($.trim($('#propertyfee_edit').val())==''){
                         location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写物业管理费");
@@ -1635,11 +1649,11 @@
                         $("#modal-tip-edit").html("请填写物业费押金");
                         return;
                     }
-                    if($.trim($('#electric_edit').val())==''){
+                   /* if($.trim($('#electric_edit').val())==''){
                         location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写电费单价");
                         return;
-                    }
+                    }*/
                 }else if($("#contype_edit").val() == '2'){
                     //校验停车
                     if($.trim($('#manager_edit').val())==''){

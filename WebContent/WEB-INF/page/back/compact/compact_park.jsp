@@ -169,7 +169,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" >
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price">合同金额（元）：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price">合同金额（元/年）：</label>
                                     <div class="col-sm-4">
                                         <input type="text" placeholder="" class="width-100" id="price" />
                                     </div>
@@ -383,7 +383,7 @@
                         <div class="widget-body">
                             <div class="widget-main">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="manager">停车场地资产产权单位：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="manager">停车场地资产管理单位：</label>
                                     <div class="col-sm-10">
                                         <input type="text" id="manager" class="width-100"/>
                                     </div>
@@ -538,7 +538,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" >
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price_edit">合同金额（元）：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price_edit">合同金额（元/年）：</label>
                                     <div class="col-sm-4">
                                         <input type="text" placeholder="" class="width-100" id="price_edit" />
                                     </div>
@@ -753,7 +753,7 @@
                         <div class="widget-body">
                             <div class="widget-main">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="manager_edit">停车场地资产产权单位：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="manager_edit">停车场地资产管理单位：</label>
                                     <div class="col-sm-10">
                                         <input type="text" id="manager_edit" class="width-100"/>
                                     </div>
@@ -919,7 +919,7 @@
                 datatype: "json",
                 height: 450,
                 width:window.screen.availWidth-20,
-                colNames: ["ID", "合同编号","楼宇", "管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态","操作"],
+                colNames: ["ID", "合同编号","楼宇", "管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态","合同金额","操作"],
                 colModel: [{
                     name: "id",
                     width: 60,
@@ -979,6 +979,10 @@
                             return "已完成";
                         }
                     }
+                },{
+                    name: "totalamount",
+                    width: 100,
+                    search: false
                 }, {
                     name: "operation",
                     width: 100,
@@ -1099,9 +1103,19 @@
                 if(initBuildValue.length>0){
                     $('#buildid').append(new Option(initBuildValue[1],initBuildValue[0],true,true)).trigger("change");
                 }
+                $("#partacode").append(new Option("上海交投物业管理有限公司","1",true,true)).trigger("change");
+                $('#partaaddress').val("上海市徐汇区建国东路525号");
+                $('#partalegalperson').val("凌军");
+                $('#partancontact').val("021-54355520");
+                $('#partaaccount').val("98410155260000642");
+                $('#partaaccountname').val("上海交投物业管理有限公司");
+                $('#bankname').val("浦发银行大众大厦支行");
+                $('#partataxnumber').val("913101011345400534");
                 initPartaSelect2('partacode');
                 initPaytypeSelect2('paytype','WYYJ');
                 initPartbSelect2('partbcode');
+                $('#manager').val("上海交投物业管理有限公司");
+
             });
 
             $("#editCompactButton").bind("click", function () {
@@ -1319,44 +1333,6 @@
                 }
 
                 //乙方信息校验
-                if($.trim($('#partbaddress').val())==''){
-                    location.href = "#modal-tip";
-                    $("#modal-tip").html("请填写乙方地址");
-                    return;
-                }
-                if($('#partbtype').val==0){
-                    if($.trim($('#partblegalperson').val())==''){
-                        location.href = "#modal-tip";
-                        $("#modal-tip").html("请填写乙方法定代表人");
-                        return;
-                    }
-                    if($.trim($('#partbtaxnumber').val())==''){
-                        location.href = "#modal-tip";
-                        $("#modal-tip").html("请填写乙方税号");
-                        return;
-                    }
-                }else if($('#partbtype').val==1){
-                    if($.trim($('#partbzjhm').val())==''){
-                        location.href = "#modal-tip";
-                        $("#modal-tip").html("请填写乙方证件号码");
-                        return;
-                    }
-                }
-                if($.trim($('#partbtaxnumber').val())==''){
-                    location.href = "#modal-tip";
-                    $("#modal-tip").html("请填写乙方税号");
-                    return;
-                }
-                if($.trim($('#partbbankname').val())==''){
-                    location.href = "#modal-tip";
-                    $("#modal-tip").html("请填写乙方开户行");
-                    return;
-                }
-                if($.trim($('#partbaccount').val())==''){
-                    location.href = "#modal-tip";
-                    $("#modal-tip").html("请填写银行账号");
-                    return;
-                }
                 if($.trim($('#partbaccountname').val())==''){
                     location.href = "#modal-tip";
                     $("#modal-tip").html("请填写乙方户名");
@@ -1408,26 +1384,6 @@
                         $("#modal-tip").html("请填写停车场地资产产权单位");
                         return;
                     }
-                    if($.trim($('#undergroundunit').val())==''||!re.test($.trim($('#undergroundunit').val()))){
-                        location.href = "#modal-tip";
-                        $("#modal-tip").html("请填写地下车位价格,只能为数字");
-                        return;
-                    }
-                    if($.trim($('#surfaceunit').val())==''||!re.test($.trim($('#surfaceunit').val()))){
-                        location.href = "#modal-tip";
-                        $("#modal-tip").html("请填写地面车位价格,只能为数字");
-                        return;
-                    }
-                    if($.trim($('#undergroundnumber').val())==''||!re.test($.trim($('#undergroundnumber').val()))){
-                        location.href = "#modal-tip";
-                        $("#modal-tip").html("请填写地下车位数量,只能为数字");
-                        return;
-                    }
-                    if($.trim($('#surfacenumber').val())==''||!re.test($.trim($('#surfacenumber').val()))){
-                        location.href = "#modal-tip";
-                        $("#modal-tip").html("请填写地面车位数量,只能为数字");
-                        return;
-                    }
                     if($.trim($('#rent').val())==''||!re.test($.trim($('#rent').val()))){
                         location.href = "#modal-tip";
                         $("#modal-tip").html("请填写车位租赁费,只能为数字");
@@ -1436,16 +1392,6 @@
                     if($.trim($('#prepay').val())==''||!re.test($.trim($('#prepay').val()))){
                         location.href = "#modal-tip";
                         $("#modal-tip").html("请填写支付方式(月预付),只能为数字");
-                        return;
-                    }
-                    if($.trim($('#cardfee').val())==''||!re.test($.trim($('#cardfee').val()))){
-                        location.href = "#modal-tip";
-                        $("#modal-tip").html("请填写停车证制作费,只能为数字");
-                        return;
-                    }
-                    if($.trim($('#reissuecardfee').val())==''||!re.test($.trim($('#reissuecardfee').val()))){
-                        location.href = "#modal-tip";
-                        $("#modal-tip").html("请填写停车证补办费,只能为数字");
                         return;
                     }
                 }
@@ -1550,41 +1496,7 @@
                 }
 
                 //乙方信息校验
-                if($.trim($('#partbaddress_edit').val())==''){
-                    location.href = "#modal-tip-edit";
-                    $("#modal-tip-edit").html("请填写乙方地址");
-                    return;
-                }
-                if($('#partbtype_edit').val()==0){
-                    if($.trim($('#partblegalperson_edit').val())==''){
-                        location.href = "#modal-tip-edit";
-                        $("#modal-tip-edit").html("请填写乙方法定代表人");
-                        return;
-                    }
-                    if($.trim($('#partbtaxnumber_edit').val())==''){
-                        location.href = "#modal-tip-edit";
-                        $("#modal-tip-edit").html("请填写乙方税号");
-                        return;
-                    }
 
-                }else if($('#partbtype_edit').val()==1){
-                    if($.trim($('#partbzjhm_edit').val())==''){
-                        location.href = "#modal-tip";
-                        $("#modal-tip-edit").html("请填写乙方证件号码");
-                        return;
-                    }
-                }
-
-                if($.trim($('#partbbankname_edit').val())==''){
-                    location.href = "#modal-tip-edit";
-                    $("#modal-tip").html("请填写乙方开户行");
-                    return;
-                }
-                if($.trim($('#partbaccount_edit').val())==''){
-                    location.href = "#modal-tip-edit";
-                    $("#modal-tip").html("请填写银行账号");
-                    return;
-                }
                 if($.trim($('#partbaccountname_edit').val())==''){
                     location.href = "#modal-tip-edit";
                     $("#modal-tip").html("请填写乙方户名");
@@ -1637,26 +1549,6 @@
                         $("#modal-tip-edit").html("请填写停车场地资产产权单位");
                         return;
                     }
-                    if($.trim($('#undergroundunit_edit').val())==''||!re.test($.trim($('#undergroundunit_edit').val()))){
-                        location.href = "#modal-tip-edit";
-                        $("#modal-tip-edit").html("请填写地下车位价格,只能为数字");
-                        return;
-                    }
-                    if($.trim($('#surfaceunit_edit').val())==''||!re.test($.trim($('#surfaceunit_edit').val()))){
-                        location.href = "#modal-tip-edit";
-                        $("#modal-tip-edit").html("请填写地面车位价格,只能为数字");
-                        return;
-                    }
-                    if($.trim($('#undergroundnumber_edit').val())==''||!re.test($.trim($('#undergroundnumber_edit').val()))){
-                        location.href = "#modal-tip-edit";
-                        $("#modal-tip-edit").html("请填写地下车位数量,只能为数字");
-                        return;
-                    }
-                    if($.trim($('#surfacenumber_edit').val())==''||!re.test($.trim($('#surfacenumber_edit').val()))){
-                        location.href = "#modal-tip-edit";
-                        $("#modal-tip-edit").html("请填写地面车位数量,只能为数字");
-                        return;
-                    }
                     if($.trim($('#rent_edit').val())==''||!re.test($.trim($('#rent_edit').val()))){
                         location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写车位租赁费,只能为数字");
@@ -1665,16 +1557,6 @@
                     if($.trim($('#prepay_edit').val())==''||!re.test($.trim($('#prepay_edit').val()))){
                         location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写支付方式(月预付),只能为数字");
-                        return;
-                    }
-                    if($.trim($('#cardfee_edit').val())==''||!re.test($.trim($('#cardfee_edit').val()))){
-                        location.href = "#modal-tip-edit";
-                        $("#modal-tip-edit").html("请填写停车证制作费,只能为数字");
-                        return;
-                    }
-                    if($.trim($('#reissuecardfee_edit').val())==''||!re.test($.trim($('#reissuecardfee_edit').val()))){
-                        location.href = "#modal-tip-edit";
-                        $("#modal-tip-edit").html("请填写停车证补办费,只能为数字");
                         return;
                     }
                 }

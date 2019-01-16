@@ -146,7 +146,7 @@
 									</div>
 								</div>
 								<div class="form-group" >
-									<label class="col-sm-2 control-label blue" style="text-align: left" for="price_edit">合同金额（元）：</label>
+									<label class="col-sm-2 control-label blue" style="text-align: left" for="price_edit">合同金额（元/年）：</label>
 									<div class="col-sm-4">
 										<input type="text" placeholder="" class="width-100" id="price_edit" readonly/>
 									</div>

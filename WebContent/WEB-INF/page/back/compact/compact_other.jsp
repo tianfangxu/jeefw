@@ -943,7 +943,7 @@
                 datatype: "json",
                 height: 450,
                 width:window.screen.availWidth-20,
-                colNames: ["ID", "合同编号", "楼宇","管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态","操作"],
+                colNames: ["ID", "合同编号", "楼宇","管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态","合同金额","操作"],
                 colModel: [{
                     name: "id",
                     width: 60,
@@ -1003,6 +1003,10 @@
                             return "已完成";
                         }
                     }
+                },{
+                    name: "totalamount",
+                    width: 100,
+                    search: false
                 }, {
                     name: "operation",
                     width: 100,
@@ -1123,6 +1127,14 @@
                 if(initBuildValue.length>0){
                     $('#buildid').append(new Option(initBuildValue[1],initBuildValue[0],true,true)).trigger("change");
                 }
+                $("#partacode").append(new Option("上海交投物业管理有限公司","1",true,true)).trigger("change");
+                $('#partaaddress').val("上海市徐汇区建国东路525号");
+                $('#partalegalperson').val("凌军");
+                $('#partancontact').val("021-54355520");
+                $('#partaaccount').val("98410155260000642");
+                $('#partaaccountname').val("上海交投物业管理有限公司");
+                $('#bankname').val("浦发银行大众大厦支行");
+                $('#partataxnumber').val("913101011345400534");
                 initPartaSelect2('partacode');
                 initPaytypeSelect2('paytype','WYYJ');
                 initPartbSelect2('partbcode');
