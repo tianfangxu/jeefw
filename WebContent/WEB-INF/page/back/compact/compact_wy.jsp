@@ -915,17 +915,17 @@
                 }
             });
 
-            var rule = new Object();
+            /*var rule = new Object();
             rule.field = 'contype';
             rule.op = 'eq';
             rule.data = '1';
             var rules = new Array();
-            rules.push(rule);
+            rules.push(rule);*/
 
             jQuery(grid_selector).jqGrid({
                 subGrid: false,
-                postData:generateParams(new Object(),rules),
-                url: "${contextPath}/sys/contract/getContractByCondition",
+                //postData:generateParams(new Object(),rules),
+                url: "${contextPath}/sys/contract/getContractByCondition?contype=1",
                 datatype: "json",
                 height: 450,
                 width:window.screen.availWidth-20,
@@ -1113,6 +1113,7 @@
                 initBuildSelect2('buildid');
                 if(initBuildValue.length>0){
                     $('#buildid').append(new Option(initBuildValue[1],initBuildValue[0],true,true)).trigger("change");
+                    $('#showAddressId').val(initBuildValue[2]);
                 }
                 $("#partacode").append(new Option("上海交投物业管理有限公司","1",true,true)).trigger("change");
                 $('#partaaddress').val("上海市徐汇区建国东路525号");
@@ -1286,13 +1287,13 @@
                     $("#modal-tip").html("请选择楼宇");
                     return;
                 }
-                if($("#contype").val() == '1'){
+                /*if($("#contype").val() == '1'){
                     if($.trim($('#PropertyIds').val()) == ""){
                         location.href = "#modal-tip";
                         $("#modal-tip").html("请输入楼宇具体的管理单元");
                         return;
                     }
-                }
+                }*/
                 if($("#contype").val() == '3'){
                     if($.trim($('#price').val())==''||!re.test($.trim($('#price').val()))) {
                         location.href = "#modal-tip";
@@ -1515,13 +1516,13 @@
                     $("#modal-tip-edit").html("请选择楼宇");
                     return;
                 }
-                if($("#contype_edit").val() == '1'){
+                /*if($("#contype_edit").val() == '1'){
                     if($('#PropertyIds_edit').val() == ""){
                         location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请选择楼宇具体的管理单元");
                         return;
                     }
-                }
+                }*/
                 if($("#contype_edit").val() == '3'){
                     if($.trim($('#price_edit').val())==''||!re.test($.trim($('#price_edit').val()))) {
                         location.href = "#modal-tip-edit";
@@ -2936,6 +2937,7 @@
                 if(data.status=='200'){
                     initBuildValue.push(JSON.parse(data.responseText).rows[0].id);
                     initBuildValue.push(JSON.parse(data.responseText).rows[0].name);
+                    initBuildValue.push(JSON.parse(data.responseText).rows[0].address);
                 } else{
                     toastMessage("系统提示",data.responseJSON.message);
                 }

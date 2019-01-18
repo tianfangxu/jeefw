@@ -79,6 +79,11 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 		ids = ids.substring(0, ids.length()-1);
 		sb.append(" and buildcode in ( "+ids+") ");
 
+        if(CommonUtil.isNotNull(model.getContype())){
+            if(!StringUnit.isNullOrEmpty(model.getContype())){
+                sb.append(" and contype = '"+model.getContype()+"' ");
+            }
+        }
 
 		if(CommonUtil.isNotNull(model.getHtqx())){
 			if(model.getHtqx().equals("2")){
