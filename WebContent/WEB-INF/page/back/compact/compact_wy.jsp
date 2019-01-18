@@ -2618,7 +2618,9 @@
             $('#tenantarea_edit').val(data.tenantarea);
             $('#propertyfee_edit').val(data.propertyfee);
             initPaytypeSelect2('paytype_edit','WYYJ');
-            $('#paytype_edit').append(new Option(data.paytype,data.paytypecode,true,true)).trigger("change");
+            if(data.paytypecode!=null){
+                $('#paytype_edit').append(new Option(data.paytype,data.paytypecode,true,true)).trigger("change");
+            }
             $('#deposit_edit').val(data.deposit);
             $('#electric_edit').val(data.electric);
         }  else if (data.contype=='2') {
