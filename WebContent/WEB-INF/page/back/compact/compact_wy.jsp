@@ -992,7 +992,11 @@
                 }, {
                     name: "totalamount",
                     width: 100,
-                    search: false
+                    search: false,
+                    align:"right",
+                    formatter:function(celval, options, rowdata){
+                        return gshNumber(celval)+"(元/年)";
+                    }
                 },{
                     name: "operation",
                     width: 100,
@@ -2973,5 +2977,26 @@
             $('#div5_edit').css("display","");
             $('#div7_edit').css("display","");
         }
+    }
+
+    function gshNumber(num){
+        var flag = false;
+        var xs = "";
+        var sum = num+"";
+        if((num+"").indexOf(".")>-1){
+            num = sum.split(".")[0];
+            xs =  sum.split(".")[1];
+            flag = true;
+        }
+        var num = (num || 0).toString(), result = '';
+        while (num.length > 3) {
+            result = ',' + num.slice(-3) + result;
+            num = num.slice(0, num.length - 3);
+        }
+        if (num) { result = num + result; }
+        if(flag) {
+            result = result+"."+xs;
+        }
+        return result;
     }
 </script>
