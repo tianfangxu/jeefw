@@ -178,7 +178,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" >
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price">合同金额（元）：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price">合同金额（元/年）：</label>
                                     <div class="col-sm-4">
                                         <input type="text" placeholder="" class="width-100" id="price" />
                                     </div>
@@ -261,7 +261,7 @@
                                     </div>
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtype">类型：</label>
                                     <div class="col-sm-4">
-                                        <select class="select2" id="partbtype" style="width: 100%">
+                                        <select class="select2" id="partbtype" style="width: 100%" onchange="changePartbShow()">
                                             <option value="0">企业</option>
                                             <option value="1">个人</option>
                                         </select>
@@ -273,9 +273,20 @@
                                     <div class="col-sm-4">
                                         <input type="text" id="partbaddress" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson">法定代表人：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="partblegalperson" class="width-100"/>
+                                    <div id="div4">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson">法定代表人：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partblegalperson" class="width-100"/>
+                                        </div>
+                                    </div>
+                                    <div id="div5" style="display: none">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbzjzl">证件种类：</label>
+                                        <div class="col-sm-4">
+                                            <select id="partbzjzl" class="form-control">
+                                                <option value="身份证">身份证</option>
+                                                <option value="护照">护照</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -283,9 +294,17 @@
                                     <div class="col-sm-4">
                                         <input type="text" id="partbncontact" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber">税 号：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="partbtaxnumber" class="width-100" />
+                                    <div id="div6">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber">税 号：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partbtaxnumber" class="width-100" />
+                                        </div>
+                                    </div>
+                                    <div id="div7" style="display: none">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbzjhm">证件号码：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partbzjhm" class="width-100" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -528,7 +547,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" >
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price_edit">合同金额（元）：</label>
+                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="price_edit">合同金额（元/年）：</label>
                                     <div class="col-sm-4">
                                         <input type="text" placeholder="" class="width-100" id="price_edit" />
                                     </div>
@@ -611,7 +630,7 @@
                                     </div>
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtype_edit">类型：</label>
                                     <div class="col-sm-4">
-                                        <select class="select2" id="partbtype_edit" style="width: 100%">
+                                        <select class="select2" id="partbtype_edit" style="width: 100%" ONCHANGE="changePartbShow_edit()">
                                             <option value="0">企业</option>
                                             <option value="1">个人</option>
                                         </select>
@@ -623,19 +642,39 @@
                                     <div class="col-sm-4">
                                         <input type="text" id="partbaddress_edit" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson_edit">法定代表人：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="partblegalperson_edit" class="width-100"/>
+                                    <div id="div4_edit" style="display:none">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partblegalperson_edit">法定代表人：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partblegalperson_edit" class="width-100"/>
+                                        </div>
                                     </div>
+                                    <div id="div5_edit" style="display:none">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbzjzl_edit">证件种类：</label>
+                                        <div class="col-sm-4">
+                                            <select id="partbzjzl_edit" class="form-control">
+                                                <option value="身份证">身份证</option>
+                                                <option value="护照">护照</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label blue" style="text-align: left" for="partbncontact_edit">联系电话：</label>
                                     <div class="col-sm-4">
                                         <input type="text" id="partbncontact_edit" class="width-100"/>
                                     </div>
-                                    <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">税 号：</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="partbtaxnumber_edit" class="width-100" />
+                                    <div id="div6_edit" style="display:none;">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbtaxnumber_edit">税 号：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partbtaxnumber_edit" class="width-100" />
+                                        </div>
+                                    </div>
+                                    <div id="div7_edit" style="display:none;">
+                                        <label class="col-sm-2 control-label blue" style="text-align: left" for="partbzjhm_edit">证件号码：</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="partbzjhm_edit" class="width-100" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -876,21 +915,21 @@
                 }
             });
 
-            var rule = new Object();
+            /*var rule = new Object();
             rule.field = 'contype';
             rule.op = 'eq';
             rule.data = '1';
             var rules = new Array();
-            rules.push(rule);
+            rules.push(rule);*/
 
             jQuery(grid_selector).jqGrid({
                 subGrid: false,
-                postData:generateParams(new Object(),rules),
-                url: "${contextPath}/sys/contract/getContractByCondition",
+                //postData:generateParams(new Object(),rules),
+                url: "${contextPath}/sys/contract/getContractByCondition?contype=1",
                 datatype: "json",
                 height: 450,
                 width:window.screen.availWidth-20,
-                colNames: ["ID", "合同编号", "楼宇","管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态","操作"],
+                colNames: ["ID", "合同编号", "楼宇","管理方", "承租方", "合同类型", "承租方联系电话", "租赁开始时间","租赁结束时间", "合同状态","合同金额","操作"],
                 colModel: [{
                     name: "id",
                     width: 60,
@@ -951,6 +990,14 @@
                         }
                     }
                 }, {
+                    name: "totalamount",
+                    width: 100,
+                    search: false,
+                    align:"right",
+                    formatter:function(celval, options, rowdata){
+                        return gshNumber(celval)+"(元/年)";
+                    }
+                },{
                     name: "operation",
                     width: 100,
                     search: false,
@@ -1070,7 +1117,18 @@
                 initBuildSelect2('buildid');
                 if(initBuildValue.length>0){
                     $('#buildid').append(new Option(initBuildValue[1],initBuildValue[0],true,true)).trigger("change");
+                    $('#showAddressId').val(initBuildValue[2]);
                 }
+                $("#partacode").append(new Option("上海交投物业管理有限公司","1",true,true)).trigger("change");
+                $('#partaaddress').val("上海市徐汇区建国东路525号");
+                $('#partalegalperson').val("凌军");
+                $('#partancontact').val("021-54355520");
+                $('#partaaccount').val("98410155260000642");
+                $('#partaaccountname').val("上海交投物业管理有限公司");
+                $('#bankname').val("浦发银行大众大厦支行");
+                $('#partataxnumber').val("913101011345400534");
+
+
                 initPartaSelect2('partacode');
                 initPaytypeSelect2('paytype','WYYJ');
                 initPartbSelect2('partbcode');
@@ -1233,13 +1291,13 @@
                     $("#modal-tip").html("请选择楼宇");
                     return;
                 }
-                if($("#contype").val() == '1'){
+                /*if($("#contype").val() == '1'){
                     if($.trim($('#PropertyIds').val()) == ""){
                         location.href = "#modal-tip";
                         $("#modal-tip").html("请输入楼宇具体的管理单元");
                         return;
                     }
-                }
+                }*/
                 if($("#contype").val() == '3'){
                     if($.trim($('#price').val())==''||!re.test($.trim($('#price').val()))) {
                         location.href = "#modal-tip";
@@ -1291,21 +1349,30 @@
                 }
 
                 //乙方信息校验
-                if($.trim($('#partbaddress').val())==''){
+/*                if($.trim($('#partbaddress').val())==''){
                     location.href = "#modal-tip";
                     $("#modal-tip").html("请填写乙方地址");
                     return;
                 }
-                if($.trim($('#partblegalperson').val())==''){
-                    location.href = "#modal-tip";
-                    $("#modal-tip").html("请填写乙方法定代表人");
-                    return;
+                if($('#partbtype').val()==0){
+                    if($.trim($('#partblegalperson').val())==''){
+                        location.href = "#modal-tip";
+                        $("#modal-tip").html("请填写乙方法定代表人");
+                        return;
+                    }
+                    if($.trim($('#partbtaxnumber').val())==''){
+                        location.href = "#modal-tip";
+                        $("#modal-tip").html("请填写乙方税号");
+                        return;
+                    }
+                }else if($('#partbtype').val()==1){
+                    if($.trim($('#partbzjhm').val())==''){
+                        location.href = "#modal-tip";
+                        $("#modal-tip").html("请填写乙方证件号码");
+                        return;
+                    }
                 }
-                if($.trim($('#partbtaxnumber').val())==''){
-                    location.href = "#modal-tip";
-                    $("#modal-tip").html("请填写乙方税号");
-                    return;
-                }
+
                 if($.trim($('#partbbankname').val())==''){
                     location.href = "#modal-tip";
                     $("#modal-tip").html("请填写乙方开户行");
@@ -1315,7 +1382,7 @@
                     location.href = "#modal-tip";
                     $("#modal-tip").html("请填写银行账号");
                     return;
-                }
+                }*/
                 if($.trim($('#partbaccountname').val())==''){
                     location.href = "#modal-tip";
                     $("#modal-tip").html("请填写乙方户名");
@@ -1335,11 +1402,11 @@
                         $("#modal-tip").html("请填写房屋建筑面积");
                         return;
                     }
-                    if($.trim($('#tenantarea').val())==''){
+                   /* if($.trim($('#tenantarea').val())==''){
                         location.href = "#modal-tip";
                         $("#modal-tip").html("请填写承租建筑面积");
                         return;
-                    }
+                    }*/
                     if($.trim($('#propertyfee').val())==''){
                         location.href = "#modal-tip";
                         $("#modal-tip").html("请填写物业管理费");
@@ -1355,11 +1422,11 @@
                         $("#modal-tip").html("请填写物业费押金");
                         return;
                     }
-                    if($.trim($('#electric').val())==''){
+                  /*  if($.trim($('#electric').val())==''){
                         location.href = "#modal-tip";
                         $("#modal-tip").html("请填写电费单价");
                         return;
-                    }
+                    }*/
                 }else if($("#contype").val() == '2'){
                     //校验停车
                     if($.trim($('#manager').val())==''){
@@ -1453,13 +1520,13 @@
                     $("#modal-tip-edit").html("请选择楼宇");
                     return;
                 }
-                if($("#contype_edit").val() == '1'){
+                /*if($("#contype_edit").val() == '1'){
                     if($('#PropertyIds_edit').val() == ""){
                         location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请选择楼宇具体的管理单元");
                         return;
                     }
-                }
+                }*/
                 if($("#contype_edit").val() == '3'){
                     if($.trim($('#price_edit').val())==''||!re.test($.trim($('#price_edit').val()))) {
                         location.href = "#modal-tip-edit";
@@ -1511,20 +1578,30 @@
                 }
 
                 //乙方信息校验
-                if($.trim($('#partbaddress_edit').val())==''){
+                /*if($.trim($('#partbaddress_edit').val())==''){
                     location.href = "#modal-tip-edit";
                     $("#modal-tip-edit").html("请填写乙方地址");
                     return;
                 }
-                if($.trim($('#partblegalperson_edit').val())==''){
-                    location.href = "#modal-tip-edit";
-                    $("#modal-tip-edit").html("请填写乙方法定代表人");
-                    return;
-                }
-                if($.trim($('#partbtaxnumber_edit').val())==''){
-                    location.href = "#modal-tip-edit";
-                    $("#modal-tip-edit").html("请填写乙方税号");
-                    return;
+
+                if($('#partbtype_edit').val()==0){
+                    if($.trim($('#partblegalperson_edit').val())==''){
+                        location.href = "#modal-tip-edit";
+                        $("#modal-tip-edit").html("请填写乙方法定代表人");
+                        return;
+                    }
+                    if($.trim($('#partbtaxnumber_edit').val())==''){
+                        location.href = "#modal-tip-edit";
+                        $("#modal-tip-edit").html("请填写乙方税号");
+                        return;
+                    }
+
+                }else if($('#partbtype_edit').val()==1){
+                    if($.trim($('#partbzjhm_edit').val())==''){
+                        location.href = "#modal-tip";
+                        $("#modal-tip-edit").html("请填写乙方证件号码");
+                        return;
+                    }
                 }
 
                 if($.trim($('#partbbankname_edit').val())==''){
@@ -1536,7 +1613,7 @@
                     location.href = "#modal-tip-edit";
                     $("#modal-tip").html("请填写银行账号");
                     return;
-                }
+                }*/
                 if($.trim($('#partbaccountname_edit').val())==''){
                     location.href = "#modal-tip-edit";
                     $("#modal-tip").html("请填写乙方户名");
@@ -1557,11 +1634,11 @@
                         $("#modal-tip-edit").html("请填写房屋建筑面积");
                         return;
                     }
-                    if($.trim($('#tenantarea_edit').val())==''){
+                   /* if($.trim($('#tenantarea_edit').val())==''){
                         location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写承租建筑面积");
                         return;
-                    }
+                    }*/
                     if($.trim($('#propertyfee_edit').val())==''){
                         location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写物业管理费");
@@ -1577,11 +1654,11 @@
                         $("#modal-tip-edit").html("请填写物业费押金");
                         return;
                     }
-                    if($.trim($('#electric_edit').val())==''){
+                   /* if($.trim($('#electric_edit').val())==''){
                         location.href = "#modal-tip-edit";
                         $("#modal-tip-edit").html("请填写电费单价");
                         return;
-                    }
+                    }*/
                 }else if($("#contype_edit").val() == '2'){
                     //校验停车
                     if($.trim($('#manager_edit').val())==''){
@@ -1950,6 +2027,8 @@
                     $('#partbbankname').attr('readonly',true);
                     $('#partbaccount').attr('readonly',true);
                     $('#partbaccountname').attr('readonly',true);
+                    $('#partbzjzl').attr('disabled',true);
+                    $('#partbzjhm').attr('readonly',true);
                 }else{
                     $('#partbtype').attr('disabled',false);
                     $('#partbaddress').attr('readonly',false);
@@ -1959,6 +2038,8 @@
                     $('#partbbankname').attr('readonly',false);
                     $('#partbaccount').attr('readonly',false);
                     $('#partbaccountname').attr('readonly',false);
+                    $('#partbzjzl').attr('disabled',false);
+                    $('#partbzjhm').attr('readonly',false);
                 }
             });
 
@@ -1972,6 +2053,8 @@
                     $('#partbbankname_edit').attr('readonly',true);
                     $('#partbaccount_edit').attr('readonly',true);
                     $('#partbaccountname_edit').attr('readonly',true);
+                    $('#partbzjzl_edit').attr('disabled',true);
+                    $('#partbzjhm_edit').attr('readonly',true);
                 }else{
                     $('#partbtype_edit').attr('disabled',false);
                     $('#partbaddress_edit').attr('readonly',false);
@@ -1981,9 +2064,10 @@
                     $('#partbbankname_edit').attr('readonly',false);
                     $('#partbaccount_edit').attr('readonly',false);
                     $('#partbaccountname_edit').attr('readonly',false);
+                    $('#partbzjzl_edit').attr('disabled',false);
+                    $('#partbzjhm_edit').attr('readonly',false);
                 }
             });
-
         });
     });
 
@@ -2347,6 +2431,10 @@
                             $('#partbaccountname').val(JSON.parse(data.responseText).rows[0].accountname);
                             $('#partbbankname').val(JSON.parse(data.responseText).rows[0].bankname);
                             $("#partbtype").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
+                            if($('#partbtype').val()==1){
+                                $('#partbzjhm').val(JSON.parse(data.responseText).rows[0].idnumber);
+                                $("#partbzjzl").val(JSON.parse(data.responseText).rows[0].idtype).trigger("change");
+                            }
                         }else if(id=='partbcode_edit'){
                             $('#partbaddress_edit').val(JSON.parse(data.responseText).rows[0].address);
                             $('#partblegalperson_edit').val(JSON.parse(data.responseText).rows[0].name);
@@ -2356,6 +2444,10 @@
                             $('#partbaccountname_edit').val(JSON.parse(data.responseText).rows[0].accountname);
                             $('#partbbankname_edit').val(JSON.parse(data.responseText).rows[0].bankname);
                             $("#partbtype_edit").val(JSON.parse(data.responseText).rows[0].type).trigger("change");
+                            if($('#partbtype_edit').val()==1){
+                                $('#partbzjhm_edit').val(JSON.parse(data.responseText).rows[0].idnumber);
+                                $("#partbzjzl_edit").val(JSON.parse(data.responseText).rows[0].idtype).trigger("change");
+                            }
                         }
                     }else{
                         toastMessage("系统提示",xmlRequest.responseJSON.message);
@@ -2462,6 +2554,9 @@
         data.cardfee = $.trim($('#cardfee').val());
         data.reissuecardfee = $.trim($('#reissuecardfee').val());
         data.auditstate = 1;
+        //证件种类和证件号码
+        data.partbzjzl = $('#partbzjzl').val();
+        data.partbzjhm = $.trim($('#partbzjhm').val());
         return data;
     }
 
@@ -2479,6 +2574,13 @@
         $('#buildid_edit').append(new Option(buildInfo.name,data.buildid,true,true)).trigger("change");
         $('#showAddressId_edit').val(buildInfo.address);
 
+        if(data.partbtype==0){
+            $('#div4_edit').css("display","");
+            $('#div6_edit').css("display","");
+        }else if(data.partbtype==1){
+            $('#div5_edit').css("display","");
+            $('#div7_edit').css("display","");
+        }
         if (data.contype=='1') {
             $(".wyxx").css("display", "");
             $(".cwxx").css("display", "none");
@@ -2513,12 +2615,16 @@
         $('#partbaccountname_edit').val(data.partbaccountname);
         $('#partbbankname_edit').val(data.partbbankname);
         $("#partbtype_edit").val(data.partbtype).trigger("change");
+        $("#partbzjzl_edit_edit").val(data.partbzjzl).trigger("change");
+        $("#partbzjhm_edit").val(data.partbzjhm);
         if (data.contype=='1') {
             $('#buildarera_edit').val(data.buildarea);
             $('#tenantarea_edit').val(data.tenantarea);
             $('#propertyfee_edit').val(data.propertyfee);
             initPaytypeSelect2('paytype_edit','WYYJ');
-            $('#paytype_edit').append(new Option(data.paytype,data.paytypecode,true,true)).trigger("change");
+            if(data.paytypecode!=null){
+                $('#paytype_edit').append(new Option(data.paytype,data.paytypecode,true,true)).trigger("change");
+            }
             $('#deposit_edit').val(data.deposit);
             $('#electric_edit').val(data.electric);
         }  else if (data.contype=='2') {
@@ -2653,6 +2759,8 @@
         data.cardfee = $.trim($('#cardfee_edit').val());
         data.reissuecardfee = $.trim($('#reissuecardfee_edit').val());
         data.auditstate = 1;
+        data.partbzjzl = $('#partbzjzl_edit').val();
+        data.partbzjhm = $.trim($('#partbzjhm_edit').val());
         return data;
     }
 
@@ -2835,10 +2943,60 @@
                 if(data.status=='200'){
                     initBuildValue.push(JSON.parse(data.responseText).rows[0].id);
                     initBuildValue.push(JSON.parse(data.responseText).rows[0].name);
+                    initBuildValue.push(JSON.parse(data.responseText).rows[0].address);
                 } else{
-                    toastMessage("系统提示",xmlRequest.responseJSON.message);
+                    toastMessage("系统提示",data.responseJSON.message);
                 }
             }
         });
+    }
+
+    function changePartbShow(){
+        if($('#partbtype').val()==0){
+            $('#div4').css("display","");
+            $('#div6').css("display","");
+            $('#div5').css("display","none");
+            $('#div7').css("display","none");
+        }else if($('#partbtype').val()==1){
+            $('#div4').css("display","none");
+            $('#div6').css("display","none");
+            $('#div5').css("display","");
+            $('#div7').css("display","");
+        }
+    }
+
+    function changePartbShow_edit(){
+        if($('#partbtype_edit').val()==0){
+            $('#div4_edit').css("display","");
+            $('#div6_edit').css("display","");
+            $('#div5_edit').css("display","none");
+            $('#div7_edit').css("display","none");
+        }else if($('#partbtype_edit').val()==1){
+            $('#div4_edit').css("display","none");
+            $('#div6_edit').css("display","none");
+            $('#div5_edit').css("display","");
+            $('#div7_edit').css("display","");
+        }
+    }
+
+    function gshNumber(num){
+        var flag = false;
+        var xs = "";
+        var sum = num+"";
+        if((num+"").indexOf(".")>-1){
+            num = sum.split(".")[0];
+            xs =  sum.split(".")[1];
+            flag = true;
+        }
+        var num = (num || 0).toString(), result = '';
+        while (num.length > 3) {
+            result = ',' + num.slice(-3) + result;
+            num = num.slice(0, num.length - 3);
+        }
+        if (num) { result = num + result; }
+        if(flag) {
+            result = result+"."+xs;
+        }
+        return result;
     }
 </script>

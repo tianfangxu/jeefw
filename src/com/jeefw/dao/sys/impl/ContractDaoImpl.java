@@ -79,6 +79,11 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 		ids = ids.substring(0, ids.length()-1);
 		sb.append(" and buildcode in ( "+ids+") ");
 
+        if(CommonUtil.isNotNull(model.getContype())){
+            if(!StringUnit.isNullOrEmpty(model.getContype())){
+                sb.append(" and contype = '"+model.getContype()+"' ");
+            }
+        }
 
 		if(CommonUtil.isNotNull(model.getHtqx())){
 			if(model.getHtqx().equals("2")){
@@ -180,7 +185,7 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 
 		columns.append(" b.id parkingid,b.address parkingaddress,b.manager,b.undergroundunit,b.undergroundnumber,b.surfaceunit,b.surfacenumber,b.rent,b.prepay,b.cardfee,b.reissuecardfee,");
 		columns.append(" c.id propertyid,c.address propertyaddress,c.tenantarea,c.buildarea,c.propertyfee,c.paytype,c.deposit,c.electric,a.buildcode buildid,a.propertytext propertyids,c.paytypecode,a.partbaccount,a.partbaccountname,a.partbbankname,");
-		columns.append(" a.othercontype othercontype,a.otherpaytype otherpaytype");
+		columns.append(" a.othercontype othercontype,a.otherpaytype otherpaytype,a.partbzjzl partbzjzl,a.partbzjhm partbzjhm ");
 		StringBuffer sb = new StringBuffer(" select "+columns.toString()+" from t_contract a left join t_contract_property c on a.id = c.contractcode  left join t_contract_parking b on a.id =b.contractcode  where a.id = '"+model.getId()+"'");
 		Query query =  session.createSQLQuery(sb.toString()).addScalar("id", StandardBasicTypes.STRING)
 				.addScalar("startdate",StandardBasicTypes.DATE).addScalar("enddate",StandardBasicTypes.DATE)
@@ -207,6 +212,7 @@ public class ContractDaoImpl extends BaseDao<Contract> implements ContractDao {
 				.addScalar("paytypecode",StandardBasicTypes.STRING).addScalar("partbaccount",StandardBasicTypes.STRING)
 				.addScalar("partbaccountname",StandardBasicTypes.STRING).addScalar("partbbankname",StandardBasicTypes.STRING)
 				.addScalar("othercontype",StandardBasicTypes.STRING).addScalar("otherpaytype",StandardBasicTypes.STRING)
+				.addScalar("partbzjzl",StandardBasicTypes.STRING).addScalar("partbzjhm",StandardBasicTypes.STRING)
 				.setResultTransformer(Transformers.aliasToBean(BigContractModel.class));
 		 List<BigContractModel> list = query.list();
 		result.setRows(list);

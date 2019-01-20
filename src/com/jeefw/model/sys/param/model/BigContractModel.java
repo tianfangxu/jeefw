@@ -76,6 +76,9 @@ public class BigContractModel <T, G> extends BaseModel<T, G> implements Serializ
 
     private String htqx;//合同期限 1：将到期 2：已过期
 
+    private String partbzjzl;
+    private String partbzjhm;
+
     public String getId() {
         return id;
     }
@@ -554,5 +557,21 @@ public class BigContractModel <T, G> extends BaseModel<T, G> implements Serializ
 
     public void setHtqx(String htqx) {
         this.htqx = htqx;
+    }
+
+    public String getPartbzjzl() {
+        return partbzjzl;
+    }
+
+    public void setPartbzjzl(String partbzjzl) {
+        this.partbzjzl = partbzjzl;
+    }
+
+    public String getPartbzjhm() {
+        return partbzjhm;
+    }
+
+    public void setPartbzjhm(String partbzjhm) {
+        this.partbzjhm = partbzjhm;
     }
 }

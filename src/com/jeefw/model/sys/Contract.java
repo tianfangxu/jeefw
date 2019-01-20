@@ -117,6 +117,12 @@ public class Contract extends ExtJSBaseParameter {
     @Transient
     private String buildname;
 
+    @Column(name = "partbzjzl")
+    private String partbzjzl;
+
+    @Column(name = "partbzjhm")
+    private String partbzjhm;
+
     public String getId() {
         return id;
     }
@@ -450,6 +456,22 @@ public class Contract extends ExtJSBaseParameter {
         this.buildname = buildname;
     }
 
+    public String getPartbzjzl() {
+        return partbzjzl;
+    }
+
+    public void setPartbzjzl(String partbzjzl) {
+        this.partbzjzl = partbzjzl;
+    }
+
+    public String getPartbzjhm() {
+        return partbzjhm;
+    }
+
+    public void setPartbzjhm(String partbzjhm) {
+        this.partbzjhm = partbzjhm;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -495,11 +517,14 @@ public class Contract extends ExtJSBaseParameter {
                 Objects.equals(deletetime, contract.deletetime) &&
                 Objects.equals(othercontype, contract.othercontype) &&
                 Objects.equals(otherpaytype, contract.otherpaytype) &&
-                Objects.equals(buildname, contract.buildname);
+                Objects.equals(buildname, contract.buildname) &&
+                Objects.equals(partbzjzl, contract.partbzjzl) &&
+                Objects.equals(partbzjhm, contract.partbzjhm);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, sysnumber, startdate, enddate, contype, totalamount, partacode, partaname, partaaddress, partalegalperson, partancontact, partaaccount, partaaccountname, bankname, partataxnumber, partbcode, partbtype, partbname, partbaddress, partblegalperson, partbcontact, partbtaxnumber, partbaccount, partbaccountname, partbbankname, subsidiary, auditstate, dealusers, buildcode, propertycodes, propertytext, createuser, createtime, updateuser, updatetime, deleteuser, deletetime, deleteflg, othercontype, otherpaytype, buildname);
+
+        return Objects.hash(id, sysnumber, startdate, enddate, contype, totalamount, partacode, partaname, partaaddress, partalegalperson, partancontact, partaaccount, partaaccountname, bankname, partataxnumber, partbcode, partbtype, partbname, partbaddress, partblegalperson, partbcontact, partbtaxnumber, partbaccount, partbaccountname, partbbankname, subsidiary, auditstate, dealusers, buildcode, propertycodes, propertytext, createuser, createtime, updateuser, updatetime, deleteuser, deletetime, deleteflg, othercontype, otherpaytype, buildname, partbzjzl, partbzjhm);
     }
 }

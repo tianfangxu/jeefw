@@ -395,12 +395,16 @@ public final class DateUnit {
 
     public static int monthsBetween(String start, String end) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar startDate = Calendar.getInstance();
+      /*  Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
         startDate.setTime(sdf.parse(start));
         endDate.setTime(sdf.parse(end));
-        int result = yearsBetween(start, end) * 12 + endDate.get(Calendar.MONTH) - startDate.get(Calendar.MONTH);
-        return result == 0 ? 1 : Math.abs(result);
+        int result = yearsBetween(start, end) * 12 + endDate.get(Calendar.MONTH) - startDate.get(Calendar.MONTH);*/
+        //return result == 0 ? 1 : Math.abs(result);
+        //return (int)(Math.floor(Integer.parseInt(getGapBetweenTwoDates(start, end,"yyyy-MM-dd","day"))/30));
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        int ss = getMonthDiff(sdf.parse(start),sdf.parse(end));
+        return ss;
     }
 
     public static int yearsBetween(String start, String end) throws ParseException {
@@ -412,9 +416,6 @@ public final class DateUnit {
         return (endDate.get(Calendar.YEAR) - startDate.get(Calendar.YEAR));
     }
 
-    public static void main(String[] args) throws ParseException {
-        System.out.println(monthsBetween("2018-11-09", "2019-12-09"));
-    }
 
 
     /****
@@ -436,6 +437,40 @@ public final class DateUnit {
         } catch (Exception e) {
             return "";
         }
+    }
+
+
+    public static int getMonthDiff(Date d1, Date d2) {
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        c1.setTime(d1);
+        c2.setTime(d2);
+        int year1 = c1.get(Calendar.YEAR);
+        int year2 = c2.get(Calendar.YEAR);
+        int month1 = c1.get(Calendar.MONTH);
+        int month2 = c2.get(Calendar.MONTH);
+        int day1 = c1.get(Calendar.DAY_OF_MONTH);
+        int day2 = c2.get(Calendar.DAY_OF_MONTH);
+         // 获取年的差值 
+        int yearInterval = year1 - year2;
+         // 如果 d1的 月-日 小于 d2的 月-日 那么 yearInterval-- 这样就得到了相差的年数
+        if (month1 < month2 || month1 == month2 && day1 < day2)
+         yearInterval--;
+         // 获取月数差值
+        int monthInterval = (month1 + 12) - month2;
+        if (day1 < day2)
+         monthInterval--;
+        monthInterval %= 12;
+        int monthsDiff = Math.abs(yearInterval * 12 + monthInterval);
+        return monthsDiff;
+    }
+
+    public static void main(String[] args) throws ParseException {
+
+        //int ss=  (int)(Math.floor(Integer.parseInt(getGapBetweenTwoDates("2018-06-01", "2020-05-31","yyyy-MM-dd","day"))/30));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        int ss = getMonthDiff(sdf.parse("2018-06-30"),sdf.parse("2018-07-30"));
+        System.out.println(ss);
     }
 
 }
