@@ -577,8 +577,26 @@ public class ContractServiceImpl extends BaseService<Contract> implements Contra
 
         map.put("undergroundunit", CommonUtil.isNotNull(contractParking.getUndergroundunit()) ? contractParking.getUndergroundunit() : "  ");
         map.put("surfaceunit", CommonUtil.isNotNull(contractParking.getSurfaceunit()) ? contractParking.getSurfaceunit() : " ");
-        map.put("undergroundnumber", CommonUtil.isNotNull(contractParking.getUndergroundnumber()) ? contractParking.getUndergroundnumber() + "" : "  ");
-        map.put("surfacenumber", CommonUtil.isNotNull(contractParking.getSurfacenumber()) ? contractParking.getSurfacenumber() + "" : "");
+        if(CommonUtil.isNotNull(contractParking.getUndergroundnumber())){
+             if(contractParking.getUndergroundnumber()==0){
+                 map.put("undergroundnumber", "  ");
+             } else{
+                 map.put("undergroundnumber", contractParking.getUndergroundnumber() + "");
+             }
+        }else{
+            map.put("undergroundnumber", "  ");
+        }
+        if(CommonUtil.isNotNull(contractParking.getSurfacenumber())){
+            if(contractParking.getSurfacenumber()==0){
+                map.put("surfacenumber", "  ");
+            } else{
+                map.put("surfacenumber", contractParking.getSurfacenumber() + "");
+            }
+        }else{
+            map.put("surfacenumber", "  ");
+        }
+       // map.put("undergroundnumber", CommonUtil.isNotNull(contractParking.getUndergroundnumber()) ? contractParking.getUndergroundnumber() + "" : "  ");
+        //map.put("surfacenumber", CommonUtil.isNotNull(contractParking.getSurfacenumber()) ? contractParking.getSurfacenumber() + "" : "");
         map.put("rent", CommonUtil.isNotNull(contractParking.getRent()) ? contractParking.getRent() : "  ");
         map.put("prepay", CommonUtil.isNotNull(contractParking.getPrepay()) ? contractParking.getPrepay() : " ");
         map.put("cardfee", CommonUtil.isNotNull(contractParking.getCardfee()) ? contractParking.getCardfee() : "  ");

@@ -2488,8 +2488,8 @@
             $('#manager_edit').val(data.manager);
             $('#undergroundunit_edit').val(data.undergroundunit);
             $('#surfaceunit_edit').val(data.surfaceunit);
-            $('#undergroundnumber_edit').val(data.undergroundnumber);
-            $('#surfacenumber_edit').val(data.surfacenumber);
+            $('#undergroundnumber_edit').val(data.undergroundnumber==0?"":data.undergroundnumber);
+            $('#surfacenumber_edit').val(data.surfacenumber==0?"":data.surfacenumber);
             $('#rent_edit').val(data.rent);
             $('#prepay_edit').val(data.prepay);
             $('#cardfee_edit').val(data.cardfee);
