@@ -217,11 +217,11 @@
 												<td><input id="tempparkingps" type="text"
 													class="inputc ps"></td>
 											</tr>
-											<%--<tr>
+											<tr>
                                                <td colspan="2">服务费</td>
                                                 <td><input id="service" type="text" class="inputc num"></td>
-                                               <td><input type="text" class="inputc"></td>
-                                           </tr>--%>
+                                               <td><input id="serviceps" type="text" class="inputc ps"></td>
+                                           </tr>
 
 											<tr>
 												<td colspan="2">广告费</td>
@@ -242,15 +242,15 @@
 												<td><input id="servicingps" type="text"
 													class="inputc ps"></td>
 											</tr>
-											<%--<tr>
-                                           <td colspan="2">仓储费/经营开发</td>
-                                            <td><input id="warehouse" type="text" class="inputc num"></td>
-                                               <td><input type="text" class="inputc"></td>
-                                       </tr><tr>
-                                           <td colspan="2">租线费</td>
-                                           <td><input id="rental" type="text" class="inputc num"></td>
-                                               <td><input type="text" class="inputc"></td>
-                                       </tr>--%>
+											<tr>
+	                                           <td colspan="2">仓储费/经营开发</td>
+	                                            <td><input id="warehouse" type="text" class="inputc num"></td>
+	                                               <td><input id="warehouseps" type="text" class="inputc ps"></td>
+	                                       </tr><tr>
+	                                           <td colspan="2">租线费</td>
+	                                           <td><input id="rental" type="text" class="inputc num"></td>
+	                                               <td><input id="rentalps" type="text" class="inputc ps"></td>
+	                                       </tr>
 											<tr>
 												<td colspan="2">电费</td>
 												<td><input id="electricin" type="text"
@@ -436,69 +436,69 @@
 												</td>
 											</tr>
 										</table>
-										<%-- <table class="table table-striped table-bordered table-hover" style="text-align: center;">
+										<table class="table table-striped table-bordered table-hover" style="text-align: center;">
                                            <tr>
                                                <td rowspan="3" style="vertical-align: middle;">业务外包</td>
                                                <td colspan="2">保安服务费</td>
                                                <td style="width: 33%"><input id="security" type="text" class="inputc num"></td>
-                                               <td style="width: 33%"><input type="text" class="inputc"></td>
+                                               <td style="width: 33%"><input id="securityps" type="text" class="inputc ps"></td>
                                            </tr>
                                            <tr>
                                                <td colspan="2">保洁服务费</td>
                                                <td style="width: 33%"><input id="cleansing" type="text" class="inputc num"></td>
-                                               <td style="width: 33%"><input type="text" class="inputc"></td>
+                                               <td style="width: 33%"><input id="cleansingps" type="text" class="inputc ps"></td>
                                            </tr>
                                            <tr>
                                                <td colspan="2">工程外包</td>
                                                <td style="width: 33%"><input id="projectout" type="text" class="inputc num"></td>
-                                               <td style="width: 33%"><input type="text" class="inputc"></td>
+                                               <td style="width: 33%"><input id="projectoutps" type="text" class="inputc ps"></td>
                                            </tr>
                                            <tr>
-                                               <td colspan="5" style="text-align: left;">合计:<span id="sum2" style="color:red;">0.00</span> </td>
+                                               <td colspan="5" style="text-align: left;">合计:<span id="sum02" style="color:red;">0.00</span> </td>
                                            </tr>
                                        </table>
                                        <table class="table table-striped table-bordered table-hover" style="text-align: center;">
                                            <tr>
                                                <td colspan="2">大修理费用</td>
                                                <td style="width: 33%"><input id="repair" type="text" class="inputc num"></td>
-                                               <td style="width: 33%"><input type="text" class="inputc"></td>
+                                               <td style="width: 33%"><input id="repairps" type="text" class="inputc ps"></td>
                                            </tr>
                                            <tr>
                                                <td rowspan="3" style="vertical-align: middle;">设备设施维护</td>
                                                <td>消防设备设施维护费</td>
                                                <td style="width: 33%"><input id="firefighting" type="text" class="inputc num"></td>
-                                               <td style="width: 33%"><input type="text" class="inputc"></td>
+                                               <td style="width: 33%"><input id="firefightingps" type="text" class="inputc ps"></td>
                                            </tr>
                                            <tr>
                                                <td>工程设备设施维护费</td>
                                                <td style="width: 33%"><input id="engineering" type="text" class="inputc num"></td>
-                                               <td style="width: 33%"><input type="text" class="inputc"></td>
+                                               <td style="width: 33%"><input id="engineeringps" type="text" class="inputc ps"></td>
                                            </tr>
                                            <tr>
                                                <td>设备设施检测费</td>
                                                <td style="width: 33%"><input id="equipmenttesting" type="text" class="inputc num"></td>
-                                               <td style="width: 33%"><input type="text" class="inputc"></td>
+                                               <td style="width: 33%"><input id="equipmenttestingps" type="text" class="inputc ps"></td>
                                            </tr>
                                            <tr>
                                                <td rowspan="3" style="vertical-align: middle;">日常修理费用</td>
                                                <td>材料费</td>
                                                <td style="width: 33%"><input id="material" type="text" class="inputc num"></td>
-                                               <td style="width: 33%"><input type="text" class="inputc"></td>
+                                               <td style="width: 33%"><input id="materialps" type="text" class="inputc ps"></td>
                                            </tr>
                                            <tr>
                                                <td>灭火机</td>
                                                <td style="width: 33%"><input id="extinguisher" type="text" class="inputc num"></td>
-                                               <td style="width: 33%"><input type="text" class="inputc"></td>
+                                               <td style="width: 33%"><input id="extinguisherps" type="text" class="inputc ps"></td>
                                            </tr>
                                            <tr>
                                                <td>日常维修费</td>
                                                <td style="width: 33%"><input id="upkeep" type="text" class="inputc num"></td>
-                                               <td style="width: 33%"><input type="text" class="inputc"></td>
+                                               <td style="width: 33%"><input id="upkeepps" type="text" class="inputc ps"></td>
                                            </tr>
                                            <tr>
-                                               <td colspan="5" style="text-align: left;">合计:<span id="sum3" style="color:red;">0.00</span> </td>
+                                               <td colspan="5" style="text-align: left;">合计:<span id="sum03" style="color:red;">0.00</span> </td>
                                            </tr>
-                                       </table>--%>
+                                       </table>
 										<table class="table table-striped table-bordered table-hover"
 											style="text-align: center;">
 											<tr>
@@ -602,11 +602,11 @@
 												<td id="tempparking_info" class="cass"></td>
 												<td id="tempparkingps_info" class="cass"></td>
 											</tr>
-											<%--<tr>
-                                            <td colspan="2">服务费</td>
-                                            <td id="service_info">84315.00</td>
-                                            <td>含基站租赁</td>
-                                        </tr>--%>
+											<tr>
+	                                            <td colspan="2">服务费</td>
+	                                            <td id="service_info" class="cass"></td>
+	                                            <td id="serviceps_info" class="cass"></td>
+	                                        </tr>
 											<tr>
 												<td colspan="2">广告费</td>
 												<td id="advertising_info" class="cass"></td>
@@ -622,16 +622,16 @@
 												<td id="servicing_info" class="cass"></td>
 												<td id="servicingps_info" class="cass"></td>
 											</tr>
-											<%--<tr>
-                                            <td colspan="2">仓储费/经营开发</td>
-                                            <td id="warehouse_info">35000.00</td>
-                                            <td>有服务合同</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">租线费</td>
-                                            <td id="rental_info">70000.00</td>
-                                            <td>备注</td>
-                                        </tr>--%>
+											<tr>
+	                                           <td colspan="2">仓储费/经营开发</td>
+	                                           <td id="warehouse_info" class="cass"></td>
+	                                           <td id="warehouseps_info" class="cass"></td>
+	                                       </tr>
+	                                       <tr>
+	                                           <td colspan="2">租线费</td>
+	                                           <td id="rental_info" class="cass"></td>
+	                                           <td id="rentalps_info" class="cass"></td>
+	                                       </tr>
 											<tr>
 												<td colspan="2">电费</td>
 												<td id="electricin_info" class="cass"></td>
@@ -792,7 +792,7 @@
 												</td>
 											</tr>
 										</table>
-										<%--<table class="table table-striped table-bordered table-hover">
+										<table class="table table-striped table-bordered table-hover">
                                         <tr>
                                             <td colspan="3" style="text-align: center;">项目</td>
                                             <td style="text-align: center;">全年预算</td>
@@ -801,21 +801,21 @@
                                         <tr>
                                             <td rowspan="3" style="vertical-align: middle;">业务外包</td>
                                             <td colspan="2">保安服务费</td>
-                                            <td></td>
-                                            <td>有服务合同</td>
+                                            <td id="security_info" class="cass"></td>
+                                            <td id="securityps_info" class="cass"></td>
                                         </tr>
                                         <tr>
                                             <td colspan="2">保洁服务费</td>
-                                            <td></td>
-                                            <td>有服务合同</td>
+                                            <td id="cleansing_info" class="cass"></td>
+                                            <td id="cleansingps_info" class="cass"></td>
                                         </tr>
                                         <tr>
                                             <td colspan="2">工程外包</td>
-                                            <td></td>
-                                            <td></td>
+                                            <td id="projectout_info" class="cass"></td>
+                                            <td id="projectoutps_info" class="cass"></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5">小计:<span style="color:red;">0.00</span> </td>
+                                            <td colspan="5">小计:<span style="color:red;" id="sum02_info">0.00</span> </td>
                                         </tr>
                                     </table>
                                     <table class="table table-striped table-bordered table-hover">
@@ -825,52 +825,47 @@
                                             <td style="text-align: center;">备注</td>
                                         </tr>
                                         <tr>
-                                            <td rowspan="8" style="vertical-align: middle;">修理费</td>
-                                            <td colspan="2">保安服务费</td>
-                                            <td></td>
-                                            <td>有服务合同</td>
-                                        </tr>
-                                        <tr>
+                                            <td rowspan="7" style="vertical-align: middle;">修理费</td>
                                             <td colspan="2">大修理费用</td>
-                                            <td></td>
-                                            <td></td>
+                                            <td id="repair_info" class="cass"></td>
+                                            <td id="repairps_info" class="cass"></td>
                                         </tr>
                                         <tr>
                                             <td rowspan="3" style="vertical-align: middle;">设备设施维护</td>
                                             <td>消防设备设施维护费</td>
-                                            <td></td>
-                                            <td></td>
+                                            <td id="firefighting_info" class="cass"></td>
+                                            <td id="firefightingps_info" class="cass"></td>
                                         </tr>
                                         <tr>
                                             <td>工程设备设施维护费</td>
-                                            <td></td>
-                                            <td>含高压维保费等</td>
+                                            <td id="engineering_info" class="cass"></td>
+                                            <td id="engineeringps_info" class="cass"></td>
                                         </tr>
                                         <tr>
                                             <td>设备设施检测费</td>
-                                            <td></td>
-                                            <td>含避雷检测费、消防检测费等</td>
+                                            <td id="equipmenttesting_info" class="cass"></td>
+                                            <td id="equipmenttestingps_info" class="cass">含避雷检测费、消防检测费等</td>
                                         </tr>
                                         <tr>
                                             <td rowspan="3" style="vertical-align: middle;">日常修理费用</td>
                                             <td>材料费</td>
-                                            <td>20000</td>
-                                            <td></td>
+                                            <td id="material_info" class="cass"></td>
+                                            <td id="materialps_info" class="cass"></td>
                                         </tr>
                                         <tr>
                                             <td>灭火机</td>
-                                            <td>20000</td>
-                                            <td></td>
+                                            <td id="extinguisher_info" class="cass"></td>
+                                            <td id="extinguisherps_info" class="cass"></td>
                                         </tr>
                                         <tr>
                                             <td>日常维修费</td>
-                                            <td></td>
-                                            <td></td>
+                                            <td id="upkeep_info" class="cass"></td>
+                                            <td id="upkeepps_info" class="cass"></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5">合计:<span style="color:red;">40000.00</span> </td>
+                                            <td colspan="5">合计:<span style="color:red;" id="sum03_info"></span> </td>
                                         </tr>
-                                    </table>--%>
+                                    </table>
 										<table class="table table-striped table-bordered table-hover">
 											<tr>
 												<td>其他</td>
@@ -972,7 +967,7 @@
                 url: "${contextPath}//recode/budget/getBudgetByCondition",
                 datatype: "json",
                 height: 450,
-                colNames: ["ID","楼宇", "年份", "收入预算合计", "成本预算合计", "能源费合计", "办公总务合计", "业务外包合计", "修理费合计", "其他合计", "操作"],
+                colNames: ["ID","楼宇", "年份", "毛利润","收入预算合计", "成本预算合计", "能源费合计", "办公总务合计", "业务外包合计", "修理费合计", "其他合计", "操作"],
                 colModel: [{
                     name: "id",
                     width: 50,
@@ -987,6 +982,14 @@
                         name: "year",
                         width: 100,
                         search:false,
+                    },
+                    {
+                        name: "",
+                        width: 100,
+                        search:false,
+                        formatter:function(value,options,rows){
+                            return parseFloat(rows.sumincome)-parseFloat(rows.sumcost);
+                        }
                     },
                     {
                         name: "sumincome",
@@ -1419,7 +1422,7 @@
     function  budgetInfoToview(id,mark){
         $.ajax({
             dataType : "json",
-            url : "${contextPath}//recode/budget/getBudgetByCondition?page=1&rows=1&id="+id,
+            url : "${contextPath}//recode/budget/getBudgetByCondition?page=1&rows=1&id="+id+"&build="+$("#lyxx").val(),
             type : "post",
             contentType: 'application/json',
             data :null,
@@ -1451,6 +1454,8 @@
         $('#sum1_info').html(data.sumenergy);
         $('#sum2_info').html(data.sumoffice);
         $('#sum3_info').html(data.sumelsed);
+        $('#sum02_info').html(data.sumbusiness);
+        $('#sum03_info').html(data.sumfixed);
         $('#sum_info').html(parseFloat(data.sumincome) - parseFloat(data.sumcost));
         for(var param in data){
             $('.cass').each(function(i){
@@ -1471,6 +1476,8 @@
         $('#sum0').html(data.sumenergy);
         $('#sum1').html(data.sumoffice);
         $('#sum2').html(data.sumelsed);
+        $('#sum02').html(data.sumbusiness);
+        $('#sum03').html(data.sumfixed);
         $('#sum5').html(parseFloat(data.sumincome) - parseFloat(data.sumcost));
         for(var param in data){
             $('.num').each(function(i){
@@ -1611,16 +1618,20 @@
 	function sumnumber(){
 		$('.num').each(function(i){
 			$(this).bind('input',function(){
-                if(i <9){
-                    $('#sumincome').html(getsumToIndex(0,8));
-                }else if(i<12){
-                    $('#sum0').html(getsumToIndex(9,11));
-                }else if(i<28){
-                    $('#sum1').html(getsumToIndex(12,27));
+                if(i <12){
+                    $('#sumincome').html(getsumToIndex(0,11));
+                }else if(i<15){
+                    $('#sum0').html(getsumToIndex(12,14));
                 }else if(i<31){
-                    $('#sum2').html(getsumToIndex(28,28));
+                    $('#sum1').html(getsumToIndex(15,30));
+                }else if(i<34){
+                    $('#sum02').html(getsumToIndex(31,33));
+                }else if(i<41){
+                    $('#sum03').html(getsumToIndex(34,40));
+                }else if(i<42){
+                    $('#sum2').html(getsumToIndex(41,41));
                 }
-                    $('#sum5').html(getsumToIndex(0,8)-getsumToIndex(8,31));
+                    $('#sum5').html(getsumToIndex(0,11)-getsumToIndex(12,41));
 			});
 		});
 	}

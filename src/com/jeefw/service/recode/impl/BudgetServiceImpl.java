@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.persistence.Column;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -11,9 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jeefw.dao.recode.BudgetDao;
+import com.jeefw.dao.recode.BuildDao;
 import com.jeefw.model.recode.BudgetEntity;
 import com.jeefw.model.recode.BuildEntity;
 import com.jeefw.model.recode.param.BudgetModel;
+import com.jeefw.model.recode.param.BuildModel;
 import com.jeefw.service.recode.BudgetService;
 
 import core.support.JqGridPageView;
@@ -25,11 +28,27 @@ public class BudgetServiceImpl implements BudgetService{
 	
 	@Resource
 	BudgetDao budgetDao;
+	
+	@Resource
+	BuildDao buildDao;
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public JqGridPageView<BudgetModel> getBudgetByCondition(BudgetModel model) {
 		
+		BuildModel cmodel = new BuildModel();
+		cmodel.setLoginuser(model.getLoginuser());
+		cmodel.setPage("1");
+		cmodel.setRows("1000");
+		List<BuildEntity> rows = buildDao.getBuildByCondition(cmodel, null).getRows();
+		String ids = "";
+		if(rows != null && rows.size() != 0){
+			for (BuildEntity buildEntity : rows) {
+				ids += "'"+buildEntity.getId()+"',";
+			}
+		}
+		ids = ids.substring(0, ids.length()-1);
+		model.setBuilds(ids);
 		JqGridPageView<BudgetModel> view = budgetDao.getBudgetByCondition(model);
 		if(view == null){
 			return null;
@@ -42,7 +61,8 @@ public class BudgetServiceImpl implements BudgetService{
 //			bm.setSumincome(ArithmeticUtil.add(bm.getProperty(),bm.getFixedparking(),bm.getTempparking(),bm.getService(),bm.getAdvertising(),
 //					bm.getWarehouse(),bm.getRental(),bm.getElectricin()));
 			bm.setSumincome(ArithmeticUtil.add(bm.getProperty(),bm.getFixedparking(),bm.getTempparking(),bm.getAdvertising(),
-					bm.getRent(),bm.getRest(),bm.getServicing(),bm.getElectricin(),bm.getWaterin()));
+					bm.getRent(),bm.getRest(),bm.getServicing(),bm.getElectricin(),bm.getWaterin(),bm.getService(),bm.getWarehouse()
+					,bm.getRental()));
 			//能源预算合计
 			bm.setSumenergy(ArithmeticUtil.add(bm.getWater(),bm.getElectricout(),bm.getGas()));
 			//办公预算合计
@@ -50,16 +70,16 @@ public class BudgetServiceImpl implements BudgetService{
 					bm.getCleanser(),bm.getAfforestation(),bm.getPpe(),bm.getTrashcleaning(),bm.getEmergencymaterial(),bm.getWallwashing(),
 					bm.getAlarmservice(),bm.getPestcontrol(),bm.getSewerage(),bm.getMaintenance(),bm.getOffice()));
 			//业务预算合计
-//			bm.setSumbusiness(ArithmeticUtil.add(bm.getSecurity(),bm.getCleansing(),bm.getProjectout()));
+			bm.setSumbusiness(ArithmeticUtil.add(bm.getSecurity(),bm.getCleansing(),bm.getProjectout()));
 			//修理预算合计
-//			bm.setSumfixed(ArithmeticUtil.add(bm.getRepair(),bm.getFirefighting(),bm.getEngineering(),bm.getEquipmenttesting(),bm.getMaterial(),
-//					bm.getExtinguisher(),bm.getUpkeep()));
+			bm.setSumfixed(ArithmeticUtil.add(bm.getRepair(),bm.getFirefighting(),bm.getEngineering(),bm.getEquipmenttesting(),bm.getMaterial(),
+					bm.getExtinguisher(),bm.getUpkeep()));
 			//其他预算合计
 			bm.setSumelsed(bm.getOther());
 			
 			//成本预算
-//			bm.setSumcost(ArithmeticUtil.add(bm.getSumbusiness(),bm.getSumelsed(),bm.getSumenergy(),bm.getSumfixed(),bm.getSumoffice()));
-			bm.setSumcost(ArithmeticUtil.add(bm.getSumelsed(),bm.getSumenergy(),bm.getSumoffice()));
+			bm.setSumcost(ArithmeticUtil.add(bm.getSumbusiness(),bm.getSumelsed(),bm.getSumenergy(),bm.getSumfixed(),bm.getSumoffice()));
+//			bm.setSumcost(ArithmeticUtil.add(bm.getSumelsed(),bm.getSumenergy(),bm.getSumoffice()));
 		}
 		return view;
 	}

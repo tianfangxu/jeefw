@@ -37,8 +37,10 @@ public class AchievementDaoImpl extends BaseDao<AchievementEntity> implements Ac
 		
 		if(!StringUnit.isNullOrEmpty(model.getBuild())){
 			sb.append(" and t.build = '"+model.getBuild()+"' ");
-		}else{
-			return null;
+		}
+		
+		if(!StringUnit.isNullOrEmpty(model.getBuilds())){
+			sb.append(" and t.build in ("+model.getBuilds()+")");
 		}
 		
 		if(!StringUnit.isNullOrEmpty(model.getYear())){
@@ -68,7 +70,7 @@ public class AchievementDaoImpl extends BaseDao<AchievementEntity> implements Ac
 			}
 		}
 		
-		Query query = session.createSQLQuery("select t.id,t.year ,t.build,t.type ,t.serialno,t.month,"
+		/*Query query = session.createSQLQuery("select t.id,t.year ,t.build,t.type ,t.serialno,t.month,"
 				+ "t.property,t.fixedparking,t.tempparking,t.advertising,"
 				+ "t.electricin ,t.water,t.electricout,t.gas  ,t.stationery ,t.communication,t.drinkwater ,t.doorplate  ,t.decorate,t.cleanser,t.afforestation,t.ppe  ,"
 				+ "t.trashcleaning,t.emergencymaterial ,t.wallwashing,t.alarmservice,t.pestcontrol,t.sewerage,t.maintenance,t.office,"
@@ -80,6 +82,8 @@ public class AchievementDaoImpl extends BaseDao<AchievementEntity> implements Ac
 				+ "t.trashcleaningps,t.emergencymaterialps ,t.wallwashingps,t.alarmserviceps,t.pestcontrolps,t.sewerageps,t.maintenanceps,t.officeps,"
 				+ "t.otherps,t.restps,t.servicingps,t.rentps,t.waterinps"
 				
+				+ " from t_achievement t left join m_build b on t.build = b.id "+ sb.toString())*/
+		Query query = session.createSQLQuery("select t.*,b.name buildname"
 				+ " from t_achievement t left join m_build b on t.build = b.id "+ sb.toString())
 				.addScalar("id", StandardBasicTypes.STRING)
 				.addScalar("buildname", StandardBasicTypes.STRING)
@@ -147,6 +151,35 @@ public class AchievementDaoImpl extends BaseDao<AchievementEntity> implements Ac
 				.addScalar("restps", StandardBasicTypes.STRING)
 				.addScalar("servicingps", StandardBasicTypes.STRING)
 				.addScalar("rentps", StandardBasicTypes.STRING)
+				
+				.addScalar("serviceps" , StandardBasicTypes.STRING)
+				.addScalar("warehouseps"  , StandardBasicTypes.STRING)
+				.addScalar("rentalps"  , StandardBasicTypes.STRING)
+				
+				.addScalar("securityps", StandardBasicTypes.STRING)
+				.addScalar("cleansingps"  , StandardBasicTypes.STRING)
+				.addScalar("projectoutps" , StandardBasicTypes.STRING)
+				.addScalar("repairps"  , StandardBasicTypes.STRING)
+				.addScalar("firefightingps", StandardBasicTypes.STRING)
+				.addScalar("engineeringps", StandardBasicTypes.STRING)
+				.addScalar("equipmenttestingps"  , StandardBasicTypes.STRING)
+				.addScalar("materialps", StandardBasicTypes.STRING)
+				.addScalar("extinguisherps", StandardBasicTypes.STRING)
+				.addScalar("upkeepps"  , StandardBasicTypes.STRING)
+				.addScalar("service" , StandardBasicTypes.STRING)
+				.addScalar("warehouse"  , StandardBasicTypes.STRING)
+				.addScalar("rental"  , StandardBasicTypes.STRING)
+				.addScalar("security", StandardBasicTypes.STRING)
+				.addScalar("cleansing"  , StandardBasicTypes.STRING)
+				.addScalar("projectout" , StandardBasicTypes.STRING)
+				.addScalar("repair"  , StandardBasicTypes.STRING)
+				.addScalar("firefighting", StandardBasicTypes.STRING)
+				.addScalar("engineering", StandardBasicTypes.STRING)
+				.addScalar("equipmenttesting"  , StandardBasicTypes.STRING)
+				.addScalar("material", StandardBasicTypes.STRING)
+				.addScalar("extinguisher", StandardBasicTypes.STRING)
+				.addScalar("upkeep"  , StandardBasicTypes.STRING)
+				
 				.setResultTransformer(Transformers.aliasToBean(AchievementModel.class)); 
 		query.setFirstResult((Integer.parseInt(model.getPage()) - 1)
 				* Integer.parseInt(model.getRows()));
@@ -185,8 +218,10 @@ public class AchievementDaoImpl extends BaseDao<AchievementEntity> implements Ac
 		StringBuffer where = new StringBuffer(" 1=1 and tb.deleteflg = '0' and ta.deleteflg = '0' ");
 		if(!StringUnit.isNullOrEmpty(model.getBuild())){
 			where.append(" and tb.build = '"+model.getBuild()+"' ");
-		}else{
-			return null;
+		}
+		
+		if(!StringUnit.isNullOrEmpty(model.getBuilds())){
+			where.append(" and tb.build in ("+model.getBuilds()+")");
 		}
 		
 		if(!StringUnit.isNullOrEmpty(model.getYear())){
@@ -226,12 +261,12 @@ public class AchievementDaoImpl extends BaseDao<AchievementEntity> implements Ac
 					"st.build "+
 					"from (  "+
 					"SELECT  "+
-					"tb.property+tb.fixedparking+tb.tempparking+tb.advertising+tb.electricin+tb.waterin-tb.water-tb.electricout-tb.gas-tb.stationery-tb.communication-tb.drinkwater-tb."+
+					"tb.property+tb.fixedparking+tb.tempparking+tb.advertising+tb.electricin+tb.waterin+tb.service+tb.warehouse+tb.rental-tb.water-tb.electricout-tb.gas-tb.stationery-tb.communication-tb.drinkwater-tb."+
 					"doorplate-tb.decorate-tb.cleanser-tb.afforestation-tb.ppe-tb.trashcleaning-tb.emergencymaterial-tb.wallwashing-tb.alarmservice-tb.pestcontrol-tb.sewerage-tb.maintenance-tb.office"+
-					"-tb.other+tb.rent+tb.rest+tb.servicing as dugetsum,"+
-					"ta.property+ta.fixedparking+ta.tempparking+ta.advertising+ta.electricin+ta.waterin-ta.water-ta.electricout-ta.gas-ta.stationery-ta.communication-ta.drinkwater-ta."+
+					"-tb.other+tb.rent+tb.rest+tb.servicing-tb.security-tb.cleansing-tb.projectout-tb.repair-tb.firefighting-tb.engineering-tb.equipmenttesting-tb.material-tb.extinguisher-tb.upkeep as dugetsum,"+
+					"ta.property+ta.fixedparking+ta.tempparking+ta.advertising+ta.electricin+ta.waterin+ta.service+ta.warehouse+ta.rental-ta.water-ta.electricout-ta.gas-ta.stationery-ta.communication-ta.drinkwater-ta."+
 					"doorplate-ta.decorate-ta.cleanser-ta.afforestation-ta.ppe-ta.trashcleaning-ta.emergencymaterial-ta.wallwashing-ta.alarmservice-ta.pestcontrol-ta.sewerage-ta.maintenance-ta.office"+
-					"-ta.other+ta.rent+ta.rest+ta.servicing as incomesum,"+
+					"-ta.other+ta.rent+ta.rest+ta.servicing-ta.security-ta.cleansing-ta.projectout-ta.repair-ta.firefighting-ta.engineering-ta.equipmenttesting-ta.material-ta.extinguisher-ta.upkeep as incomesum,"+
 					"ta.`year`, "+
 					"ta.`month`,"+
 					"ta.build,  "+

@@ -92,6 +92,47 @@ public class AchievementModel<T, G> extends BaseModel<T, G> implements Serializa
 	private String maintenanceps;// 地坪保养费支出备注	
 	private String officeps;// 办公总务其他支出备注	
 	private String otherps;// 其他支出备注
+	
+	private String service;// 服务费收入
+	private String warehouse;// 仓储费/经营开发支出
+	private String rental;// 租线费收入
+	
+	private String security;// 保安服务费支出
+	private String cleansing;// 保洁服务费支出
+	private String projectout;// 工程外包支出
+	private String repair;// 大修理费用支出
+	private String firefighting;// 消防设备设施维护费支出
+	private String engineering;// 工程设备设施维护费支出
+	private String equipmenttesting;// 设备设施检测费支出
+	private String material;// 材料费支出
+	private String extinguisher;// 灭火机支出
+	private String upkeep;// 日常维修费支出
+	
+	private String serviceps;// 服务费收入
+	private String warehouseps;// 仓储费/经营开发支出
+	private String rentalps;// 租线费收入
+	
+	private String securityps;// 保安服务费支出
+	private String cleansingps;// 保洁服务费支出
+	private String projectoutps;// 工程外包支出
+	private String repairps;// 大修理费用支出
+	private String firefightingps;// 消防设备设施维护费支出
+	private String engineeringps;// 工程设备设施维护费支出
+	private String equipmenttestingps;// 设备设施检测费支出
+	private String materialps;// 材料费支出
+	private String extinguisherps;// 灭火机支出
+	private String upkeepps;// 日常维修费支出
+	
+	private String builds;
+	
+	
+	
+	public String getBuilds() {
+		return builds;
+	}
+	public void setBuilds(String builds) {
+		this.builds = builds;
+	}
 	public String getId() {
 		return id;
 	}
@@ -565,6 +606,162 @@ public class AchievementModel<T, G> extends BaseModel<T, G> implements Serializa
 	}
 	public void setOtherps(String otherps) {
 		this.otherps = otherps;
+	}
+	public String getService() {
+		return service;
+	}
+	public void setService(String service) {
+		this.service = service;
+	}
+	public String getWarehouse() {
+		return warehouse;
+	}
+	public void setWarehouse(String warehouse) {
+		this.warehouse = warehouse;
+	}
+	public String getRental() {
+		return rental;
+	}
+	public void setRental(String rental) {
+		this.rental = rental;
+	}
+	public String getSecurity() {
+		return security;
+	}
+	public void setSecurity(String security) {
+		this.security = security;
+	}
+	public String getCleansing() {
+		return cleansing;
+	}
+	public void setCleansing(String cleansing) {
+		this.cleansing = cleansing;
+	}
+	public String getProjectout() {
+		return projectout;
+	}
+	public void setProjectout(String projectout) {
+		this.projectout = projectout;
+	}
+	public String getRepair() {
+		return repair;
+	}
+	public void setRepair(String repair) {
+		this.repair = repair;
+	}
+	public String getFirefighting() {
+		return firefighting;
+	}
+	public void setFirefighting(String firefighting) {
+		this.firefighting = firefighting;
+	}
+	public String getEngineering() {
+		return engineering;
+	}
+	public void setEngineering(String engineering) {
+		this.engineering = engineering;
+	}
+	public String getEquipmenttesting() {
+		return equipmenttesting;
+	}
+	public void setEquipmenttesting(String equipmenttesting) {
+		this.equipmenttesting = equipmenttesting;
+	}
+	public String getMaterial() {
+		return material;
+	}
+	public void setMaterial(String material) {
+		this.material = material;
+	}
+	public String getExtinguisher() {
+		return extinguisher;
+	}
+	public void setExtinguisher(String extinguisher) {
+		this.extinguisher = extinguisher;
+	}
+	public String getUpkeep() {
+		return upkeep;
+	}
+	public void setUpkeep(String upkeep) {
+		this.upkeep = upkeep;
+	}
+	public String getServiceps() {
+		return serviceps;
+	}
+	public void setServiceps(String serviceps) {
+		this.serviceps = serviceps;
+	}
+	public String getWarehouseps() {
+		return warehouseps;
+	}
+	public void setWarehouseps(String warehouseps) {
+		this.warehouseps = warehouseps;
+	}
+	public String getRentalps() {
+		return rentalps;
+	}
+	public void setRentalps(String rentalps) {
+		this.rentalps = rentalps;
+	}
+	public String getSecurityps() {
+		return securityps;
+	}
+	public void setSecurityps(String securityps) {
+		this.securityps = securityps;
+	}
+	public String getCleansingps() {
+		return cleansingps;
+	}
+	public void setCleansingps(String cleansingps) {
+		this.cleansingps = cleansingps;
+	}
+	public String getProjectoutps() {
+		return projectoutps;
+	}
+	public void setProjectoutps(String projectoutps) {
+		this.projectoutps = projectoutps;
+	}
+	public String getRepairps() {
+		return repairps;
+	}
+	public void setRepairps(String repairps) {
+		this.repairps = repairps;
+	}
+	public String getFirefightingps() {
+		return firefightingps;
+	}
+	public void setFirefightingps(String firefightingps) {
+		this.firefightingps = firefightingps;
+	}
+	public String getEngineeringps() {
+		return engineeringps;
+	}
+	public void setEngineeringps(String engineeringps) {
+		this.engineeringps = engineeringps;
+	}
+	public String getEquipmenttestingps() {
+		return equipmenttestingps;
+	}
+	public void setEquipmenttestingps(String equipmenttestingps) {
+		this.equipmenttestingps = equipmenttestingps;
+	}
+	public String getMaterialps() {
+		return materialps;
+	}
+	public void setMaterialps(String materialps) {
+		this.materialps = materialps;
+	}
+	public String getExtinguisherps() {
+		return extinguisherps;
+	}
+	public void setExtinguisherps(String extinguisherps) {
+		this.extinguisherps = extinguisherps;
+	}
+	public String getUpkeepps() {
+		return upkeepps;
+	}
+	public void setUpkeepps(String upkeepps) {
+		this.upkeepps = upkeepps;
 	}
 
 	

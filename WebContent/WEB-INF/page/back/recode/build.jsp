@@ -16,7 +16,7 @@
 				</a>
 			</shiro:hasPermission>
 			<shiro:lacksPermission name="${ROLE_KEY}:build:add">
-				<a id="addInformationButton" disabled="disabled" role="button" class="btn btn-info btn-sm" data-toggle="modal">
+				<a id="addInformationButton1" disabled="disabled" role="button" class="btn btn-info btn-sm" data-toggle="modal">
 					添加记录
 				</a>
 	        </shiro:lacksPermission>
@@ -26,7 +26,7 @@
 				</a>
 			</shiro:hasPermission>
 			<shiro:lacksPermission name="${ROLE_KEY}:build:edit">
-				<a id="editInformationButton" role="button" disabled="disabled" class="btn btn-purple btn-sm" data-toggle="modal">
+				<a id="editInformationButton1" role="button" disabled="disabled" class="btn btn-purple btn-sm" data-toggle="modal">
 					编辑记录
 				</a>			
 			</shiro:lacksPermission>

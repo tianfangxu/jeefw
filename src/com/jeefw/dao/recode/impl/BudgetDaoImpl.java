@@ -33,8 +33,9 @@ public class BudgetDaoImpl extends BaseDao<BudgetEntity> implements BudgetDao{
 		
 		if(!StringUnit.isNullOrEmpty(model.getBuild())){
 			sb.append(" and t.build = '"+model.getBuild()+"' ");
-		}else{
-			return null;
+		}
+		if(!StringUnit.isNullOrEmpty(model.getBuilds())){
+			sb.append(" and t.build in ("+model.getBuilds()+")");
 		}
 		
 		if(!StringUnit.isNullOrEmpty(model.getYear())){
@@ -65,7 +66,7 @@ public class BudgetDaoImpl extends BaseDao<BudgetEntity> implements BudgetDao{
 				+ "t.trashcleaning,t.emergencymaterial ,t.wallwashing,t.alarmservice,t.pestcontrol,t.sewerage,t.maintenance,t.office  ,t.security,t.cleansing  ,t.projectout,"
 				+ "t.repair,t.firefighting ,t.engineering,t.equipmenttesting  ,t.material ,t.extinguisher,t.upkeep,t.other,b.name buildname"
 				+ " from t_budget t left join m_build b on t.build = b.id "+ sb.toString())*/
-		Query query = session.createSQLQuery("select t.id,t.year ,t.build,t.type ,t.serialno,"
+		/*Query query = session.createSQLQuery("select t.id,t.year ,t.build,t.type ,t.serialno,"
 				+ "t.property,t.fixedparking,t.tempparking,t.advertising,"
 				+ "t.electricin ,t.water,t.electricout,t.gas  ,t.stationery ,t.communication,t.drinkwater ,t.doorplate  ,t.decorate,t.cleanser,t.afforestation,t.ppe  ,"
 				+ "t.trashcleaning,t.emergencymaterial ,t.wallwashing,t.alarmservice,t.pestcontrol,t.sewerage,t.maintenance,t.office,"
@@ -77,6 +78,8 @@ public class BudgetDaoImpl extends BaseDao<BudgetEntity> implements BudgetDao{
 				+ "t.trashcleaningps,t.emergencymaterialps ,t.wallwashingps,t.alarmserviceps,t.pestcontrolps,t.sewerageps,t.maintenanceps,t.officeps,"
 				+ "t.otherps,t.restps,t.servicingps,t.rentps,t.waterinps"
 				
+				+ " from t_budget t left join m_build b on t.build = b.id "+ sb.toString())*/
+		Query query = session.createSQLQuery("select t.*,b.name buildname"
 				+ " from t_budget t left join m_build b on t.build = b.id "+ sb.toString())
 				.addScalar("id", StandardBasicTypes.STRING)
 				.addScalar("buildname", StandardBasicTypes.STRING)
@@ -87,10 +90,10 @@ public class BudgetDaoImpl extends BaseDao<BudgetEntity> implements BudgetDao{
 				.addScalar("property", StandardBasicTypes.STRING)
 				.addScalar("fixedparking", StandardBasicTypes.STRING)
 				.addScalar("tempparking", StandardBasicTypes.STRING)
-//				.addScalar("service" , StandardBasicTypes.STRING)
 				.addScalar("advertising", StandardBasicTypes.STRING)
-//				.addScalar("warehouse"  , StandardBasicTypes.STRING)
-//				.addScalar("rental"  , StandardBasicTypes.STRING)
+				.addScalar("service" , StandardBasicTypes.STRING)
+				.addScalar("warehouse"  , StandardBasicTypes.STRING)
+				.addScalar("rental"  , StandardBasicTypes.STRING)
 				.addScalar("electricin" , StandardBasicTypes.STRING)
 				.addScalar("waterin", StandardBasicTypes.STRING)
 				.addScalar("water", StandardBasicTypes.STRING)
@@ -112,16 +115,16 @@ public class BudgetDaoImpl extends BaseDao<BudgetEntity> implements BudgetDao{
 				.addScalar("sewerage", StandardBasicTypes.STRING)
 				.addScalar("maintenance", StandardBasicTypes.STRING)
 				.addScalar("office"  , StandardBasicTypes.STRING)
-//				.addScalar("security", StandardBasicTypes.STRING)
-//				.addScalar("cleansing"  , StandardBasicTypes.STRING)
-//				.addScalar("projectout" , StandardBasicTypes.STRING)
-//				.addScalar("repair"  , StandardBasicTypes.STRING)
-//				.addScalar("firefighting", StandardBasicTypes.STRING)
-//				.addScalar("engineering", StandardBasicTypes.STRING)
-//				.addScalar("equipmenttesting"  , StandardBasicTypes.STRING)
-//				.addScalar("material", StandardBasicTypes.STRING)
-//				.addScalar("extinguisher", StandardBasicTypes.STRING)
-//				.addScalar("upkeep"  , StandardBasicTypes.STRING)
+				.addScalar("security", StandardBasicTypes.STRING)
+				.addScalar("cleansing"  , StandardBasicTypes.STRING)
+				.addScalar("projectout" , StandardBasicTypes.STRING)
+				.addScalar("repair"  , StandardBasicTypes.STRING)
+				.addScalar("firefighting", StandardBasicTypes.STRING)
+				.addScalar("engineering", StandardBasicTypes.STRING)
+				.addScalar("equipmenttesting"  , StandardBasicTypes.STRING)
+				.addScalar("material", StandardBasicTypes.STRING)
+				.addScalar("extinguisher", StandardBasicTypes.STRING)
+				.addScalar("upkeep"  , StandardBasicTypes.STRING)
 				.addScalar("other", StandardBasicTypes.STRING)
 				.addScalar("rest", StandardBasicTypes.STRING)
 				.addScalar("servicing", StandardBasicTypes.STRING)
@@ -156,6 +159,22 @@ public class BudgetDaoImpl extends BaseDao<BudgetEntity> implements BudgetDao{
 				.addScalar("restps", StandardBasicTypes.STRING)
 				.addScalar("servicingps", StandardBasicTypes.STRING)
 				.addScalar("rentps", StandardBasicTypes.STRING)
+				
+				.addScalar("serviceps" , StandardBasicTypes.STRING)
+				.addScalar("warehouseps"  , StandardBasicTypes.STRING)
+				.addScalar("rentalps"  , StandardBasicTypes.STRING)
+				
+				.addScalar("securityps", StandardBasicTypes.STRING)
+				.addScalar("cleansingps"  , StandardBasicTypes.STRING)
+				.addScalar("projectoutps" , StandardBasicTypes.STRING)
+				.addScalar("repairps"  , StandardBasicTypes.STRING)
+				.addScalar("firefightingps", StandardBasicTypes.STRING)
+				.addScalar("engineeringps", StandardBasicTypes.STRING)
+				.addScalar("equipmenttestingps"  , StandardBasicTypes.STRING)
+				.addScalar("materialps", StandardBasicTypes.STRING)
+				.addScalar("extinguisherps", StandardBasicTypes.STRING)
+				.addScalar("upkeepps"  , StandardBasicTypes.STRING)
+				
 				.setResultTransformer(Transformers.aliasToBean(BudgetModel.class)); 
 		query.setFirstResult((Integer.parseInt(model.getPage()) - 1)
 				* Integer.parseInt(model.getRows()));

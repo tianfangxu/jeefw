@@ -106,11 +106,11 @@
 												<td id="tempparking_info" class="cass"></td>
 												<td id="tempparkingps_info" class="cass"></td>
 											</tr>
-											<%--<tr>
-                                            <td colspan="2">服务费</td>
-                                            <td id="service_info">84315.00</td>
-                                            <td>含基站租赁</td>
-                                        </tr>--%>
+											<tr>
+	                                            <td colspan="2">服务费</td>
+	                                            <td id="service_info" class="cass"></td>
+	                                            <td id="serviceps_info" class="cass"></td>
+	                                        </tr>
 											<tr>
 												<td colspan="2">广告费</td>
 												<td id="advertising_info" class="cass"></td>
@@ -126,16 +126,16 @@
 												<td id="servicing_info" class="cass"></td>
 												<td id="servicingps_info" class="cass"></td>
 											</tr>
-											<%--<tr>
-                                            <td colspan="2">仓储费/经营开发</td>
-                                            <td id="warehouse_info">35000.00</td>
-                                            <td>有服务合同</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">租线费</td>
-                                            <td id="rental_info">70000.00</td>
-                                            <td>备注</td>
-                                        </tr>--%>
+											<tr>
+	                                           <td colspan="2">仓储费/经营开发</td>
+	                                           <td id="warehouse_info" class="cass"></td>
+	                                           <td id="warehouseps_info" class="cass"></td>
+	                                       </tr>
+	                                       <tr>
+	                                           <td colspan="2">租线费</td>
+	                                           <td id="rental_info" class="cass"></td>
+	                                           <td id="rentalps_info" class="cass"></td>
+	                                       </tr>
 											<tr>
 												<td colspan="2">电费</td>
 												<td id="electricin_info" class="cass"></td>
@@ -296,6 +296,80 @@
 												</td>
 											</tr>
 										</table>
+										<table class="table table-striped table-bordered table-hover">
+                                        <tr>
+                                            <td colspan="3" style="text-align: center;">项目</td>
+                                            <td style="text-align: center;">全年预算</td>
+                                            <td style="text-align: center;">备注</td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="3" style="vertical-align: middle;">业务外包</td>
+                                            <td colspan="2">保安服务费</td>
+                                            <td id="security_info" class="cass"></td>
+                                            <td id="securityps_info" class="cass"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">保洁服务费</td>
+                                            <td id="cleansing_info" class="cass"></td>
+                                            <td id="cleansingps_info" class="cass"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">工程外包</td>
+                                            <td id="projectout_info" class="cass"></td>
+                                            <td id="projectoutps_info" class="cass"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">小计:<span style="color:red;" id="sum02_info">0.00</span> </td>
+                                        </tr>
+                                    </table>
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <tr>
+                                            <td colspan="3" style="text-align: center;">项目</td>
+                                            <td style="text-align: center;">全年预算</td>
+                                            <td style="text-align: center;">备注</td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="7" style="vertical-align: middle;">修理费</td>
+                                            <td colspan="2">大修理费用</td>
+                                            <td id="repair_info" class="cass"></td>
+                                            <td id="repairps_info" class="cass"></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="3" style="vertical-align: middle;">设备设施维护</td>
+                                            <td>消防设备设施维护费</td>
+                                            <td id="firefighting_info" class="cass"></td>
+                                            <td id="firefightingps_info" class="cass"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>工程设备设施维护费</td>
+                                            <td id="engineering_info" class="cass"></td>
+                                            <td id="engineeringps_info" class="cass"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>设备设施检测费</td>
+                                            <td id="equipmenttesting_info" class="cass"></td>
+                                            <td id="equipmenttestingps_info" class="cass">含避雷检测费、消防检测费等</td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="3" style="vertical-align: middle;">日常修理费用</td>
+                                            <td>材料费</td>
+                                            <td id="material_info" class="cass"></td>
+                                            <td id="materialps_info" class="cass"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>灭火机</td>
+                                            <td id="extinguisher_info" class="cass"></td>
+                                            <td id="extinguisherps_info" class="cass"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>日常维修费</td>
+                                            <td id="upkeep_info" class="cass"></td>
+                                            <td id="upkeepps_info" class="cass"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">合计:<span style="color:red;" id="sum03_info"></span> </td>
+                                        </tr>
+                                    </table>
 										<table class="table table-striped table-bordered table-hover">
 											<tr>
 												<td>其他</td>
@@ -1035,6 +1109,8 @@
 	                    $('#sum1_info').html(data.sumenergy);
 	                    $('#sum2_info').html(data.sumoffice);
 	                    $('#sum3_info').html(data.sumelsed);
+	                    $('#sum02').html(data.sumbusiness);
+	                    $('#sum03').html(data.sumfixed);
 	                    $('#sum_info').html(parseFloat(data.sumincome) - parseFloat(data.sumcost));
 	                    for(var param in data){
 	                        $('.cass').each(function(i){
@@ -1064,5 +1140,7 @@
              $('#sum2_info').html('');
              $('#sum3_info').html('');
              $('#sum_info').html('');
+             $('#sum02').html('');
+             $('#sum03').html('');
 		}
 </script>
