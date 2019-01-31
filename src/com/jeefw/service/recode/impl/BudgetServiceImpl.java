@@ -15,6 +15,7 @@ import com.jeefw.dao.recode.BudgetDao;
 import com.jeefw.dao.recode.BuildDao;
 import com.jeefw.model.recode.BudgetEntity;
 import com.jeefw.model.recode.BuildEntity;
+import com.jeefw.model.recode.param.AchievementModel;
 import com.jeefw.model.recode.param.BudgetModel;
 import com.jeefw.model.recode.param.BuildModel;
 import com.jeefw.service.recode.BudgetService;
@@ -85,14 +86,26 @@ public class BudgetServiceImpl implements BudgetService{
 	}
 
 	@Override
-	public void saveBudget(BudgetModel model) {
+	public String saveBudget(BudgetModel model){
+		
+		BudgetModel rmodel = new BudgetModel();
+		rmodel.setBuild(model.getBuild());
+		rmodel.setYear(model.getYear());
+		rmodel.setPage("1");
+		rmodel.setRows("1000");
+		JqGridPageView<BudgetModel> view = budgetDao.getBudgetByCondition(rmodel );
+		if(view != null && view.getRows() != null && view.getRows().size() != 0){
+			//说明已存在该数据，不能保存
+			return "数据已存在，不能保存！";
+		}
+		
 		BudgetEntity entity = new BudgetEntity();
 		BeanUtils.copyProperties(model, entity);
 		entity.setDeleteflg("0");
 		entity.setCreatetime(DateUnit.getTime14());
 		entity.setCreateuser(model.getLoginuser().getId().toString());
 		budgetDao.persist(entity);
-		
+		return "保存成功!";
 	}
 
 	@Override

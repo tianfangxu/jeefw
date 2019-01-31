@@ -25,6 +25,7 @@ import com.jeefw.service.recode.AchievementService;
 import core.support.JqGridPageView;
 import core.util.ArithmeticUtil;
 import core.util.DateUnit;
+import core.util.StringUnit;
 
 @Service
 @Transactional
@@ -89,13 +90,27 @@ public class AchievementServiceImpl<E> implements AchievementService {
 	}
 
 	@Override
-	public void saveAchievement(AchievementModel model) {
+	public String saveAchievement(AchievementModel model){
+		
+		AchievementModel rmodel = new AchievementModel();
+		rmodel.setBuild(model.getBuild());
+		rmodel.setYear(model.getYear());
+		rmodel.setMonth(model.getMonth());
+		rmodel.setPage("1");
+		rmodel.setRows("1000");
+		JqGridPageView<AchievementModel> view = achievementDao.getBudgetByCondition(rmodel );
+		if(view != null && view.getRows() != null && view.getRows().size() != 0){
+			//说明已存在该数据，不能保存
+			return "数据已存在，不能保存！";
+		}
+		
 		AchievementEntity entity = new AchievementEntity();
 		BeanUtils.copyProperties(model, entity);
 		entity.setDeleteflg("0");
 		entity.setCreatetime(DateUnit.getTime14());
 		entity.setCreateuser(model.getLoginuser().getId().toString());
 		achievementDao.persist(entity);
+		return "保存成功！";
 	}
 
 	@Override
@@ -170,7 +185,11 @@ public class AchievementServiceImpl<E> implements AchievementService {
 	//报表数据
 	public ArrayList<String> setExcleDate(AchievementSumExportModel model,ArrayList<String> list){
 		//应完成度
-		String divide = ArithmeticUtil.divide(model.getMonth(),"12");
+		String divide = "0";
+		if(!StringUnit.isNullOrEmpty(model.getMonth())){
+			divide = ArithmeticUtil.divide(model.getMonth(),"12");
+		}
+		
 		
 		list.add(model.getRent() );
 		list.add(model.getSumrent() );
@@ -478,6 +497,10 @@ public class AchievementServiceImpl<E> implements AchievementService {
 		list.add("");
 		
 		return list;
+	}
+	
+	public static void main(String[] args) throws Exception {
+		 throw new Exception("234234432");
 	}
 
 }

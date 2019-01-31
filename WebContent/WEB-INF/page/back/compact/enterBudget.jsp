@@ -1684,6 +1684,12 @@
             contentType: 'application/json',
             data :params,
             complete : function(xmlRequest) {
+            	console.log(xmlRequest);
+            	$.gritter.add({
+                    title: '信息',
+                    text: xmlRequest.responseJSON.message,
+                    class_name:"gritter-info"
+                });
                 $('#table_in').modal("toggle");
                 jQuery("#grid-table").trigger("reloadGrid");
             }

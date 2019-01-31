@@ -7,6 +7,11 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/ui.jqgrid.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery.gritter.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/select2.css" />
+<style>
+	.tdclass{
+		text-align: center;
+	}
+</style>
 
 <div class="row">
 	<div class="col-xs-12">
@@ -22,6 +27,335 @@
 		<script type="text/javascript">
 			var $path_base = "${contextPath}/static";//in Ace demo this will be used for editurl parameter
 		</script>
+		
+		<div>
+			<div class="col-xs-12">
+				<div class="widget-box">
+					<div class="widget-header" style="height: 50px;">
+						<select id="port_year" style="width: 300px;margin-top: 10px;border-radius: 5px;">
+							<option>2018</option>
+							<option>2019</option>
+							<option>2020</option>
+							<option>2021</option>
+							<option>2022</option>
+							<option>2023</option>
+							<option>2024</option>
+							<option>2025</option>
+							<option>2026</option>
+							<option>2027</option>
+							<option>2028</option>
+						</select>
+						<div onclick="setResultData()" class="btn btn-info btn-sm" style="width: 100px;margin-left: 20px">查询</div>
+						<div onclick="exportexcel()" class="btn btn-info btn-sm" style="width: 100px;margin-left: 20px">导出</div>
+					</div>
+					<div class="widget-body">
+						<div class="widget-main">
+							<table id="SumBudgetexport" class="table table-striped table-bordered table-hover">
+								<tr>
+									<td colspan="12" class="tdclass"><h4 class="widget-title">2019物业楼宇收入、成本预算表</h4></td>
+								</tr>
+								<tr>
+									<td colspan="4"></td>
+									<td class="tdclass">金宏</td>
+									<td class="tdclass">巴士</td>
+									<td class="tdclass">西区</td>
+									<td class="tdclass">天山</td>
+									<td class="tdclass">芦恒路</td>
+									<td class="tdclass">物业公司</td>
+									<td class="tdclass">逸仙路</td>
+									<td class="tdclass">资产物业公司</td>
+								</tr>
+								<tr>
+									<td colspan="4" class="tdclass">项目</td>
+									<td class="tdclass">全年预算</td>
+									<td class="tdclass">全年预算</td>
+									<td class="tdclass">全年预算</td>
+									<td class="tdclass">全年预算</td>
+									<td class="tdclass">全年预算</td>
+									<td class="tdclass">合计</td>
+									<td class="tdclass">全年预算</td>
+									<td class="tdclass">合计</td>
+								</tr>
+								<tr>
+									<td rowspan="10" class="tdclass" style="vertical-align: middle;">收入</td>
+									<td colspan="3" class="tdclass">物业管理费</td>
+									<td name="property" class="jh_class"></td><td name="property" class="bs_class"></td><td name="property" class="xq_class"></td><td name="property" class="ts_class"></td><td name="property" class="hhl_class"></td><td name="property" class="wygs_class"></td><td name="property" class="yxl_class"></td><td name="property" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td rowspan="2" class="tdclass" style="vertical-align: middle;">停车费</td>
+									<td colspan="2" class="tdclass">固定停车费</td>
+									<td name="fixedparking" class="jh_class"></td><td name="fixedparking" class="bs_class"></td><td name="fixedparking" class="xq_class"></td><td name="fixedparking" class="ts_class"></td><td name="fixedparking" class="hhl_class"></td><td name="fixedparking" class="wygs_class"></td><td name="fixedparking" class="yxl_class"></td><td name="fixedparking" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">临时停车费</td>
+									<td name="tempparking" class="jh_class"></td><td name="tempparking" class="bs_class"></td><td name="tempparking" class="xq_class"></td><td name="tempparking" class="ts_class"></td><td name="tempparking" class="hhl_class"></td><td name="tempparking" class="wygs_class"></td><td name="tempparking" class="yxl_class"></td><td name="tempparking" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="3" class="tdclass">服务费(含基站）</td>
+									<td name="service" class="jh_class"></td><td name="service" class="bs_class"></td><td name="service" class="xq_class"></td><td name="service" class="ts_class"></td><td name="service" class="hhl_class"></td><td name="service" class="wygs_class"></td><td name="service" class="yxl_class"></td><td name="service" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="3" class="tdclass">广告费</td>
+									<td name="advertising" class="jh_class"></td><td name="advertising" class="bs_class"></td><td name="advertising" class="xq_class"></td><td name="advertising" class="ts_class"></td><td name="advertising" class="hhl_class"></td><td name="advertising" class="wygs_class"></td><td name="advertising" class="yxl_class"></td><td name="advertising" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="3" class="tdclass">仓储费/经营开发</td>
+									<td name="warehouseps" class="jh_class"></td><td name="warehouseps" class="bs_class"></td><td name="warehouseps" class="xq_class"></td><td name="warehouseps" class="ts_class"></td><td name="warehouseps" class="hhl_class"></td><td name="warehouseps" class="wygs_class"></td><td name="warehouseps" class="yxl_class"></td><td name="warehouseps" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="3" class="tdclass">租线费</td>
+									<td name="rentalps" class="jh_class"></td><td name="rentalps" class="bs_class"></td><td name="rentalps" class="xq_class"></td><td name="rentalps" class="ts_class"></td><td name="rentalps" class="hhl_class"></td><td name="rentalps" class="wygs_class"></td><td name="rentalps" class="yxl_class"></td><td name="rentalps" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="3" class="tdclass">电费</td>
+									<td name="electricin" class="jh_class"></td><td name="electricin" class="bs_class"></td><td name="electricin" class="xq_class"></td><td name="electricin" class="ts_class"></td><td name="electricin" class="hhl_class"></td><td name="electricin" class="wygs_class"></td><td name="electricin" class="yxl_class"></td><td name="electricin" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="3" class="tdclass">水费</td>
+									<td name="waterin" class="jh_class"></td><td name="waterin" class="bs_class"></td><td name="waterin" class="xq_class"></td><td name="waterin" class="ts_class"></td><td name="waterin" class="hhl_class"></td><td name="waterin" class="wygs_class"></td><td name="waterin" class="yxl_class"></td><td name="waterin" class="zcwygs_class"></td>
+								</tr>
+								<tr class="sum_class">
+									<td colspan="3" class="tdclass">合计</td>
+									<td class="jh_class"></td><td class="bs_class"></td><td class="xq_class"></td><td  class="ts_class"></td><td  class="hhl_class"></td><td class="wygs_class"></td><td class="yxl_class"></td><td class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td rowspan="31" class="tdclass" style="vertical-align: middle;">成本</td>
+									<td rowspan="4" class="tdclass" style="vertical-align: middle;">能源费</td>
+									<td colspan="2" class="tdclass">水费</td>
+									<td name="water" class="jh_class"></td><td name="water" class="bs_class"></td><td name="water" class="xq_class"></td><td name="water" class="ts_class"></td><td name="water" class="hhl_class"></td><td name="water" class="wygs_class"></td><td name="water" class="yxl_class"></td><td name="water" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">电费</td>
+									<td name="electricout" class="jh_class"></td><td name="electricout" class="bs_class"></td><td name="electricout" class="xq_class"></td><td name="electricout" class="ts_class"></td><td name="electricout" class="hhl_class"></td><td name="electricout" class="wygs_class"></td><td name="electricout" class="yxl_class"></td><td name="electricout" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">燃气费</td>
+									<td name="gas" class="jh_class"></td><td name="gas" class="bs_class"></td><td name="gas" class="xq_class"></td><td name="gas" class="ts_class"></td><td name="gas" class="hhl_class"></td><td name="gas" class="wygs_class"></td><td name="gas" class="yxl_class"></td><td name="gas" class="zcwygs_class"></td>
+								</tr>
+								<tr class="sum_class">
+									<td colspan="2" class="tdclass">合计</td>
+									<td class="jh_class"></td><td class="bs_class"></td><td class="xq_class"></td><td class="ts_class"></td><td class="hhl_class"></td><td class="wygs_class"></td><td class="yxl_class"></td><td class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td rowspan="18" class="tdclass" style="vertical-align: middle;">办公总务</td>
+									<td colspan="2" class="tdclass">办公用品</td>
+									<td name="stationery" class="jh_class"></td><td name="stationery" class="bs_class"></td><td name="stationery" class="xq_class"></td><td name="stationery" class="ts_class"></td><td name="stationery" class="hhl_class"></td><td name="stationery" class="wygs_class"></td><td name="stationery" class="yxl_class"></td><td name="stationery" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">电话、通信费等</td>
+									<td name="communication" class="jh_class"></td><td name="communication" class="bs_class"></td><td name="communication" class="xq_class"></td><td name="communication" class="ts_class"></td><td name="communication" class="hhl_class"></td><td name="communication" class="wygs_class"></td><td name="communication" class="yxl_class"></td><td name="communication" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">饮用水等</td>
+									<td name="drinkwater" class="jh_class"></td><td name="drinkwater" class="bs_class"></td><td name="drinkwater" class="xq_class"></td><td name="drinkwater" class="ts_class"></td><td name="drinkwater" class="hhl_class"></td><td name="drinkwater" class="wygs_class"></td><td name="drinkwater" class="yxl_class"></td><td name="drinkwater" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">门牌制作等</td>
+									<td name="doorplate" class="jh_class"></td><td name="doorplate" class="bs_class"></td><td name="doorplate" class="xq_class"></td><td name="doorplate" class="ts_class"></td><td name="doorplate" class="hhl_class"></td><td name="doorplate" class="wygs_class"></td><td name="doorplate" class="yxl_class"></td><td name="doorplate" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">节假日布置</td>
+									<td name="decorate" class="jh_class"></td><td name="decorate" class="bs_class"></td><td name="decorate" class="xq_class"></td><td name="decorate" class="ts_class"></td><td name="decorate" class="hhl_class"></td><td name="decorate" class="wygs_class"></td><td name="decorate" class="yxl_class"></td><td name="decorate" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">保洁用品</td>
+									<td name="cleanser" class="jh_class"></td><td name="cleanser" class="bs_class"></td><td name="cleanser" class="xq_class"></td><td name="cleanser" class="ts_class"></td><td name="cleanser" class="hhl_class"></td><td name="cleanser" class="wygs_class"></td><td name="cleanser" class="yxl_class"></td><td name="cleanser" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">绿化费</td>
+									<td name="afforestation" class="jh_class"></td><td name="afforestation" class="bs_class"></td><td name="afforestation" class="xq_class"></td><td name="afforestation" class="ts_class"></td><td name="afforestation" class="hhl_class"></td><td name="afforestation" class="wygs_class"></td><td name="afforestation" class="yxl_class"></td><td name="afforestation" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">劳防用品</td>
+									<td name="ppe" class="jh_class"></td><td name="ppe" class="bs_class"></td><td name="ppe" class="xq_class"></td><td name="ppe" class="ts_class"></td><td name="ppe" class="hhl_class"></td><td name="ppe" class="wygs_class"></td><td name="ppe" class="yxl_class"></td><td name="ppe" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">垃圾清运费</td>
+									<td name="trashcleaning" class="jh_class"></td><td name="trashcleaning" class="bs_class"></td><td name="trashcleaning" class="xq_class"></td><td name="trashcleaning" class="ts_class"></td><td name="trashcleaning" class="hhl_class"></td><td name="trashcleaning" class="wygs_class"></td><td name="trashcleaning" class="yxl_class"></td><td name="trashcleaning" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">应急物资</td>
+									<td name="emergencymaterial" class="jh_class"></td><td name="emergencymaterial" class="bs_class"></td><td name="emergencymaterial" class="xq_class"></td><td name="emergencymaterial" class="ts_class"></td><td name="emergencymaterial" class="hhl_class"></td><td name="emergencymaterial" class="wygs_class"></td><td name="emergencymaterial" class="yxl_class"></td><td name="emergencymaterial" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">外墙、水箱清洗</td>
+									<td name="wallwashing" class="jh_class"></td><td name="wallwashing" class="bs_class"></td><td name="wallwashing" class="xq_class"></td><td name="wallwashing" class="ts_class"></td><td name="wallwashing" class="hhl_class"></td><td name="wallwashing" class="wygs_class"></td><td name="wallwashing" class="yxl_class"></td><td name="wallwashing" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">报警服务费</td>
+									<td name="alarmservice" class="jh_class"></td><td name="alarmservice" class="bs_class"></td><td name="alarmservice" class="xq_class"></td><td name="alarmservice" class="ts_class"></td><td name="alarmservice" class="hhl_class"></td><td name="alarmservice" class="wygs_class"></td><td name="alarmservice" class="yxl_class"></td><td name="alarmservice" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">灭虫害服务费</td>
+									<td name="pestcontrol" class="jh_class"></td><td name="pestcontrol" class="bs_class"></td><td name="pestcontrol" class="xq_class"></td><td name="pestcontrol" class="ts_class"></td><td name="pestcontrol" class="hhl_class"></td><td name="pestcontrol" class="wygs_class"></td><td name="pestcontrol" class="yxl_class"></td><td name="pestcontrol" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">污水处理（疏通）费</td>
+									<td name="sewerage" class="jh_class"></td><td name="sewerage" class="bs_class"></td><td name="sewerage" class="xq_class"></td><td name="sewerage" class="ts_class"></td><td name="sewerage" class="hhl_class"></td><td name="sewerage" class="wygs_class"></td><td name="sewerage" class="yxl_class"></td><td name="sewerage" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">地坪保养费</td>
+									<td name="maintenance" class="jh_class"></td><td name="maintenance" class="bs_class"></td><td name="maintenance" class="xq_class"></td><td name="maintenance" class="ts_class"></td><td name="maintenance" class="hhl_class"></td><td name="maintenance" class="wygs_class"></td><td name="maintenance" class="yxl_class"></td><td name="maintenance" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">其他</td>
+									<td name="office" class="jh_class"></td><td name="office" class="bs_class"></td><td name="office" class="xq_class"></td><td name="office" class="ts_class"></td><td name="office" class="hhl_class"></td><td name="office" class="wygs_class"></td><td name="office" class="yxl_class"></td><td name="office" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass"></td>
+									<td class="jh_class"></td><td  class="bs_class"></td><td  class="xq_class"></td><td  class="ts_class"></td><td  class="hhl_class"></td><td  class="wygs_class"></td><td  class="yxl_class"></td><td  class="zcwygs_class"></td>
+								</tr>
+								<tr class="sum_class">
+									<td colspan="2" class="tdclass">合计</td>
+									<td  class="jh_class"></td><td  class="bs_class"></td><td  class="xq_class"></td><td  class="ts_class"></td><td  class="hhl_class"></td><td  class="wygs_class"></td><td  class="yxl_class"></td><td  class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td rowspan="4" class="tdclass" style="vertical-align: middle;">业务外包</td>
+									<td colspan="2" class="tdclass">保安服务费</td>
+									<td name="security" class="jh_class"></td><td name="security" class="bs_class"></td><td name="security" class="xq_class"></td><td name="security" class="ts_class"></td><td name="security" class="hhl_class"></td><td name="security" class="wygs_class"></td><td name="security" class="yxl_class"></td><td name="security" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">保洁服务费</td>
+									<td name="cleansing" class="jh_class"></td><td name="cleansing" class="bs_class"></td><td name="cleansing" class="xq_class"></td><td name="cleansing" class="ts_class"></td><td name="cleansing" class="hhl_class"></td><td name="cleansing" class="wygs_class"></td><td name="cleansing" class="yxl_class"></td><td name="cleansing" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="tdclass">工程外包</td>
+									<td name="projectout" class="jh_class"></td><td name="projectout" class="bs_class"></td><td name="projectout" class="xq_class"></td><td name="projectout" class="ts_class"></td><td name="projectout" class="hhl_class"></td><td name="projectout" class="wygs_class"></td><td name="projectout" class="yxl_class"></td><td name="projectout" class="zcwygs_class"></td>
+								</tr>
+								<tr class="sum_class">
+									<td colspan="2" class="tdclass">合计</td>
+									<td  class="jh_class"></td><td  class="bs_class"></td><td  class="xq_class"></td><td  class="ts_class"></td><td  class="hhl_class"></td><td  class="wygs_class"></td><td  class="yxl_class"></td><td  class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td rowspan="3"></td>
+									<td rowspan="2" class="tdclass" style="vertical-align: middle;">日常修理费用</td>
+									<td class="tdclass">材料费</td>
+									<td name="material" class="jh_class"></td><td name="material" class="bs_class"></td><td name="material" class="xq_class"></td><td name="material" class="ts_class"></td><td name="material" class="hhl_class"></td><td name="material" class="wygs_class"></td><td name="material" class="yxl_class"></td><td name="material" class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td class="tdclass">灭火器</td>
+									<td name="extinguisher" class="jh_class"></td><td name="extinguisher" class="bs_class"></td><td name="extinguisher" class="xq_class"></td><td name="extinguisher" class="ts_class"></td><td name="extinguisher" class="hhl_class"></td><td name="extinguisher" class="wygs_class"></td><td name="extinguisher" class="yxl_class"></td><td name="extinguisher" class="zcwygs_class"></td>
+								</tr>
+
+								<tr class="sum_class">
+									<td colspan="2" class="tdclass">合计</td>
+									<td  class="jh_class"></td><td  class="bs_class"></td><td  class="xq_class"></td><td  class="ts_class"></td><td  class="hhl_class"></td><td  class="wygs_class"></td><td  class="yxl_class"></td><td  class="zcwygs_class"></td>
+								</tr>
+								<tr>
+									<td colspan="3" class="tdclass">其他（巴士大厦电话维护）</td>
+									<td name="other" class="jh_class"></td><td name="other" class="bs_class"></td><td name="other" class="xq_class"></td><td name="other" class="ts_class"></td><td name="other" class="hhl_class"></td><td name="other" class="wygs_class"></td><td name="other" class="yxl_class"></td><td name="other" class="zcwygs_class"></td>
+								</tr>
+								<tr class="sum_class">
+									<td colspan="3" class="tdclass">合计</td>
+									<td  class="jh_class"></td><td  class="bs_class"></td><td  class="xq_class"></td><td  class="ts_class"></td><td  class="hhl_class"></td><td  class="wygs_class"></td><td  class="yxl_class"></td><td  class="zcwygs_class"></td>
+								</tr>
+							</table>
+							<script>
+								//(资产)物业公司合计
+								function getWygsHj(){
+									$('.wygs_class').each(function(i,e){
+										var p = $(e).parents();
+										var s = checknumber(p.find('.jh_class:eq('+i+')').html())+
+										checknumber(p.find('.bs_class:eq('+i+')').html())+
+										checknumber(p.find('.xq_class:eq('+i+')').html())+
+										checknumber(p.find('.ts_class:eq('+i+')').html())+
+										checknumber(p.find('.hhl_class:eq('+i+')').html());
+										$(e).html(s);
+										p.find('.zcwygs_class:eq('+i+')').html(checknumber(s)+checknumber(p.find('.yxl_class:eq('+i+')').html()));
+									});
+								}
+
+								//收入合计
+								function setSum() {
+									var classs = ['.jh_class','.bs_class','.xq_class','.ts_class','.hhl_class','.wygs_class','.yxl_class','.zcwygs_class'];
+									for(var i in classs){
+										//收入
+										$('.sum_class:eq(0)').find(classs[i]).html(sumMethod(classs[i],0,9));
+										//能源费
+										$('.sum_class:eq(1)').find(classs[i]).html(sumMethod(classs[i],10,13));
+										//办公总务
+										$('.sum_class:eq(2)').find(classs[i]).html(sumMethod(classs[i],14,31));
+										//业务外包
+										$('.sum_class:eq(3)').find(classs[i]).html(sumMethod(classs[i],32,35));
+										//日常修理费用
+										$('.sum_class:eq(4)').find(classs[i]).html(sumMethod(classs[i],36,38));
+										//总合计
+										$('.sum_class:eq(5)').find(classs[i]).html(checknumber($('.sum_class:eq(1)').find(classs[i]).html())
+												+checknumber($('.sum_class:eq(2)').find(classs[i]).html())+checknumber($('.sum_class:eq(3)').find(classs[i]).html())
+												+checknumber($('.sum_class:eq(4)').find(classs[i]).html())+sumMethod(classs[i],39,40));
+									}
+								}
+								function sumMethod(id,start,end){
+									var s = 0;
+									for(var i = start;i < end ; i++){
+										var t = $(id+":eq("+i+")").html();
+										s += checknumber(t);
+									}
+									return s;
+								}
+								function checknumber(t){
+									if(t == parseFloat(t) ){
+										return parseFloat(t);
+									}
+									return 0;
+								}
+								
+								//查询数据
+								function setResultData(){
+									 $.ajax({
+					    				url : "${contextPath}/recode/budget/getBudgetByCondition?year="+$("#port_year").val()+"&rows=1000&page=1",
+					    				type : "get",
+					    				contentType: 'application/json',
+					    				success : function(res) {
+					    					var rows = JSON.parse(res).rows;
+					    					setdata(rows);
+					    					getWygsHj();
+					    					setSum();
+					    				}
+					    			});
+								}
+								//数据回显
+								function setdata(rows){
+									for(var i = 0;i < rows.length;i++){
+										var data = rows[i];
+										var classs = '';
+										if(data.buildname == '巴士大厦'){
+											classs = 'bs_class';
+										}else if(data.buildname == '金宏大厦'){
+											classs = 'jh_class';
+										}else if(data.buildname == '天瑞天祥大厦'){
+											classs = 'ts_class';
+										}else if(data.buildname == '久事公交大厦'){
+											classs = 'xq_class';
+										}else if(data.buildname == '芦恒路枢纽'){
+											classs = 'hhl_class';
+										}else if(data.buildname == '逸仙大厦'){
+											classs = 'yxl_class';
+										}
+										if(classs == ''){
+											continue;
+										}
+										for(var para in data){
+											$("."+classs).each(function(i,e){
+												if($(e).attr('name') == para){
+													$(e).html(data[para]);
+												}
+											});
+										}
+									}
+								}
+								//导出
+								function exportexcel(){
+									methodToExport('SumBudgetexport');
+								}
+
+
+							</script>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<!-- PAGE CONTENT ENDS -->
 	</div><!-- /.col -->
@@ -200,7 +534,7 @@
 												<td rowspan="16" style="vertical-align: middle;">办公总务</td>
 												<td colspan="2">办公用品</td>
 												<td id="stationery_info" class="cass"></td>
-												<td id="stationeryps_info" class="cass"></td>
+												<td idpropertyryps_info" class="cass"></td>
 											</tr>
 											<tr>
 												<td colspan="2">电话、通信费等</td>
@@ -402,7 +736,7 @@
 <script type="text/javascript">
 		var scripts = [ null, "${contextPath}/static/assets/js/jqGrid/jquery.jqGrid.js", "${contextPath}/static/assets/js/jqGrid/i18n/grid.locale-cn.js", "${contextPath}/static/assets/js/jquery-ui.custom.js",
 		        		"${contextPath}/static/assets/js/jquery.ui.touch-punch.js", "${contextPath}/static/assets/js/markdown/markdown.js", "${contextPath}/static/assets/js/markdown/bootstrap-markdown.js",
-		        		,"${contextPath}/static/assets/js/echarts.js","${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.hotkeys.js", 
+		        		,"${contextPath}/static/assets/js/ExportExcel.js","${contextPath}/static/assets/js/echarts.js","${contextPath}/static/assets/js/select2.js","${contextPath}/static/assets/js/jquery.hotkeys.js", 
 		        		"${contextPath}/static/assets/js/bootstrap-wysiwyg.js", "${contextPath}/static/assets/js/bootbox.js", "${contextPath}/static/assets/js/jquery.gritter.js", null ]
       
 		$(".page-content-area").ace_ajax("loadScripts", scripts, function() {

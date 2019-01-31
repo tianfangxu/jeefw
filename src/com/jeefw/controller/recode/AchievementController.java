@@ -70,8 +70,8 @@ public class AchievementController extends JavaEEFrameworkBaseController<Achieve
 				model.setLoginuser(mo.getLoginuser());
 			}
 			if(StringUtils.isEmpty(model.getId())){
-				achievementService.saveAchievement(model);
-				map.put("message", "添加成功");
+				String msg = achievementService.saveAchievement(model);
+				map.put("message", msg);
 				writeJSON(response,map);
 			}else{
 				//修改

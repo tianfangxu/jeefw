@@ -147,8 +147,13 @@
 
                             <div class="col-xs-12 col-sm-12">
                                 <span style="font-size: large">月份：</span><input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
-                                                style="text-align: center; margin-left: 8px; border: none; border-bottom: 1px solid #d5d5d5;" value="1"
+                                                style="text-align: center; margin-left: 8px; border: none; border-bottom: 1px solid #d5d5d5;" readonly="readonly"
                                                 id="month" />
+                                <script type="text/javascript">
+	                                var date=new Date;
+	                                var month=date.getMonth()+1;
+	                                $("#month").val(month);
+                                </script>
                                 <div class="widget-box">
                                     <div class="widget-header">
                                         <h4 class="widget-title">收入</h4>
@@ -1522,6 +1527,9 @@
 
     function setMsgBudgetInfo(data){
         $("#id").val('');
+        var date=new Date;
+        var month=date.getMonth()+1;
+        $("#month").val(month);
         $("#table_in").modal("toggle");
         $("#informationForm")[0].reset();
         $("#editor").html("");
@@ -1682,6 +1690,12 @@
             contentType: 'application/json',
             data :params,
             complete : function(xmlRequest) {
+            	console.log(xmlRequest);
+            	$.gritter.add({
+                    title: '信息',
+                    text: xmlRequest.responseJSON.message,
+                    class_name:" gritter-info"
+                });
                 $('#table_in').modal("toggle");
                 jQuery("#grid-table").trigger("reloadGrid");
             }

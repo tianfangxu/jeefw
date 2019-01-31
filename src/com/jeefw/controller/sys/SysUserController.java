@@ -730,4 +730,9 @@ public class SysUserController extends JavaEEFrameworkBaseController<SysUser> im
 	public String countReport(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return "back/compact/countReport";
 	}
+	
+	@RequestMapping("/summaryTable")
+	public String summaryTable(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "back/recode/summaryTable";
+	}
 }

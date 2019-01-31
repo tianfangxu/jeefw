@@ -65,8 +65,8 @@ public class BudgetController extends JavaEEFrameworkBaseController<BudgetEntity
 				model.setLoginuser(mo.getLoginuser());
 			}
 			if(StringUtils.isEmpty(model.getId())){
-				budgetService.saveBudget(model);
-				map.put("message", "添加成功");
+				String msg = budgetService.saveBudget(model);
+				map.put("message", msg);
 				writeJSON(response,map);
 			}else{
 				//修改

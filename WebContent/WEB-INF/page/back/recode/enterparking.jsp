@@ -86,9 +86,10 @@
 		
 		<table id="enterproperty-table"></table>
 			
-		<div id="grid-pager"></div>
+		
 		
 		<table id="exportexceltable" style="display: none;" border="1"></table>
+		<div id="grid-pager"></div>
 
 		<script type="text/javascript">
 			var $path_base = "${contextPath}/static";//in Ace demo this will be used for editurl parameter

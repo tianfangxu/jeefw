@@ -1,7 +1,10 @@
 package com.jeefw.dao.recode.impl;
 
 import java.util.List;
+import java.util.Set;
 
+import com.jeefw.model.sys.Role;
+import com.jeefw.model.sys.SysUser;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -27,24 +30,38 @@ public class CustomerDaoImpl extends BaseDao<CustomerEntity> implements Customer
 			CustomerModel model) {
 		JqGridPageView<CustomerEntity> result = new JqGridPageView<CustomerEntity>();
 		Session session = this.getSession();
-		StringBuffer sb = new StringBuffer(" where deleteflg = '0' ");
+		StringBuffer sb = new StringBuffer(" where c.deleteflg = '0' ");
 
 		//区分个人与企业客户
 		if(!StringUnit.isNullOrEmpty(model.getType())){
-			sb.append(" and type = '"+model.getType()+"' ");
+			sb.append(" and c.type = '"+model.getType()+"' ");
+		}
+
+		//部门
+		SysUser user = model.getLoginuser();
+		String key = user.getDepartmentKey();
+		Set<Role> roles = user.getRoles();
+		String rolestring = "";
+		for (Role role : roles) {
+			rolestring += role.getRoleValue();
+		}
+		if(key!= null && !(key.equals("ZJB") || key.equals("WYB") ||key.equals("CWB"))){
+			if(!StringUnit.isNullOrEmpty(user.getDepartmentKey()) && rolestring.indexOf("超级管理员") == -1){
+				sb.append(" and d.department_key = '"+model.getLoginuser().getDepartmentKey()+"' ");
+			}
 		}
 
 		//等于查询
 		if(model.getEqparam() != null){
 			CustomerModel eqmodel = (CustomerModel) model.getEqparam();
 			if(!StringUnit.isNullOrEmpty(eqmodel.getName())){
-				sb.append(" and name = '"+eqmodel.getName()+"' ");
+				sb.append(" and c.name = '"+eqmodel.getName()+"' ");
 			}
 			if(!StringUnit.isNullOrEmpty(eqmodel.getAddress())){
-				sb.append(" and address = '"+eqmodel.getAddress()+"' ");
+				sb.append(" and c.address = '"+eqmodel.getAddress()+"' ");
 			}
 			if(!StringUnit.isNullOrEmpty(eqmodel.getIdtype())){
-				sb.append(" and idtype = '"+eqmodel.getIdtype()+"' ");
+				sb.append(" and c.idtype = '"+eqmodel.getIdtype()+"' ");
 			}
 			if(!StringUnit.isNullOrEmpty(eqmodel.getIdnumber())){
 				sb.append(" and idnumber = '"+eqmodel.getIdnumber()+"' ");
@@ -53,7 +70,7 @@ public class CustomerDaoImpl extends BaseDao<CustomerEntity> implements Customer
 				sb.append(" and contactname = '"+eqmodel.getContactname()+"' ");
 			}
 			if(!StringUnit.isNullOrEmpty(eqmodel.getId())){
-				sb.append(" and id = '"+eqmodel.getId()+"' ");
+				sb.append(" and c.id = '"+eqmodel.getId()+"' ");
 			}
 
 		}
@@ -61,33 +78,41 @@ public class CustomerDaoImpl extends BaseDao<CustomerEntity> implements Customer
 		if(model.getLikeparam() != null){
 			CustomerModel likemodel = (CustomerModel) model.getLikeparam();
 			if(!StringUnit.isNullOrEmpty(likemodel.getName())){
-				sb.append(" and name like '%"+likemodel.getName()+"%' ");
+				sb.append(" and c.name like '%"+likemodel.getName()+"%' ");
 			}
 			if(!StringUnit.isNullOrEmpty(likemodel.getAddress())){
-				sb.append(" and address like '%"+likemodel.getAddress()+"%' ");
+				sb.append(" and c.address like '%"+likemodel.getAddress()+"%' ");
 			}
 			if(!StringUnit.isNullOrEmpty(likemodel.getIdtype())){
-				sb.append(" and idtype like '%"+likemodel.getIdtype()+"%' ");
+				sb.append(" and c.idtype like '%"+likemodel.getIdtype()+"%' ");
 			}
 			if(!StringUnit.isNullOrEmpty(likemodel.getIdnumber())){
-				sb.append(" and idnumber like '%"+likemodel.getIdnumber()+"%' ");
+				sb.append(" and c.idnumber like '%"+likemodel.getIdnumber()+"%' ");
 			}
 			if(!StringUnit.isNullOrEmpty(likemodel.getContactname())){
-				sb.append(" and contactname like '%"+likemodel.getContactname()+"%' ");
+				sb.append(" and c.contactname like '%"+likemodel.getContactname()+"%' ");
 			}
 		}
 
-		Query query = session.createQuery("from CustomerEntity "
-				+ sb.toString());
+		String sql = "SELECT c.* from m_customer c left JOIN sys_user u on c.createuser = u.id " +
+				"LEFT JOIN department d ON u.department_key = d.parent_departmentkey or u.department_key = d.department_key"+sb.toString()
+				+" group by c.id ";
+		/*Query query = session.createQuery("from CustomerEntity "
+				+ sb.toString());*/
+		Query query = session.createSQLQuery(sql).addEntity(CustomerEntity.class);
 		query.setFirstResult((Integer.parseInt(model.getPage()) - 1)
 				* Integer.parseInt(model.getRows()));
 		query.setMaxResults(Integer.parseInt(model.getRows()));
 
 		List<CustomerEntity> list = query.list();
 
-		Object cout = session.createSQLQuery(
+		String sqlCunt = "select count(a.id) from ( SELECT c.* from m_customer c left JOIN sys_user u on c.createuser = u.id " +
+				"LEFT JOIN department d ON u.department_key = d.parent_departmentkey or u.department_key = d.department_key"+sb.toString()
+				+" group by c.id ) as a  ";
+		/*Object cout = session.createSQLQuery(
 				"select count(1) from m_customer " + sb.toString())
-				.uniqueResult();
+				.uniqueResult();*/
+		Object cout = session.createSQLQuery(sqlCunt).uniqueResult();
 		long count = Long.parseLong(cout.toString());
 
 		result.setRows(list);

@@ -13,7 +13,7 @@ public interface AchievementService {
 	JqGridPageView<AchievementModel> getAchievementByCondition(
 			AchievementModel model);
 
-	void saveAchievement(AchievementModel model);
+	String saveAchievement(AchievementModel model);
 
 	String updateAchievement(AchievementModel model);
 

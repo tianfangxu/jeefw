@@ -9,7 +9,7 @@ public interface BudgetService {
 
 	JqGridPageView<BudgetModel> getBudgetByCondition(BudgetModel model);
 
-	void saveBudget(BudgetModel model);
+	String saveBudget(BudgetModel model);
 
 	String updateBudget(BudgetModel model);
 

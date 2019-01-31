@@ -215,7 +215,7 @@ public class AchievementDaoImpl extends BaseDao<AchievementEntity> implements Ac
 	public JqGridPageView<AchievementSumResponseModel> sumToTable(AchievementModel model){
 		JqGridPageView<AchievementSumResponseModel> result = new JqGridPageView<AchievementSumResponseModel>();
 		Session session = this.getSession();
-		StringBuffer where = new StringBuffer(" 1=1 and tb.deleteflg = '0' and ta.deleteflg = '0' ");
+		StringBuffer where = new StringBuffer(" 1=1 and tb.deleteflg = '0'  ");
 		if(!StringUnit.isNullOrEmpty(model.getBuild())){
 			where.append(" and tb.build = '"+model.getBuild()+"' ");
 		}
@@ -267,9 +267,9 @@ public class AchievementDaoImpl extends BaseDao<AchievementEntity> implements Ac
 					"ta.property+ta.fixedparking+ta.tempparking+ta.advertising+ta.electricin+ta.waterin+ta.service+ta.warehouse+ta.rental-ta.water-ta.electricout-ta.gas-ta.stationery-ta.communication-ta.drinkwater-ta."+
 					"doorplate-ta.decorate-ta.cleanser-ta.afforestation-ta.ppe-ta.trashcleaning-ta.emergencymaterial-ta.wallwashing-ta.alarmservice-ta.pestcontrol-ta.sewerage-ta.maintenance-ta.office"+
 					"-ta.other+ta.rent+ta.rest+ta.servicing-ta.security-ta.cleansing-ta.projectout-ta.repair-ta.firefighting-ta.engineering-ta.equipmenttesting-ta.material-ta.extinguisher-ta.upkeep as incomesum,"+
-					"ta.`year`, "+
+					"tb.`year`, "+
 					"ta.`month`,"+
-					"ta.build,  "+
+					"tb.build,  "+
 					"mb.`name`  "+
 					"from t_budget tb LEFT JOIN t_achievement ta on tb.build = ta.build and tb.`year` = ta.`year` LEFT JOIN m_build mb on mb.id = tb.build "+
 					"where "+where.toString()+
@@ -413,5 +413,6 @@ public class AchievementDaoImpl extends BaseDao<AchievementEntity> implements Ac
 		result.setRows(list);
 		return result;
 	}
+	
 
 }
