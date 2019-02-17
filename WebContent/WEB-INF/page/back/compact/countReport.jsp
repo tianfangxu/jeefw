@@ -534,7 +534,7 @@
 												<td rowspan="16" style="vertical-align: middle;">办公总务</td>
 												<td colspan="2">办公用品</td>
 												<td id="stationery_info" class="cass"></td>
-												<td idpropertyryps_info" class="cass"></td>
+												<td id="propertyryps_info" class="cass"></td>
 											</tr>
 											<tr>
 												<td colspan="2">电话、通信费等</td>
@@ -816,91 +816,91 @@
 							width : 100,
 							search:false,
 							formatter:function(value,options,rows){
-	        					return '<a class="" style="cursor:pointer;" onclick="budgetsumInfo(\''+rows.build+'\',\''+rows.year+'\')">'+rows.dugetsum+'</a>';
+	        					return '<a class="" style="cursor:pointer;" onclick="budgetsumInfo(\''+rows.build+'\',\''+rows.year+'\')">'+parseFloat(rows.dugetsum).toFixed(2)+'</a>';
 	        				}
 						},{
 							name : "jan",
 							width : 100,
 							search:false,
 							formatter:function(value,options,rows){
-	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'1\')">'+rows.jan+'</a>';
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'1\')">'+parseFloat(rows.jan).toFixed(2)+'</a>';
 	        				}
 						},{
 							name : "feb",
 							width : 100,
 							search:false,
 							formatter:function(value,options,rows){
-	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'2\')">'+rows.feb+'</a>';
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'2\')">'+parseFloat(rows.feb).toFixed(2)+'</a>';
 	        				}
 						},{
 							name : "mar",
 							width : 100,
 							search:false,
 							formatter:function(value,options,rows){
-	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'3\')">'+rows.mar+'</a>';
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'3\')">'+parseFloat(rows.mar).toFixed(2)+'</a>';
 	        				}
 						},{
 							name : "apr",
 							width : 100,
 							search:false,
 							formatter:function(value,options,rows){
-	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'4\')">'+rows.apr+'</a>';
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'4\')">'+parseFloat(rows.apr).toFixed(2)+'</a>';
 	        				}
 						},{
 							name : "may",
 							width : 100,
 							search:false,
 							formatter:function(value,options,rows){
-	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'5\')">'+rows.may+'</a>';
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'5\')">'+parseFloat(rows.may).toFixed(2)+'</a>';
 	        				}
 						},{
 							name : "jun",
 							width : 100,
 							search:false,
 							formatter:function(value,options,rows){
-	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'6\')">'+rows.jun+'</a>';
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'6\')">'+parseFloat(rows.jun).toFixed(2)+'</a>';
 	        				}
 						},{
 							name : "jul",
 							width : 100,
 							search:false,
 							formatter:function(value,options,rows){
-	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'7\')">'+rows.jul+'</a>';
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'7\')">'+parseFloat(rows.jul).toFixed(2)+'</a>';
 	        				}
 						},{
 							name : "aug",
 							width : 100,
 							search:false,
 							formatter:function(value,options,rows){
-	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'8\')">'+rows.aug+'</a>';
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'8\')">'+parseFloat(rows.aug).toFixed(2)+'</a>';
 	        				}
 						},{
 							name : "sept",
 							width : 100,
 							search:false,
 							formatter:function(value,options,rows){
-	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'9\')">'+rows.sept+'</a>';
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'9\')">'+parseFloat(rows.sept).toFixed(2)+'</a>';
 	        				}
 						},{
 							name : "oct",
 							width : 100,
 							search:false,
 							formatter:function(value,options,rows){
-	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'10\')">'+rows.oct+'</a>';
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'10\')">'+parseFloat(rows.oct).toFixed(2)+'</a>';
 	        				}
 						},{
 							name : "nov",
 							width : 100,
 							search:false,
 							formatter:function(value,options,rows){
-	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'11\')">'+rows.nov+'</a>';
+	        					return '<a class="" style="cursor:pointer;" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'11\')">'+parseFloat(rows.nov).toFixed(2)+'</a>';
 	        				}
 						},{
 							name : "dece",
 							width : 100,
 							search:false,
 							formatter:function(value,options,rows){
-	        					return '<a class="" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'12\')">'+rows.dece+'</a>';
+	        					return '<a class="" onclick="monthsumInfo(\''+rows.build+'\',\''+rows.year+'\',\'12\')">'+parseFloat(rows.dece).toFixed(2)+'</a>';
 	        				}
 						},{
 							name : "",
@@ -1413,7 +1413,7 @@
 	        $('#sum1_info').html(data.sumenergy);
 	        $('#sum2_info').html(data.sumoffice);
 	        $('#sum3_info').html(data.sumelsed);
-	        $('#sum_info').html(parseFloat(data.sumincome) - parseFloat(data.sumcost));
+	        $('#sum_info').html(numSub(parseFloat(data.sumincome) ,parseFloat(data.sumcost)));
 	        for(var param in data){
 	            $('.cass').each(function(i){
 	                console.log($(this).attr('id').split('_info')[0]);
@@ -1445,7 +1445,7 @@
 	                    $('#sum3_info').html(data.sumelsed);
 	                    $('#sum02').html(data.sumbusiness);
 	                    $('#sum03').html(data.sumfixed);
-	                    $('#sum_info').html(parseFloat(data.sumincome) - parseFloat(data.sumcost));
+	                    $('#sum_info').html(numSub(parseFloat(data.sumincome) , parseFloat(data.sumcost)));
 	                    for(var param in data){
 	                        $('.cass').each(function(i){
 	                            console.log($(this).attr('id').split('_info')[0]);
@@ -1477,4 +1477,23 @@
              $('#sum02').html('');
              $('#sum03').html('');
 		}
+		
+
+	    function numSub(num1, num2) {
+	    	var baseNum, baseNum1, baseNum2;
+	    	var precision;// 精度
+	    	try {
+	    		baseNum1 = num1.toString().split(".")[1].length;
+	    	} catch (e) {
+	    		baseNum1 = 0;
+	    	}
+	    	try {
+	    		baseNum2 = num2.toString().split(".")[1].length;
+	    	} catch (e) {
+	    		baseNum2 = 0;
+	    	}
+	    	baseNum = Math.pow(10, Math.max(baseNum1, baseNum2));
+	    	precision = (baseNum1 >= baseNum2) ? baseNum1 : baseNum2;
+	    	return ((num1 * baseNum - num2 * baseNum) / baseNum).toFixed(precision);
+	    };
 </script>

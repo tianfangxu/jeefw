@@ -147,7 +147,7 @@
 
                             <div class="col-xs-12 col-sm-12">
                                 <span style="font-size: large">月份：</span><input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
-                                                style="text-align: center; margin-left: 8px; border: none; border-bottom: 1px solid #d5d5d5;" readonly="readonly"
+                                                style="text-align: center; margin-left: 8px; border: none; border-bottom: 1px solid #d5d5d5;" 
                                                 id="month" />
                                 <script type="text/javascript">
 	                                var date=new Date;
@@ -1021,7 +1021,7 @@
                         width: 100,
                         search:false,
                         formatter:function(value,options,rows){
-                            return parseFloat(rows.sumincome)-parseFloat(rows.sumcost);
+                            return numSub(parseFloat(rows.sumincome),parseFloat(rows.sumcost));
                         }
                     },
                     {
@@ -1637,7 +1637,7 @@
                 }else if(i<42){
                     $('#sum2').html(getsumToIndex(41,41));
                 }
-                    $('#sum5').html(getsumToIndex(0,11)-getsumToIndex(12,41));
+                    $('#sum5').html(numSub(getsumToIndex(0,11),getsumToIndex(12,41)));
             });
         });
     }
@@ -1761,7 +1761,7 @@
         $('#sum2').html(data.sumelsed);
         $('#sum02').html(data.sumbusiness);
         $('#sum03').html(data.sumfixed);
-        $('#sum5').html(parseFloat(data.sumincome) - parseFloat(data.sumcost));
+        $('#sum5').html(numSub(parseFloat(data.sumincome), parseFloat(data.sumcost)));
         $('#lyxx').val(data.build);
         for(var param in data){
             $('.num').each(function(i){
@@ -1806,7 +1806,7 @@
                     $('#sum3_info').html(data.sumelsed);
                     $('#sum02_info').html(data.sumbusiness);
                     $('#sum03_info').html(data.sumfixed);
-                    $('#sum_info').html(parseFloat(data.sumincome) - parseFloat(data.sumcost));
+                    $('#sum_info').html(numSub(parseFloat(data.sumincome),parseFloat(data.sumcost)));
                     for(var param in data){
                         $('.cass').each(function(i){
                             console.log($(this).attr('id').split('_info')[0]);
@@ -2061,4 +2061,22 @@
 		}
 		return val;
 	}
+    
+    function numSub(num1, num2) {
+    	var baseNum, baseNum1, baseNum2;
+    	var precision;// 精度
+    	try {
+    		baseNum1 = num1.toString().split(".")[1].length;
+    	} catch (e) {
+    		baseNum1 = 0;
+    	}
+    	try {
+    		baseNum2 = num2.toString().split(".")[1].length;
+    	} catch (e) {
+    		baseNum2 = 0;
+    	}
+    	baseNum = Math.pow(10, Math.max(baseNum1, baseNum2));
+    	precision = (baseNum1 >= baseNum2) ? baseNum1 : baseNum2;
+    	return ((num1 * baseNum - num2 * baseNum) / baseNum).toFixed(precision);
+    };
 </script>
